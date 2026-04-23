@@ -1,0 +1,85 @@
+# orcSONAR – Main Configuration
+# Default: VEGFA / HeLa proof-of-concept run
+
+# --- Analysis Target ---
+target_gene: "VEGFA"
+cell_line: "HeLa"
+sarna_sequence: "GCAACCATAGCCTCGGCCGC"
+
+# --- Promoter Window ---
+promoter_upstream: 1000
+promoter_downstream: 200
+
+# --- Thermodynamic Thresholds ---
+delta_g_strong: -30.0      # kcal/mol  → high-risk binding
+delta_g_moderate: -25.0    # kcal/mol  → moderate-risk binding
+
+# --- Seed Alignment ---
+seed_length: 7
+max_mismatches: 3
+gc_range: [35, 65]         # % GC content acceptable range
+
+# --- Remote Data URLs ---
+phylop_bigwig_url: "https://hgdownload.soe.ucsc.edu/goldenPath/hg38/phyloP100way/hg38.phyloP100way.bw"
+ensembl_base_url: "https://rest.ensembl.org"
+gnomad_api_url: "https://gnomad.broadinstitute.org/api"
+ncbi_eutils_url: "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/"
+ucsc_api_url: "https://api.genome.ucsc.edu/getData/track"
+encode_portal_url: "https://www.encodeproject.org"
+
+# --- API Rate Limits (requests/second) ---
+api_rate_limits:
+  ensembl: 15
+  ncbi: 3
+  ucsc: 5
+  gnomad: 5
+
+# --- Scoring Weights (must sum to 1.0) ---
+scoring_weights:
+  sequence_specificity: 0.20
+  variant_toxicity: 0.15
+  biophysics_structure: 0.25
+  epigenetic_context: 0.20
+  execution_safety: 0.20
+
+# --- Risk Thresholds ---
+risk_thresholds:
+  safe: 0.3
+  warning: 0.6
+  high_risk: 0.8
+  # ≥ 0.8 → DANGEROUS
+
+# --- Supported Cell Lines ---
+supported_cell_lines:
+  - A549
+  - GM12878
+  - HEK293T
+  - HeLa
+  - HepG2
+  - Huh7
+  - K562
+  - MCF7
+
+# --- Local Data Paths ---
+data_paths:
+  epdnew_bed: "data/1_Temel_Harita/EPDnew/EPDnew_hg38.bed"
+  fantom5_bed: "data/1_Temel_Harita/FANTOM5/FANTOM5_hg38_CAGE_peaks.bed"
+  mirbase_fa: "data/1_Temel_Harita/miRBase/mature.fa"
+  cosmic_vcf: "data/2_Varyant_Toksisite/COSMIC/Cosmic_GenomeScreensMutant_v103_GRCh38.vcf.gz"
+  ccle_csv: "data/3_Topoloji_Epigenetik/CCLE/CCLE_Expression.csv"
+  turner_rules_dir: "data/4_Biyofizik_Yapısal/Turner_Rules"
+  shape_seq_dir: "data/4_Biyofizik_Yapısal/SHAPE_Seq"
+  m6a_bed: "data/4_Biyofizik_Yapısal/RMBase/hg38_m6A_mühürlü.bed.gz"
+  immune_motifs: "data/5_Icra_Güvenlik/Immun_Motifler/immune_motifs.txt"
+  circrna_dir: "data/5_Icra_Güvenlik/circAtlas"
+  rbp_dir: "data/5_Icra_Güvenlik/POSTAR3"
+  cache_db: "data/cache/orcsonar_cache.db"
+
+# --- Cache Settings ---
+cache:
+  default_ttl_hours: 168    # 1 week
+  max_size_mb: 2048
+
+# --- Output ---
+results_dir: "results"
+logs_dir: "logs"
