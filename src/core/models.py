@@ -71,6 +71,17 @@ class TranscriptInfo(BaseModel):
     source: Literal["Ensembl", "RefSeq", "EPDnew"]
 
 
+class AlignmentResult(BaseModel):
+    """Intermediate result from seed_aligner._score_alignment."""
+
+    score: float
+    mismatches: int = Field(ge=0)
+    gu_wobbles: int = Field(ge=0)
+    seed_mismatches: int = Field(ge=0)
+    aligned_target: str
+    positions: list[int] = Field(default_factory=list)
+
+
 class OffTargetSite(BaseModel):
     """A candidate off-target binding site for the saRNA."""
 
