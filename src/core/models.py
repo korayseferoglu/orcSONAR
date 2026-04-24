@@ -120,6 +120,27 @@ class OffTargetSite(BaseModel):
     alignment_score: float
 
 
+class RepeatEntry(BaseModel):
+    """A single RepeatMasker annotation from UCSC rmsk track."""
+
+    chrom: str
+    start: int = Field(ge=0)
+    end: int = Field(ge=0)
+    rep_name: str
+    rep_class: str
+    rep_family: str
+
+
+class RepeatResult(BaseModel):
+    """Repeat scan result for one genomic region (Stage 2)."""
+
+    region: GenomicRegion
+    repeats: list[RepeatEntry] = Field(default_factory=list)
+    has_alu: bool = False
+    has_line: bool = False
+    adar_risk_score: float = Field(ge=0.0, le=1.0, default=0.0)
+
+
 class VariantScore(BaseModel):
     """Stage 3 — variant & toxicity sub-scores."""
 

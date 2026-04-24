@@ -1,0 +1,178 @@
+"""UCSC RepeatMasker-based repeat element scanner for Stage 2.
+
+Queries the UCSC rmsk track via REST API to detect Alu, LINE-1, and other
+repeat elements overlapping off-target genomic regions.
+
+ADAR risk rationale:
+  - Alu inverted repeats form dsRNA → ~90% of ADAR A-to-I editing occurs in Alu elements
+  - LINE-1 elements carry transposition / insertional mutagenesis risk
+"""
+
+from __future__ import annotations
+
+import requests
+from loguru import logger
+from tenacity import retry, stop_after_attempt, wait_exponential
+
+from src.core.cache import Cache
+from src.core.config import OrcSonarConfig
+from src.core.models import GenomicRegion, RepeatEntry, RepeatResult
+
+_ALU_FAMILIES: frozenset[str] = frozenset({"Alu"})
+_LINE_CLASSES: frozenset[str] = frozenset({"LINE"})
+
+_ADAR_SCORE_ALU = 0.8
+_ADAR_SCORE_LINE = 0.3
+
+
+# ---------------------------------------------------------------------------
+# Public API
+# ---------------------------------------------------------------------------
+
+
+def scan_repeats(
+    regions: list[GenomicRegion],
+    config: OrcSonarConfig,
+) -> list[RepeatResult]:
+    """Query UCSC rmsk track for repeat elements in each off-target region.
+
+    Args:
+        regions: Genomic intervals to scan (hg38, chr-prefixed).
+        config: Pipeline config (ucsc_api_url, data_paths.cache_db).
+
+    Returns:
+        RepeatResult for every input region (same order as input).
+    """
+    results: list[RepeatResult] = []
+    with Cache(config.data_paths.cache_db) as cache:
+        for region in regions:
+            entries = _query_ucsc_rmsk(region, config, cache)
+            has_alu, has_line, score = _classify_risk(entries)
+            results.append(
+                RepeatResult(
+                    region=region,
+                    repeats=entries,
+                    has_alu=has_alu,
+                    has_line=has_line,
+                    adar_risk_score=score,
+                )
+            )
+            logger.info(
+                f"repeat_scanner: {region} → {len(entries)} repeat(s), "
+                f"alu={has_alu}, line={has_line}, adar_risk={score:.2f}"
+            )
+    return results
+
+
+# ---------------------------------------------------------------------------
+# Internal helpers
+# ---------------------------------------------------------------------------
+
+
+def _query_ucsc_rmsk(
+    region: GenomicRegion,
+    config: OrcSonarConfig,
+    cache: Cache,
+) -> list[RepeatEntry]:
+    """Fetch RepeatMasker annotations for one region, with cache + retry.
+
+    On any unrecoverable API failure the function logs a warning and returns
+    an empty list (graceful degradation per pipeline policy).
+
+    Args:
+        region: Genomic interval (chr-prefixed chrom expected).
+        config: Pipeline config supplying ucsc_api_url.
+        cache: Open SQLite cache instance.
+
+    Returns:
+        List of RepeatEntry objects (may be empty).
+    """
+    cache_key = f"rmsk:{region.chrom}:{region.start}:{region.end}"
+    cached = cache.get(cache_key)
+    if cached is not None:
+        logger.debug(f"repeat_scanner cache HIT: {cache_key}")
+        return [RepeatEntry(**e) for e in cached["entries"]]
+
+    try:
+        entries = _fetch_rmsk(region, config.ucsc_api_url)
+    except Exception as exc:
+        logger.warning(
+            f"UCSC rmsk query failed for {region} — falling back to empty repeat list: {exc}"
+        )
+        entries = []
+
+    cache.set(cache_key, {"entries": [e.model_dump() for e in entries]})
+    return entries
+
+
+@retry(
+    stop=stop_after_attempt(3),
+    wait=wait_exponential(multiplier=1, min=1, max=10),
+    reraise=True,
+)
+def _fetch_rmsk(region: GenomicRegion, base_url: str) -> list[RepeatEntry]:
+    """HTTP call to UCSC getData/track endpoint, retried up to 3 times.
+
+    Args:
+        region: Target interval.
+        base_url: UCSC getData/track base URL (from config).
+
+    Returns:
+        Parsed list of RepeatEntry objects.
+
+    Raises:
+        requests.HTTPError: On non-2xx response (triggers tenacity retry).
+        requests.RequestException: On network errors (triggers tenacity retry).
+    """
+    params = {
+        "genome": "hg38",
+        "track": "rmsk",
+        "chrom": region.chrom,
+        "start": region.start,
+        "end": region.end,
+    }
+    resp = requests.get(base_url, params=params, timeout=30)
+    resp.raise_for_status()
+    data = resp.json()
+
+    entries: list[RepeatEntry] = []
+    for item in data.get("rmsk", []):
+        entries.append(
+            RepeatEntry(
+                chrom=item["genoName"],
+                start=item["genoStart"],
+                end=item["genoEnd"],
+                rep_name=item["repName"],
+                rep_class=item["repClass"],
+                rep_family=item["repFamily"],
+            )
+        )
+    logger.debug(f"UCSC rmsk: {region} → {len(entries)} element(s)")
+    return entries
+
+
+def _classify_risk(entries: list[RepeatEntry]) -> tuple[bool, bool, float]:
+    """Compute Alu/LINE presence flags and ADAR risk score.
+
+    Score components:
+      Alu (repFamily == "Alu")  → +0.8  (dominant ADAR editing substrate)
+      LINE (repClass == "LINE") → +0.3  (transposition / dsRNA risk)
+      Combined score is capped at 1.0.
+
+    Args:
+        entries: RepeatMasker entries for a genomic region.
+
+    Returns:
+        Tuple of (has_alu, has_line, adar_risk_score).
+    """
+    has_alu = any(e.rep_family in _ALU_FAMILIES for e in entries)
+    has_line = any(e.rep_class in _LINE_CLASSES for e in entries)
+
+    score = 0.0
+    if has_alu:
+        score += _ADAR_SCORE_ALU
+    if has_line:
+        score += _ADAR_SCORE_LINE
+    score = min(score, 1.0)
+
+    return has_alu, has_line, score
