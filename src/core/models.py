@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Literal
+from typing import Literal, Optional
 
 from pydantic import BaseModel, Field, field_validator
 
@@ -139,6 +139,47 @@ class RepeatResult(BaseModel):
     has_alu: bool = False
     has_line: bool = False
     adar_risk_score: float = Field(ge=0.0, le=1.0, default=0.0)
+
+
+class CosmicMutation(BaseModel):
+    """A single COSMIC cancer mutation record parsed from the VCF."""
+
+    position: int = Field(ge=0)
+    ref: str
+    alt: str
+    gene: str
+    so_term: str
+    sample_count: int = Field(ge=0, default=0)
+    tier: Optional[int] = None  # 1 or 2 if in Cancer Gene Census; None otherwise
+
+
+class CosmicResult(BaseModel):
+    """COSMIC scan result for one off-target genomic region (Stage 3)."""
+
+    region: GenomicRegion
+    mutations: list[CosmicMutation] = Field(default_factory=list)
+    mutation_count: int = Field(ge=0, default=0)
+    has_tier1_gene: bool = False
+    density_score: float = Field(ge=0.0, le=1.0, default=0.0)
+
+
+class ClinvarVariant(BaseModel):
+    """A single ClinVar variant (pathogenic or likely pathogenic)."""
+
+    uid: str
+    position: Optional[int] = None
+    significance: str
+    condition: str = ""
+    gene: str = ""
+
+
+class ClinvarResult(BaseModel):
+    """ClinVar check result for one off-target genomic region (Stage 3)."""
+
+    region: GenomicRegion
+    pathogenic_count: int = Field(ge=0, default=0)
+    likely_pathogenic_count: int = Field(ge=0, default=0)
+    variants: list[ClinvarVariant] = Field(default_factory=list)
 
 
 class VariantScore(BaseModel):
