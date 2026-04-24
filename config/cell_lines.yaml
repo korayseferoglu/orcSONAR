@@ -16,6 +16,8 @@ A549:
   ago2_eclip: "https://www.encodeproject.org/files/ENCFF355MIH/@@download/ENCFF355MIH.bigWig"
   hnrnpa1_eclip: "https://www.encodeproject.org/files/ENCFF758VEP/@@download/ENCFF758VEP.bigWig"
   gro_seq_url: "https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSM1480327&format=file"
+  gro_seq_plus_url: null   # TODO: fill with GEO/SRA BigWig (plus strand)
+  gro_seq_minus_url: null  # TODO: fill with GEO/SRA BigWig (minus strand)
   hic_url: "https://4dn-open-data-public.s3.amazonaws.com/fourfront-webprod/wfoutput/7386f957-76aa-4579-95b9-7a6e3fd57441/4DNFI823LSII.hic"
 
 GM12878:
@@ -26,6 +28,8 @@ GM12878:
   ago2_eclip: "https://www.encodeproject.org/files/ENCFF511QFI/@@download/ENCFF511QFI.bigWig"
   hnrnpa1_eclip: "https://www.encodeproject.org/files/ENCFF807NMM/@@download/ENCFF807NMM.bigWig"
   gro_seq_url: "https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSM1480312&format=file"
+  gro_seq_plus_url: null
+  gro_seq_minus_url: null
   hic_url: "https://4dn-open-data-public.s3.amazonaws.com/fourfront-webprod/wfoutput/91a8b0a5-5e0d-4e84-ad63-c88a7b8aef36/4DNFIXP4QG5B.hic"
 
 HEK293T:
@@ -36,6 +40,8 @@ HEK293T:
   ago2_eclip: "https://www.encodeproject.org/files/ENCFF348RLA/@@download/ENCFF348RLA.bigWig"
   hnrnpa1_eclip: "https://www.encodeproject.org/files/ENCFF660GHD/@@download/ENCFF660GHD.bigWig"
   gro_seq_url: "https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSM2437727&format=file"
+  gro_seq_plus_url: null
+  gro_seq_minus_url: null
   hic_url: "https://4dn-open-data-public.s3.amazonaws.com/fourfront-webprod/wfoutput/6e44b2b9-f8d3-4b42-8e69-94b5d1f26f38/4DNFIH9ZY5GF.hic"
 
 HeLa:
@@ -46,6 +52,8 @@ HeLa:
   ago2_eclip: "https://www.encodeproject.org/files/ENCFF765PFM/@@download/ENCFF765PFM.bigWig"
   hnrnpa1_eclip: "https://www.encodeproject.org/files/ENCFF810JXO/@@download/ENCFF810JXO.bigWig"
   gro_seq_url: "https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSM1480321&format=file"
+  gro_seq_plus_url: null
+  gro_seq_minus_url: null
   hic_url: "https://4dn-open-data-public.s3.amazonaws.com/fourfront-webprod/wfoutput/a83b4c7d-9eb8-4d4e-a2f0-f23c87bca9ab/4DNFIP1P9VJL.hic"
 
 HepG2:
@@ -56,6 +64,8 @@ HepG2:
   ago2_eclip: "https://www.encodeproject.org/files/ENCFF523KDQ/@@download/ENCFF523KDQ.bigWig"
   hnrnpa1_eclip: "https://www.encodeproject.org/files/ENCFF126BOK/@@download/ENCFF126BOK.bigWig"
   gro_seq_url: "https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSM1480319&format=file"
+  gro_seq_plus_url: null
+  gro_seq_minus_url: null
   hic_url: "https://4dn-open-data-public.s3.amazonaws.com/fourfront-webprod/wfoutput/c4d67e8f-93b2-4dfa-bbc2-512a6db7c4c6/4DNFIPC4BZ71.hic"
 
 Huh7:
@@ -66,6 +76,8 @@ Huh7:
   ago2_eclip: "https://www.encodeproject.org/files/ENCFF187DJD/@@download/ENCFF187DJD.bigWig"
   hnrnpa1_eclip: "https://www.encodeproject.org/files/ENCFF902RTE/@@download/ENCFF902RTE.bigWig"
   gro_seq_url: "https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSM2437731&format=file"
+  gro_seq_plus_url: null
+  gro_seq_minus_url: null
   hic_url: "https://4dn-open-data-public.s3.amazonaws.com/fourfront-webprod/wfoutput/b5e1c2a3-4f7d-4b82-9c13-6a2f5e8d1c94/4DNFIURK38JN.hic"
 
 K562:
@@ -76,6 +88,8 @@ K562:
   ago2_eclip: "https://www.encodeproject.org/files/ENCFF739ZXP/@@download/ENCFF739ZXP.bigWig"
   hnrnpa1_eclip: "https://www.encodeproject.org/files/ENCFF997SNO/@@download/ENCFF997SNO.bigWig"
   gro_seq_url: "https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSM1480317&format=file"
+  gro_seq_plus_url: null
+  gro_seq_minus_url: null
   hic_url: "https://4dn-open-data-public.s3.amazonaws.com/fourfront-webprod/wfoutput/f17b38c6-e2c5-481f-a614-6d4ceb2b3f7e/4DNFI9GMP2J8.hic"
 
 MCF7:
@@ -86,4 +100,6 @@ MCF7:
   ago2_eclip: "https://www.encodeproject.org/files/ENCFF582ERI/@@download/ENCFF582ERI.bigWig"
   hnrnpa1_eclip: "https://www.encodeproject.org/files/ENCFF359SFR/@@download/ENCFF359SFR.bigWig"
   gro_seq_url: "https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSM1480323&format=file"
+  gro_seq_plus_url: null
+  gro_seq_minus_url: null
   hic_url: "https://4dn-open-data-public.s3.amazonaws.com/fourfront-webprod/wfoutput/d8f6c4e1-7a3b-4c5d-8e9f-2b1a6c7d4e5f/4DNFIB78NZGZ.hic"

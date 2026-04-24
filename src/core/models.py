@@ -221,6 +221,23 @@ class VariantScore(BaseModel):
     normalized_score: float = Field(ge=0.0, le=1.0, default=0.5)
 
 
+class HiCResult(BaseModel):
+    """Hi-C 3D contact result between two genomic regions (Stage 4)."""
+
+    target_region: GenomicRegion
+    offtarget_region: GenomicRegion
+    contact_frequency: float = 0.0
+
+
+class GROseqResult(BaseModel):
+    """GRO-seq transcriptional activity result for one region (Stage 4)."""
+
+    region: GenomicRegion
+    plus_signal: float = 0.0
+    minus_signal: float = 0.0
+    combined_signal: float = 0.0
+
+
 class EpigeneticScore(BaseModel):
     """Stage 4 — epigenetic & topology sub-scores."""
 
