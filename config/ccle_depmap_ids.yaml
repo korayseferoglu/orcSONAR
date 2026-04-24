@@ -1,0 +1,18 @@
+# orcSONAR — DepMap Model ID mapping for supported cell lines
+#
+# Maps human-readable cell line names to DepMap ACH IDs used in
+# CCLE_Expression.csv (ModelID column).
+#
+# Source: DepMap portal https://depmap.org/portal/download/
+#   File: Model.csv → ModelID + CellLineName columns
+#
+# HEK293T is absent from CCLE default entries; queries return 0.0 (neutral).
+
+A549:    ACH-000681
+GM12878: ACH-000004
+HEK293T: null         # not present in CCLE_Expression.csv
+HeLa:    ACH-001113
+HepG2:   ACH-000021
+Huh7:    ACH-001339
+K562:    ACH-000707
+MCF7:    ACH-000019

@@ -221,6 +221,16 @@ class VariantScore(BaseModel):
     normalized_score: float = Field(ge=0.0, le=1.0, default=0.5)
 
 
+class CCLEResult(BaseModel):
+    """CCLE gene expression result for one (gene, cell line) pair (Stage 4)."""
+
+    gene: str
+    cell_line: str
+    expression_value: float = 0.0
+    is_expressed: bool = False
+    expression_percentile: float = Field(ge=0.0, le=1.0, default=0.0)
+
+
 class HiCResult(BaseModel):
     """Hi-C 3D contact result between two genomic regions (Stage 4)."""
 
