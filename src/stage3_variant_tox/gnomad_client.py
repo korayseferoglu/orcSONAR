@@ -1,0 +1,239 @@
+"""gnomAD population genetics client for Stage 3.
+
+Queries the gnomAD v4 GraphQL API to detect common polymorphisms in
+off-target genomic regions.  High allele-frequency variants indicate the
+region is already variable in the human population, which REDUCES off-target
+risk — the saRNA is less likely to disrupt conserved function.
+
+gnomAD quirk: chromosome field uses no "chr" prefix (e.g. "1", not "chr1").
+"""
+
+from __future__ import annotations
+
+import requests
+from loguru import logger
+from tenacity import retry, stop_after_attempt, wait_exponential
+
+from src.core.cache import Cache
+from src.core.config import OrcSonarConfig
+from src.core.models import GnomadResult, GnomadVariant, GenomicRegion
+
+# Allele-frequency threshold: variants above this are "common" → polymorphic region
+_AF_COMMON_THRESHOLD: float = 0.01
+# Cache TTL — gnomAD data is updated infrequently
+_GNOMAD_TTL_HOURS: int = 720  # 30 days
+
+_GRAPHQL_QUERY_TEMPLATE = """
+{{
+  region(dataset: gnomad_r4, chrom: "{chrom}", start: {start}, stop: {stop}) {{
+    variants {{
+      variant_id
+      pos
+      ref
+      alt
+      genome {{ af }}
+      exome {{ af }}
+    }}
+  }}
+}}
+"""
+
+
+# ---------------------------------------------------------------------------
+# Public API
+# ---------------------------------------------------------------------------
+
+
+def query_gnomad(
+    regions: list[GenomicRegion],
+    config: OrcSonarConfig,
+) -> list[GnomadResult]:
+    """Query gnomAD v4 for population variants in each off-target region.
+
+    Regions with high-AF common variants receive a low polymorphism_score
+    (the region is variable → off-target risk is reduced).  Regions with
+    no common variants receive polymorphism_score = 1.0 (conserved → risky).
+
+    Args:
+        regions: Genomic intervals to query (hg38, chr-prefixed).
+        config: Pipeline config supplying gnomad_api_url and cache_db.
+
+    Returns:
+        GnomadResult for every input region (same order as input).
+    """
+    results: list[GnomadResult] = []
+    with Cache(config.data_paths.cache_db) as cache:
+        for region in regions:
+            result = _query_gnomad_region(region, config, cache)
+            results.append(result)
+            logger.info(
+                f"gnomad_client: {region} → {result.variant_count} variant(s), "
+                f"max_af={result.max_af:.4f}, polymorphism_score={result.polymorphism_score:.3f}"
+            )
+    return results
+
+
+# ---------------------------------------------------------------------------
+# Internal helpers
+# ---------------------------------------------------------------------------
+
+
+def _query_gnomad_region(
+    region: GenomicRegion,
+    config: OrcSonarConfig,
+    cache: Cache,
+) -> GnomadResult:
+    """Fetch gnomAD variants for one region, with cache + retry + graceful fallback.
+
+    Args:
+        region: Target genomic interval.
+        config: Pipeline config.
+        cache: Open SQLite cache instance.
+
+    Returns:
+        GnomadResult — neutral (polymorphism_score=0.5) on unrecoverable error.
+    """
+    cache_key = f"gnomad:{region.chrom}:{region.start}:{region.end}"
+    cached = cache.get(cache_key)
+    if cached is not None:
+        logger.debug(f"gnomad cache HIT: {cache_key}")
+        variants = [GnomadVariant(**v) for v in cached["variants"]]
+        return _build_result(region, variants)
+
+    try:
+        variants = _fetch_variants(region, config.gnomad_api_url)
+    except Exception as exc:
+        logger.warning(f"gnomad_client: query failed for {region} — returning neutral: {exc}")
+        # Neutral score (0.5) on API failure — unknown polymorphism state
+        return GnomadResult(
+            region=region,
+            variants=[],
+            variant_count=0,
+            max_af=0.0,
+            polymorphism_score=0.5,
+        )
+
+    cache.set(cache_key, {"variants": [v.model_dump() for v in variants]}, ttl_hours=_GNOMAD_TTL_HOURS)
+    return _build_result(region, variants)
+
+
+def _build_result(region: GenomicRegion, variants: list[GnomadVariant]) -> GnomadResult:
+    """Construct a GnomadResult from a list of parsed variants.
+
+    Args:
+        region: Source genomic region.
+        variants: Parsed GnomadVariant list (may be empty).
+
+    Returns:
+        GnomadResult with computed max_af and polymorphism_score.
+    """
+    max_af = max((v.allele_frequency for v in variants), default=0.0)
+    score = _calculate_polymorphism_score(variants)
+    return GnomadResult(
+        region=region,
+        variants=variants,
+        variant_count=len(variants),
+        max_af=max_af,
+        polymorphism_score=score,
+    )
+
+
+@retry(
+    stop=stop_after_attempt(3),
+    wait=wait_exponential(multiplier=1, min=2, max=30),
+    reraise=True,
+)
+def _fetch_variants(region: GenomicRegion, api_url: str) -> list[GnomadVariant]:
+    """POST gnomAD GraphQL query and parse the variant list.
+
+    Args:
+        region: Target interval (chr-prefixed; "chr" is stripped for the query).
+        api_url: gnomAD GraphQL endpoint URL.
+
+    Returns:
+        List of GnomadVariant objects (empty if region has no variants).
+
+    Raises:
+        requests.HTTPError: On non-2xx response (triggers tenacity retry).
+        requests.RequestException: On network errors (triggers tenacity retry).
+        KeyError / ValueError: On unexpected response schema.
+    """
+    chrom = region.chrom[3:] if region.chrom.startswith("chr") else region.chrom
+    query = _graphql_query(chrom, region.start, region.end)
+    resp = requests.post(api_url, json={"query": query}, timeout=60)
+    resp.raise_for_status()
+    data = resp.json()
+    raw_variants = (data.get("data", {}).get("region") or {}).get("variants") or []
+    return _parse_variants(raw_variants)
+
+
+def _graphql_query(chrom: str, start: int, end: int) -> str:
+    """Build the gnomAD region GraphQL query string.
+
+    Args:
+        chrom: Chromosome without "chr" prefix (e.g. "1", "X").
+        start: 0-based start position.
+        end: 0-based end position (used as GraphQL ``stop``).
+
+    Returns:
+        Formatted GraphQL query string.
+    """
+    return _GRAPHQL_QUERY_TEMPLATE.format(chrom=chrom, start=start, stop=end)
+
+
+def _parse_variants(raw: list[dict]) -> list[GnomadVariant]:
+    """Parse the gnomAD API variants array into GnomadVariant objects.
+
+    Handles null genome/exome blocks (when a variant was only observed in one
+    cohort). Takes the maximum AF across genome and exome cohorts.
+
+    Args:
+        raw: List of variant dicts from the gnomAD API response.
+
+    Returns:
+        List of GnomadVariant objects (malformed entries are skipped).
+    """
+    variants: list[GnomadVariant] = []
+    for item in raw:
+        try:
+            genome_block = item.get("genome") or {}
+            exome_block = item.get("exome") or {}
+            genome_af = float(genome_block.get("af") or 0.0)
+            exome_af = float(exome_block.get("af") or 0.0)
+            af = max(genome_af, exome_af)
+            # Clamp to valid AF range (API occasionally returns tiny negatives)
+            af = max(0.0, min(af, 1.0))
+            variants.append(
+                GnomadVariant(
+                    variant_id=item["variant_id"],
+                    position=int(item["pos"]),
+                    ref=item["ref"],
+                    alt=item["alt"],
+                    allele_frequency=af,
+                )
+            )
+        except (KeyError, TypeError, ValueError) as exc:
+            logger.debug(f"gnomad_client: skipping malformed variant entry: {exc}")
+    return variants
+
+
+def _calculate_polymorphism_score(variants: list[GnomadVariant]) -> float:
+    """Compute normalised polymorphism risk score in [0, 1].
+
+    High AF common variants → the region is already polymorphic → off-target
+    risk is LOWER → score approaches 0.  No variants (or all rare) → the region
+    is conserved → score = 1.0.
+
+    Score = max(0.0, 1.0 - max_af / AF_COMMON_THRESHOLD)
+    Saturates at 0.0 when max_af >= 0.01 (1% population frequency).
+
+    Args:
+        variants: GnomadVariant list for the region.
+
+    Returns:
+        Polymorphism score in [0.0, 1.0].
+    """
+    if not variants:
+        return 1.0  # no data → assume conserved → high risk
+    max_af = max(v.allele_frequency for v in variants)
+    return max(0.0, 1.0 - max_af / _AF_COMMON_THRESHOLD)

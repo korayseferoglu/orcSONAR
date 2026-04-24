@@ -182,6 +182,34 @@ class ClinvarResult(BaseModel):
     variants: list[ClinvarVariant] = Field(default_factory=list)
 
 
+class GnomadVariant(BaseModel):
+    """A single variant record from gnomAD population database."""
+
+    variant_id: str
+    position: int = Field(ge=0)
+    ref: str
+    alt: str
+    allele_frequency: float = Field(ge=0.0, le=1.0, default=0.0)
+
+
+class GnomadResult(BaseModel):
+    """gnomAD polymorphism scan result for one off-target region (Stage 3)."""
+
+    region: GenomicRegion
+    variants: list[GnomadVariant] = Field(default_factory=list)
+    variant_count: int = Field(ge=0, default=0)
+    max_af: float = Field(ge=0.0, le=1.0, default=0.0)
+    polymorphism_score: float = Field(ge=0.0, le=1.0, default=1.0)
+
+
+class PhylopResult(BaseModel):
+    """phyloP evolutionary conservation result for one off-target region (Stage 3)."""
+
+    region: GenomicRegion
+    mean_score: float = 0.0  # raw phyloP value (can be negative)
+    conservation_score: float = Field(ge=0.0, le=1.0, default=0.5)
+
+
 class VariantScore(BaseModel):
     """Stage 3 — variant & toxicity sub-scores."""
 
