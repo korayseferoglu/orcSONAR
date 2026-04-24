@@ -82,6 +82,33 @@ class AlignmentResult(BaseModel):
     positions: list[int] = Field(default_factory=list)
 
 
+class MirnaEntry(BaseModel):
+    """A single mature miRNA record parsed from miRBase FASTA."""
+
+    mirna_id: str
+    accession: str
+    sequence: str
+    seed: str
+
+
+class MirbaseOverlap(BaseModel):
+    """Per-miRNA overlap result for one comparison."""
+
+    mirna_id: str
+    mirna_seed: str
+    overlap_score: float
+    matched_positions: int
+
+
+class MirbaseResult(BaseModel):
+    """Aggregated miRBase seed overlap result for a saRNA."""
+
+    sarna_seed: str
+    overlapping_mirnas: list[MirbaseOverlap] = Field(default_factory=list)
+    max_overlap_score: float = 0.0
+    risk_level: Literal["SAFE", "LOW", "MODERATE", "HIGH"] = "SAFE"
+
+
 class OffTargetSite(BaseModel):
     """A candidate off-target binding site for the saRNA."""
 
