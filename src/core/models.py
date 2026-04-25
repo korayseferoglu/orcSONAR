@@ -260,6 +260,16 @@ class EpigeneticScore(BaseModel):
     normalized_score: float = Field(ge=0.0, le=1.0, default=0.5)
 
 
+class ThermoResult(BaseModel):
+    """Nearest-neighbor ΔG result for a saRNA:mRNA duplex (Stage 5)."""
+
+    delta_g: float
+    delta_h: float = 0.0
+    stack_energies: list[float] = Field(default_factory=list)
+    has_mismatches: bool = False
+    mismatch_penalties: list[float] = Field(default_factory=list)
+
+
 class BiophysicsScore(BaseModel):
     """Stage 5 — biophysics & structural sub-scores."""
 
