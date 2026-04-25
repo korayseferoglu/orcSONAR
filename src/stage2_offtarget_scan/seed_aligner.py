@@ -285,3 +285,105 @@ def _reverse_complement(seq: str) -> str:
     """
     comp: dict[str, str] = {"A": "U", "U": "A", "G": "C", "C": "G", "T": "A", "N": "N"}
     return "".join(comp.get(b, "N") for b in reversed(seq))
+
+
+# ---------------------------------------------------------------------------
+# Snakemake run() entry point
+# ---------------------------------------------------------------------------
+
+
+def run(
+    sarna_sequence: str,
+    promoter_path: str,
+    seed_length: int,
+    max_mismatches: int,
+    gc_range: list[float],
+    threads: int,
+    output_path: str,
+    log_path: str,
+) -> None:
+    """Run seed alignment against transcripts and write stage2_seed_hits.json.
+
+    Loads transcript metadata and sequences from stage1_promoter.json, then
+    fetches mRNA sequences via Ensembl.  Falls back to neutral (empty) results
+    when sequence data is unavailable.
+    """
+    import json
+    import sys
+    from pathlib import Path as _Path
+    from typing import Any
+
+    _Path(log_path).parent.mkdir(parents=True, exist_ok=True)
+    logger.remove()
+    logger.add(log_path, level="DEBUG")
+    logger.add(sys.stderr, level="INFO")
+
+    # Load promoter JSON to get gene info and transcript metadata
+    promoter_data: dict[str, Any] = {}
+    try:
+        promoter_data = json.loads(_Path(promoter_path).read_text(encoding="utf-8"))
+    except Exception as exc:
+        logger.warning(f"seed_aligner: cannot load promoter JSON: {exc}")
+
+    gene = promoter_data.get("gene", "UNKNOWN")
+    raw_transcripts: list[dict] = promoter_data.get("transcripts", [])
+
+    from src.core.config import OrcSonarConfig
+    from src.core.models import TranscriptInfo
+    from src.stage1_genomic_map.transcript_resolver import get_transcript_sequence
+
+    config = OrcSonarConfig(
+        target_gene=gene,
+        seed_length=seed_length,
+        max_mismatches=max_mismatches,
+        gc_range=gc_range,
+    )
+
+    transcripts: list[TranscriptInfo] = []
+    for raw in raw_transcripts:
+        try:
+            transcripts.append(TranscriptInfo(**raw))
+        except Exception:
+            pass
+
+    # Fetch sequences for each transcript from Ensembl
+    sequences: dict[str, str] = {}
+    for t in transcripts:
+        try:
+            seq = get_transcript_sequence(t.transcript_id, config)
+            if seq:
+                sequences[t.transcript_id] = seq.upper().replace("T", "U")
+        except Exception as exc:
+            logger.debug(f"seed_aligner: sequence fetch failed for {t.transcript_id}: {exc}")
+
+    if not sequences:
+        logger.warning(
+            f"seed_aligner: no sequences available for {gene} — returning empty hits"
+        )
+        payload: dict[str, Any] = {"sites": [], "sequence_scores": {}}
+        out = _Path(output_path)
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+        return
+
+    sarna_rna = sarna_sequence.upper().replace("T", "U")
+    try:
+        sites = find_offtargets(sarna_rna, transcripts, sequences, config)
+    except Exception as exc:
+        logger.warning(f"seed_aligner: find_offtargets failed: {exc}")
+        sites = []
+
+    seq_scores = {
+        f"{s.gene}:{s.transcript_id}": round(s.alignment_score, 4)
+        for s in sites
+    }
+
+    payload = {
+        "sites": [s.model_dump() for s in sites],
+        "sequence_scores": seq_scores,
+    }
+
+    out = _Path(output_path)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+    logger.info(f"seed_aligner: {gene} → {len(sites)} off-target site(s)")

@@ -184,3 +184,59 @@ def _calculate_mutation_density(mutations: list[CosmicMutation], region_length: 
         return 0.0
     density_per_kb = len(mutations) / (region_length / 1000.0)
     return min(density_per_kb / _DENSITY_SATURATION_PER_KB, 1.0)
+
+
+# ---------------------------------------------------------------------------
+# Snakemake run() entry point
+# ---------------------------------------------------------------------------
+
+
+def run(
+    offtargets_path: str,
+    cosmic_vcf: str,
+    output_path: str,
+    log_path: str,
+) -> None:
+    """Scan COSMIC VCF for each off-target region and write stage3_cosmic.json."""
+    import json
+    import sys
+    from pathlib import Path as _Path
+    from typing import Any
+
+    _Path(log_path).parent.mkdir(parents=True, exist_ok=True)
+    logger.remove()
+    logger.add(log_path, level="DEBUG")
+    logger.add(sys.stderr, level="INFO")
+
+    from src.core.models import GenomicRegion
+
+    offtargets: dict[str, Any] = {}
+    try:
+        offtargets = json.loads(_Path(offtargets_path).read_text(encoding="utf-8"))
+    except Exception as exc:
+        logger.warning(f"cosmic_scanner.run: cannot load offtargets: {exc}")
+
+    sites: list[dict] = offtargets.get("offtarget_sites", [])
+    regions: list[GenomicRegion] = []
+    site_ids: list[str] = []
+    for s in sites:
+        try:
+            regions.append(GenomicRegion(**s["region"]))
+            site_ids.append(f"{s['gene']}:{s['transcript_id']}")
+        except Exception:
+            pass
+
+    cosmic_results: dict[str, Any] = {}
+    if regions:
+        try:
+            results = scan_cosmic(regions, cosmic_vcf)
+            for site_id, res in zip(site_ids, results):
+                cosmic_results[site_id] = res.model_dump()
+        except Exception as exc:
+            logger.warning(f"cosmic_scanner.run: scan failed: {exc}")
+
+    payload: dict[str, Any] = {"cosmic_results": cosmic_results}
+    out = _Path(output_path)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
+    logger.info(f"cosmic_scanner: scanned {len(regions)} regions → {output_path}")

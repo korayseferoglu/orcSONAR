@@ -493,3 +493,48 @@ def _ncbi_get_text(url: str) -> str:
     resp = requests.get(url, timeout=30)
     resp.raise_for_status()
     return resp.text
+
+
+# ---------------------------------------------------------------------------
+# Snakemake run() entry point
+# ---------------------------------------------------------------------------
+
+
+def run(
+    gene: str,
+    ensembl_url: str,
+    ncbi_url: str,
+    output_path: str,
+    log_path: str,
+) -> None:
+    """Resolve transcripts for *gene* and write stage1_transcripts.json."""
+    import json
+    import sys
+    from pathlib import Path as _Path
+
+    _Path(log_path).parent.mkdir(parents=True, exist_ok=True)
+    logger.remove()
+    logger.add(log_path, level="DEBUG")
+    logger.add(sys.stderr, level="INFO")
+
+    config = OrcSonarConfig(
+        target_gene=gene,
+        ensembl_base_url=ensembl_url,
+        ncbi_eutils_url=ncbi_url,
+    )
+
+    try:
+        transcripts = resolve_transcripts(gene, config)
+        payload = {
+            "gene": gene,
+            "transcripts": [t.model_dump() for t in transcripts],
+            "count": len(transcripts),
+        }
+        logger.info(f"transcript_resolver: {gene} → {len(transcripts)} transcript(s)")
+    except Exception as exc:
+        logger.warning(f"transcript_resolver: failed for '{gene}': {exc} — returning empty")
+        payload = {"gene": gene, "transcripts": [], "count": 0}
+
+    out = _Path(output_path)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(json.dumps(payload, indent=2), encoding="utf-8")

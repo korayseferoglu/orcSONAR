@@ -176,3 +176,63 @@ def _classify_risk(entries: list[RepeatEntry]) -> tuple[bool, bool, float]:
     score = min(score, 1.0)
 
     return has_alu, has_line, score
+
+
+# ---------------------------------------------------------------------------
+# Snakemake run() entry point
+# ---------------------------------------------------------------------------
+
+
+def run(
+    seed_hits_path: str,
+    ucsc_api_url: str,
+    output_path: str,
+    log_path: str,
+) -> None:
+    """Scan RepeatMasker for off-target regions and write stage2_repeats.json."""
+    import json
+    import sys
+    from pathlib import Path as _Path
+    from typing import Any
+
+    _Path(log_path).parent.mkdir(parents=True, exist_ok=True)
+    logger.remove()
+    logger.add(log_path, level="DEBUG")
+    logger.add(sys.stderr, level="INFO")
+
+    seed_data: dict[str, Any] = {}
+    try:
+        seed_data = json.loads(_Path(seed_hits_path).read_text(encoding="utf-8"))
+    except Exception as exc:
+        logger.warning(f"repeat_scanner: cannot load seed hits: {exc}")
+
+    sites: list[dict] = seed_data.get("sites", [])
+
+    from src.core.config import OrcSonarConfig
+    from src.core.models import GenomicRegion
+
+    config = OrcSonarConfig(ucsc_api_url=ucsc_api_url)
+
+    regions: list[GenomicRegion] = []
+    site_ids: list[str] = []
+    for s in sites:
+        try:
+            regions.append(GenomicRegion(**s["region"]))
+            site_ids.append(f"{s['gene']}:{s['transcript_id']}")
+        except Exception:
+            pass
+
+    repeat_results: dict[str, Any] = {}
+    if regions:
+        try:
+            results = scan_repeats(regions, config)
+            for site_id, res in zip(site_ids, results):
+                repeat_results[site_id] = res.model_dump()
+        except Exception as exc:
+            logger.warning(f"repeat_scanner: scan_repeats failed: {exc}")
+
+    payload: dict[str, Any] = {"repeat_results": repeat_results}
+    out = _Path(output_path)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+    logger.info(f"repeat_scanner: scanned {len(regions)} regions")

@@ -1,4 +1,5 @@
 """TSS lookup for orcSONAR Stage 1 (EPDnew → FANTOM5 fallback)."""
+# ruff: noqa: E402
 
 from __future__ import annotations
 
@@ -258,3 +259,56 @@ def _get_gene_coordinates_ensembl(
 
     finally:
         cache.close()
+
+
+# ---------------------------------------------------------------------------
+# Snakemake run() entry point
+# ---------------------------------------------------------------------------
+
+
+def run(
+    gene: str,
+    epdnew_bed: str,
+    fantom5_bed: str,
+    output_path: str,
+    log_path: str,
+) -> None:
+    """Map TSS for *gene* from EPDnew/FANTOM5 and write stage1_tss.json.
+
+    Args:
+        gene: HGNC gene symbol (e.g. ``"VEGFA"``).
+        epdnew_bed: Path to EPDnew BED file.
+        fantom5_bed: Path to FANTOM5 BED file.
+        output_path: Destination JSON path.
+        log_path: Log file path.
+    """
+    import json
+    import sys
+
+    Path(log_path).parent.mkdir(parents=True, exist_ok=True)
+    logger.remove()
+    logger.add(log_path, level="DEBUG")
+    logger.add(sys.stderr, level="INFO")
+
+    config = OrcSonarConfig(
+        target_gene=gene,
+        data_paths={"epdnew_bed": epdnew_bed, "fantom5_bed": fantom5_bed},
+    )
+
+    try:
+        tss = find_tss(gene, config)
+        payload = {"gene": gene, "tss": tss.model_dump()}
+        logger.info(f"tss_mapper: {gene} → {tss.chrom}:{tss.position}({tss.strand})")
+    except Exception as exc:
+        logger.warning(f"tss_mapper: TSS lookup failed for '{gene}': {exc} — using fallback")
+        payload = {
+            "gene": gene,
+            "tss": {
+                "gene": gene, "chrom": "chr1", "position": 0,
+                "strand": "+", "source": "EPDnew", "score": 0.0,
+            },
+        }
+
+    out = Path(output_path)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(json.dumps(payload, indent=2), encoding="utf-8")

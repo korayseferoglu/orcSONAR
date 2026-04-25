@@ -173,3 +173,70 @@ def detect_g4(sequence: str) -> G4Result:
         g4_density=round(density, 4),
         risk_score=round(risk, 4),
     )
+
+
+# ---------------------------------------------------------------------------
+# Snakemake run() entry point
+# ---------------------------------------------------------------------------
+
+
+def run(
+    offtargets_path: str,
+    output_path: str,
+    log_path: str,
+) -> None:
+    """Detect G4 motifs for off-target site sequences and write stage5_g4.json.
+
+    For each off-target site, retrieves the target sequence from Ensembl
+    and runs G4 detection.  Falls back to zero-risk result if the sequence
+    cannot be fetched.
+    """
+    import json
+    import sys
+    from pathlib import Path as _Path
+    from typing import Any
+
+    _Path(log_path).parent.mkdir(parents=True, exist_ok=True)
+    logger.remove()
+    logger.add(log_path, level="DEBUG")
+    logger.add(sys.stderr, level="INFO")
+
+    offtargets: dict[str, Any] = {}
+    try:
+        offtargets = json.loads(_Path(offtargets_path).read_text(encoding="utf-8"))
+    except Exception as exc:
+        logger.warning(f"g4_detector.run: cannot load offtargets: {exc}")
+
+    sites: list[dict] = offtargets.get("offtarget_sites", [])
+    g4_results: dict[str, Any] = {}
+
+    from src.core.config import OrcSonarConfig
+    from src.stage1_genomic_map.transcript_resolver import get_transcript_sequence
+    config = OrcSonarConfig()
+
+    for s in sites:
+        site_id = f"{s['gene']}:{s['transcript_id']}"
+        seq = ""
+        try:
+            seq = get_transcript_sequence(s["transcript_id"], config)
+        except Exception as exc:
+            logger.debug(f"g4_detector: sequence unavailable for {site_id}: {exc}")
+
+        try:
+            result = detect_g4(seq)
+            g4_results[site_id] = result.model_dump()
+        except Exception as exc:
+            logger.debug(f"g4_detector: detection failed for {site_id}: {exc}")
+            g4_results[site_id] = {
+                "motifs": [], "g4_count": 0, "g4_density": 0.0, "risk_score": 0.0,
+            }
+        logger.debug(
+            f"g4_detector: {site_id} → "
+            f"g4_count={g4_results[site_id].get('g4_count', 0)}"
+        )
+
+    payload: dict[str, Any] = {"g4_results": g4_results}
+    out = _Path(output_path)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
+    logger.info(f"g4_detector: {len(g4_results)} sites → {output_path}")

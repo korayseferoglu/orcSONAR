@@ -238,3 +238,61 @@ def _parse_esummary_entry(uid: str, entry: dict) -> ClinvarVariant | None:
         condition=condition,
         gene=gene,
     )
+
+
+# ---------------------------------------------------------------------------
+# Snakemake run() entry point
+# ---------------------------------------------------------------------------
+
+
+def run(
+    offtargets_path: str,
+    ncbi_url: str,
+    output_path: str,
+    log_path: str,
+) -> None:
+    """Check ClinVar for each off-target region and write stage3_clinvar.json."""
+    import json
+    import sys
+    from pathlib import Path as _Path
+    from typing import Any
+
+    _Path(log_path).parent.mkdir(parents=True, exist_ok=True)
+    logger.remove()
+    logger.add(log_path, level="DEBUG")
+    logger.add(sys.stderr, level="INFO")
+
+    from src.core.config import OrcSonarConfig
+    from src.core.models import GenomicRegion
+
+    offtargets: dict[str, Any] = {}
+    try:
+        offtargets = json.loads(_Path(offtargets_path).read_text(encoding="utf-8"))
+    except Exception as exc:
+        logger.warning(f"clinvar_client.run: cannot load offtargets: {exc}")
+
+    sites: list[dict] = offtargets.get("offtarget_sites", [])
+    regions: list[GenomicRegion] = []
+    site_ids: list[str] = []
+    for s in sites:
+        try:
+            regions.append(GenomicRegion(**s["region"]))
+            site_ids.append(f"{s['gene']}:{s['transcript_id']}")
+        except Exception:
+            pass
+
+    config = OrcSonarConfig(ncbi_eutils_url=ncbi_url)
+    clinvar_results: dict[str, Any] = {}
+    if regions:
+        try:
+            results = check_clinvar(regions, config)
+            for site_id, res in zip(site_ids, results):
+                clinvar_results[site_id] = res.model_dump()
+        except Exception as exc:
+            logger.warning(f"clinvar_client.run: query failed: {exc}")
+
+    payload: dict[str, Any] = {"clinvar_results": clinvar_results}
+    out = _Path(output_path)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
+    logger.info(f"clinvar_client: scanned {len(regions)} regions → {output_path}")

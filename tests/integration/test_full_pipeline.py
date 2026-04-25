@@ -60,9 +60,9 @@ def _stage2(
     sites: list[str] | None = None,
     seq_scores: dict[str, float] | None = None,
 ) -> str:
-    sites = sites or [_SITE_A, _SITE_B]
+    sites = [_SITE_A, _SITE_B] if sites is None else sites
     regions = {_SITE_A: _REGION_A, _SITE_B: _REGION_B}
-    seq_scores = seq_scores or {s: 0.40 for s in sites}
+    seq_scores = {s: 0.40 for s in sites} if seq_scores is None else seq_scores
 
     payload: dict[str, Any] = {
         "offtarget_sites": [
@@ -97,7 +97,7 @@ def _stage3(
     sites: list[str] | None = None,
     normalized: float = 0.30,
 ) -> str:
-    sites = sites or [_SITE_A, _SITE_B]
+    sites = [_SITE_A, _SITE_B] if sites is None else sites
     payload = {
         "variant_scores": {
             s: {
@@ -125,7 +125,7 @@ def _stage4(
     expression_score: float = 0.60,
     execution_score: float = 0.40,
 ) -> str:
-    sites = sites or [_SITE_A, _SITE_B]
+    sites = [_SITE_A, _SITE_B] if sites is None else sites
     payload = {
         "epigenetic_scores": {
             s: {
@@ -157,7 +157,7 @@ def _stage5(
     normalized: float = 0.35,
     shape_available: bool = True,
 ) -> str:
-    sites = sites or [_SITE_A, _SITE_B]
+    sites = [_SITE_A, _SITE_B] if sites is None else sites
     payload = {
         "biophysics_scores": {
             s: {
@@ -183,7 +183,7 @@ def _stage6(
     sites: list[str] | None = None,
     normalized: float = 0.20,
 ) -> str:
-    sites = sites or [_SITE_A, _SITE_B]
+    sites = [_SITE_A, _SITE_B] if sites is None else sites
     payload = {
         "execution_scores": {
             s: {

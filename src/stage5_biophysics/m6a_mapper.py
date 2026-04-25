@@ -143,3 +143,65 @@ def scan_m6a_sites(
         )
 
     return results
+
+
+# ---------------------------------------------------------------------------
+# Snakemake run() entry point
+# ---------------------------------------------------------------------------
+
+
+def run(
+    offtargets_path: str,
+    m6a_bed: str,
+    cell_line: str,
+    output_path: str,
+    log_path: str,
+) -> None:
+    """Scan m6A sites for off-target regions and write stage5_m6a.json."""
+    import json
+    import sys
+    from pathlib import Path as _Path
+    from typing import Any
+
+    _Path(log_path).parent.mkdir(parents=True, exist_ok=True)
+    logger.remove()
+    logger.add(log_path, level="DEBUG")
+    logger.add(sys.stderr, level="INFO")
+
+    from src.core.models import GenomicRegion
+
+    offtargets: dict[str, Any] = {}
+    try:
+        offtargets = json.loads(_Path(offtargets_path).read_text(encoding="utf-8"))
+    except Exception as exc:
+        logger.warning(f"m6a_mapper.run: cannot load offtargets: {exc}")
+
+    sites: list[dict] = offtargets.get("offtarget_sites", [])
+    regions: list[GenomicRegion] = []
+    site_ids: list[str] = []
+    for s in sites:
+        try:
+            regions.append(GenomicRegion(**s["region"]))
+            site_ids.append(f"{s['gene']}:{s['transcript_id']}")
+        except Exception:
+            pass
+
+    m6a_results: dict[str, Any] = {}
+    if regions:
+        try:
+            results = scan_m6a_sites(regions, cell_line, m6a_bed)
+            for site_id, res in zip(site_ids, results):
+                m6a_results[site_id] = res.model_dump()
+        except Exception as exc:
+            logger.warning(f"m6a_mapper.run: scan failed: {exc} — using neutral")
+            for site_id, region in zip(site_ids, regions):
+                m6a_results[site_id] = {
+                    "region": region.model_dump(), "cell_line": cell_line,
+                    "sites": [], "site_count": 0, "m6a_score": 0.0,
+                }
+
+    payload: dict[str, Any] = {"m6a_results": m6a_results}
+    out = _Path(output_path)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
+    logger.info(f"m6a_mapper: scanned {len(regions)} regions → {output_path}")

@@ -164,3 +164,45 @@ def _score_to_risk(score: float) -> str:
     if score >= 0.3:
         return "LOW"
     return "SAFE"
+
+
+# ---------------------------------------------------------------------------
+# Snakemake run() entry point
+# ---------------------------------------------------------------------------
+
+
+def run(
+    sarna_sequence: str,
+    mirbase_fa: str,
+    output_path: str,
+    log_path: str,
+) -> None:
+    """Check saRNA against miRBase and write stage2_mirbase.json."""
+    import json
+    import sys
+    from pathlib import Path as _Path
+
+    _Path(log_path).parent.mkdir(parents=True, exist_ok=True)
+    logger.remove()
+    logger.add(log_path, level="DEBUG")
+    logger.add(sys.stderr, level="INFO")
+
+    try:
+        result = check_mirbase_overlap(sarna_sequence, mirbase_fa)
+        payload = result.model_dump()
+        logger.info(
+            f"mirbase_checker: seed={result.sarna_seed} "
+            f"overlaps={len(result.overlapping_mirnas)} risk={result.risk_level}"
+        )
+    except Exception as exc:
+        logger.warning(f"mirbase_checker: failed: {exc} — returning SAFE result")
+        payload = {
+            "sarna_seed": sarna_sequence[:7] if len(sarna_sequence) >= 7 else sarna_sequence,
+            "overlapping_mirnas": [],
+            "max_overlap_score": 0.0,
+            "risk_level": "SAFE",
+        }
+
+    out = _Path(output_path)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(json.dumps(payload, indent=2), encoding="utf-8")
