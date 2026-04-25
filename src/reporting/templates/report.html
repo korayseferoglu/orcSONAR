@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>orcSONAR — Off-Target Risk Report | {{ report.sarna_input.target_gene }} / {{ report.sarna_input.cell_line }}</title>
+  <style>{{ styles }}</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════════ HEADER -->
+<div class="container">
+  <header class="header">
+    <div class="header-inner">
+      <div>
+        <div class="logo">🔬 orcSONAR</div>
+        <div class="logo-sub">Off-Target Risk Assessment Report</div>
+      </div>
+      <div class="header-meta">
+        <strong>Generated</strong> {{ generated_at }}<br>
+        <strong>Version</strong> {{ version }}<br>
+        <strong>Assembly</strong> hg38 / GRCh38
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════════════ OVERALL RISK SCORE -->
+  <div class="card">
+    <div class="section-title">Overall Risk Assessment</div>
+    <div class="risk-overview">
+
+      <div class="risk-gauge">
+        <div class="risk-gauge-emoji">{{ overall_emoji }}</div>
+        <div class="risk-score-value" style="color: {{ overall_color }}">
+          {{ "%.3f"|format(report.final_risk_score) }}
+        </div>
+        <div class="risk-badge c-{{ report.risk_class|lower|replace('_','-') }}">
+          {{ report.risk_class|replace('_',' ') }}
+        </div>
+      </div>
+
+      <div class="risk-meta">
+        <div><strong>Target gene</strong> {{ report.sarna_input.target_gene }}</div>
+        <div><strong>saRNA sequence</strong>
+          <span class="font-mono">{{ report.sarna_input.sequence }}</span>
+        </div>
+        <div><strong>Cell line</strong> {{ report.sarna_input.cell_line }}</div>
+        <div><strong>Off-target sites analysed</strong>
+          {{ report.domain_scores_per_site | length }}
+        </div>
+        <div class="mt-8">
+          <div class="context-box">
+            <span class="context-icon">🧬</span>
+            <span>
+              This score is <strong>{{ report.sarna_input.cell_line }}-specific</strong>.
+              {{ report.cell_line_context }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ INPUT SUMMARY -->
+  <div class="card card-sm">
+    <div class="section-title">saRNA Input</div>
+    <div class="input-grid">
+      <div class="input-item">
+        <label>Sequence (5′→3′)</label>
+        <div class="val">{{ report.sarna_input.sequence }}</div>
+      </div>
+      <div class="input-item">
+        <label>Length</label>
+        <div class="val">{{ report.sarna_input.sequence | length }} nt</div>
+      </div>
+      <div class="input-item">
+        <label>Target gene</label>
+        <div class="val">{{ report.sarna_input.target_gene }}</div>
+      </div>
+      <div class="input-item">
+        <label>Cell line</label>
+        <div class="val">{{ report.sarna_input.cell_line }}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ OFF-TARGET SITE TABLE -->
+  <div class="card">
+    <div class="section-title">Off-Target Site Summary</div>
+
+    {% if sites %}
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Site</th>
+            <th>Match type</th>
+            <th>Sequence</th>
+            <th>Variant</th>
+            <th>Epigenetic</th>
+            <th>Biophysics</th>
+            <th>Execution</th>
+            <th>Score</th>
+            <th>Risk</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for site in sites %}
+          <tr>
+            <td class="text-muted text-xs">{{ loop.index }}</td>
+            <td>
+              <div class="font-bold">{{ site.id.split(':')[0] }}</div>
+              <div class="text-xs text-muted font-mono truncate" style="max-width:180px">
+                {{ site.id.split(':')[1] if ':' in site.id else '' }}
+              </div>
+            </td>
+            <td class="text-xs mono">
+              {% if site.info %}
+                <span style="
+                  padding: 2px 8px; border-radius: 999px; font-size: 0.72rem;
+                  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1)
+                ">{{ site.info.seed_match_type }}</span>
+              {% else %}—{% endif %}
+            </td>
+            <!-- Domain score bars (compact) -->
+            {% set domain_vals = [
+              site.scores.sequence_specificity,
+              site.scores.variant_toxicity,
+              site.scores.epigenetic_context,
+              site.scores.biophysics_structure,
+              site.scores.execution_safety
+            ] %}
+            {% for val in domain_vals %}
+            <td>
+              <div class="score-bar-wrap" style="min-width: 72px">
+                <div class="score-bar-bg">
+                  <div class="score-bar-fill" style="
+                    width: {{ (val * 100)|int }}%;
+                    background: {% if val < 0.3 %}var(--safe){% elif val < 0.6 %}var(--warning){% elif val < 0.8 %}var(--high-risk){% else %}var(--dangerous){% endif %};
+                  "></div>
+                </div>
+                <span class="score-bar-label">{{ "%.2f"|format(val) }}</span>
+              </div>
+            </td>
+            {% endfor %}
+            <td>
+              <span class="font-bold" style="color: {{ site.risk_color }}">
+                {{ "%.3f"|format(site.weighted_score) }}
+              </span>
+            </td>
+            <td>
+              <span class="risk-badge c-{{ site.risk_class|lower|replace('_','-') }}">
+                {{ site.risk_emoji }} {{ site.risk_class|replace('_',' ') }}
+              </span>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <div class="empty-state">
+      <div class="icon">✅</div>
+      No off-target sites were identified for this saRNA in {{ report.sarna_input.cell_line }}.
+    </div>
+    {% endif %}
+  </div>
+
+  <!-- ════════════════════════════════════════ PER-SITE DETAIL + RADAR CHARTS -->
+  {% if sites %}
+  <div class="section-title" style="margin-bottom:20px">Per-Site Domain Breakdown</div>
+
+  <div class="site-grid">
+  {% for site in sites %}
+    <div class="site-card">
+      <div class="site-card-header">
+        <div>
+          <div class="site-card-title">{{ site.id.split(':')[0] }}</div>
+          <div class="site-card-sub">{{ site.id }}</div>
+          {% if site.info %}
+          <div class="site-card-sub" style="margin-top:4px">
+            {{ site.info.region.chrom }}:{{ site.info.region.start }}-{{ site.info.region.end }}
+            &nbsp;({{ site.info.region.strand }})
+            &nbsp;|&nbsp;{{ site.info.seed_match_type }}
+            &nbsp;|&nbsp;mm={{ site.info.mismatches }}
+          </div>
+          {% endif %}
+        </div>
+        <span class="site-score-pill" style="color:{{ site.risk_color }}; border: 1px solid {{ site.risk_color }}; background: rgba(0,0,0,0.3)">
+          {{ site.risk_emoji }} {{ "%.3f"|format(site.weighted_score) }}
+        </span>
+      </div>
+
+      <!-- Radar chart (browser only) -->
+      <div class="radar-wrap" id="radar-container-{{ loop.index }}">
+        <div id="radar-{{ loop.index }}" style="width:100%;height:290px"></div>
+      </div>
+
+      <!-- Static domain rows (print fallback) -->
+      <div class="print-domain-table">
+        {% set labels = ['Sequence', 'Variant', 'Epigenetic', 'Biophysics', 'Execution'] %}
+        {% set vals = [
+          site.scores.sequence_specificity,
+          site.scores.variant_toxicity,
+          site.scores.epigenetic_context,
+          site.scores.biophysics_structure,
+          site.scores.execution_safety
+        ] %}
+        {% for i in range(5) %}
+        <div class="domain-row">
+          <span class="domain-name">{{ labels[i] }}</span>
+          <div class="score-bar-bg" style="flex:1; height:6px; background:rgba(0,0,0,0.1); border-radius:999px; overflow:hidden">
+            <div style="width:{{ (vals[i]*100)|int }}%; height:100%; background:#6366f1; border-radius:999px"></div>
+          </div>
+          <span class="score-bar-label" style="color:#333">{{ "%.3f"|format(vals[i]) }}</span>
+        </div>
+        {% endfor %}
+      </div>
+
+      <!-- Domain score summary row -->
+      <div class="mt-16" style="border-top: 1px solid var(--border); padding-top:12px;">
+        <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:8px; text-align:center;">
+          {% set labels = ['Seq','Var','Epi','Bio','Exec'] %}
+          {% set vals = [
+            site.scores.sequence_specificity,
+            site.scores.variant_toxicity,
+            site.scores.epigenetic_context,
+            site.scores.biophysics_structure,
+            site.scores.execution_safety
+          ] %}
+          {% for i in range(5) %}
+          <div>
+            <div class="text-xs text-muted mb-4">{{ labels[i] }}</div>
+            <div class="font-bold" style="font-size:1.05rem; color:
+              {% if vals[i] < 0.3 %}var(--safe)
+              {% elif vals[i] < 0.6 %}var(--warning)
+              {% elif vals[i] < 0.8 %}var(--high-risk)
+              {% else %}var(--dangerous){% endif %}">
+              {{ "%.2f"|format(vals[i]) }}
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+  </div>
+  {% endif %}
+
+  <!-- ═════════════════════════════════════════════════════════════ FOOTER -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div>
+        <h4>About orcSONAR</h4>
+        <p style="margin-bottom:8px">
+          Cell-specific, biophysics-driven saRNA off-target predictor.<br>
+          Integrates epigenetic, variant, thermodynamic and structural data
+          across {{ "24" }} curated data sources.
+        </p>
+        <p>v{{ version }} &nbsp;·&nbsp; hg38/GRCh38 &nbsp;·&nbsp; {{ generated_at }}</p>
+      </div>
+      <div>
+        <h4>Data Sources</h4>
+        <ul>
+          <li>EPDnew hg38 · FANTOM5 CAGE · GENCODE v44 · RefSeq</li>
+          <li>miRBase v22 · RepeatMasker · COSMIC v103 · gnomAD v4</li>
+          <li>ClinVar · phyloP 100-way · ENCODE ATAC/ChIP/eCLIP</li>
+          <li>GRO-seq · Hi-C 4DN · CCLE/DepMap · Turner ΔG rules</li>
+          <li>SHAPE-Seq · m6A-Atlas (RMBase) · ADAR/Alu proxy</li>
+          <li>G4 RNA regex · circAtlas 3.0 · TLR7/TLR8 motifs</li>
+        </ul>
+      </div>
+    </div>
+    <div style="margin-top:24px; padding-top:16px; border-top:1px solid var(--border); color:var(--text-muted); font-size:0.78rem;">
+      orcSONAR is a research tool. Results should be experimentally validated before clinical application.
+    </div>
+  </footer>
+</div><!-- /container -->
+
+<!-- ════════════════════════════════════════════ PLOTLY.JS RADAR CHARTS -->
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js" crossorigin="anonymous"></script>
+<script>
+(function () {
+  var charts = {
+    {% for site in sites %}
+    "{{ loop.index }}": {{ site.chart_json | safe }}{% if not loop.last %},{% endif %}
+    {% endfor %}
+  };
+
+  Object.keys(charts).forEach(function (idx) {
+    var el = document.getElementById('radar-' + idx);
+    if (!el) return;
+    var d = charts[idx];
+    Plotly.newPlot(el, [d.trace], d.layout, d.config);
+  });
+})();
+</script>
+
+</body>
+</html>
