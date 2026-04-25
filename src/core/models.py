@@ -365,6 +365,43 @@ class RBPResult(BaseModel):
     is_competing: bool = False
 
 
+class CircRNAEntry(BaseModel):
+    """A single circular RNA record from circAtlas BED (Stage 6)."""
+
+    chrom: str
+    start: int = Field(ge=0)
+    end: int = Field(ge=0)
+    circ_id: str
+    strand: Literal["+", "-", "."] = "."
+
+
+class CircRNAResult(BaseModel):
+    """circRNA sponge overlap result for one genomic region (Stage 6)."""
+
+    region: GenomicRegion
+    overlapping_circrnas: list[CircRNAEntry] = Field(default_factory=list)
+    overlap_count: int = Field(ge=0, default=0)
+    sponge_risk: bool = False
+    data_available: bool = False
+
+
+class MotifHit(BaseModel):
+    """A single TLR7/TLR8 immune motif hit in a saRNA sequence (Stage 6)."""
+
+    motif: str
+    position: int = Field(ge=0)
+    strand: Literal["+", "-"]
+
+
+class ImmuneResult(BaseModel):
+    """Immune motif screen result for a saRNA sequence (Stage 6)."""
+
+    motifs_found: list[MotifHit] = Field(default_factory=list)
+    total_hits: int = Field(ge=0, default=0)
+    risk_score: float = Field(ge=0.0, le=1.0, default=0.0)
+    risk_level: str = "SAFE"
+
+
 class ExecutionScore(BaseModel):
     """Stage 6 — execution & safety sub-scores."""
 
