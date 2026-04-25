@@ -270,6 +270,69 @@ class ThermoResult(BaseModel):
     mismatch_penalties: list[float] = Field(default_factory=list)
 
 
+class ShapeResult(BaseModel):
+    """SHAPE-Seq accessibility result for one genomic region (Stage 5)."""
+
+    region: GenomicRegion
+    mean_reactivity: float = 0.0
+    accessibility_score: float = Field(ge=0.0, le=1.0, default=0.5)
+    single_stranded_fraction: float = Field(ge=0.0, le=1.0, default=0.5)
+    data_available: bool = False
+
+
+class M6ASite(BaseModel):
+    """A single m6A modification site from RMBase (Stage 5)."""
+
+    chrom: str
+    start: int = Field(ge=0)
+    end: int = Field(ge=0)
+    strand: Literal["+", "-", "."] = "."
+    mod_type: str = "m6A"
+    cell_line: str = ""
+    gene: str = ""
+
+
+class M6AResult(BaseModel):
+    """m6A site scan result for one genomic region (Stage 5)."""
+
+    region: GenomicRegion
+    cell_line: str
+    sites: list[M6ASite] = Field(default_factory=list)
+    site_count: int = Field(ge=0, default=0)
+    m6a_score: float = Field(ge=0.0, le=1.0, default=0.0)
+
+
+class AdarRiskResult(BaseModel):
+    """ADAR A-to-I editing risk for one genomic region (Stage 5)."""
+
+    region: GenomicRegion
+    alu_risk: float = Field(ge=0.0, le=1.0, default=0.0)
+    shape_ds_risk: float = Field(ge=0.0, le=1.0, default=0.5)
+    adar_score: float = Field(ge=0.0, le=1.0, default=0.0)
+    shape_used: bool = False
+
+
+class G4Motif(BaseModel):
+    """A single G-Quadruplex motif found in a sequence (Stage 5)."""
+
+    start: int = Field(ge=0)
+    end: int = Field(ge=0)
+    sequence: str
+    strand: Literal["+", "-"] = "+"
+    g_tract_lengths: list[int] = Field(default_factory=list)
+    loop_lengths: list[int] = Field(default_factory=list)
+    stability_score: float = Field(ge=0.0, le=1.0, default=0.0)
+
+
+class G4Result(BaseModel):
+    """G4 structure detection result for a nucleotide sequence (Stage 5)."""
+
+    motifs: list[G4Motif] = Field(default_factory=list)
+    g4_count: int = Field(ge=0, default=0)
+    g4_density: float = 0.0  # motifs per kb
+    risk_score: float = Field(ge=0.0, le=1.0, default=0.0)
+
+
 class BiophysicsScore(BaseModel):
     """Stage 5 — biophysics & structural sub-scores."""
 
