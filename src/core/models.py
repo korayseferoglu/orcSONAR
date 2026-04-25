@@ -344,6 +344,27 @@ class BiophysicsScore(BaseModel):
     normalized_score: float = Field(ge=0.0, le=1.0, default=0.5)
 
 
+class Ago2Result(BaseModel):
+    """Ago2 eCLIP RISC-loading result for one genomic region (Stage 6)."""
+
+    region: GenomicRegion
+    cell_line: str
+    raw_signal: float = 0.0
+    loading_score: float = Field(ge=0.0, le=1.0, default=0.0)
+    is_loaded: bool = False
+
+
+class RBPResult(BaseModel):
+    """RBP competition result for one genomic region (Stage 6)."""
+
+    region: GenomicRegion
+    cell_line: str
+    rbp_name: str = "hnRNPA1"
+    raw_signal: float = 0.0
+    competition_score: float = Field(ge=0.0, le=1.0, default=0.0)
+    is_competing: bool = False
+
+
 class ExecutionScore(BaseModel):
     """Stage 6 — execution & safety sub-scores."""
 
