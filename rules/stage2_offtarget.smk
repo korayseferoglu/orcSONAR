@@ -27,6 +27,7 @@ rule seed_alignment:
             threads=threads,
             output_path=output[0],
             log_path=log[0],
+            cell_line=wildcards.cell_line,
         )
 
 

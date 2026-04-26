@@ -301,12 +301,14 @@ def run(
     threads: int,
     output_path: str,
     log_path: str,
+    cell_line: str = "HeLa",
 ) -> None:
-    """Run seed alignment against transcripts and write stage2_seed_hits.json.
+    """Run seed alignment against the whole transcriptome and write stage2_seed_hits.json.
 
-    Loads transcript metadata and sequences from stage1_promoter.json, then
-    fetches mRNA sequences via Ensembl.  Falls back to neutral (empty) results
-    when sequence data is unavailable.
+    Loads target-gene transcript metadata from stage1_promoter.json, merges with
+    a background set of ~250 canonical human transcripts fetched from Ensembl, then
+    scans all combined sequences for off-target seed matches.
+    Falls back to neutral (empty) results when sequence data is unavailable.
     """
     import json
     import sys
@@ -331,6 +333,7 @@ def run(
     from src.core.config import OrcSonarConfig
     from src.core.models import TranscriptInfo
     from src.stage1_genomic_map.transcript_resolver import get_transcript_sequence
+    from src.stage2_offtarget_scan.transcriptome_fetcher import get_background_transcriptome
 
     config = OrcSonarConfig(
         target_gene=gene,
@@ -339,6 +342,7 @@ def run(
         gc_range=gc_range,
     )
 
+    # --- Target gene transcripts (from Stage 1) ---
     transcripts: list[TranscriptInfo] = []
     for raw in raw_transcripts:
         try:
@@ -346,7 +350,6 @@ def run(
         except Exception:
             pass
 
-    # Fetch sequences for each transcript from Ensembl
     sequences: dict[str, str] = {}
     for t in transcripts:
         try:
@@ -355,6 +358,23 @@ def run(
                 sequences[t.transcript_id] = seq.upper().replace("T", "U")
         except Exception as exc:
             logger.debug(f"seed_aligner: sequence fetch failed for {t.transcript_id}: {exc}")
+
+    # --- Background transcriptome (whole-transcriptome scan) ---
+    try:
+        bg_transcripts, bg_sequences = get_background_transcriptome(
+            config, exclude_gene=gene
+        )
+        # Normalise to RNA alphabet
+        for tid, seq in bg_sequences.items():
+            bg_sequences[tid] = seq.upper().replace("T", "U")
+        transcripts = transcripts + bg_transcripts
+        sequences.update(bg_sequences)
+        logger.info(
+            f"seed_aligner: {gene} — scanning {len(sequences)} transcripts total "
+            f"({len(bg_transcripts)} background + target gene)"
+        )
+    except Exception as exc:
+        logger.warning(f"seed_aligner: background transcriptome fetch failed: {exc}")
 
     if not sequences:
         logger.warning(
