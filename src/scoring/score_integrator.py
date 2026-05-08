@@ -27,6 +27,21 @@ from src.core.models import DomainScores
 _NEUTRAL = 0.5
 
 
+def _clamp(value: Any) -> float:
+    """Clamp upstream domain score to the [0, 1] contract of DomainScores.
+
+    Why: stage producers (e.g. seed_aligner) emit raw alignment scores that
+    can exceed 1.0; DomainScores rejects them with a Pydantic ValidationError.
+    """
+    try:
+        v = float(value)
+    except (TypeError, ValueError):
+        return _NEUTRAL
+    if v != v:  # NaN guard
+        return _NEUTRAL
+    return max(0.0, min(1.0, v))
+
+
 def _load(path: str) -> dict[str, Any]:
     p = Path(path)
     if not p.exists():
@@ -102,11 +117,11 @@ def run(
         site_ids = [f"{s['gene']}:{s['transcript_id']}" for s in offtarget_sites]
 
     for site_id in site_ids:
-        seq = sequence_scores.get(site_id, _NEUTRAL)
-        var = variant_scores.get(site_id, {}).get("normalized_score", _NEUTRAL)
-        epi = epigenetic_scores.get(site_id, {}).get("normalized_score", _NEUTRAL)
-        bio = biophysics_scores.get(site_id, {}).get("normalized_score", _NEUTRAL)
-        exe = execution_scores.get(site_id, {}).get("normalized_score", _NEUTRAL)
+        seq = _clamp(sequence_scores.get(site_id, _NEUTRAL))
+        var = _clamp(variant_scores.get(site_id, {}).get("normalized_score", _NEUTRAL))
+        epi = _clamp(epigenetic_scores.get(site_id, {}).get("normalized_score", _NEUTRAL))
+        bio = _clamp(biophysics_scores.get(site_id, {}).get("normalized_score", _NEUTRAL))
+        exe = _clamp(execution_scores.get(site_id, {}).get("normalized_score", _NEUTRAL))
 
         ds = DomainScores(
             sequence_specificity=seq,
