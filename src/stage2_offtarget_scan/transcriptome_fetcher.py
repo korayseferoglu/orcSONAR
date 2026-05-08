@@ -26,7 +26,7 @@ from src.core.config import OrcSonarConfig
 from src.core.models import TranscriptInfo
 
 _ENSEMBL_DELAY = 1 / 15        # 15 req/s
-_LOOKUP_BATCH = 200             # genes per POST /lookup/symbol
+_LOOKUP_BATCH = 80              # genes per POST /lookup/symbol (smaller batch avoids 60s+ Ensembl response times)
 _SEQ_BATCH = 50                 # transcript IDs per POST /sequence/id
 
 # ---------------------------------------------------------------------------
@@ -394,7 +394,7 @@ def _ensembl_post(url: str, payload: dict) -> dict | list:  # type: ignore[type-
         url,
         json=payload,
         headers={"Content-Type": "application/json", "Accept": "application/json"},
-        timeout=60,
+        timeout=120,
     )
     resp.raise_for_status()
     return resp.json()  # type: ignore[no-any-return]

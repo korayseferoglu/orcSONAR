@@ -16,7 +16,11 @@ delta_g_moderate: -25.0    # kcal/mol  → moderate-risk binding
 
 # --- Seed Alignment ---
 seed_length: 7
-max_mismatches: 3
+# Counts all mismatches across the 20-nt anti-parallel alignment. miRNA-style
+# off-targets show perfect 7-mer seed + extensive flanking mismatches — 12
+# admits these canonical seed-only off-targets; the score (Watson-Crick +1,
+# G:U wobble +0.5) drives ranking.
+max_mismatches: 12
 gc_range: [35, 65]         # % GC content acceptable range
 
 # --- Remote Data URLs ---

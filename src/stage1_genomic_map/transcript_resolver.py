@@ -206,7 +206,7 @@ def _fetch_ensembl_sequence(transcript_id: str, config: OrcSonarConfig) -> str:
     """
     url = (
         f"{config.ensembl_base_url}/sequence/id/{transcript_id}"
-        "?type=mRNA&content-type=application/json"
+        "?type=cdna&content-type=application/json"
     )
     try:
         data = _ensembl_get(url)

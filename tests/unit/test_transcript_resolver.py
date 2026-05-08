@@ -160,7 +160,7 @@ def _ensembl_transcript_url(gene: str) -> str:
 
 
 def _ensembl_seq_url(tid: str) -> str:
-    return f"{_BASE}/sequence/id/{tid}?type=mRNA&content-type=application/json"
+    return f"{_BASE}/sequence/id/{tid}?type=cdna&content-type=application/json"
 
 
 def _esearch_url(gene: str) -> str:
