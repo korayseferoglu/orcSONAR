@@ -118,6 +118,8 @@ class OffTargetSite(BaseModel):
     seed_match_type: Literal["perfect", "G:U_wobble", "mismatch", "bulge"]
     mismatches: int = Field(ge=0)
     alignment_score: float
+    tx_start: Optional[int] = Field(default=None, ge=0)
+    tx_end: Optional[int] = Field(default=None, ge=0)
 
 
 class RepeatEntry(BaseModel):

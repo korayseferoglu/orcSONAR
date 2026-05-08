@@ -125,6 +125,8 @@ def find_offtargets(
                     seed_match_type=seed_match_type,
                     mismatches=result.mismatches,
                     alignment_score=result.score,
+                    tx_start=win_start,
+                    tx_end=win_end,
                 )
             )
 

@@ -49,20 +49,60 @@ def run(
         site_id = f"{s['gene']}:{s['transcript_id']}"
         try:
             region = GenomicRegion(**s["region"])
-            result = get_shape_accessibility(region, cell_line, shape_dir)
-            shape_results[site_id] = result.model_dump()
+            result = get_shape_accessibility(
+                region,
+                cell_line,
+                shape_dir,
+                transcript_id=s.get("transcript_id"),
+                tx_start=s.get("tx_start"),
+                tx_end=s.get("tx_end"),
+            )
+            new_payload = result.model_dump()
         except Exception as exc:
             logger.debug(f"shape_reader: failed for {site_id}: {exc}")
-            shape_results[site_id] = {
+            new_payload = {
                 "region": s.get("region", {}),
                 "mean_reactivity": 0.0,
                 "accessibility_score": 0.5,
                 "single_stranded_fraction": 0.5,
                 "data_available": False,
             }
+        # Multiple off-target windows can map to the same gene:transcript pair.
+        # Prefer the window that produced real measured icSHAPE signal over a
+        # neutral fallback so signal is not silently overwritten.
+        existing = shape_results.get(site_id)
+        if existing is None or _better(new_payload, existing):
+            shape_results[site_id] = new_payload
+
+    n_with_data = sum(1 for v in shape_results.values() if v.get("data_available"))
+    n_with_signal = sum(1 for v in shape_results.values() if _has_signal(v))
 
     payload: dict[str, Any] = {"shape_results": shape_results}
     out = Path(output_path)
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
-    logger.info(f"shape_reader: {len(shape_results)} regions in {cell_line} → {output_path}")
+    logger.info(
+        f"shape_reader: {len(shape_results)} regions in {cell_line} "
+        f"({n_with_data} consulted icSHAPE, {n_with_signal} with measured signal) "
+        f"→ {output_path}"
+    )
+
+
+def _has_signal(payload: dict[str, Any]) -> bool:
+    """A SHAPE payload carries real icSHAPE signal when icSHAPE was consulted
+    AND the result is not the (0.5/0.5) NULL-window neutral fallback."""
+    if not payload.get("data_available"):
+        return False
+    return not (
+        payload.get("accessibility_score") == 0.5
+        and payload.get("single_stranded_fraction") == 0.5
+    )
+
+
+def _better(new: dict[str, Any], existing: dict[str, Any]) -> bool:
+    """Return True when *new* carries strictly more icSHAPE signal than *existing*."""
+    if _has_signal(new) and not _has_signal(existing):
+        return True
+    if new.get("data_available") and not existing.get("data_available"):
+        return True
+    return False
