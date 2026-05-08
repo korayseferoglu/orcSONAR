@@ -19,9 +19,13 @@ Return value convention:
   - Stage 7 normalises all signals to [0, 1].
 
 YAML keys used (in cell_lines.yaml):
-  gro_seq_plus_url  — plus-strand BigWig URL
+  gro_seq_plus_url  — plus-strand BigWig URL (preferred)
   gro_seq_minus_url — minus-strand BigWig URL (negative values expected for
                        minus-strand BigWigs; reader takes the absolute value)
+  gro_seq_url       — fallback unstranded BigWig URL.  Used only when both
+                       strand-specific URLs are absent; the resulting signal
+                       is recorded as ``combined_signal`` with both strand
+                       fields left at neutral (0.0).
 """
 
 from __future__ import annotations
@@ -32,6 +36,7 @@ from src.stage4_epigenetic.encode_reader import EncodeSignalReader, _NEUTRAL_SIG
 
 _GROSEQ_PLUS_KEY: str = "gro_seq_plus_url"
 _GROSEQ_MINUS_KEY: str = "gro_seq_minus_url"
+_GROSEQ_UNSTRANDED_KEY: str = "gro_seq_url"
 
 
 class GROseqReader(EncodeSignalReader):
@@ -62,6 +67,19 @@ class GROseqReader(EncodeSignalReader):
         """
         plus_url = self._get_url_for_cell_line(cell_line, _GROSEQ_PLUS_KEY)
         minus_url = self._get_url_for_cell_line(cell_line, _GROSEQ_MINUS_KEY)
+
+        if not plus_url and not minus_url:
+            unstranded_url = self._get_url_for_cell_line(
+                cell_line, _GROSEQ_UNSTRANDED_KEY
+            )
+            if unstranded_url:
+                combined = abs(self.read_signal(unstranded_url, region))
+                return GROseqResult(
+                    region=region,
+                    plus_signal=_NEUTRAL_SIGNAL,
+                    minus_signal=_NEUTRAL_SIGNAL,
+                    combined_signal=combined,
+                )
 
         plus_signal = (
             self.read_signal(plus_url, region) if plus_url else _NEUTRAL_SIGNAL
@@ -94,6 +112,24 @@ class GROseqReader(EncodeSignalReader):
 
         plus_url = self._get_url_for_cell_line(cell_line, _GROSEQ_PLUS_KEY)
         minus_url = self._get_url_for_cell_line(cell_line, _GROSEQ_MINUS_KEY)
+
+        if not plus_url and not minus_url:
+            unstranded_url = self._get_url_for_cell_line(
+                cell_line, _GROSEQ_UNSTRANDED_KEY
+            )
+            if unstranded_url:
+                combined_signals = [
+                    abs(v) for v in self.read_signal_bulk(unstranded_url, regions)
+                ]
+                return [
+                    GROseqResult(
+                        region=region,
+                        plus_signal=_NEUTRAL_SIGNAL,
+                        minus_signal=_NEUTRAL_SIGNAL,
+                        combined_signal=c,
+                    )
+                    for region, c in zip(regions, combined_signals)
+                ]
 
         plus_signals = (
             self.read_signal_bulk(plus_url, regions)

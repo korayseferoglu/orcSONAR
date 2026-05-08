@@ -1,14 +1,26 @@
 # orcSONAR – Cell Line ENCODE / GEO Experiment Registry
 # All BigWig URLs point to ENCODE portal experiment accessions.
-# hic_url → 4DN portal .hic files.
+# hic_url → 4DN portal .hic files (open_data_url, S3 direct).
 #
-# Accession registry (validated 2026-05-08, full ENCODE search + pyBigWig open test):
+# Accession registry (validated 2026-05-09, full ENCODE search + pyBigWig open test):
 #   - h3k*_chip:    Histone ChIP-seq, output_type "fold change over control"
 #   - atac_seq:     ATAC-seq fold change over control, OR DNase-seq
 #                   "read-depth normalized signal" fallback (HeLa, HEK293T)
 #   - ago2_eclip:   eCLIP target=AGO2, "fold change over control" (HepG2)
 #                   or "plus strand signal of unique reads" (K562)
 #   - hnrnpa1_eclip: eCLIP target=HNRNPA1, "plus strand signal of unique reads"
+#   - gro_seq_plus_url / gro_seq_minus_url:
+#       Strand-specific nascent transcription BigWigs.  We use, in order of
+#       preference: PRO-seq (A549) → PRO-cap (K562, HEK293T) →
+#       GRO-cap (GM12878) → CAGE (HeLa-S3, HepG2, MCF-7).  CAGE is a 5'
+#       nascent-TSS proxy and is the closest available substitute for cell
+#       lines without GRO-seq/PRO-seq on ENCODE.
+#   - gro_seq_url:  Optional unstranded fallback.  When both plus and minus
+#       are null but gro_seq_url is set, transcription_run.py reads it as a
+#       single combined signal.  Currently null everywhere — left for future
+#       cell lines without strand-resolved data.
+#   - hic_url:      4DN portal in-situ Hi-C (or Dilution Hi-C for A549).
+#       URLs are open_data_url S3 paths so hicstraw can stream without auth.
 #
 # Coverage notes:
 #   - eCLIP: AGO2/hnRNPA1 only available for K562 and HepG2 in ENCODE.
@@ -16,6 +28,9 @@
 #   - HEK293T h3k27me3: not available in ENCODE.
 #   - Huh7: no ENCODE BigWig coverage at all — pipeline returns neutral
 #     scores for all epigenetic/safety domains for this cell line.
+#   - GRO-seq: ENCODE has no HeLa GRO/PRO-seq, so HeLa-S3 CAGE is used.
+#     Huh-7 has no nascent-transcription data on ENCODE → null.
+#   - Hi-C: 4DN has no in-situ Hi-C for HEK293T, MCF-7, Huh-7 → null.
 #
 # pyBigWig requirement: HTTP 307 redirect resolution is handled in
 # src/stage4_epigenetic/encode_reader.py (libBigWig does not follow redirects).
@@ -27,10 +42,10 @@ A549:
   h3k27me3_chip: "https://www.encodeproject.org/files/ENCFF013LYY/@@download/ENCFF013LYY.bigWig"
   ago2_eclip: null   # AGO2 eCLIP not in ENCODE for A549
   hnrnpa1_eclip: null   # hnRNPA1 eCLIP not in ENCODE for A549
-  gro_seq_url: "https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSM1480327&format=file"
-  gro_seq_plus_url: null
-  gro_seq_minus_url: null
-  hic_url: "https://4dn-open-data-public.s3.amazonaws.com/fourfront-webprod/wfoutput/7386f957-76aa-4579-95b9-7a6e3fd57441/4DNFI823LSII.hic"
+  gro_seq_plus_url: "https://www.encodeproject.org/files/ENCFF979GYA/@@download/ENCFF979GYA.bigWig"   # PRO-seq plus, rep [1,2] merged (ENCSR989CPK)
+  gro_seq_minus_url: "https://www.encodeproject.org/files/ENCFF275NOU/@@download/ENCFF275NOU.bigWig"  # PRO-seq minus, rep [1,2] merged
+  gro_seq_url: null
+  hic_url: "https://4dn-open-data-public.s3.amazonaws.com/fourfront-webprod/wfoutput/ae0b7513-d1a0-4f27-a9d3-348837f42cb6/4DNFID68JQY9.hic"  # Dilution Hi-C
 
 GM12878:
   atac_seq: "https://www.encodeproject.org/files/ENCFF603BJO/@@download/ENCFF603BJO.bigWig"
@@ -39,10 +54,10 @@ GM12878:
   h3k27me3_chip: "https://www.encodeproject.org/files/ENCFF919DOR/@@download/ENCFF919DOR.bigWig"
   ago2_eclip: null
   hnrnpa1_eclip: null
-  gro_seq_url: "https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSM1480312&format=file"
-  gro_seq_plus_url: null
-  gro_seq_minus_url: null
-  hic_url: "https://4dn-open-data-public.s3.amazonaws.com/fourfront-webprod/wfoutput/91a8b0a5-5e0d-4e84-ad63-c88a7b8aef36/4DNFIXP4QG5B.hic"
+  gro_seq_plus_url: "https://www.encodeproject.org/files/ENCFF896TNM/@@download/ENCFF896TNM.bigWig"   # GRO-cap plus (ENCSR521SWL)
+  gro_seq_minus_url: "https://www.encodeproject.org/files/ENCFF764SVR/@@download/ENCFF764SVR.bigWig"  # GRO-cap minus
+  gro_seq_url: null
+  hic_url: "https://4dn-open-data-public.s3.amazonaws.com/fourfront-webprod/wfoutput/54082fcc-a8de-4bc1-a493-ea1c41a40c14/4DNFIQXCW8KM.hic"  # in-situ Hi-C
 
 HEK293T:
   atac_seq: "https://www.encodeproject.org/files/ENCFF529BOG/@@download/ENCFF529BOG.bigWig"   # DNase-seq fallback (no ATAC for HEK293T in ENCODE)
@@ -51,10 +66,10 @@ HEK293T:
   h3k27me3_chip: null   # not available in ENCODE for HEK293
   ago2_eclip: null
   hnrnpa1_eclip: null
-  gro_seq_url: "https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSM2437727&format=file"
-  gro_seq_plus_url: null
-  gro_seq_minus_url: null
-  hic_url: "https://4dn-open-data-public.s3.amazonaws.com/fourfront-webprod/wfoutput/6e44b2b9-f8d3-4b42-8e69-94b5d1f26f38/4DNFIH9ZY5GF.hic"
+  gro_seq_plus_url: "https://www.encodeproject.org/files/ENCFF726DCR/@@download/ENCFF726DCR.bigWig"   # PRO-cap plus, rep 1 (ENCSR733DAS)
+  gro_seq_minus_url: "https://www.encodeproject.org/files/ENCFF603FIP/@@download/ENCFF603FIP.bigWig"  # PRO-cap minus, rep 1
+  gro_seq_url: null
+  hic_url: null   # No in-situ Hi-C for HEK293/HEK293T on 4DN portal
 
 HeLa:
   atac_seq: "https://www.encodeproject.org/files/ENCFF184TYT/@@download/ENCFF184TYT.bigWig"   # DNase-seq fallback (no ATAC for HeLa-S3 in ENCODE)
@@ -63,10 +78,10 @@ HeLa:
   h3k27me3_chip: "https://www.encodeproject.org/files/ENCFF186NYC/@@download/ENCFF186NYC.bigWig"
   ago2_eclip: null   # AGO2 eCLIP only in K562 + HepG2 in ENCODE
   hnrnpa1_eclip: null   # hnRNPA1 eCLIP only in K562 + HepG2
-  gro_seq_url: "https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSM1480321&format=file"
-  gro_seq_plus_url: null
-  gro_seq_minus_url: null
-  hic_url: "https://4dn-open-data-public.s3.amazonaws.com/fourfront-webprod/wfoutput/a83b4c7d-9eb8-4d4e-a2f0-f23c87bca9ab/4DNFIP1P9VJL.hic"
+  gro_seq_plus_url: "https://www.encodeproject.org/files/ENCFF650PYG/@@download/ENCFF650PYG.bigWig"   # CAGE plus, HeLa-S3 (ENCSR000CLH) — used as nascent-TSS proxy
+  gro_seq_minus_url: "https://www.encodeproject.org/files/ENCFF736IHC/@@download/ENCFF736IHC.bigWig"  # CAGE minus, HeLa-S3
+  gro_seq_url: null
+  hic_url: "https://4dn-open-data-public.s3.amazonaws.com/fourfront-webprod/wfoutput/acc2f1c3-8c96-4d21-814a-3a8ba81e7741/4DNFIVJ3IIQL.hic"   # HeLa-S3 in-situ Hi-C
 
 HepG2:
   atac_seq: "https://www.encodeproject.org/files/ENCFF645OHB/@@download/ENCFF645OHB.bigWig"
@@ -75,10 +90,10 @@ HepG2:
   h3k27me3_chip: "https://www.encodeproject.org/files/ENCFF529HLC/@@download/ENCFF529HLC.bigWig"
   ago2_eclip: "https://www.encodeproject.org/files/ENCFF097LEQ/@@download/ENCFF097LEQ.bigWig"   # fold change over control
   hnrnpa1_eclip: "https://www.encodeproject.org/files/ENCFF561NYA/@@download/ENCFF561NYA.bigWig"   # plus strand signal
-  gro_seq_url: "https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSM1480319&format=file"
-  gro_seq_plus_url: null
-  gro_seq_minus_url: null
-  hic_url: "https://4dn-open-data-public.s3.amazonaws.com/fourfront-webprod/wfoutput/c4d67e8f-93b2-4dfa-bbc2-512a6db7c4c6/4DNFIPC4BZ71.hic"
+  gro_seq_plus_url: "https://www.encodeproject.org/files/ENCFF922EZZ/@@download/ENCFF922EZZ.bigWig"   # CAGE plus (ENCSR000CJL) — nascent-TSS proxy
+  gro_seq_minus_url: "https://www.encodeproject.org/files/ENCFF028YPU/@@download/ENCFF028YPU.bigWig"  # CAGE minus
+  gro_seq_url: null
+  hic_url: "https://4dn-open-data-public.s3.amazonaws.com/fourfront-webprod/wfoutput/25104375-a588-46e6-a382-663cee6c332f/4DNFICSTCJQZ.hic"   # in-situ Hi-C
 
 Huh7:
   atac_seq: null   # No ENCODE BigWig for Huh-7 / Huh-7.5
@@ -87,10 +102,10 @@ Huh7:
   h3k27me3_chip: null
   ago2_eclip: null
   hnrnpa1_eclip: null
-  gro_seq_url: "https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSM2437731&format=file"
-  gro_seq_plus_url: null
+  gro_seq_plus_url: null   # No nascent-transcription data on ENCODE for Huh-7
   gro_seq_minus_url: null
-  hic_url: "https://4dn-open-data-public.s3.amazonaws.com/fourfront-webprod/wfoutput/b5e1c2a3-4f7d-4b82-9c13-6a2f5e8d1c94/4DNFIURK38JN.hic"
+  gro_seq_url: null
+  hic_url: null   # No 4DN Hi-C for Huh-7
 
 K562:
   atac_seq: "https://www.encodeproject.org/files/ENCFF920FUW/@@download/ENCFF920FUW.bigWig"
@@ -99,10 +114,10 @@ K562:
   h3k27me3_chip: "https://www.encodeproject.org/files/ENCFF242ENK/@@download/ENCFF242ENK.bigWig"
   ago2_eclip: "https://www.encodeproject.org/files/ENCFF426YFB/@@download/ENCFF426YFB.bigWig"   # plus strand signal of unique reads
   hnrnpa1_eclip: "https://www.encodeproject.org/files/ENCFF401DKP/@@download/ENCFF401DKP.bigWig"   # plus strand signal of unique reads
-  gro_seq_url: "https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSM1480317&format=file"
-  gro_seq_plus_url: null
-  gro_seq_minus_url: null
-  hic_url: "https://4dn-open-data-public.s3.amazonaws.com/fourfront-webprod/wfoutput/f17b38c6-e2c5-481f-a614-6d4ceb2b3f7e/4DNFI9GMP2J8.hic"
+  gro_seq_plus_url: "https://www.encodeproject.org/files/ENCFF850NZE/@@download/ENCFF850NZE.bigWig"   # PRO-cap plus, rep 1 (ENCSR220XSM)
+  gro_seq_minus_url: "https://www.encodeproject.org/files/ENCFF364CCA/@@download/ENCFF364CCA.bigWig"  # PRO-cap minus, rep 1
+  gro_seq_url: null
+  hic_url: "https://4dn-open-data-public.s3.amazonaws.com/fourfront-webprod/wfoutput/dcfcb009-f006-4ab8-a4c7-af72be58c12c/4DNFITUOMFUQ.hic"   # in-situ Hi-C
 
 MCF7:
   atac_seq: "https://www.encodeproject.org/files/ENCFF782BVX/@@download/ENCFF782BVX.bigWig"
@@ -111,7 +126,7 @@ MCF7:
   h3k27me3_chip: "https://www.encodeproject.org/files/ENCFF725VID/@@download/ENCFF725VID.bigWig"
   ago2_eclip: null
   hnrnpa1_eclip: null
-  gro_seq_url: "https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSM1480323&format=file"
-  gro_seq_plus_url: null
-  gro_seq_minus_url: null
-  hic_url: "https://4dn-open-data-public.s3.amazonaws.com/fourfront-webprod/wfoutput/d8f6c4e1-7a3b-4c5d-8e9f-2b1a6c7d4e5f/4DNFIB78NZGZ.hic"
+  gro_seq_plus_url: "https://www.encodeproject.org/files/ENCFF690MQP/@@download/ENCFF690MQP.bigWig"   # CAGE plus, rep 3 (ENCSR000CKV) — nascent-TSS proxy
+  gro_seq_minus_url: "https://www.encodeproject.org/files/ENCFF146NQM/@@download/ENCFF146NQM.bigWig"  # CAGE minus, rep 3
+  gro_seq_url: null
+  hic_url: null   # No in-situ Hi-C for MCF-7 on 4DN portal

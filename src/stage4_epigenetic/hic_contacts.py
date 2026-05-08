@@ -213,10 +213,13 @@ class HiCContactReader:
         """
         c1 = r1.chrom.lstrip("chr")
         c2 = r2.chrom.lstrip("chr")
-        reg1 = f"{c1}:{r1.start}:{r1.end}"
-        reg2 = f"{c2}:{r2.start}:{r2.end}"
         target_bin_x = _round_bin(r1.start, resolution)
         target_bin_y = _round_bin(r2.start, resolution)
+        # Query spans must be at least one full bin or hicstraw returns no
+        # records.  Snap each region to the bin that contains it, expanded to
+        # cover the bin width.
+        reg1 = f"{c1}:{target_bin_x}:{target_bin_x + resolution}"
+        reg2 = f"{c2}:{target_bin_y}:{target_bin_y + resolution}"
 
         for norm in ("KR", "NONE"):
             try:
