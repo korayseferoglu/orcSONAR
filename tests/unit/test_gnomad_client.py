@@ -31,6 +31,17 @@ REGION_EMPTY = GenomicRegion(chrom="chr22", start=10_000, end=11_000, strand="."
 
 
 # ---------------------------------------------------------------------------
+# Fixtures
+# ---------------------------------------------------------------------------
+
+
+@pytest.fixture(autouse=True)
+def _no_sleep(monkeypatch):
+    """Neutralise rate-limit sleeps so tests run fast and deterministically."""
+    monkeypatch.setattr("src.stage3_variant_tox.gnomad_client.time.sleep", lambda _s: None)
+
+
+# ---------------------------------------------------------------------------
 # Payload helpers
 # ---------------------------------------------------------------------------
 
@@ -87,6 +98,16 @@ class TestGraphqlQuery:
         q = _graphql_query("1", 0, 1000)
         for field in ("variant_id", "pos", "ref", "alt", "genome", "exome", "af"):
             assert field in q
+
+    def test_contains_reference_genome_grch38(self) -> None:
+        # gnomAD v4 schema: region(...) requires reference_genome (enum, unquoted)
+        q = _graphql_query("1", 0, 1000)
+        assert "reference_genome: GRCh38" in q
+
+    def test_dataset_argument_on_variants_field(self) -> None:
+        # gnomAD v4 schema: dataset moved from region(...) to region.variants(...)
+        q = _graphql_query("1", 0, 1000)
+        assert "variants(dataset: gnomad_r4)" in q
 
 
 # ---------------------------------------------------------------------------
@@ -252,6 +273,32 @@ class TestFetchVariants:
         )
         variants = _fetch_variants(REGION_A, GNOMAD_API)
         assert variants == []
+
+    @resp_mock.activate
+    def test_429_triggers_backoff_then_succeeds(self) -> None:
+        # First response is 429 → tenacity retries → second response succeeds.
+        resp_mock.add(resp_mock.POST, GNOMAD_API, status=429)
+        resp_mock.add(
+            resp_mock.POST,
+            GNOMAD_API,
+            json=_api_response([_variant_item(genome_af=0.02)]),
+            status=200,
+        )
+        variants = _fetch_variants(REGION_A, GNOMAD_API)
+        assert len(variants) == 1
+        assert variants[0].allele_frequency == pytest.approx(0.02)
+
+    @resp_mock.activate
+    def test_graphql_errors_array_raises(self) -> None:
+        # gnomAD reports schema errors as 200 + {"errors": [...]} — must not be silently dropped.
+        resp_mock.add(
+            resp_mock.POST,
+            GNOMAD_API,
+            json={"errors": [{"message": "bad argument"}]},
+            status=200,
+        )
+        with pytest.raises(Exception):
+            _fetch_variants(REGION_A, GNOMAD_API)
 
 
 # ---------------------------------------------------------------------------

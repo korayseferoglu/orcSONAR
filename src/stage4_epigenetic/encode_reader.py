@@ -17,6 +17,8 @@ ENCODE API quirk:
 
 from __future__ import annotations
 
+import urllib.error
+import urllib.request
 from pathlib import Path
 from typing import Optional
 
@@ -34,6 +36,40 @@ _NEUTRAL_SIGNAL: float = 0.0
 _ENCODE_URL_TTL_HOURS: int = 720   # 30 days — accession→URL mapping rarely changes
 _SIGNAL_TTL_HOURS: int = 168       # 1 week — BigWig signal
 _DEFAULT_CELL_LINES_YAML: str = "config/cell_lines.yaml"
+
+
+class _NoRedirect(urllib.request.HTTPRedirectHandler):
+    def redirect_request(self, *args, **kwargs):
+        return None
+
+
+def _resolve_encode_redirect(url: str) -> str:
+    """Resolve the ENCODE portal 307 to its short-lived signed S3 URL.
+
+    pyBigWig (libBigWig) does not follow HTTP redirects, so an
+    ``encodeproject.org/files/.../*.bigWig`` URL fails to open. We issue a
+    HEAD-like GET (no follow) and return the ``Location`` header.
+
+    Non-ENCODE URLs and URLs that don't redirect are returned unchanged.
+    """
+    if "encodeproject.org" not in url:
+        return url
+    opener = urllib.request.build_opener(_NoRedirect)
+    try:
+        opener.open(url, timeout=20)
+        return url
+    except urllib.error.HTTPError as exc:
+        if exc.code in (301, 302, 303, 307, 308):
+            location = exc.headers.get("Location")
+            if location:
+                return location
+        logger.warning(
+            f"encode_reader: ENCODE returned {exc.code} for {url[:80]} (no Location)"
+        )
+        return url
+    except Exception as exc:
+        logger.warning(f"encode_reader: redirect resolve failed for {url[:80]}: {exc}")
+        return url
 
 
 # ---------------------------------------------------------------------------
@@ -207,7 +243,7 @@ class EncodeSignalReader:
                 return results
 
             try:
-                bw = pyBigWig.open(url)
+                bw = pyBigWig.open(_resolve_encode_redirect(url))
             except Exception as exc:
                 logger.error(f"encode_reader: cannot open BigWig '{url}': {exc}")
                 return results  # cache-miss positions stay at neutral
@@ -333,7 +369,7 @@ def _read_one_region(url: str, region: GenomicRegion) -> float:
         Mean signal float, or 0.0 on failure.
     """
     try:
-        bw = pyBigWig.open(url)
+        bw = pyBigWig.open(_resolve_encode_redirect(url))
     except Exception as exc:
         logger.error(f"encode_reader: cannot open BigWig '{url}': {exc}")
         return _NEUTRAL_SIGNAL

@@ -10,6 +10,9 @@ gnomAD quirk: chromosome field uses no "chr" prefix (e.g. "1", not "chr1").
 
 from __future__ import annotations
 
+import threading
+import time
+
 import requests
 from loguru import logger
 from tenacity import retry, stop_after_attempt, wait_exponential
@@ -23,10 +26,22 @@ _AF_COMMON_THRESHOLD: float = 0.01
 # Cache TTL — gnomAD data is updated infrequently
 _GNOMAD_TTL_HOURS: int = 720  # 30 days
 
+# gnomAD enforces a strict rate limit. 1 req/s keeps us well below the cap.
+_MIN_REQUEST_INTERVAL_SEC: float = 1.0
+# When we hit 429, gnomAD asks us to back off — wait long enough for the bucket to reset.
+_RATE_LIMIT_BACKOFF_SEC: float = 30.0
+
+_last_request_time: float = 0.0
+_rate_limit_lock = threading.Lock()
+
+# Schema notes (verified against live API on 2026-05-08):
+#   - region(...) now requires reference_genome (no longer accepts dataset).
+#   - dataset moved to the inner Region.variants(dataset: …) field.
+# reference_genome and dataset are GraphQL enums → no quotes around them.
 _GRAPHQL_QUERY_TEMPLATE = """
 {{
-  region(dataset: gnomad_r4, chrom: "{chrom}", start: {start}, stop: {stop}) {{
-    variants {{
+  region(chrom: "{chrom}", start: {start}, stop: {stop}, reference_genome: GRCh38) {{
+    variants(dataset: gnomad_r4) {{
       variant_id
       pos
       ref
@@ -138,6 +153,21 @@ def _build_result(region: GenomicRegion, variants: list[GnomadVariant]) -> Gnoma
     )
 
 
+def _rate_limit_sleep() -> None:
+    """Block until at least ``_MIN_REQUEST_INTERVAL_SEC`` has passed since the last call.
+
+    gnomAD aggressively rate-limits the public GraphQL endpoint; pacing requests
+    to ~1 Hz keeps us under the threshold and avoids 429 cascades.
+    """
+    global _last_request_time
+    with _rate_limit_lock:
+        elapsed = time.monotonic() - _last_request_time
+        wait = _MIN_REQUEST_INTERVAL_SEC - elapsed
+        if wait > 0:
+            time.sleep(wait)
+        _last_request_time = time.monotonic()
+
+
 @retry(
     stop=stop_after_attempt(3),
     wait=wait_exponential(multiplier=1, min=2, max=30),
@@ -160,9 +190,19 @@ def _fetch_variants(region: GenomicRegion, api_url: str) -> list[GnomadVariant]:
     """
     chrom = region.chrom[3:] if region.chrom.startswith("chr") else region.chrom
     query = _graphql_query(chrom, region.start, region.end)
+    _rate_limit_sleep()
     resp = requests.post(api_url, json={"query": query}, timeout=60)
+    if resp.status_code == 429:
+        logger.warning(
+            f"gnomad_client: HTTP 429 rate limited at {region}; "
+            f"sleeping {_RATE_LIMIT_BACKOFF_SEC:.0f}s before retry"
+        )
+        time.sleep(_RATE_LIMIT_BACKOFF_SEC)
     resp.raise_for_status()
     data = resp.json()
+    if data.get("errors"):
+        # GraphQL schema/argument errors come back as 200 with an "errors" array.
+        raise RuntimeError(f"gnomAD GraphQL error: {data['errors']}")
     raw_variants = (data.get("data", {}).get("region") or {}).get("variants") or []
     return _parse_variants(raw_variants)
 

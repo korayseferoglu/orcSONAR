@@ -2,103 +2,115 @@
 # All BigWig URLs point to ENCODE portal experiment accessions.
 # hic_url → 4DN portal .hic files.
 #
-# h3k27me3_chip: repressive Polycomb mark.  Fill in the ENCODE accession from
-# https://www.encodeproject.org after filtering for:
-#   Assay: Histone ChIP-seq  |  Target: H3K27me3  |  Biosample: <cell line>
-#   File format: bigWig  |  Output type: signal fold change over control
-# Framework returns 0.0 (neutral) for any null entry.
+# Accession registry (validated 2026-05-08, full ENCODE search + pyBigWig open test):
+#   - h3k*_chip:    Histone ChIP-seq, output_type "fold change over control"
+#   - atac_seq:     ATAC-seq fold change over control, OR DNase-seq
+#                   "read-depth normalized signal" fallback (HeLa, HEK293T)
+#   - ago2_eclip:   eCLIP target=AGO2, "fold change over control" (HepG2)
+#                   or "plus strand signal of unique reads" (K562)
+#   - hnrnpa1_eclip: eCLIP target=HNRNPA1, "plus strand signal of unique reads"
+#
+# Coverage notes:
+#   - eCLIP: AGO2/hnRNPA1 only available for K562 and HepG2 in ENCODE.
+#     Other cell lines: framework returns 0.0 (neutral) for null entry.
+#   - HEK293T h3k27me3: not available in ENCODE.
+#   - Huh7: no ENCODE BigWig coverage at all — pipeline returns neutral
+#     scores for all epigenetic/safety domains for this cell line.
+#
+# pyBigWig requirement: HTTP 307 redirect resolution is handled in
+# src/stage4_epigenetic/encode_reader.py (libBigWig does not follow redirects).
 
 A549:
-  atac_seq: "https://www.encodeproject.org/files/ENCFF172NLS/@@download/ENCFF172NLS.bigWig"
-  h3k4me3_chip: "https://www.encodeproject.org/files/ENCFF531VZN/@@download/ENCFF531VZN.bigWig"
-  h3k27ac_chip: "https://www.encodeproject.org/files/ENCFF840ASF/@@download/ENCFF840ASF.bigWig"
-  h3k27me3_chip: null   # TODO: fill from portal.encodeproject.org
-  ago2_eclip: "https://www.encodeproject.org/files/ENCFF355MIH/@@download/ENCFF355MIH.bigWig"
-  hnrnpa1_eclip: "https://www.encodeproject.org/files/ENCFF758VEP/@@download/ENCFF758VEP.bigWig"
+  atac_seq: "https://www.encodeproject.org/files/ENCFF872SDF/@@download/ENCFF872SDF.bigWig"
+  h3k4me3_chip: "https://www.encodeproject.org/files/ENCFF072TKP/@@download/ENCFF072TKP.bigWig"
+  h3k27ac_chip: "https://www.encodeproject.org/files/ENCFF772XVV/@@download/ENCFF772XVV.bigWig"
+  h3k27me3_chip: "https://www.encodeproject.org/files/ENCFF013LYY/@@download/ENCFF013LYY.bigWig"
+  ago2_eclip: null   # AGO2 eCLIP not in ENCODE for A549
+  hnrnpa1_eclip: null   # hnRNPA1 eCLIP not in ENCODE for A549
   gro_seq_url: "https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSM1480327&format=file"
-  gro_seq_plus_url: null   # TODO: fill with GEO/SRA BigWig (plus strand)
-  gro_seq_minus_url: null  # TODO: fill with GEO/SRA BigWig (minus strand)
+  gro_seq_plus_url: null
+  gro_seq_minus_url: null
   hic_url: "https://4dn-open-data-public.s3.amazonaws.com/fourfront-webprod/wfoutput/7386f957-76aa-4579-95b9-7a6e3fd57441/4DNFI823LSII.hic"
 
 GM12878:
-  atac_seq: "https://www.encodeproject.org/files/ENCFF953NJX/@@download/ENCFF953NJX.bigWig"
-  h3k4me3_chip: "https://www.encodeproject.org/files/ENCFF000ARY/@@download/ENCFF000ARY.bigWig"
-  h3k27ac_chip: "https://www.encodeproject.org/files/ENCFF000AKX/@@download/ENCFF000AKX.bigWig"
-  h3k27me3_chip: null   # TODO: fill from portal.encodeproject.org
-  ago2_eclip: "https://www.encodeproject.org/files/ENCFF511QFI/@@download/ENCFF511QFI.bigWig"
-  hnrnpa1_eclip: "https://www.encodeproject.org/files/ENCFF807NMM/@@download/ENCFF807NMM.bigWig"
+  atac_seq: "https://www.encodeproject.org/files/ENCFF603BJO/@@download/ENCFF603BJO.bigWig"
+  h3k4me3_chip: "https://www.encodeproject.org/files/ENCFF287HAO/@@download/ENCFF287HAO.bigWig"
+  h3k27ac_chip: "https://www.encodeproject.org/files/ENCFF469WVA/@@download/ENCFF469WVA.bigWig"
+  h3k27me3_chip: "https://www.encodeproject.org/files/ENCFF919DOR/@@download/ENCFF919DOR.bigWig"
+  ago2_eclip: null
+  hnrnpa1_eclip: null
   gro_seq_url: "https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSM1480312&format=file"
   gro_seq_plus_url: null
   gro_seq_minus_url: null
   hic_url: "https://4dn-open-data-public.s3.amazonaws.com/fourfront-webprod/wfoutput/91a8b0a5-5e0d-4e84-ad63-c88a7b8aef36/4DNFIXP4QG5B.hic"
 
 HEK293T:
-  atac_seq: "https://www.encodeproject.org/files/ENCFF330DCH/@@download/ENCFF330DCH.bigWig"
-  h3k4me3_chip: "https://www.encodeproject.org/files/ENCFF572ZDP/@@download/ENCFF572ZDP.bigWig"
-  h3k27ac_chip: "https://www.encodeproject.org/files/ENCFF382OGY/@@download/ENCFF382OGY.bigWig"
-  h3k27me3_chip: null   # TODO: fill from portal.encodeproject.org
-  ago2_eclip: "https://www.encodeproject.org/files/ENCFF348RLA/@@download/ENCFF348RLA.bigWig"
-  hnrnpa1_eclip: "https://www.encodeproject.org/files/ENCFF660GHD/@@download/ENCFF660GHD.bigWig"
+  atac_seq: "https://www.encodeproject.org/files/ENCFF529BOG/@@download/ENCFF529BOG.bigWig"   # DNase-seq fallback (no ATAC for HEK293T in ENCODE)
+  h3k4me3_chip: "https://www.encodeproject.org/files/ENCFF439DDQ/@@download/ENCFF439DDQ.bigWig"
+  h3k27ac_chip: "https://www.encodeproject.org/files/ENCFF885SUR/@@download/ENCFF885SUR.bigWig"
+  h3k27me3_chip: null   # not available in ENCODE for HEK293
+  ago2_eclip: null
+  hnrnpa1_eclip: null
   gro_seq_url: "https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSM2437727&format=file"
   gro_seq_plus_url: null
   gro_seq_minus_url: null
   hic_url: "https://4dn-open-data-public.s3.amazonaws.com/fourfront-webprod/wfoutput/6e44b2b9-f8d3-4b42-8e69-94b5d1f26f38/4DNFIH9ZY5GF.hic"
 
 HeLa:
-  atac_seq: "https://www.encodeproject.org/files/ENCFF492CEJ/@@download/ENCFF492CEJ.bigWig"
-  h3k4me3_chip: "https://www.encodeproject.org/files/ENCFF553KON/@@download/ENCFF553KON.bigWig"
-  h3k27ac_chip: "https://www.encodeproject.org/files/ENCFF044JNJ/@@download/ENCFF044JNJ.bigWig"
-  h3k27me3_chip: null   # TODO: fill from portal.encodeproject.org
-  ago2_eclip: "https://www.encodeproject.org/files/ENCFF765PFM/@@download/ENCFF765PFM.bigWig"
-  hnrnpa1_eclip: "https://www.encodeproject.org/files/ENCFF810JXO/@@download/ENCFF810JXO.bigWig"
+  atac_seq: "https://www.encodeproject.org/files/ENCFF184TYT/@@download/ENCFF184TYT.bigWig"   # DNase-seq fallback (no ATAC for HeLa-S3 in ENCODE)
+  h3k4me3_chip: "https://www.encodeproject.org/files/ENCFF432PYK/@@download/ENCFF432PYK.bigWig"
+  h3k27ac_chip: "https://www.encodeproject.org/files/ENCFF658XKZ/@@download/ENCFF658XKZ.bigWig"
+  h3k27me3_chip: "https://www.encodeproject.org/files/ENCFF186NYC/@@download/ENCFF186NYC.bigWig"
+  ago2_eclip: null   # AGO2 eCLIP only in K562 + HepG2 in ENCODE
+  hnrnpa1_eclip: null   # hnRNPA1 eCLIP only in K562 + HepG2
   gro_seq_url: "https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSM1480321&format=file"
   gro_seq_plus_url: null
   gro_seq_minus_url: null
   hic_url: "https://4dn-open-data-public.s3.amazonaws.com/fourfront-webprod/wfoutput/a83b4c7d-9eb8-4d4e-a2f0-f23c87bca9ab/4DNFIP1P9VJL.hic"
 
 HepG2:
-  atac_seq: "https://www.encodeproject.org/files/ENCFF027OFJ/@@download/ENCFF027OFJ.bigWig"
-  h3k4me3_chip: "https://www.encodeproject.org/files/ENCFF807CJE/@@download/ENCFF807CJE.bigWig"
-  h3k27ac_chip: "https://www.encodeproject.org/files/ENCFF714MZK/@@download/ENCFF714MZK.bigWig"
-  h3k27me3_chip: null   # TODO: fill from portal.encodeproject.org
-  ago2_eclip: "https://www.encodeproject.org/files/ENCFF523KDQ/@@download/ENCFF523KDQ.bigWig"
-  hnrnpa1_eclip: "https://www.encodeproject.org/files/ENCFF126BOK/@@download/ENCFF126BOK.bigWig"
+  atac_seq: "https://www.encodeproject.org/files/ENCFF645OHB/@@download/ENCFF645OHB.bigWig"
+  h3k4me3_chip: "https://www.encodeproject.org/files/ENCFF500VAH/@@download/ENCFF500VAH.bigWig"
+  h3k27ac_chip: "https://www.encodeproject.org/files/ENCFF022TZG/@@download/ENCFF022TZG.bigWig"
+  h3k27me3_chip: "https://www.encodeproject.org/files/ENCFF529HLC/@@download/ENCFF529HLC.bigWig"
+  ago2_eclip: "https://www.encodeproject.org/files/ENCFF097LEQ/@@download/ENCFF097LEQ.bigWig"   # fold change over control
+  hnrnpa1_eclip: "https://www.encodeproject.org/files/ENCFF561NYA/@@download/ENCFF561NYA.bigWig"   # plus strand signal
   gro_seq_url: "https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSM1480319&format=file"
   gro_seq_plus_url: null
   gro_seq_minus_url: null
   hic_url: "https://4dn-open-data-public.s3.amazonaws.com/fourfront-webprod/wfoutput/c4d67e8f-93b2-4dfa-bbc2-512a6db7c4c6/4DNFIPC4BZ71.hic"
 
 Huh7:
-  atac_seq: "https://www.encodeproject.org/files/ENCFF551BCX/@@download/ENCFF551BCX.bigWig"
-  h3k4me3_chip: "https://www.encodeproject.org/files/ENCFF249UKL/@@download/ENCFF249UKL.bigWig"
-  h3k27ac_chip: "https://www.encodeproject.org/files/ENCFF311YKL/@@download/ENCFF311YKL.bigWig"
-  h3k27me3_chip: null   # TODO: fill from portal.encodeproject.org
-  ago2_eclip: "https://www.encodeproject.org/files/ENCFF187DJD/@@download/ENCFF187DJD.bigWig"
-  hnrnpa1_eclip: "https://www.encodeproject.org/files/ENCFF902RTE/@@download/ENCFF902RTE.bigWig"
+  atac_seq: null   # No ENCODE BigWig for Huh-7 / Huh-7.5
+  h3k4me3_chip: null
+  h3k27ac_chip: null
+  h3k27me3_chip: null
+  ago2_eclip: null
+  hnrnpa1_eclip: null
   gro_seq_url: "https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSM2437731&format=file"
   gro_seq_plus_url: null
   gro_seq_minus_url: null
   hic_url: "https://4dn-open-data-public.s3.amazonaws.com/fourfront-webprod/wfoutput/b5e1c2a3-4f7d-4b82-9c13-6a2f5e8d1c94/4DNFIURK38JN.hic"
 
 K562:
-  atac_seq: "https://www.encodeproject.org/files/ENCFF168IEG/@@download/ENCFF168IEG.bigWig"
-  h3k4me3_chip: "https://www.encodeproject.org/files/ENCFF751XNB/@@download/ENCFF751XNB.bigWig"
-  h3k27ac_chip: "https://www.encodeproject.org/files/ENCFF686EGU/@@download/ENCFF686EGU.bigWig"
-  h3k27me3_chip: null   # TODO: fill from portal.encodeproject.org
-  ago2_eclip: "https://www.encodeproject.org/files/ENCFF739ZXP/@@download/ENCFF739ZXP.bigWig"
-  hnrnpa1_eclip: "https://www.encodeproject.org/files/ENCFF997SNO/@@download/ENCFF997SNO.bigWig"
+  atac_seq: "https://www.encodeproject.org/files/ENCFF920FUW/@@download/ENCFF920FUW.bigWig"
+  h3k4me3_chip: "https://www.encodeproject.org/files/ENCFF253TOF/@@download/ENCFF253TOF.bigWig"
+  h3k27ac_chip: "https://www.encodeproject.org/files/ENCFF381NDD/@@download/ENCFF381NDD.bigWig"
+  h3k27me3_chip: "https://www.encodeproject.org/files/ENCFF242ENK/@@download/ENCFF242ENK.bigWig"
+  ago2_eclip: "https://www.encodeproject.org/files/ENCFF426YFB/@@download/ENCFF426YFB.bigWig"   # plus strand signal of unique reads
+  hnrnpa1_eclip: "https://www.encodeproject.org/files/ENCFF401DKP/@@download/ENCFF401DKP.bigWig"   # plus strand signal of unique reads
   gro_seq_url: "https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSM1480317&format=file"
   gro_seq_plus_url: null
   gro_seq_minus_url: null
   hic_url: "https://4dn-open-data-public.s3.amazonaws.com/fourfront-webprod/wfoutput/f17b38c6-e2c5-481f-a614-6d4ceb2b3f7e/4DNFI9GMP2J8.hic"
 
 MCF7:
-  atac_seq: "https://www.encodeproject.org/files/ENCFF203YJU/@@download/ENCFF203YJU.bigWig"
-  h3k4me3_chip: "https://www.encodeproject.org/files/ENCFF117RHN/@@download/ENCFF117RHN.bigWig"
-  h3k27ac_chip: "https://www.encodeproject.org/files/ENCFF529PJK/@@download/ENCFF529PJK.bigWig"
-  h3k27me3_chip: null   # TODO: fill from portal.encodeproject.org
-  ago2_eclip: "https://www.encodeproject.org/files/ENCFF582ERI/@@download/ENCFF582ERI.bigWig"
-  hnrnpa1_eclip: "https://www.encodeproject.org/files/ENCFF359SFR/@@download/ENCFF359SFR.bigWig"
+  atac_seq: "https://www.encodeproject.org/files/ENCFF782BVX/@@download/ENCFF782BVX.bigWig"
+  h3k4me3_chip: "https://www.encodeproject.org/files/ENCFF267OQQ/@@download/ENCFF267OQQ.bigWig"
+  h3k27ac_chip: "https://www.encodeproject.org/files/ENCFF063VLJ/@@download/ENCFF063VLJ.bigWig"
+  h3k27me3_chip: "https://www.encodeproject.org/files/ENCFF725VID/@@download/ENCFF725VID.bigWig"
+  ago2_eclip: null
+  hnrnpa1_eclip: null
   gro_seq_url: "https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSM1480323&format=file"
   gro_seq_plus_url: null
   gro_seq_minus_url: null
