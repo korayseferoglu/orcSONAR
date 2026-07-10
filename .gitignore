@@ -12,6 +12,9 @@ data/
 logs/
 results/
 
+# Snakemake working state (derived; regenerated on every run)
+.snakemake/
+
 # Python
 __pycache__/
 *.pyc
@@ -23,6 +26,11 @@ dist/
 build/
 .eggs/
 
+# Virtual environments
+venv/
+.venv/
+env/
+
 # Cache
 data/cache/
 .cache/
@@ -30,8 +38,9 @@ data/cache/
 # Testing & coverage
 .pytest_cache/
 .coverage
+coverage.xml
+junit.xml
 htmlcov/
-*.xml
 
 # Type checking
 .mypy_cache/

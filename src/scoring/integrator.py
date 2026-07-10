@@ -5,7 +5,7 @@ Architecture
 Final Risk = Base_Score × Cell_Modifier   (clamped to [0, 1])
 
 Base_Score  — weighted sum of all five domain scores using configurable weights
-              (default weights from config/config.yaml sum exactly to 1.0).
+              (defaults in config/config.yaml sum exactly to 1.0).
 
 Cell_Modifier — derived from cell-dependent activity signals (chromatin
               accessibility, gene expression, execution context).  A locus
