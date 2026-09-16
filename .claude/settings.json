@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/block-data-writes.py\"",
+            "timeout": 10,
+            "statusMessage": "Checking data/ is untouched"
+          },
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/block-results-writes.py\"",
+            "timeout": 10,
+            "statusMessage": "Checking results/ is untouched"
+          },
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/no-print-in-src.py\"",
+            "timeout": 10,
+            "statusMessage": "Checking for print() in src/"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/ruff-check-src.py\"",
+            "timeout": 40,
+            "statusMessage": "ruff check"
+          }
+        ]
+      }
+    ]
+  }
+}

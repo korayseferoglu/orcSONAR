@@ -1,0 +1,80 @@
+"""Shared helpers for orcSONAR's Claude Code hooks.
+
+Every hook reads the tool-call JSON from stdin, decides, and either exits 0
+(allow) or exits 2 with a reason on stderr (block). Anything unexpected —
+malformed JSON, a tool shape we do not recognise — exits 0: a guard that
+crashes must not wedge the session.
+"""
+
+from __future__ import annotations
+
+import json
+import os
+import sys
+from typing import Any
+
+# .claude/hooks/_hooklib.py -> project root
+PROJECT_ROOT = os.path.realpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
+
+
+def read_payload() -> dict[str, Any]:
+    """Parse the hook payload from stdin, or return {} if it is unusable."""
+    try:
+        data = json.load(sys.stdin)
+    except Exception:
+        return {}
+    return data if isinstance(data, dict) else {}
+
+
+def target_path(payload: dict[str, Any]) -> str | None:
+    """Absolute, symlink- and ``..``-resolved path the tool call writes to."""
+    tool_input = payload.get("tool_input")
+    if not isinstance(tool_input, dict):
+        return None
+    raw = tool_input.get("file_path")
+    if not isinstance(raw, str) or not raw:
+        return None
+    if not os.path.isabs(raw):
+        raw = os.path.join(payload.get("cwd") or PROJECT_ROOT, raw)
+    return os.path.realpath(raw)
+
+
+def under(path: str, *relative_dirs: str) -> bool:
+    """True if ``path`` lies inside one of PROJECT_ROOT/<relative_dir>."""
+    for rel in relative_dirs:
+        root = os.path.realpath(os.path.join(PROJECT_ROOT, rel))
+        if path == root or path.startswith(root + os.sep):
+            return True
+    return False
+
+
+def rel(path: str) -> str:
+    """Path relative to the project root, for readable messages."""
+    try:
+        return os.path.relpath(path, PROJECT_ROOT)
+    except ValueError:
+        return path
+
+
+def written_text(payload: dict[str, Any]) -> str:
+    """All NEW text this call introduces (Write content, Edit/MultiEdit new_string)."""
+    tool_input = payload.get("tool_input")
+    if not isinstance(tool_input, dict):
+        return ""
+    chunks: list[str] = []
+    for key in ("content", "new_string"):
+        value = tool_input.get(key)
+        if isinstance(value, str):
+            chunks.append(value)
+    edits = tool_input.get("edits")
+    if isinstance(edits, list):
+        for edit in edits:
+            if isinstance(edit, dict) and isinstance(edit.get("new_string"), str):
+                chunks.append(edit["new_string"])
+    return "\n".join(chunks)
+
+
+def block(message: str) -> None:
+    """Refuse the tool call: exit 2 with the reason on stderr."""
+    sys.stderr.write(message.rstrip() + "\n")
+    sys.exit(2)
