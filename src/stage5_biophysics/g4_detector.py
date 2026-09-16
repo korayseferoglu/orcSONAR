@@ -215,7 +215,7 @@ def run(
     config = OrcSonarConfig()
 
     for s in sites:
-        site_id = f"{s['gene']}:{s['transcript_id']}"
+        site_id = s["site_id"]
         seq = ""
         try:
             seq = get_transcript_sequence(s["transcript_id"], config)

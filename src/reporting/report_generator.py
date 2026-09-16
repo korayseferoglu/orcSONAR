@@ -47,16 +47,26 @@ def _parse_offtarget_sites(raw: list[dict[str, Any]]) -> list[OffTargetSite]:
                 end=region_data.get("end", 1),
                 strand=region_data.get("strand", "."),
             )
-            sites.append(
-                OffTargetSite(
-                    gene=item["gene"],
-                    transcript_id=item["transcript_id"],
-                    region=region,
-                    seed_match_type=item.get("seed_match_type", "mismatch"),
-                    mismatches=item.get("mismatches", 0),
-                    alignment_score=item.get("alignment_score", 0.0),
-                )
+            site = OffTargetSite(
+                gene=item["gene"],
+                transcript_id=item["transcript_id"],
+                region=region,
+                seed_match_type=item.get("seed_match_type", "mismatch"),
+                mismatches=item.get("mismatches", 0),
+                alignment_score=item.get("alignment_score", 0.0),
             )
+            # site_id is recomputed here from the fields, while stages 2-6 keyed
+            # their results on the value stored in the JSON. If the two ever
+            # disagree the report joins on a different key than the pipeline did
+            # — and the model ignores extra keys, so nothing would complain.
+            stored = item.get("site_id")
+            if stored is not None and stored != site.site_id:
+                logger.warning(
+                    f"report_generator: stored site_id {stored!r} disagrees with the id "
+                    f"recomputed from its own fields ({site.site_id!r}) — the report may "
+                    f"join scores onto the wrong site"
+                )
+            sites.append(site)
         except Exception as exc:
             logger.warning(f"report_generator: skipping malformed site: {exc}")
     return sites

@@ -395,3 +395,82 @@ daha ucuz bir düzeltme ve tüm domainleri aynı anda doğru lokusa oturtur.
 
 **Nasıl bulundu:** `/verify-run` skill'inin 3. kontrolü (stage'ler arası
 koordinat tutarlılığı). Bu tam olarak kontrolün var oluş sebebi.
+
+---
+
+## BULGU-8 (KRİTİK) — `seed_aligner` splice-blind; çok-ekzonlu her transkriptin genomik koordinatı yanlış
+
+**Bulundu:** 2026-09-16, Bulgu-2 düzeltmesi sırasında koordinat üretim zinciri
+okunurken.
+
+`src/stage2_offtarget_scan/seed_aligner.py:105-112` bir **cDNA ofsetini genomik
+bir koordinata ekliyor**:
+
+```python
+if t_info.strand == "+":
+    g_start = t_info.start + win_start
+else:
+    g_start = max(0, t_info.end - win_end)
+```
+
+`win_start`/`win_end`, hizalama penceresinin **spliced transkript** içindeki
+ofsetleri. Doğrulandı: `transcriptome_fetcher.py:346` Ensembl `/sequence/id`
+uç noktasını `{"type": "cdna"}` ile çağırıyor — yani diziler intronsuz.
+`t_info.start`/`end` ise **genomik** span sınırları, ve `TranscriptInfo`
+(`models.py:61-71`) hiç ekzon yapısı taşımıyor. İkisini toplamak geni
+intronsuzmuş gibi ele almak demek. Kodun kendi yorumu da kabul ediyor:
+"Approximate genomic coordinates (mRNA is spliced; coordinates are indicative)".
+
+**Büyüklük** (VEGFA_HeLa koşusunun kendi aritmetiğinden türetildi):
+
+```
+MTOR ENST00000361445, eksi iplik, 58 ekzon
+  türetilen çapa t_info.end = 11.262.551   (= MTOR'un hg38 genomik bitişi)
+  gerçek lokus    chr1:11.106.551-11.262.551   156 kb
+  üretilebilir aralık chr1:11.253.851-11.262.551   8,7 kb  (= cDNA uzunluğu)
+  -> 147 kb, genin %94'ü hiçbir zaman üretilemiyor
+  gözlenen iki hit (11.255.438 / 11.259.515) bu üstteki 8,7 kb'de — öngörüldüğü gibi
+```
+
+mRNA'nın 3' ucuna yakın bir hit, eksi iplikli bir gende chr1:11.106.551
+civarına düşmeli; dolayısıyla en kötü durumda sapma 147 kb'ye yaklaşıyor.
+
+**Kapsam Bulgu-2'den çok daha geniş:** 11 duplike site değil, çok-ekzonlu
+**her** transkriptteki **her** site. Genomik lokus okuyan ve bu yüzden yanlış
+yerden ölçen kaynaklar: COSMIC, gnomAD, ClinVar, phyloP, ATAC, histon ChIP,
+GRO-seq, Hi-C, Ago2, RBP, m6A, circRNA, RepeatMasker. Etkilenmeyenler (dizi-
+veya transkript-tabanlı): SHAPE, ΔG, G4, miRBase seed örtüşmesi, immün
+motifler, CCLE (gen anahtarlı).
+
+**Düzeltme yönü:** `TranscriptInfo`'ya ekzon yapısı eklenmeli (Ensembl
+`/lookup/id?expand=1`) ve cDNA→genomik dönüşüm skaler ofset toplamak yerine
+ekzonlar üzerinde yürümeli. Kendi oturumunun işi.
+
+**Bulgu-2 ile ilişkisi — karıştırılmamalı.** Bulgu-2 düzeltmesi tüm stage'lerin
+**aynı** lokusu okumasını sağlıyor; o lokusun **doğru** olmasını sağlamıyor.
+`/verify-run` 3. kontrolünün yeşil olması "stage'ler artık anlaşıyor" demek,
+"koordinat biyolojik olarak doğru" demek değil.
+
+---
+
+## BULGU-9 — HTML rapordaki risk rozeti config'in kullanmadığı ağırlıklarla hesaplanıyor
+
+`src/reporting/html_report.py:25-31` kendi `_DEFAULT_WEIGHTS` sabitini
+tanımlıyor; `_weighted_score` (`:53-61`) ve ardından `classify()` (`:152`)
+site başına rozeti bu sabitlerden **ve hücre modifieri uygulanmadan**
+hesaplıyor. `stage7_classification.json` ise `config/config.yaml` ağırlıklarını
+ve `apply_cell_modifier`'ı kullanıyor.
+
+Yani aynı site için HTML rozeti ile JSON'daki `risk_class` birbirinden farklı
+olabilir; ikisi farklı formülün çıktısı. Rapor, kullanıcının gördüğü yüzey
+olduğu için bu sessiz bir tutarsızlık.
+
+---
+
+## Ufak notlar (düzeltilmedi)
+
+- `src/stage4_epigenetic/epigenetic_merger.py:102-107` — `all_site_ids`
+  birleşimine `h3k27ac_signals` dahil edilmemiş; yalnızca o kaynakta görünen
+  bir site sessizce düşer.
+- `src/reporting/report_generator.py:39-62` — `_parse_offtarget_sites`
+  `tx_start`/`tx_end` alanlarını rapora taşımıyor.

@@ -10,7 +10,7 @@ from typing import Any
 from loguru import logger
 
 from src.stage6_execution.circrna_sponge import check_circrna_overlap
-from src.core.models import GenomicRegion
+from src.core.site_keys import site_ids_and_regions
 
 
 def run(
@@ -41,14 +41,7 @@ def run(
         logger.warning(f"circrna_checker: cannot load offtargets: {exc}")
 
     sites: list[dict] = offtargets.get("offtarget_sites", [])
-    regions: list[GenomicRegion] = []
-    site_ids: list[str] = []
-    for s in sites:
-        try:
-            regions.append(GenomicRegion(**s["region"]))
-            site_ids.append(f"{s['gene']}:{s['transcript_id']}")
-        except Exception:
-            pass
+    site_ids, regions = site_ids_and_regions(sites, caller="circrna_checker")
 
     # Look for a BED file in the circAtlas directory
     circrna_bed: str | None = None
@@ -67,11 +60,11 @@ def run(
     if regions:
         try:
             results = check_circrna_overlap(regions, circrna_bed)
-            for site_id, res in zip(site_ids, results):
+            for site_id, res in zip(site_ids, results, strict=True):
                 circrna_results[site_id] = res.model_dump()
         except Exception as exc:
             logger.warning(f"circrna_checker: check failed: {exc} — using neutral")
-            for site_id, region in zip(site_ids, regions):
+            for site_id, region in zip(site_ids, regions, strict=True):
                 circrna_results[site_id] = {
                     "region": region.model_dump(),
                     "overlapping_circrnas": [],

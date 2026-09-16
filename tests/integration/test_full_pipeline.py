@@ -35,15 +35,30 @@ _GENE = "VEGFA"
 _CELL = "HeLa"
 _SARNA = "GCAACCAUAGCCUCGGCCGC"
 
-_SITE_A = "BRCA1:ENST00000357654"
-_SITE_B = "TP53:ENST00000269305"
-
 _REGION_A = {"chrom": "chr17", "start": 41196312, "end": 41196332, "strand": "+"}
 _REGION_B = {"chrom": "chr17", "start": 7674220, "end": 7674240, "strand": "-"}
 
+# Site ids are derived from the regions so the two can never drift apart — a
+# site whose coordinates contradict its own id is exactly the state this suite
+# exists to catch (AUDIT.md Bulgu-2). Layout: gene:transcript:chrom:start.
+_SITE_A = f"BRCA1:ENST00000357654:{_REGION_A['chrom']}:{_REGION_A['start']}"
+_SITE_B = f"TP53:ENST00000269305:{_REGION_B['chrom']}:{_REGION_B['start']}"
+
+
+def _region_from_id(site_id: str) -> dict[str, Any]:
+    """Rebuild a region from a site id, so ad-hoc ids get coherent coordinates."""
+    for known, region in ((_SITE_A, _REGION_A), (_SITE_B, _REGION_B)):
+        if site_id == known:
+            return region
+    parts = site_id.split(":")
+    if len(parts) >= 4:
+        start = int(parts[3])
+        return {"chrom": parts[2], "start": start, "end": start + 20, "strand": "+"}
+    return dict(_REGION_A)
+
 
 def _offtarget_site(site_id: str, region: dict[str, Any]) -> dict[str, Any]:
-    gene, tid = site_id.split(":")
+    gene, tid = site_id.split(":")[:2]
     return {
         "gene": gene,
         "transcript_id": tid,
@@ -51,6 +66,9 @@ def _offtarget_site(site_id: str, region: dict[str, Any]) -> dict[str, Any]:
         "seed_match_type": "perfect",
         "mismatches": 0,
         "alignment_score": 0.92,
+        # Stages 2-6 key their results on this value; score_integrator's
+        # consistency gate rejects any domain key that is not in this set.
+        "site_id": site_id,
     }
 
 
@@ -61,7 +79,7 @@ def _stage2(
     seq_scores: dict[str, float] | None = None,
 ) -> str:
     sites = [_SITE_A, _SITE_B] if sites is None else sites
-    regions = {_SITE_A: _REGION_A, _SITE_B: _REGION_B}
+    regions = {s: _region_from_id(s) for s in sites}
     seq_scores = {s: 0.40 for s in sites} if seq_scores is None else seq_scores
 
     payload: dict[str, Any] = {
@@ -890,3 +908,112 @@ class TestVEGFAHeLaPipeline:
         ctx = scores_data["cell_context"]
         for key in ("atac_score", "expression_score", "execution_score"):
             assert key in ctx, f"cell_context missing {key}"
+
+
+class TestSiteIdentityUniqueness:
+    """Regression guard for AUDIT.md Bulgu-2.
+
+    The seed scan can return several hits for one transcript. While site ids
+    were `gene:transcript`, those hits collided: each stage's dict kept one and
+    the stages did not keep the same one, so sites carried other sites'
+    measurements and 11 of 41 never reached the report. These tests fail if the
+    identity key stops separating two hits on one transcript.
+    """
+
+    # Two windows on the same transcript, 4077 bp apart — the exact MTOR case
+    # from the audit.
+    _HIT_STRONG = "MTOR:ENST00000361445:chr1:11255438"
+    _HIT_WEAK = "MTOR:ENST00000361445:chr1:11259515"
+
+    def test_two_hits_on_one_transcript_stay_separate(self, tmp_path: Path) -> None:
+        sites = [self._HIT_STRONG, self._HIT_WEAK]
+        scores_data, classif_data, _, html_path = _run_full(tmp_path, sites=sites)
+
+        assert len(scores_data["domain_scores"]) == 2, (
+            "two hits on one transcript collapsed into one score record — "
+            "the site id is not unique again"
+        )
+        assert len(scores_data["base_scores"]) == 2
+        assert len(classif_data["site_classifications"]) == 2
+        assert set(scores_data["domain_scores"]) == set(sites)
+
+        html = html_path.read_text(encoding="utf-8")
+        assert html.count("<tr>") >= 2, "both hits must render their own report row"
+        assert "11255438" in html and "11259515" in html, (
+            "each row must show its own locus, otherwise the two are "
+            "indistinguishable to the reader"
+        )
+
+    def test_site_count_parity_across_stages(self, tmp_path: Path) -> None:
+        """Every stage must carry as many sites as stage 2 emitted hits."""
+        sites = [self._HIT_STRONG, self._HIT_WEAK, _SITE_A, _SITE_B]
+        scores_data, classif_data, json_path, _ = _run_full(tmp_path, sites=sites)
+
+        n = len(sites)
+        assert len({*sites}) == n, "test fixture itself must use unique ids"
+        assert len(scores_data["offtarget_sites"]) == n
+        assert len(scores_data["domain_scores"]) == n
+        assert len(classif_data["site_classifications"]) == n
+
+        report = json.loads(json_path.read_text(encoding="utf-8"))
+        assert len(report["offtarget_sites"]) == n
+        assert len(report["domain_scores_per_site"]) == n, (
+            "final_report.json listed a different number of sites than it scored — "
+            "this is the exact 41-vs-30 asymmetry of Bulgu-2"
+        )
+
+    def test_mis_keyed_stage_is_rejected_not_averaged(self, tmp_path: Path) -> None:
+        """A stage keyed on the old format must raise, not score neutral.
+
+        Every merger falls back to a neutral 0.5 on a missing key, so without
+        the gate in score_integrator a mis-keyed stage produces plausible wrong
+        numbers instead of an error.
+        """
+        sites = [_SITE_A, _SITE_B]
+        s2 = _stage2(tmp_path, sites=sites)
+        s3 = _stage3(tmp_path, sites=["BRCA1:ENST00000357654"])  # legacy 2-part key
+        s4 = _stage4(tmp_path, sites=sites)
+        s5 = _stage5(tmp_path, sites=sites)
+        s6 = _stage6(tmp_path, sites=sites)
+
+        with pytest.raises(ValueError, match="site id"):
+            score_integrator_run(
+                offtargets_path=s2,
+                variants_path=s3,
+                epigenetic_path=s4,
+                biophysics_path=s5,
+                execution_path=s6,
+                weights=_DEFAULT_WEIGHTS,
+                output_path=str(tmp_path / "stage7_scores.json"),
+                log_path=str(tmp_path / "logs" / "s.log"),
+            )
+
+    def test_site_survives_when_every_domain_drops_it(self, tmp_path: Path) -> None:
+        """Stage 2 decides which sites exist; the domains only measure them.
+
+        A site no domain could measure must still be scored (neutral) and
+        reported. Deriving the site list from the domains instead would let it
+        vanish — the Bulgu-2 asymmetry one level down.
+        """
+        all_sites = [_SITE_A, _SITE_B]
+        measured = [_SITE_A]  # every domain failed on _SITE_B
+
+        s2 = _stage2(tmp_path, sites=all_sites, seq_scores={s: 0.4 for s in measured})
+        s3 = _stage3(tmp_path, sites=measured)
+        s4 = _stage4(tmp_path, sites=measured)
+        s5 = _stage5(tmp_path, sites=measured)
+        s6 = _stage6(tmp_path, sites=measured)
+
+        scores_path = str(tmp_path / "stage7_scores.json")
+        score_integrator_run(
+            offtargets_path=s2, variants_path=s3, epigenetic_path=s4,
+            biophysics_path=s5, execution_path=s6, weights=_DEFAULT_WEIGHTS,
+            output_path=scores_path, log_path=str(tmp_path / "logs" / "s.log"),
+        )
+        data = json.loads(Path(scores_path).read_text(encoding="utf-8"))
+        assert set(data["domain_scores"]) == set(all_sites), (
+            "a site every domain dropped disappeared from the scores instead of "
+            "scoring neutral"
+        )
+        unmeasured = data["domain_scores"][_SITE_B]
+        assert all(v == 0.5 for v in unmeasured.values()), unmeasured

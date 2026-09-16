@@ -8,6 +8,7 @@ import pysam
 from loguru import logger
 
 from src.core.models import GenomicRegion, M6AResult, M6ASite
+from src.core.site_keys import site_ids_and_regions
 
 # Column indices in the m6A BED file (0-based)
 _COL_CHROM = 0
@@ -168,8 +169,6 @@ def run(
     logger.add(log_path, level="DEBUG")
     logger.add(sys.stderr, level="INFO")
 
-    from src.core.models import GenomicRegion
-
     offtargets: dict[str, Any] = {}
     try:
         offtargets = json.loads(_Path(offtargets_path).read_text(encoding="utf-8"))
@@ -177,24 +176,17 @@ def run(
         logger.warning(f"m6a_mapper.run: cannot load offtargets: {exc}")
 
     sites: list[dict] = offtargets.get("offtarget_sites", [])
-    regions: list[GenomicRegion] = []
-    site_ids: list[str] = []
-    for s in sites:
-        try:
-            regions.append(GenomicRegion(**s["region"]))
-            site_ids.append(f"{s['gene']}:{s['transcript_id']}")
-        except Exception:
-            pass
+    site_ids, regions = site_ids_and_regions(sites, caller="m6a_mapper")
 
     m6a_results: dict[str, Any] = {}
     if regions:
         try:
             results = scan_m6a_sites(regions, cell_line, m6a_bed)
-            for site_id, res in zip(site_ids, results):
+            for site_id, res in zip(site_ids, results, strict=True):
                 m6a_results[site_id] = res.model_dump()
         except Exception as exc:
             logger.warning(f"m6a_mapper.run: scan failed: {exc} — using neutral")
-            for site_id, region in zip(site_ids, regions):
+            for site_id, region in zip(site_ids, regions, strict=True):
                 m6a_results[site_id] = {
                     "region": region.model_dump(), "cell_line": cell_line,
                     "sites": [], "site_count": 0, "m6a_score": 0.0,

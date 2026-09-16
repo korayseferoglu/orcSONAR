@@ -71,15 +71,18 @@ def _make_report(
     n_sites: int = 2,
 ) -> FinalReport:
     sites = [_make_site(f"GENE{i}", f"ENST{i:08d}") for i in range(n_sites)]
+    # Key off the model's own site_id rather than a hand-written literal, so the
+    # scores cannot be keyed differently from the sites they describe — which is
+    # the failure this file's join tests are meant to detect (AUDIT.md Bulgu-2).
     domain_map = {
-        f"GENE{i}:ENST{i:08d}": _make_domain(
+        site.site_id: _make_domain(
             seq=0.1 * (i + 1),
             var=0.2,
             epi=0.3,
             bio=0.4,
             exc=0.1,
         )
-        for i in range(n_sites)
+        for i, site in enumerate(sites)
     }
     return FinalReport(
         sarna_input=_make_input(),

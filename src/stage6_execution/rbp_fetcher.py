@@ -11,7 +11,7 @@ from loguru import logger
 
 from src.stage6_execution.rbp_competition import assess_rbp_competition
 from src.core.config import OrcSonarConfig
-from src.core.models import GenomicRegion
+from src.core.site_keys import site_ids_and_regions
 
 
 def run(
@@ -34,25 +34,18 @@ def run(
         logger.warning(f"rbp_fetcher: cannot load offtargets: {exc}")
 
     sites: list[dict] = offtargets.get("offtarget_sites", [])
-    regions: list[GenomicRegion] = []
-    site_ids: list[str] = []
-    for s in sites:
-        try:
-            regions.append(GenomicRegion(**s["region"]))
-            site_ids.append(f"{s['gene']}:{s['transcript_id']}")
-        except Exception:
-            pass
+    site_ids, regions = site_ids_and_regions(sites, caller="rbp_fetcher")
 
     rbp_results: dict[str, Any] = {}
     if regions:
         try:
             config = OrcSonarConfig(cell_line=cell_line)
             results = assess_rbp_competition(regions, cell_line, config, cell_lines_cfg)
-            for site_id, res in zip(site_ids, results):
+            for site_id, res in zip(site_ids, results, strict=True):
                 rbp_results[site_id] = res.model_dump()
         except Exception as exc:
             logger.warning(f"rbp_fetcher: assessment failed: {exc} — using neutral")
-            for site_id, region in zip(site_ids, regions):
+            for site_id, region in zip(site_ids, regions, strict=True):
                 rbp_results[site_id] = {
                     "region": region.model_dump(), "cell_line": cell_line,
                     "rbp_name": "hnRNPA1", "raw_signal": 0.0,

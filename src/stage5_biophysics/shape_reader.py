@@ -46,7 +46,7 @@ def run(
     sites: list[dict] = offtargets.get("offtarget_sites", [])
     shape_results: dict[str, Any] = {}
     for s in sites:
-        site_id = f"{s['gene']}:{s['transcript_id']}"
+        site_id = s["site_id"]
         try:
             region = GenomicRegion(**s["region"])
             result = get_shape_accessibility(
@@ -67,12 +67,13 @@ def run(
                 "single_stranded_fraction": 0.5,
                 "data_available": False,
             }
-        # Multiple off-target windows can map to the same gene:transcript pair.
-        # Prefer the window that produced real measured icSHAPE signal over a
-        # neutral fallback so signal is not silently overwritten.
-        existing = shape_results.get(site_id)
-        if existing is None or _better(new_payload, existing):
-            shape_results[site_id] = new_payload
+        # site_id includes the locus, so each window has its own key and no
+        # window can overwrite another. This used to prefer the window with real
+        # signal over a neutral fallback, which is why SHAPE reported a
+        # different locus than every other stage (AUDIT.md Bulgu-2). Sites that
+        # previously borrowed a sibling window's measured signal now correctly
+        # report their own — including its absence.
+        shape_results[site_id] = new_payload
 
     n_with_data = sum(1 for v in shape_results.values() if v.get("data_available"))
     n_with_signal = sum(1 for v in shape_results.values() if _has_signal(v))
@@ -97,12 +98,3 @@ def _has_signal(payload: dict[str, Any]) -> bool:
         payload.get("accessibility_score") == 0.5
         and payload.get("single_stranded_fraction") == 0.5
     )
-
-
-def _better(new: dict[str, Any], existing: dict[str, Any]) -> bool:
-    """Return True when *new* carries strictly more icSHAPE signal than *existing*."""
-    if _has_signal(new) and not _has_signal(existing):
-        return True
-    if new.get("data_available") and not existing.get("data_available"):
-        return True
-    return False

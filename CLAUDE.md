@@ -20,11 +20,25 @@ passing, each is its own session's work.
 |---|---|---|
 | Off-target search space (Bulgu-6) | `_BACKGROUND_GENES` in `src/stage2_offtarget_scan/transcriptome_fetcher.py` is a hand-curated **183-gene** set fetched over Ensembl REST. Not the transcriptome. | Full GENCODE scan (~250k transcripts) with a local seed index; thresholds must be recalibrated. |
 | ΔG (Bulgu-1) | `src/stage5_biophysics/delta_g_calculator.py` uses the reverse complement of the saRNA **itself** as the duplex target, never the off-target mRNA. Every site in a run gets one identical, **positive** ΔG (+31.1 for VEGFA_HeLa) → `risk_score` 0.0 everywhere. The biophysics pillar is decorative. | Real per-site duplex ΔG. Blocked on stage 2: `stage2_offtargets.json` stores coordinates and `tx_start`/`tx_end`, not the sequence. |
-| Cross-stage coordinates (Bulgu-2) | For the same site, stage 3 (COSMIC, phyloP) and stage 6 (Ago2) query a locus ~4 kb away from the stage 2 seed hit. | One region per off-target, shared by all stages. |
+| Genomic coordinates are splice-blind (Bulgu-8) | `seed_aligner.py:105-112` adds a **cDNA** offset (`transcriptome_fetcher.py:346` fetches `type="cdna"`) to a **genomic** span boundary, and `TranscriptInfo` carries no exon structure. Every site on a multi-exon transcript is placed wrongly: for MTOR only the top 8.7 kb of a 156 kb gene is reachable, so 94% of the locus can never be emitted. Affects every genomic-locus source (COSMIC, gnomAD, ClinVar, phyloP, ATAC, ChIP, GRO-seq, Hi-C, Ago2, RBP, m6A, circRNA, RepeatMasker); not SHAPE/ΔG/G4/miRBase/immune/CCLE. | Exon structure on `TranscriptInfo` (Ensembl `/lookup/id?expand=1`) and a cDNA→genomic walk over exons. |
 
 Two docstrings still claim "~250 genes" (`transcriptome_fetcher.py:133`,
-`seed_aligner.py:311`) — also wrong; the list is 183. Coverage is uneven too: pure-logic
+`seed_aligner.py:326`) — also wrong; the list is 183. Coverage is uneven too: pure-logic
 modules 95-100%, the `run()` adapters and mergers Snakemake actually calls 0% (Bulgu-3).
+
+**Fixed 2026-09-17 — Bulgu-2 (site identity).** A site is identified by
+`OffTargetSite.site_id`, a `@computed_field` in `src/core/models.py`:
+`gene:transcript:chrom:start`. Stage 2 emits it, every other stage keys on it
+**verbatim** — never rebuild the string, that drift is what caused the bug. Field order
+is load-bearing (`epigenetic_merger` takes field 0 as the gene, the HTML template field
+1 as the transcript); `tests/unit/test_models.py::test_site_id_layout` pins it.
+`score_integrator` raises if any stage carries a site id stage 2 did not emit. Verified:
+VEGFA_HeLa 41 hits → 41 records in every stage, zero cross-stage coordinate divergence.
+**Caveat: that means the stages now agree on a locus, not that the locus is right —
+see Bulgu-8.**
+
+The other three runs under `results/` (VEGFA_K562, CEBPA_HepG2, MYC_K562) predate this
+and still carry two-part ids; re-run them before comparing against VEGFA_HeLa.
 
 ## Pipeline Stages (Dependency Order)
 1 Genomic map (TSS from EPDnew + FANTOM5, transcript models → promoter window −1000 /

@@ -11,7 +11,7 @@ from loguru import logger
 
 from src.stage4_epigenetic.hic_contacts import HiCContactReader
 from src.core.config import OrcSonarConfig
-from src.core.models import GenomicRegion
+from src.core.site_keys import site_ids_and_regions
 
 
 def run(
@@ -34,14 +34,7 @@ def run(
         logger.warning(f"hic_fetcher: cannot load offtargets: {exc}")
 
     sites: list[dict] = offtargets.get("offtarget_sites", [])
-    regions: list[GenomicRegion] = []
-    site_ids: list[str] = []
-    for s in sites:
-        try:
-            regions.append(GenomicRegion(**s["region"]))
-            site_ids.append(f"{s['gene']}:{s['transcript_id']}")
-        except Exception:
-            pass
+    site_ids, regions = site_ids_and_regions(sites, caller="hic_fetcher")
 
     hic_contacts: dict[str, float] = {}
     if regions:
@@ -52,7 +45,7 @@ def run(
             # (Hi-C measures contact between the saRNA target locus and off-target loci)
             target_region = regions[0]
             results = reader.get_contacts_bulk(target_region, regions, cell_line)
-            for site_id, res in zip(site_ids, results):
+            for site_id, res in zip(site_ids, results, strict=True):
                 hic_contacts[site_id] = round(res.contact_frequency, 6)
         except Exception as exc:
             logger.warning(f"hic_fetcher: extraction failed: {exc} — using 0.0")

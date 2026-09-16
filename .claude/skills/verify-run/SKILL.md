@@ -32,10 +32,18 @@ one exists, use it and say so.
 ## Project facts you need (this skill does not inherit CLAUDE.md)
 
 - Genome build is **hg38/GRCh38** throughout.
-- Site ids are `GENE:TRANSCRIPT`, e.g. `MTOR:ENST00000361445`.
-- Stage 2 writes a **list** of seed hits; stages 3–6 store a **dict keyed by
-  gene:transcript**, so a site with several hits is silently collapsed to one.
-  This is the mechanism behind the coordinate check below.
+- Site ids are `GENE:TRANSCRIPT:CHROM:START`, e.g.
+  `MTOR:ENST00000361445:chr1:11255438` — defined once as a computed field on
+  `OffTargetSite` (`src/core/models.py`) and stored in the stage-2 JSON. Runs
+  made before that fix carry the old two-part `GENE:TRANSCRIPT` id.
+- Stage 2 writes a **list** of seed hits and can record several for one
+  transcript; stages 3–6 store dicts keyed by site id. While the id was only
+  `gene:transcript` those hits collided and each stage kept a different one —
+  the mechanism behind check 3 (AUDIT.md Bulgu-2).
+- **Coordinates being consistent is not the same as being correct.** Check 3
+  going green means the stages agree on a locus, not that the locus is right:
+  the genomic coordinates are computed splice-blind (AUDIT.md Bulgu-8). Never
+  report a green check 3 as biological accuracy.
 - Graceful degradation is projectwide: a failed data source logs a warning and
   substitutes a **neutral 0.5**. That is why a completely dead source produces
   plausible-looking output instead of an error.
@@ -87,7 +95,7 @@ documented findings — report them as confirmations, not discoveries:
 | Expect to see | Known as |
 |---|---|
 | ΔG identical across all sites, value `+31.1` | AUDIT.md Bulgu-1 |
-| stages 3/6 ~4 kb from the stage-2 hit (MTOR: 4077 bp) | AUDIT.md Bulgu-2 |
+| stages 3/6 ~4 kb from the stage-2 hit (MTOR: 4077 bp) — **only in runs made before the site_id fix** | AUDIT.md Bulgu-2 |
 | all scores compressed into 0.30–0.41, top classes dead | AUDIT.md Bulgu-4 |
 | large neutral-0.5 populations, e.g. SHAPE | AUDIT.md Bulgu-5 |
 

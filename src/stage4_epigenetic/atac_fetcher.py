@@ -11,7 +11,7 @@ from loguru import logger
 
 from src.stage4_epigenetic.chromatin_access import ATACSeqReader
 from src.core.config import OrcSonarConfig
-from src.core.models import GenomicRegion
+from src.core.site_keys import site_ids_and_regions
 
 
 def run(
@@ -34,14 +34,7 @@ def run(
         logger.warning(f"atac_fetcher: cannot load offtargets: {exc}")
 
     sites: list[dict] = offtargets.get("offtarget_sites", [])
-    regions: list[GenomicRegion] = []
-    site_ids: list[str] = []
-    for s in sites:
-        try:
-            regions.append(GenomicRegion(**s["region"]))
-            site_ids.append(f"{s['gene']}:{s['transcript_id']}")
-        except Exception:
-            pass
+    site_ids, regions = site_ids_and_regions(sites, caller="atac_fetcher")
 
     atac_signals: dict[str, float] = {}
     if regions:
@@ -49,7 +42,7 @@ def run(
             config = OrcSonarConfig()
             reader = ATACSeqReader(config, cell_lines_yaml=cell_lines_cfg)
             signals = reader.get_accessibility_bulk(regions, cell_line)
-            for site_id, sig in zip(site_ids, signals):
+            for site_id, sig in zip(site_ids, signals, strict=True):
                 atac_signals[site_id] = round(sig, 4)
         except Exception as exc:
             logger.warning(f"atac_fetcher: signal extraction failed: {exc} — using 0.0")

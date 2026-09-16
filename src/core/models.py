@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Literal, Optional
 
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field, computed_field, field_validator
 
 
 class GenomicRegion(BaseModel):
@@ -120,6 +120,36 @@ class OffTargetSite(BaseModel):
     alignment_score: float
     tx_start: Optional[int] = Field(default=None, ge=0)
     tx_end: Optional[int] = Field(default=None, ge=0)
+
+    @computed_field  # type: ignore[prop-decorator]
+    @property
+    def site_id(self) -> str:
+        """Canonical identity of this site, unique across a run.
+
+        The seed scan can return several hits for one transcript, so
+        ``gene:transcript_id`` alone is NOT unique — keying a dict on it makes
+        one hit silently overwrite another (AUDIT.md Bulgu-2). The locus is
+        what separates them.
+
+        FIELD ORDER IS LOAD-BEARING and pinned by
+        ``tests/unit/test_models.py::test_site_id_layout``:
+
+        * field 0 is the gene — ``epigenetic_merger`` recovers it with
+          ``split(":", 1)[0]`` for the CCLE lookup, which is keyed by gene.
+        * field 1 is the transcript — ``templates/report.html`` renders it.
+
+        Reordering these breaks both silently: the CCLE lookup would miss for
+        every site and degrade to 0.0, still producing in-range scores.
+
+        Strand is deliberately absent: it comes from the transcript, so with
+        ``transcript_id`` already present it disambiguates nothing. It stays
+        available on ``region.strand``.
+
+        The number is ``region.start`` as the aligner produced it — an
+        identifier, not a display coordinate. Never parse it back out to do
+        arithmetic; ``region`` is the source of truth for coordinates.
+        """
+        return f"{self.gene}:{self.transcript_id}:{self.region.chrom}:{self.region.start}"
 
 
 class RepeatEntry(BaseModel):

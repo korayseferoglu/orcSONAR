@@ -11,7 +11,7 @@ from loguru import logger
 
 from src.stage4_epigenetic.transcription_run import GROseqReader
 from src.core.config import OrcSonarConfig
-from src.core.models import GenomicRegion
+from src.core.site_keys import site_ids_and_regions
 
 
 def run(
@@ -34,14 +34,7 @@ def run(
         logger.warning(f"groseq_fetcher: cannot load offtargets: {exc}")
 
     sites: list[dict] = offtargets.get("offtarget_sites", [])
-    regions: list[GenomicRegion] = []
-    site_ids: list[str] = []
-    for s in sites:
-        try:
-            regions.append(GenomicRegion(**s["region"]))
-            site_ids.append(f"{s['gene']}:{s['transcript_id']}")
-        except Exception:
-            pass
+    site_ids, regions = site_ids_and_regions(sites, caller="groseq_fetcher")
 
     groseq_signals: dict[str, float] = {}
     if regions:
@@ -49,7 +42,7 @@ def run(
             config = OrcSonarConfig()
             reader = GROseqReader(config, cell_lines_yaml=cell_lines_cfg)
             results = reader.get_transcription_bulk(regions, cell_line)
-            for site_id, res in zip(site_ids, results):
+            for site_id, res in zip(site_ids, results, strict=True):
                 groseq_signals[site_id] = round(res.combined_signal, 4)
         except Exception as exc:
             logger.warning(f"groseq_fetcher: extraction failed: {exc} — using 0.0")

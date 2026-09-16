@@ -42,6 +42,57 @@ def _clamp(value: Any) -> float:
     return max(0.0, min(1.0, v))
 
 
+def _check_site_id_consistency(
+    offtarget_sites: list[dict[str, Any]],
+    score_maps: dict[str, dict[str, Any]],
+) -> None:
+    """Refuse to score if any stage keyed its results on something else.
+
+    This is the one point where all five domains' key sets converge, which
+    makes it the only place a mis-keyed stage can be caught. It has to be
+    caught: every merger looks up with ``.get(site_id, {})`` and falls back to
+    a neutral 0.5, so a key mismatch never raises — it quietly produces
+    plausible, wrong scores (AUDIT.md Bulgu-2).
+
+    The asymmetry is deliberate:
+
+    * an **unknown** key (present in a domain, absent from stage 2) can only
+      mean that stage built its key differently — raise.
+    * a **missing** key (in stage 2, absent from a domain) is legitimate:
+      producers drop sites they cannot process via ``except Exception``. Warn
+      and name them, so a real regression is still visible.
+
+    Raises:
+        ValueError: if any domain carries a site id stage 2 never emitted.
+    """
+    expected = {s["site_id"] for s in offtarget_sites if isinstance(s, dict) and "site_id" in s}
+    if not expected:
+        logger.error(
+            "score_integrator: stage2_offtargets.json carries no site_id field — "
+            "cross-stage consistency gate SKIPPED. This run predates the Bulgu-2 fix; "
+            "its per-site scores may be attributed to the wrong locus."
+        )
+        return
+
+    for name, scores in score_maps.items():
+        unknown = set(scores) - expected
+        if unknown:
+            sample = sorted(unknown)[:5]
+            raise ValueError(
+                f"score_integrator: {name} contains {len(unknown)} site id(s) that "
+                f"stage 2 never emitted, e.g. {sample}. A stage is building site ids "
+                f"differently from src.core.models.OffTargetSite.site_id — scoring "
+                f"would silently attribute these to the wrong site."
+            )
+        missing = expected - set(scores)
+        if missing:
+            sample = sorted(missing)[:5]
+            logger.warning(
+                f"score_integrator: {name} is missing {len(missing)} of {len(expected)} "
+                f"sites (they will score neutral {_NEUTRAL}), e.g. {sample}"
+            )
+
+
 def _load(path: str) -> dict[str, Any]:
     p = Path(path)
     if not p.exists():
@@ -100,21 +151,42 @@ def run(
 
     integrator = ScoreIntegrator()
 
+    _check_site_id_consistency(
+        offtarget_sites,
+        {
+            "sequence_scores": sequence_scores,
+            "variant_scores": variant_scores,
+            "epigenetic_scores": epigenetic_scores,
+            "biophysics_scores": biophysics_scores,
+            "execution_scores": execution_scores,
+        },
+    )
+
     domain_scores_out: dict[str, dict[str, float]] = {}
     base_scores_out: dict[str, float] = {}
 
+    # Stage 2 decides which sites exist; the domains only measure them. Taking
+    # the union of the domain dicts instead would drop any site every domain
+    # failed on, reproducing the "report lists N sites but scores fewer"
+    # asymmetry of Bulgu-2 one level down. A site no domain measured still
+    # belongs in the output — scored neutral, and visible.
     site_ids: list[str] = list(
         dict.fromkeys(
-            list(sequence_scores)
-            + list(variant_scores)
-            + list(epigenetic_scores)
-            + list(biophysics_scores)
-            + list(execution_scores)
+            s["site_id"] for s in offtarget_sites if isinstance(s, dict) and "site_id" in s
         )
     )
 
-    if not site_ids and offtarget_sites:
-        site_ids = [f"{s['gene']}:{s['transcript_id']}" for s in offtarget_sites]
+    if not site_ids:
+        # Legacy stage-2 files carry no site_id; fall back to the union.
+        site_ids = list(
+            dict.fromkeys(
+                list(sequence_scores)
+                + list(variant_scores)
+                + list(epigenetic_scores)
+                + list(biophysics_scores)
+                + list(execution_scores)
+            )
+        )
 
     for site_id in site_ids:
         seq = _clamp(sequence_scores.get(site_id, _NEUTRAL))

@@ -10,7 +10,6 @@ from typing import Any
 from loguru import logger
 
 from src.stage6_execution.immune_screen import screen_immune_motifs
-from src.core.models import GenomicRegion
 
 
 def run(
@@ -64,7 +63,7 @@ def run(
     # (off-target mRNA sequences are not available without Ensembl fetch)
     offtarget_immune: dict[str, Any] = {}
     for s in sites:
-        site_id = f"{s['gene']}:{s['transcript_id']}"
+        site_id = s["site_id"]
         offtarget_immune[site_id] = sarna_immune
 
     payload: dict[str, Any] = {

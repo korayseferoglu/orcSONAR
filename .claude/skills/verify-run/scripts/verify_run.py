@@ -136,7 +136,13 @@ def reference_regions(run_dir: str) -> tuple[dict[str, list[dict[str, Any]]], li
     for site in blob.get("offtarget_sites", []) or []:
         if not isinstance(site, dict) or not isinstance(site.get("region"), dict):
             continue
-        site_id = f"{site.get('gene')}:{site.get('transcript_id')}"
+        # Prefer the id stage 2 actually stored — that is what the downstream
+        # dicts are keyed on. Rebuilding it here would silently stop matching
+        # the moment the format changes, leaving check 3 comparing empty sets
+        # and reporting PASS having checked nothing.
+        site_id = site.get("site_id")
+        if not isinstance(site_id, str) or not site_id:
+            site_id = f"{site.get('gene')}:{site.get('transcript_id')}"  # pre-Bulgu-2 runs
         entry = dict(site["region"])
         entry["_mismatches"] = site.get("mismatches")
         regions.setdefault(site_id, [])
@@ -251,9 +257,27 @@ def check_coordinates(ref, multi_hit, downstream) -> tuple[bool, list[str], list
             + f"  — {spread} bp apart"
         )
 
+    # A key-format change between stage 2 and the rest makes every comparison
+    # below iterate an empty set, which would look exactly like success. Refuse
+    # to report PASS on nothing.
+    comparable = sum(1 for regions in downstream.values() if set(regions) & set(ref))
+    if downstream and comparable == 0:
+        sample_ref = sorted(ref)[:1]
+        sample_ds = sorted(next(iter(downstream.values())))[:1]
+        lines.append(
+            "  FAIL  no downstream file shares a single site id with stage 2, so nothing "
+            "could be compared."
+        )
+        lines.append(f"        stage 2 key looks like: {sample_ref}")
+        lines.append(f"        downstream key looks like: {sample_ds}")
+        lines.append("        The stages are keyed differently — this check is blind, not passing.")
+        return False, lines, [{"error": "no overlapping site ids", "stage2_sample": sample_ref,
+                               "downstream_sample": sample_ds}]
+
     for filename, regions in sorted(downstream.items()):
         shared = [s for s in regions if s in ref]
         if not shared:
+            lines.append(f"  WARN  {filename}: no site ids in common with stage 2 — not compared")
             continue
         offsets: list[int] = []
         wrong_duplicate = off_reference = chrom_mismatch = 0

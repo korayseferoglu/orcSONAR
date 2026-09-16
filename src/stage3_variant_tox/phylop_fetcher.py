@@ -10,7 +10,7 @@ from typing import Any
 from loguru import logger
 
 from src.stage3_variant_tox.phylop_scorer import score_phylop
-from src.core.models import GenomicRegion
+from src.core.site_keys import site_ids_and_regions
 
 
 def run(
@@ -39,24 +39,17 @@ def run(
         logger.warning(f"phylop_fetcher: cannot load offtargets: {exc}")
 
     sites: list[dict] = offtargets.get("offtarget_sites", [])
-    regions: list[GenomicRegion] = []
-    site_ids: list[str] = []
-    for s in sites:
-        try:
-            regions.append(GenomicRegion(**s["region"]))
-            site_ids.append(f"{s['gene']}:{s['transcript_id']}")
-        except Exception:
-            pass
+    site_ids, regions = site_ids_and_regions(sites, caller="phylop_fetcher")
 
     phylop_results: dict[str, Any] = {}
     if regions:
         try:
             results = score_phylop(regions, bigwig_url)
-            for site_id, res in zip(site_ids, results):
+            for site_id, res in zip(site_ids, results, strict=True):
                 phylop_results[site_id] = res.model_dump()
         except Exception as exc:
             logger.warning(f"phylop_fetcher: scoring failed: {exc} — using neutral")
-            for site_id, region in zip(site_ids, regions):
+            for site_id, region in zip(site_ids, regions, strict=True):
                 phylop_results[site_id] = {
                     "region": region.model_dump(),
                     "mean_score": 0.0,

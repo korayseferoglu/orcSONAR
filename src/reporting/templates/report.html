@@ -111,10 +111,17 @@
           <tr>
             <td class="text-muted text-xs">{{ loop.index }}</td>
             <td>
-              <div class="font-bold">{{ site.id.split(':')[0] }}</div>
+              <div class="font-bold">{{ site.gene }}</div>
               <div class="text-xs text-muted font-mono truncate" style="max-width:180px">
-                {{ site.id.split(':')[1] if ':' in site.id else '' }}
+                {{ site.transcript_id }}
               </div>
+              {% if site.info %}
+              {# Several hits can share a gene+transcript, so without the locus
+                 those rows would render identically (AUDIT.md Bulgu-2). #}
+              <div class="text-xs text-muted font-mono">
+                {{ site.info.region.chrom }}:{{ site.info.region.start }}
+              </div>
+              {% endif %}
             </td>
             <td class="text-xs mono">
               {% if site.info %}
@@ -177,7 +184,7 @@
     <div class="site-card">
       <div class="site-card-header">
         <div>
-          <div class="site-card-title">{{ site.id.split(':')[0] }}</div>
+          <div class="site-card-title">{{ site.gene }}</div>
           <div class="site-card-sub">{{ site.id }}</div>
           {% if site.info %}
           <div class="site-card-sub" style="margin-top:4px">

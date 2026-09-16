@@ -131,6 +131,21 @@ def find_offtargets(
             )
 
     offtargets.sort(key=lambda x: x.alignment_score, reverse=True)
+
+    # site_id uniqueness is the premise every downstream stage relies on, and it
+    # is not guaranteed: the minus-strand branch above clamps with max(0, ...),
+    # so two windows past a short transcript's end both land on start=0 and
+    # collapse to one key. Assert rather than assume — a collision here silently
+    # reinstates Bulgu-2 with the fix nominally in place.
+    site_ids = [s.site_id for s in offtargets]
+    if len(set(site_ids)) != len(site_ids):
+        dupes = sorted({sid for sid in site_ids if site_ids.count(sid) > 1})
+        logger.error(
+            f"seed_aligner: site_id COLLISION — {len(site_ids)} hits produced only "
+            f"{len(set(site_ids))} unique ids. Downstream stages will overwrite each "
+            f"other for: {dupes[:5]}{' ...' if len(dupes) > 5 else ''}"
+        )
+
     logger.info(f"Found {len(offtargets)} off-target sites after filtering")
     return offtargets
 
@@ -395,10 +410,7 @@ def run(
         logger.warning(f"seed_aligner: find_offtargets failed: {exc}")
         sites = []
 
-    seq_scores = {
-        f"{s.gene}:{s.transcript_id}": round(s.alignment_score, 4)
-        for s in sites
-    }
+    seq_scores = {s.site_id: round(s.alignment_score, 4) for s in sites}
 
     payload = {
         "sites": [s.model_dump() for s in sites],

@@ -14,6 +14,7 @@ import pysam
 from loguru import logger
 
 from src.core.models import CosmicMutation, CosmicResult, GenomicRegion
+from src.core.site_keys import site_ids_and_regions
 
 # mutations/kb that maps to density_score == 1.0
 _DENSITY_SATURATION_PER_KB: float = 10.0
@@ -208,8 +209,6 @@ def run(
     logger.add(log_path, level="DEBUG")
     logger.add(sys.stderr, level="INFO")
 
-    from src.core.models import GenomicRegion
-
     offtargets: dict[str, Any] = {}
     try:
         offtargets = json.loads(_Path(offtargets_path).read_text(encoding="utf-8"))
@@ -217,20 +216,13 @@ def run(
         logger.warning(f"cosmic_scanner.run: cannot load offtargets: {exc}")
 
     sites: list[dict] = offtargets.get("offtarget_sites", [])
-    regions: list[GenomicRegion] = []
-    site_ids: list[str] = []
-    for s in sites:
-        try:
-            regions.append(GenomicRegion(**s["region"]))
-            site_ids.append(f"{s['gene']}:{s['transcript_id']}")
-        except Exception:
-            pass
+    site_ids, regions = site_ids_and_regions(sites, caller="cosmic_scanner")
 
     cosmic_results: dict[str, Any] = {}
     if regions:
         try:
             results = scan_cosmic(regions, cosmic_vcf)
-            for site_id, res in zip(site_ids, results):
+            for site_id, res in zip(site_ids, results, strict=True):
                 cosmic_results[site_id] = res.model_dump()
         except Exception as exc:
             logger.warning(f"cosmic_scanner.run: scan failed: {exc}")

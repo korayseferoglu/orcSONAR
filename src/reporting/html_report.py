@@ -141,20 +141,32 @@ def _build_sites(report: FinalReport) -> list[dict[str, Any]]:
     Returns:
         List of site dicts, sorted by descending weighted score.
     """
-    site_map: dict[str, Any] = {}
-    for site in report.offtarget_sites:
-        key = f"{site.gene}:{site.transcript_id}"
-        site_map[key] = site
+    site_map: dict[str, Any] = {site.site_id: site for site in report.offtarget_sites}
+
+    # A site with metadata but no score disappears from the report entirely —
+    # the same class of silent loss as Bulgu-2, one layer up. Say so.
+    orphans = set(site_map) - set(report.domain_scores_per_site)
+    if orphans:
+        logger.warning(
+            f"html_report: {len(orphans)} off-target site(s) have no domain scores and "
+            f"will not appear in the report, e.g. {sorted(orphans)[:3]}"
+        )
 
     rows: list[dict[str, Any]] = []
     for site_id, scores in report.domain_scores_per_site.items():
         w_score = _weighted_score(scores)
         risk = classify(w_score)
+        info = site_map.get(site_id)
+        # Parse the key only when the site object is absent (reports built from
+        # scores alone). site_id layout is pinned by test_site_id_layout.
+        parts = site_id.split(":")
 
         rows.append(
             {
                 "id": site_id,
-                "info": site_map.get(site_id),
+                "info": info,
+                "gene": info.gene if info else (parts[0] if parts else site_id),
+                "transcript_id": info.transcript_id if info else (parts[1] if len(parts) > 1 else ""),
                 "scores": scores,
                 "weighted_score": round(w_score, 4),
                 "risk_class": risk.value,

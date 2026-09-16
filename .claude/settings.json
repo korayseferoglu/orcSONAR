@@ -54,7 +54,8 @@
   "permissions": {
     "allow": [
       "Bash(pytest *)",
-      "Bash(ruff check *)"
+      "Bash(ruff check *)",
+      "Bash(python3 .claude/skills/verify-run/scripts/verify_run.py *)"
     ]
   },
   "enabledPlugins": {

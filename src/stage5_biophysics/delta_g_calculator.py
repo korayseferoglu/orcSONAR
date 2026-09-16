@@ -11,7 +11,6 @@ from loguru import logger
 
 from src.stage5_biophysics.thermodynamics import TurnerCalculator
 from src.core.config import OrcSonarConfig
-from src.core.models import GenomicRegion
 
 _DG_NEUTRAL = -15.0  # kcal/mol neutral fallback
 _DG_STRONG = -30.0
@@ -74,7 +73,7 @@ def run(
 
     deltag_results: dict[str, Any] = {}
     for s in sites:
-        site_id = f"{s['gene']}:{s['transcript_id']}"
+        site_id = s["site_id"]
         try:
             if calc is not None:
                 # Use reverse complement of saRNA as target (antiparallel duplex)

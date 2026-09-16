@@ -11,7 +11,7 @@ from loguru import logger
 
 from src.stage4_epigenetic.histone_marks import HistoneMarkReader
 from src.core.config import OrcSonarConfig
-from src.core.models import GenomicRegion
+from src.core.site_keys import site_ids_and_regions
 
 
 def run(
@@ -34,14 +34,7 @@ def run(
         logger.warning(f"histone_fetcher: cannot load offtargets: {exc}")
 
     sites: list[dict] = offtargets.get("offtarget_sites", [])
-    regions: list[GenomicRegion] = []
-    site_ids: list[str] = []
-    for s in sites:
-        try:
-            regions.append(GenomicRegion(**s["region"]))
-            site_ids.append(f"{s['gene']}:{s['transcript_id']}")
-        except Exception:
-            pass
+    site_ids, regions = site_ids_and_regions(sites, caller="histone_fetcher")
 
     h3k4me3_signals: dict[str, float] = {}
     h3k27ac_signals: dict[str, float] = {}
@@ -51,7 +44,7 @@ def run(
             reader = HistoneMarkReader(config, cell_lines_yaml=cell_lines_cfg)
             k4me3 = reader.get_h3k4me3_bulk(regions, cell_line)
             k27ac = reader.get_h3k27ac_bulk(regions, cell_line)
-            for site_id, k4, k27 in zip(site_ids, k4me3, k27ac):
+            for site_id, k4, k27 in zip(site_ids, k4me3, k27ac, strict=True):
                 h3k4me3_signals[site_id] = round(k4, 4)
                 h3k27ac_signals[site_id] = round(k27, 4)
         except Exception as exc:

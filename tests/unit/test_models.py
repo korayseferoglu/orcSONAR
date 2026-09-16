@@ -93,6 +93,50 @@ class TestOffTargetSite:
         )
         assert site.mismatches == 0
 
+    def test_site_id_layout(self, sample_region):
+        """Pin the site_id field order — downstream code parses it positionally.
+
+        epigenetic_merger recovers the gene with split(":", 1)[0] for the CCLE
+        lookup, and templates/report.html renders field 1 as the transcript.
+        Reordering breaks both silently (AUDIT.md Bulgu-2).
+        """
+        site = OffTargetSite(
+            gene="MTOR",
+            transcript_id="ENST00000361445",
+            region=sample_region,
+            seed_match_type="mismatch",
+            mismatches=5,
+            alignment_score=14.5,
+        )
+        parts = site.site_id.split(":")
+        assert len(parts) == 4
+        assert parts[0] == "MTOR"
+        assert parts[1] == "ENST00000361445"
+        assert parts[2] == sample_region.chrom
+        assert parts[3] == str(sample_region.start)
+        assert site.model_dump()["site_id"] == site.site_id
+
+    def test_site_id_distinguishes_hits_on_one_transcript(self, sample_region):
+        """Two windows on the same transcript must not share an id (Bulgu-2)."""
+        common = {
+            "gene": "MTOR",
+            "transcript_id": "ENST00000361445",
+            "seed_match_type": "mismatch",
+            "alignment_score": 14.5,
+        }
+        a = OffTargetSite(
+            region=GenomicRegion(chrom="chr1", start=11255438, end=11255458, strand="-"),
+            mismatches=5,
+            **common,
+        )
+        b = OffTargetSite(
+            region=GenomicRegion(chrom="chr1", start=11259515, end=11259535, strand="-"),
+            mismatches=9,
+            **common,
+        )
+        assert a.site_id != b.site_id
+        assert len({a.site_id, b.site_id}) == 2
+
     def test_negative_mismatches_raises(self, sample_region):
         with pytest.raises(ValidationError):
             OffTargetSite(

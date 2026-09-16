@@ -47,7 +47,7 @@ def run(
 
     adar_results: dict[str, Any] = {}
     for s in sites:
-        site_id = f"{s['gene']}:{s['transcript_id']}"
+        site_id = s["site_id"]
         try:
             region = GenomicRegion(**s["region"])
             repeat_raw = repeat_map.get(site_id, {})

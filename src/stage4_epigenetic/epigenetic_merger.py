@@ -108,7 +108,11 @@ def run(
 
     epigenetic_scores: dict[str, Any] = {}
     for site_id in sorted(all_site_ids):
-        gene = site_id.split(":")[0]
+        # CCLE is keyed by gene, not by site. site_id puts the gene at field 0
+        # by contract — pinned by tests/unit/test_models.py::test_site_id_layout.
+        # If that ever changes, this lookup misses for every site and silently
+        # degrades expression to 0.0.
+        gene = site_id.split(":", 1)[0]
         atac = float(atac_signals.get(site_id, 0.0))
         k4 = float(h3k4me3_signals.get(site_id, 0.0))
         k27 = float(h3k27ac_signals.get(site_id, 0.0))

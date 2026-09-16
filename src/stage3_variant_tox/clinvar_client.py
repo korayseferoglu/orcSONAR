@@ -16,6 +16,7 @@ from tenacity import retry, stop_after_attempt, wait_exponential
 from src.core.cache import Cache
 from src.core.config import OrcSonarConfig
 from src.core.models import ClinvarResult, ClinvarVariant, GenomicRegion
+from src.core.site_keys import site_ids_and_regions
 
 _RETMODE = "json"
 _RETMAX = "100"
@@ -263,7 +264,6 @@ def run(
     logger.add(sys.stderr, level="INFO")
 
     from src.core.config import OrcSonarConfig
-    from src.core.models import GenomicRegion
 
     offtargets: dict[str, Any] = {}
     try:
@@ -272,21 +272,14 @@ def run(
         logger.warning(f"clinvar_client.run: cannot load offtargets: {exc}")
 
     sites: list[dict] = offtargets.get("offtarget_sites", [])
-    regions: list[GenomicRegion] = []
-    site_ids: list[str] = []
-    for s in sites:
-        try:
-            regions.append(GenomicRegion(**s["region"]))
-            site_ids.append(f"{s['gene']}:{s['transcript_id']}")
-        except Exception:
-            pass
+    site_ids, regions = site_ids_and_regions(sites, caller="clinvar_client")
 
     config = OrcSonarConfig(ncbi_eutils_url=ncbi_url)
     clinvar_results: dict[str, Any] = {}
     if regions:
         try:
             results = check_clinvar(regions, config)
-            for site_id, res in zip(site_ids, results):
+            for site_id, res in zip(site_ids, results, strict=True):
                 clinvar_results[site_id] = res.model_dump()
         except Exception as exc:
             logger.warning(f"clinvar_client.run: query failed: {exc}")

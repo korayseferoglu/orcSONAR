@@ -17,6 +17,7 @@ from tenacity import retry, stop_after_attempt, wait_exponential
 from src.core.cache import Cache
 from src.core.config import OrcSonarConfig
 from src.core.models import GenomicRegion, RepeatEntry, RepeatResult
+from src.core.site_keys import site_ids_and_regions
 
 _ALU_FAMILIES: frozenset[str] = frozenset({"Alu"})
 _LINE_CLASSES: frozenset[str] = frozenset({"LINE"})
@@ -209,24 +210,16 @@ def run(
     sites: list[dict] = seed_data.get("sites", [])
 
     from src.core.config import OrcSonarConfig
-    from src.core.models import GenomicRegion
 
     config = OrcSonarConfig(ucsc_api_url=ucsc_api_url)
 
-    regions: list[GenomicRegion] = []
-    site_ids: list[str] = []
-    for s in sites:
-        try:
-            regions.append(GenomicRegion(**s["region"]))
-            site_ids.append(f"{s['gene']}:{s['transcript_id']}")
-        except Exception:
-            pass
+    site_ids, regions = site_ids_and_regions(sites, caller="repeat_scanner")
 
     repeat_results: dict[str, Any] = {}
     if regions:
         try:
             results = scan_repeats(regions, config)
-            for site_id, res in zip(site_ids, results):
+            for site_id, res in zip(site_ids, results, strict=True):
                 repeat_results[site_id] = res.model_dump()
         except Exception as exc:
             logger.warning(f"repeat_scanner: scan_repeats failed: {exc}")
