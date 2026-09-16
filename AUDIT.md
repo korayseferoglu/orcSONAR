@@ -339,3 +339,59 @@ Sonuçlar:
 Karar gerekiyor: ya kod belgeye uydurulacak (iki katmanlı model gerçekten
 uygulanacak), ya belge koda uydurulacak (tek katmanlı 5-domain toplamı + ayrı
 modifier olarak dürüstçe yazılacak). Faz 3 başlamadan çözülmeli.
+
+---
+
+## BULGU-2 — KÖK NEDEN BULUNDU (2026-09-16, `/verify-run` ilk çıktısı)
+
+Denetimde "stage'ler aynı site için farklı koordinat tarıyor" diye tarif edilen
+sorun bir koordinat hesaplama hatası değil. **Site kimlik anahtarı benzersiz
+değil.**
+
+`stage2_offtargets.json` bir **liste** yazıyor ve aynı transkript için birden
+fazla seed hit kaydedebiliyor. VEGFA_HeLa'da:
+
+```
+41 seed hit  →  30 benzersiz "gene:transcript" anahtarı  →  11 DUPLİKE (%27)
+
+MTOR:ENST00000361445  ×2
+   chr1:11255438-11255458   mm=5   score=14.5   ← güçlü hit
+   chr1:11259515-11259535   mm=9   score=10.0   ← zayıf hit, 4077 bp uzakta
+HNRNPA2B1:ENST00000618183 ×2  (26198044 / 26197989)
+DICER1:ENST00000343455    ×2  (95152261 / 95147794)
+TNRC6B, ATR, ... toplam 11 anahtar
+```
+
+Stage 3-6 bu listeyi `gene:transcript` anahtarlı bir **dict**'e çeviriyor.
+Anahtar çakışınca biri sessizce diğerinin üzerine yazıyor — ve **stage'ler aynı
+kazananı seçmiyor**:
+
+```
+MTOR:ENST00000361445 için hangi lokus ölçülmüş:
+  stage3_phylop  → 11259515   (zayıf hit)
+  stage3_cosmic  → 11259515   (zayıf hit)
+  stage6_ago2    → 11259515   (zayıf hit)
+  stage5_shape   → 11255438   (güçlü hit)   ← diğerleriyle çelişiyor
+```
+
+Sonuç, denetimde yazılandan daha kötü:
+
+1. **Güçlü hit (mm=5) yanlış lokustan ölçülüyor.** Varyant toksisitesi,
+   korunum ve Ago2 yüklemesi 4 kb uzaktaki zayıf hit'in yerinden okunuyor.
+2. `final_report.json` 41 site'ın hepsini listeliyor (site kaybı YOK), ama
+   `domain_scores_per_site` dict olduğu için **11 çift, tek bir skor kaydını
+   paylaşıyor**. MTOR'un iki satırı raporda birebir aynı skorları taşıyor:
+   `{sequence_specificity: 1.0, variant_toxicity: 0.65, ...}` — farklı iki
+   lokus, tek ölçüm.
+3. Yani raporlanan 41 site'ın **11'i başka bir site'ın ölçümlerini taşıyor.**
+4. `stage5_shape` denetimde "tutarlı" sayılmıştı; değil — sadece diğerlerinden
+   farklı kazananı tutuyor. (`/verify-run` ayrıca DDX17:ENST00000403230'da
+   3041 bp'lik ikinci bir sapma buldu.)
+
+**Düzeltme yönü:** site kimliği `gene:transcript` değil, koordinatı da içeren
+benzersiz bir anahtar olmalı (ör. `gene:transcript:chrom:start`). Alternatif:
+stage 2 transkript başına en iyi hit'i seçip tekilleştirsin. Bu, Bulgu-1'den
+daha ucuz bir düzeltme ve tüm domainleri aynı anda doğru lokusa oturtur.
+
+**Nasıl bulundu:** `/verify-run` skill'inin 3. kontrolü (stage'ler arası
+koordinat tutarlılığı). Bu tam olarak kontrolün var oluş sebebi.
