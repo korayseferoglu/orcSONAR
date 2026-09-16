@@ -50,5 +50,14 @@
         ]
       }
     ]
+  },
+  "permissions": {
+    "allow": [
+      "Bash(pytest *)",
+      "Bash(ruff check *)"
+    ]
+  },
+  "enabledPlugins": {
+    "pubmed@life-sciences": true
   }
 }
