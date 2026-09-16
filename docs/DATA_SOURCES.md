@@ -204,8 +204,11 @@ Each stage writes structured JSON that the next stage consumes.
 
 1. **Genomic map** — TSS (EPDnew + FANTOM5) and transcript models
    (Ensembl/RefSeq) resolve a promoter window of −1000 / +200 bp around the TSS.
-2. **Off-target scan** — seed alignment across the **whole transcriptome**, not
-   just promoter regions, plus miRBase overlap and RepeatMasker annotation.
+2. **Off-target scan** — seed alignment across full transcript bodies, not just
+   promoter regions, plus miRBase overlap and RepeatMasker annotation. The search
+   space is currently a **curated 183-gene background set**
+   (`src/stage2_offtarget_scan/transcriptome_fetcher.py`); a full GENCODE
+   transcriptome scan is planned.
 3. **Variant and toxicity** — COSMIC, gnomAD, ClinVar, phyloP conservation.
 4. **Epigenetics and topology** — ATAC-seq, histone ChIP-seq, GRO-seq, Hi-C, CCLE.
 5. **Biophysics and structure** — Turner ΔG, SHAPE reactivity, m6A, ADAR, G4.
