@@ -60,7 +60,8 @@ the range (Bulgu-4).
   only across the curated 183-gene background set (full GENCODE scan planned)
 - Default test cell line: **HeLa**
 - Supported cell lines: A549, GM12878, HEK293T, HeLa, HepG2, Huh7, K562, MCF7
-- Score weights: Determine optimal weights based on literature
+- Score weights: config/config.yaml, but see Scoring Architecture — they are
+  double-counted and not independently interpretable (AUDIT.md Bulgu-7)
 - All coordinates are hg38/GRCh38
 - COSMIC VCF: NO "chr" prefix (1, 2, 3...)
 - m6A BED: HAS "chr" prefix (chr1, chr2...)
