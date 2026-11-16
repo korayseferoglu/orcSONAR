@@ -16,6 +16,12 @@ This file used to assert things the code does not do, and those claims hid real 
 months. Each row is an open finding with evidence in `AUDIT.md`; do not "fix" them in
 passing, each is its own session's work.
 
+**Start here: `SCIENTIFIC_ROADMAP.md`.** It is the ordered work queue — every open
+finding as a numbered item with its dependency, a runnable acceptance criterion and a
+status. Read its §2 invariants before changing anything, then take the first `TODO`
+whose dependency is met and do only that one. The table below is a summary; the roadmap
+is the authority on what to work on and in what order.
+
 | Area | What the code actually does | Target |
 |---|---|---|
 | Off-target search space (Bulgu-6) | `_BACKGROUND_GENES` in `src/stage2_offtarget_scan/transcriptome_fetcher.py` is a hand-curated **183-gene** set fetched over Ensembl REST. Not the transcriptome. | Full GENCODE scan (~250k transcripts) with a local seed index; thresholds must be recalibrated. |
