@@ -51,10 +51,20 @@ matching `src/` module, which reads input JSON and writes
    `[-20, 10]`; genomic coordinates positive and `start < end`; ATAC/expression signal
    non-negative. Flag anything outside its plausible range.
 
-   **(c) Real data vs. neutral fallback.** The project degrades gracefully: a failed data
-   source logs a warning and substitutes a neutral score of **0.5**. Count how many sites
-   got genuine measured data and how many got the fallback, per metric. A stage where
-   most sites are neutral is producing decoration, not signal — say so plainly.
+   **(c) Real data vs. no-data sentinel.** A failed data source logs a warning and
+   substitutes a sentinel. **Count both sentinels, because they live in different
+   spaces:** the documented score-space **0.5** (`epigenetic_merger.py:12`, defined
+   but never read), and the raw-space **0.0** that production actually writes
+   (`encode_reader.py:35` `_NEUTRAL_SIGNAL`, reached from ATAC, the three histone
+   marks, GRO-seq, Ago2 and RBP). Counting only 0.5 is how dead channels passed
+   this check for months.
+
+   Report per metric how many sites sit at each. A stage where most sites are
+   sentinel is producing decoration, not signal — say so plainly. But do **not**
+   attribute a raw 0.0: it is either a failed source or a genuinely silent locus,
+   and the output JSON cannot distinguish them. State the count and that limit.
+   Note the direction too — for these sources less signal means lower risk, so a
+   failure biases the site toward SAFE rather than toward unknown.
 
    Use `python3`/`jq` one-liners for these counts rather than eyeballing the JSON.
 

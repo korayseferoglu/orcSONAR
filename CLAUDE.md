@@ -88,7 +88,13 @@ the range (Bulgu-4).
 - Use `loguru` for logging, NEVER `print()`
 - Use `tenacity` for ALL API calls (retry with exponential backoff)
 - Cache ALL API/BigWig results to `data/cache/` using SQLite
-- Graceful degradation: if data source fails → log warning → use neutral score (0.5)
+- Graceful degradation: if data source fails → log warning → substitute a neutral
+  score. **The intended value is 0.5 and the code does not do this** — production
+  writes `_NEUTRAL_SIGNAL = 0.0` (`encode_reader.py:35`) in raw-signal space, which
+  reads as *low risk* rather than *unknown*, so a failed source silently makes a
+  site look safe (AUDIT.md Bulgu-10). `epigenetic_merger.py:12` defines
+  `_NEUTRAL = 0.5` and nothing reads it. Do not restate 0.5 as the behaviour; the
+  fix is `SCIENTIFIC_ROADMAP.md` B2/B3 and is its own session's work.
 - Every module MUST have corresponding unit tests in `tests/unit/`
 - Use `responses` library for mocking HTTP calls in tests
 

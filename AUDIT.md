@@ -467,6 +467,295 @@ olduğu için bu sessiz bir tutarsızlık.
 
 ---
 
+## BULGU-10 (KRİTİK) — Eksik veri NEUTRAL 0.5'e değil 0.0'a düşüyor: işaret hatası
+
+`src/stage4_epigenetic/encode_reader.py:35`
+
+```python
+_NEUTRAL_SIGNAL: float = 0.0
+```
+
+Adı "NEUTRAL" olan sabit **0.0**. `docs/DATA_SOURCES.md` §7 ve CLAUDE.md'nin
+"graceful degradation" kuralı eksik kaynağın **0.5**'e düşmesini söylüyor.
+Bir güvenlik aracında bu iki değer zıt anlam taşıyor: 0.5 "bilmiyorum",
+0.0 "risk yok". Ago2/RBP sinyalinde yüksek = yüksek risk olduğu için eksik
+veri **sistematik olarak SAFE yönüne** itiliyor.
+
+Yayılma alanı — tek sabit, altı modül (ENCODE'a dayanan her kaynak):
+
+| Modül | Kaynak |
+|---|---|
+| `chromatin_access.py:47,65` | ATAC-seq |
+| `histone_marks.py:55,70,91,108,125,142` | H3K4me3 / H3K27ac / H3K27me3 |
+| `transcription_run.py:79,80,85,88,127,128,137,142` | GRO-seq |
+| `ago2_loading.py:53,70` | Ago2 eCLIP |
+| `rbp_competition.py:55,72` | hnRNPA1 eCLIP |
+| `encode_reader.py:97,101,230,375` | ortak okuyucu |
+
+**"Veri yok" mu, "kod okumuyor" mu?** → HeLa için **veri gerçekten yok**, ama
+dönen değer yanlış. `config/cell_lines.yaml:79-80` HeLa'da
+`ago2_eclip: null`, `hnrnpa1_eclip: null`; eCLIP yalnızca **HepG2 ve K562**'de
+var (destekelenen 8 hattın 6'sında null). Log da bunu söylüyor:
+
+```
+encode_reader:_get_url_for_cell_line:288 - encode_reader: 'ago2_eclip' not configured for HeLa
+ago2_loading:assess_ago2_loading:127 - ago2_loading: chr1:11255438-11255458(-) cell=HeLa raw=0.000 score=0.000
+```
+
+Kontrol deneyi (kodun okuyabildiğini kanıtlar): aynı kod, eCLIP'i olan
+hatlarda **çalışıyor** — CEBPA_HepG2 `ago2.raw_signal` 37 sitede **34 farklı
+değer, max 60.79**; VEGFA_K562 30 sitede 14 farklı değer. Yani okuyucu sağlam;
+HeLa'daki 0.0 yokluğun kendisi.
+
+**İkinci ve daha derin katman: sentinel yanlış uzayda.** `_NEUTRAL_SIGNAL`
+*ham sinyal* uzayında, projenin 0.5 sözleşmesi ise *skor* uzayında.
+0.0'ı 0.5 yapmak da düzeltmez:
+
+```python
+_AGO2_SATURATION = 20.0
+def _loading_score(raw_signal):
+    if raw_signal <= 0.0: return 0.0
+    return min(1.0, raw_signal / _AGO2_SATURATION)   # 0.5 ham → 0.025 skor
+```
+
+Ham fold-change olarak "bilmiyorum" ifade edilemez. Ayrıca `raw_signal <= 0.0`
+dalı yüzünden **gerçekten ölçülmüş 0 ile eksik veri ayırt edilemiyor**. Doğru
+çözüm `ShapeResult.data_available` gibi ayrı bir bayrak — proje bunu zaten
+biliyor; `adar_risk.py:46-57` (`_shape_ds_risk`) eksik veride açık yorumla
+`0.5  # graceful degradation` döndürüyor. Yani sözleşme koda bir yerde doğru,
+ENCODE yolunda yanlış uygulanmış.
+
+**Testler hatayı çiviliyor, yakalamıyor.** 40+ assertion sabitin *kendisiyle*
+karşılaştırıyor:
+
+```python
+assert reader.get_ago2_signal(REGION, "HeLa") == pytest.approx(_NEUTRAL_SIGNAL)
+```
+
+Bu totolojik: `_NEUTRAL_SIGNAL` hangi değerde olursa olsun geçer. Aynı desen
+`test_ago2_loading.py`, `test_chromatin_access.py`, `test_histone_marks.py`,
+`test_transcription_run.py`, `test_rbp_competition.py`, `test_encode_reader.py`
+dosyalarında. Düzeltme literal `0.5` beklemeli.
+
+---
+
+## BULGU-11 (KRİTİK, YENİ) — ClinVar sorgusu bozuk URL kodlaması yüzünden **her zaman** boş dönüyor
+
+`src/stage3_variant_tox/clinvar_client.py:132-145`
+
+```python
+term = (f"{chrom}[CHR]+AND+"
+        f"{region.start}:{region.end}[CHRPOS]+AND+"
+        "clinsig_pathogenic[prop]")
+resp = requests.get(f"{base_url}esearch.fcgi", params={... "term": term ...})
+```
+
+`term` `params=` ile geçtiği için `requests` literal `+` işaretlerini `%2B`
+olarak kodluyor; NCBI `+AND+` yerine **düz metin** alıyor ve sorgu geçersiz
+oluyor. Canlı doğrulama (2026-09-17, BRCA1 lokusu 17:43044295-43125364):
+
+| Sorgu | Sonuç |
+|---|---|
+| Koddaki hali (`params`, `+AND+`) | **0 UID**, NCBI: `['Invalid range operand', 'No items found.']` |
+| Aynı sorgu, boşluklarla | **100 UID** (retmax sınırı) |
+| Ham URL, `+AND+` kodlanmamış | **100 UID** |
+
+Yani ClinVar'da bu lokusta en az 100 patojenik varyant var, pipeline
+**sıfır** görüyor. Dört koşunun tamamında `pathogenic_count` ve
+`likely_pathogenic_count` 41/41, 30/30, 11/11, 37/37 sitede 0.
+
+**Sessizlik nedeni:** `_esearch` istisna atmıyor, boş liste dönüyor; yanıtın
+içindeki `errorlist`/`outputmessages` hiç okunmuyor; log satırı
+`clinvar esearch: ... → 0 UID(s)` **meşru bir negatif sonuç gibi okunuyor.**
+Bulgu-1'deki ΔG ile aynı sınıf: exit 0, makul görünen çıktı, ölü pillar.
+
+**Pencere genişliği ikincil.** Düzeltilse bile 20 bp pencere patojenik varyant
+yakalamaya dar (boşluklu sorgu, gerçek BRCA1 sitesinin 20 bp penceresinde
+0 döndü). Ama birincil neden bu değil: **gnomAD tam aynı 20 bp pencerelerde**
+41 farklı `max_af` ve pencere başına 8+ varyant buluyor
+(`stage3_gnomad.json`), yani pencereler varyant açısından zengin gerçek
+bölgelerde. Sorun sorgunun kendisi.
+
+**Downstream etki:** `domain_scores.py:120-123`
+`clinvar_component = pathogenic*0.40 + likely*0.20` → her zaman 0.0, yani
+`variant_toxicity`'nin **%30'u ölü**.
+
+**Uyarı — cache zehirlenmesi:** `_CLINVAR_TTL_HOURS = 720`. Boş sonuçlar 30 gün
+cache'lenmiş durumda (`data/cache/orcsonar_cache.db`). Sorgu düzeltilse bile
+cache temizlenmeden etki görünmez.
+
+---
+
+## BULGU-12 — `stage6_immune` per-site tablosu tek bir taramanın 41 kopyası
+
+`src/stage6_execution/immune_screener.py:64-70`
+
+```python
+# For off-target sites, we use the same saRNA sequence as a proxy
+# (off-target mRNA sequences are not available without Ensembl fetch)
+for s in sites:
+    offtarget_immune[s["site_id"]] = sarna_immune
+```
+
+Her site **aynı sözlük nesnesini** alıyor. Bu ne "veri yok" ne "gerçekten
+sıfır" — **yapısal placeholder**: veriden bağımsız olarak asla varyans
+üretemez. `/verify-run` check 1'in 41/41 sabit raporu burada veri değil,
+inşa biçimini ölçüyor.
+
+saRNA'nın kendisi için sonuç **gerçek ve gerçekten sıfır**: 6 motif
+`data/5_Icra_Güvenlik/Immun_Motifler/immune_motifs.txt`'ten yüklendi, tarama
+koştu, `total_hits=0 risk=SAFE`. CEBPA_HepG2'de aynı yol `total_hits=1`
+üretiyor (yine 37 siteye kopyalanmış) — yani tarayıcı çalışıyor.
+
+**Kök neden Bulgu-1 ile aynı:** stage 2 off-target **dizisini** saklamıyor.
+Tek bir eksik alan iki pillar'ı (ΔG + immün) dekoratif yapıyor.
+
+---
+
+## BULGU-13 — ADAR, aynı koşuda **mevcut olan** SHAPE verisini hiç okumuyor
+
+`src/stage5_biophysics/adar_estimator.py:59`
+
+```python
+result = calculate_adar_risk(region, repeat_result, shape_result=None)
+```
+
+Tüm siteler için sabit `None`. Oysa aynı koşudaki
+`results/VEGFA_HeLa/stage5_shape.json`'da **24/41 sitede
+`data_available=True`**, 6'sında gerçekten ölçülmüş reaktivite var:
+
+```
+MTOR:ENST00000361445:chr1:11255438   accessibility 0.2346  ss_frac 0.3333
+CTNNB1:ENST00000349496:chr3:41200550 accessibility 0.1490  ss_frac 0.0833
+HNRNPK:ENST00000376263:chr9:83979914 accessibility 0.0012  ss_frac 0.0
+```
+
+`ShapeResult` `adar_estimator.py:13`'te **import ediliyor** ama shape
+dosyasından hiç kurulmuyor. Sınıf olarak en temiz vaka: **"veri var, kod
+okumuyor."**
+
+Sonuçlar:
+- `adar_risk.py:23` `_SHAPE_WEIGHT = 0.4` **ölü kod** — `combined = alu`
+  dalı her zaman çalışıyor, ADAR skorunun %40'ı hiç katkı vermiyor.
+- `shape_ds_risk: 0.5` 41/41 — bu graceful degradation bile değil;
+  `adar_estimator.py:65`'te **elle yazılmış literal**.
+- `shape_used: False` 41/41 → check 1 bunu "degenerate" diye işaretliyor;
+  burada işaret **doğru** ve dürüst metadata, bulguyu ortaya çıkaran da bu.
+
+Not: SHAPE, `tx_start`/`tx_end`'in (cDNA) **doğru** uzay olduğu tek tüketici,
+bu yüzden Bulgu-8'den etkilenmiyor.
+
+---
+
+## BULGU-14 — m6A sıfırları rastlantı beklentisiyle uyumlu; Bulgu-8 **ikincil**
+
+Hipotez (m6A sıfırları Bulgu-8'in yan etkisi) **kısmen doğru ama birincil
+neden değil.** Kanıt:
+
+Kaynak sağlam: `data/4_Biyofizik_Yapısal/RMBase/hg38_m6A_mühürlü.bed.gz`,
+**882.385 satır**, bunların **458.320'si HeLa** etiketli, tabix indeksi yerinde,
+dosya sorunsuz açılıyor.
+
+41 VEGFA_HeLa penceresi üzerinde sonda (2026-09-17):
+
+| Pencere | HeLa m6A sitesi |
+|---|---|
+| 20 bp (kodun kullandığı) | **0** (herhangi bir hat için de 0) |
+| ±2 kb | **182** |
+
+Yani veri komşulukta **yoğun**, sadece 20 bp'lik pencerelerin içine düşmüyor.
+
+**Beklenen değer hesabı bunu bekleniyor kılıyor:** 458.320 HeLa sitesi /
+3,1 Gb = **6.764 bp'de 1 site**. 41 × 20 bp = 820 bp için **beklenen isabet
+0,12**; P(sıfır) ≈ %89. Yani 0/41 anomali değil, **istatistiksel olarak
+beklenen sonuç.** Bağımsız doğrulama: CEBPA_HepG2 37 sitede **tam 1** isabet
+almış — 0,1-0,2 beklentisiyle birebir uyumlu.
+
+**Sonuç: Bulgu-8 düzeltilse bile m6A bilgi taşımayacak.** Baskın neden
+pencere genişliği (20 bp) ile anotasyon çözünürlüğü (tek nükleotid)
+uyuşmazlığı. Bulgu-8 pencereleri ayrıca yanlış yere koyuyor (m6A stop
+kodonu/3'UTR çevresinde kümelenir, aligner genin tepesindeki şeride hapsediyor)
+ama bu ikinci derece katkı.
+
+**Bulgu-8'in bağımsız doğrulaması (yolda çıktı):** sondayı transkript
+gövdesine genişletmek de 0 döndürdü, çünkü `tx_start`/`tx_end` **cDNA**
+ofseti — MTOR sitesi `tx=(7093, 7113)` iken `region.start=11255438`. Yani
+`chr1:7093-7113` sorgulanıyor, intergenik bölge. Tek kayıtta iki farklı
+koordinat uzayı: Bulgu-8'in tam tarifi.
+
+**Üçüncü, bağımsız kusur — metrik ikili (binary):**
+
+```python
+density   = site_count / 0.02          # 20 bp = 0,02 kb
+m6a_score = min(density / 10.0, 1.0)   # 1 isabet → 50/kb → 1.0
+```
+
+Tek isabet skoru doğrudan 1.0'a çiviliyor. Doğrulandı: CEBPA_HepG2
+`EEF1A1` sitesi `site_count=1` → `m6a_score=1.0`. m6A derecelendirilmiş bir
+risk değil, 0.0/1.0 yazı-tura. Anlamlı olması için hem ekzon-farkında
+koordinat (Bulgu-8) hem biyolojinin ölçeğinde pencere/metagene yaklaşımı
+gerekiyor.
+
+---
+
+## Ölü domain sağlık tablosu (2026-09-17, VEGFA_HeLa)
+
+`/verify-run` check 1'in 41/41 sabit bildirdiği her alan için tek soru:
+veri yok mu, kod okumuyor mu, gerçekten sıfır mı?
+
+| Alan | Tanı | Kanıt | Bloke eden |
+|---|---|---|---|
+| `stage6_ago2` `raw_signal`/`is_loaded`/`loading_score` | **Veri yok + yanlış sentinel** | HeLa'da `ago2_eclip: null`; HepG2'de aynı kod 34 farklı değer üretiyor | BULGU-10 |
+| `stage6_rbp` `raw_signal`/`competition_score` | **Veri yok + yanlış sentinel** | HeLa'da `hnrnpa1_eclip: null`; K562/HepG2'de 3-5 farklı değer | BULGU-10 |
+| `stage3_clinvar` `pathogenic_count`/`likely_pathogenic` | **Sorgu bozuk** — veri var, sorgu hatalı | NCBI `Invalid range operand`; boşluklu sorgu 100 UID döndürüyor | BULGU-11 |
+| `stage6_immune` `risk_score`/`total_hits` | **Yapısal placeholder** + saRNA için gerçekten sıfır | Tek tarama 41 siteye kopyalanıyor (`immune_screener.py:64-70`) | BULGU-12 / BULGU-1 (dizi yok) |
+| `stage5_adar` `shape_used` | **Veri var, kod okumuyor** | `shape_result=None` sabit; 24/41 sitede `data_available=True` | BULGU-13 |
+| `stage5_m6a` `m6a_score`/`site_count` | **Gerçekten sıfır — ve beklenen** | 20 bp'de beklenen isabet 0,12; ±2 kb'de 182 site var | BULGU-14 (+ Bulgu-8 ikincil) |
+
+Üç ayrı arıza sınıfı, üç ayrı düzeltme:
+1. **Sentinel/işaret** (BULGU-10) — tek sabit + `data_available` bayrağı;
+   testler literal 0.5 beklemeli. En küçük değişiklik, en geniş etki.
+2. **Kablolama** (BULGU-11, BULGU-13) — veri erişilebilir, kod ona
+   ulaşmıyor. ClinVar'da cache de temizlenmeli.
+3. **Eksik girdi** (BULGU-12, BULGU-14) — stage 2 dizi saklamıyor (Bulgu-1
+   ile aynı kök); m6A ayrıca pencere ölçeği tasarımı istiyor.
+
+**Uyarı:** bu tabloda "gerçekten sıfır" bile *"metrik sağlıklı"* demek değil.
+m6A'nın sıfırı doğru ama bilgisiz; BULGU-14'teki üç kusur giderilmeden o
+pillar da karar desteği vermez.
+
+---
+
+## BULGU-15 — Aynı sinyaller için iki farklı doygunluk sabiti seti
+
+`/verify-run` check 6'yı eklerken çıktı. Aynı ham sinyali iki tüketici
+**farklı sabitlerle** normalize ediyor:
+
+| Sinyal | `domain_scores.py:42-46` (risk skoru) | `epigenetic_merger.py:15-20` (`normalized_score`) |
+|---|---|---|
+| ATAC | 10.0 | 50.0 |
+| H3K4me3 / H3K27ac | 15.0 | 20.0 |
+| GRO-seq | 5.0 | 10.0 |
+| Hi-C | **0.2** | **1.0** |
+| CCLE | 6.0 | 8.0 |
+
+Aynı koşu iki farklı doygunluk oranı veriyor (ör. VEGFA_HeLa `ccle`:
+%36,6'ya karşı %22,0), ve `normalized_score` için sağlıklı görünen bir sinyal
+risk skoruna varana kadar düzleşebiliyor. Hangi setin doğru olduğu
+belgelenmemiş.
+
+Check 6'nın ilk turda bulduğu iki gerçek vaka:
+- **MYC_K562** `ccle_expression` 11 sitenin 7'sinde (%63,6) doygun → ifade
+  sinyali artık siteleri sıralamıyor.
+- **CEBPA_HepG2** `hic_contact` 37 sitenin 21'inde (%56,8) doygun ve
+  `max/SAT = 16.226×` — sabit "lokus çok sıcak" değil, **mertebe olarak
+  yanlış** diyor.
+
+Ayrıca `results/TP53_K562/` yok ama `logs/TP53_K562/` var: yarıda kalmış bir
+koşu, `/verify-run` onu exit 2 ile bildiriyor.
+
+---
+
 ## Ufak notlar (düzeltilmedi)
 
 - `src/stage4_epigenetic/epigenetic_merger.py:102-107` — `all_site_ids`

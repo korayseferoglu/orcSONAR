@@ -74,6 +74,11 @@ Known API quirks:
   pip wheel cannot open an https URL.
 
 All API calls go through `tenacity` retry and are cached in SQLite under
-`data/cache/`. On any source failure: log a warning and fall back to the neutral
-score (0.5) rather than aborting — but note that a report produced with several
-sources unavailable is closer to a prior than to a measurement.
+`data/cache/`. On any source failure the pipeline logs a warning and substitutes a
+sentinel rather than aborting — but **the sentinel is not the documented 0.5.**
+Production writes `_NEUTRAL_SIGNAL = 0.0` (`encode_reader.py:35`) in raw-signal
+space; `epigenetic_merger.py:12` defines `_NEUTRAL = 0.5` and nothing reads it.
+For every ENCODE-derived source less signal means lower risk, so a dead source
+does not yield an unknown site, it yields one that looks safe (AUDIT.md
+Bulgu-10). A report produced with several sources unavailable is therefore not
+merely closer to a prior than to a measurement — it is biased toward SAFE.

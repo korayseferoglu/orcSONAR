@@ -3,11 +3,12 @@
 
 Usage:  verify_run.py {gene}_{cell_line} [--results-dir results] [--json]
 
-Reads results/{gene}_{cell_line}/*.json and answers five questions that a
-green Snakemake exit does not: does any metric actually vary across sites, are
-the values physically possible, do the stages agree on where each site is, how
-much of the run is real data versus neutral fallback, and does the score range
-ever reach its upper classes.
+Reads results/{gene}_{cell_line}/*.json and answers six questions that a green
+Snakemake exit does not: does any metric actually vary across sites, are the
+values physically possible, do the stages agree on where each site is, how much
+of the run is real data versus neutral fallback, does the score range ever
+reach its upper classes, and does normalisation flatten the raw signals before
+they get to the score.
 
 Exit status is 0 when every check passes, 1 when any check fails, 2 when the
 run cannot be read at all.
@@ -74,7 +75,73 @@ RANGE_RULES: dict[str, tuple[float | None, float | None, str]] = {
 }
 SCORE_SUFFIXES = ("_score", "_risk", "_signal", "_fraction", "_accessibility", "_contact", "_density")
 
-NEUTRAL = 0.5  # graceful-degradation sentinel: source failed -> neutral score
+# --------------------------------------------------------------------------
+# Raw-signal fields — measured quantities stored deliberately UNnormalised.
+#
+# stage4_epigenetic.json keeps ATAC fold-change, ChIP fold-change, Hi-C
+# contact frequency, GRO-seq coverage and CCLE log2(TPM+1) in their native
+# units; normalisation happens in the consumers, against the saturation
+# constants below. Applying the [0,1] score rule to them is therefore a false
+# positive — an H3K4me3 fold-change of 24 is a strong promoter, not a bug.
+# Check 2 keeps only the rule that is genuinely physical for them (a
+# fold-change or a coverage cannot be negative) and audits `normalized_score`,
+# the field that actually claims to be in [0,1], instead.
+#
+# What can go wrong with a raw signal is saturation, which check 6 measures:
+# normalisation is a saturating ramp, min(1, raw / SAT), so every site at or
+# above SAT collapses to exactly 1.0 and stops being distinguishable from any
+# other saturated site.
+#
+# The two consumers do not agree on the constants, so both are reported.
+# --------------------------------------------------------------------------
+RAW_SIGNAL_TABLES = {"stage4_epigenetic.json:epigenetic_scores"}
+
+SATURATION_SETS: list[tuple[str, dict[str, float]]] = [
+    (
+        "src/scoring/domain_scores.py:42-46 -> the risk score",
+        {"atac_signal": 10.0, "h3k4me3_signal": 15.0, "h3k27ac_signal": 15.0,
+         "h3k27me3_signal": 15.0, "groseq_signal": 5.0, "hic_contact": 0.2,
+         "ccle_expression": 6.0},
+    ),
+    (
+        "src/stage4_epigenetic/epigenetic_merger.py:15-20 -> normalized_score",
+        {"atac_signal": 50.0, "h3k4me3_signal": 20.0, "h3k27ac_signal": 20.0,
+         "groseq_signal": 10.0, "hic_contact": 1.0, "ccle_expression": 8.0},
+    ),
+]
+
+RAW_SIGNAL_FIELDS = {f for _, consts in SATURATION_SETS for f in consts}
+
+SATURATED_FAIL_PCT = 50.0  # past half the sites, the metric ranks nothing
+
+# --------------------------------------------------------------------------
+# TWO sentinels, in two different spaces (AUDIT.md Bulgu-10).
+#
+# CLAUDE.md documents graceful degradation as "source failed -> neutral 0.5",
+# and `epigenetic_merger.py:12` does define `_NEUTRAL = 0.5`. That constant is
+# never read: grep across the repo finds its own definition and nothing else.
+#
+# What production actually substitutes is `encode_reader.py:35`
+# `_NEUTRAL_SIGNAL = 0.0`, in RAW-SIGNAL space, reached from six modules
+# (ATAC, the three histone marks, GRO-seq, Ago2, RBP). The two values mean
+# opposite things in a safety tool: 0.5 is "unknown", 0.0 is "no signal",
+# and for every one of these sources less signal reads as LOWER risk. A
+# failed source therefore pushes a site toward SAFE.
+#
+# This check counts both, separately, because the old single `NEUTRAL = 0.5`
+# made it blind: a metric sitting at 100% 0.0 produced no finding at all and
+# the run was reported as carrying measured data everywhere.
+#
+# Caveat that must stay in the output: a raw 0.0 cannot be told apart from a
+# genuinely silent locus using the result JSON alone. Attributing it needs the
+# per-site provenance field (SCIENTIFIC_ROADMAP.md B3). Until that lands, this
+# check reports the count and says plainly that it cannot attribute it.
+# --------------------------------------------------------------------------
+SENTINEL_SCORE = 0.5  # the documented contract; expected to be unreachable
+SENTINEL_RAW = 0.0  # _NEUTRAL_SIGNAL: what the code really writes
+
+# Fields held in raw-signal space, where 0.0 is the no-data sentinel.
+NO_DATA_FIELDS = RAW_SIGNAL_FIELDS | {"raw_signal"}
 
 
 def load(path: str) -> Any | None:
@@ -217,7 +284,12 @@ def check_ranges(tables) -> tuple[bool, list[str], list[dict]]:
             if not values:
                 continue
             base = field.split("[")[0]
-            if base in RANGE_RULES:
+            if table in RAW_SIGNAL_TABLES and base in RAW_SIGNAL_FIELDS:
+                # Raw by design (see RAW_SIGNAL_TABLES): the only physical
+                # rule left is that it cannot be negative. Saturation, the
+                # failure mode that does apply, is check 6.
+                low, high, note = 0.0, None, "a raw fold-change / coverage cannot be negative"
+            elif base in RANGE_RULES:
                 low, high, note = RANGE_RULES[base]
             elif base.endswith(SCORE_SUFFIXES) or base in ("normalized_score", "final_score", "base_score"):
                 low, high, note = 0.0, 1.0, "scores are normalised to [0,1]"
@@ -234,6 +306,14 @@ def check_ranges(tables) -> tuple[bool, list[str], list[dict]]:
     ok = not findings
     if ok:
         lines.append("  every checked metric sits inside its physical range")
+    # Say out loud which fields were exempted, so a reader can tell "no
+    # violations" from "not checked".
+    raw_seen = sorted(
+        f for table, sites in tables.items() if table in RAW_SIGNAL_TABLES
+        for f in {k for v in sites.values() for k in v} if f in RAW_SIGNAL_FIELDS
+    )
+    if raw_seen:
+        lines.append(f"  raw by design, [0,1] not applied (see check 6): {', '.join(raw_seen)}")
     return ok, lines, findings
 
 
@@ -326,28 +406,116 @@ def check_coordinates(ref, multi_hit, downstream) -> tuple[bool, list[str], list
 
 
 def check_fallback(tables) -> tuple[bool, list[str], list[dict]]:
-    """Count how many sites carry the neutral 0.5 sentinel rather than measured data."""
+    """How much of this run is measured data rather than a no-data sentinel?
+
+    Counts both sentinels (see SENTINEL_SCORE / SENTINEL_RAW above): the
+    documented score-space 0.5, and the raw-space 0.0 the code actually
+    writes. A metric that is wholly sentinel is decoration — the source
+    failed and the pipeline substituted a number that reads like a result.
+
+    The raw-space count is reported but NOT attributed: 0.0 may equally be a
+    genuinely silent locus, and the result JSON cannot tell the two apart.
+    """
     lines, findings = [], []
     worst = 0.0
+    saw_raw = False
     for table, sites in sorted(tables.items()):
         fields = sorted({f for v in sites.values() for f in v})
         for field in fields:
-            values = [v[field] for v in sites.values() if field in v and is_number(v[field])]
+            values = [float(v[field]) for v in sites.values()
+                      if field in v and is_number(v[field])]
             if len(values) < 2:
                 continue
-            neutral = sum(1 for x in values if abs(float(x) - NEUTRAL) < 1e-9)
-            zero = sum(1 for x in values if float(x) == 0.0)
-            pct = 100.0 * neutral / len(values)
-            if neutral:
+            base = field.split("[")[0]
+
+            n_score = sum(1 for x in values if abs(x - SENTINEL_SCORE) < 1e-9)
+            if n_score:
+                pct = 100.0 * n_score / len(values)
                 worst = max(worst, pct)
-                findings.append({"table": table, "metric": field, "neutral": neutral,
-                                 "zero": zero, "of": len(values), "pct_neutral": round(pct, 1)})
-                lines.append(f"  {pct:5.1f}%  {table}  {field}: {neutral}/{len(values)} sites at the "
-                             f"neutral {NEUTRAL} sentinel" + (f" ({zero} at 0.0)" if zero else ""))
+                findings.append({"table": table, "metric": field, "space": "score",
+                                 "sentinel": SENTINEL_SCORE, "hits": n_score,
+                                 "of": len(values), "pct": round(pct, 1),
+                                 "attributable": True})
+                lines.append(f"  {pct:5.1f}%  {table}  {field}: {n_score}/{len(values)} "
+                             f"sites at the documented {SENTINEL_SCORE} sentinel")
+
+            n_raw = sum(1 for x in values if abs(x - SENTINEL_RAW) < 1e-9)
+            if n_raw and base in NO_DATA_FIELDS:
+                saw_raw = True
+                pct = 100.0 * n_raw / len(values)
+                worst = max(worst, pct)
+                findings.append({"table": table, "metric": field, "space": "raw",
+                                 "sentinel": SENTINEL_RAW, "hits": n_raw,
+                                 "of": len(values), "pct": round(pct, 1),
+                                 "attributable": False})
+                lines.append(f"  {pct:5.1f}%  {table}  {field}: {n_raw}/{len(values)} "
+                             f"sites at the real 0.0 no-data sentinel "
+                             f"(_NEUTRAL_SIGNAL, AUDIT.md Bulgu-10)")
+
     if not findings:
-        lines.append("  no metric sits at the neutral 0.5 sentinel — every site carries measured data")
+        lines.append("  no metric sits at either sentinel — every site carries measured data")
+    if saw_raw:
+        lines.append("  0.0 is NOT attributable from the JSON alone: it is either a failed")
+        lines.append("  source or a genuinely silent locus. Telling them apart needs the")
+        lines.append("  per-site provenance field (SCIENTIFIC_ROADMAP.md B3). Note that for")
+        lines.append("  every one of these sources less signal reads as LOWER risk, so a")
+        lines.append("  failed source pushes the site toward SAFE rather than toward unknown.")
     # Advisory: a high fallback rate is a warning, not a hard failure.
     return worst < 50.0, lines, findings
+
+
+def check_saturation(tables) -> tuple[bool, list[str], list[dict]]:
+    """How much of each raw signal's dynamic range survives normalisation?
+
+    Normalisation is a saturating ramp, ``min(1, raw / SAT)``. Every site at
+    or above ``SAT`` maps to exactly 1.0, so it can no longer be ranked
+    against any other saturated site — the discrimination is thrown away
+    before scoring. A handful of saturated sites is expected (the most active
+    promoters really are the most active); past half the sites the metric has
+    stopped separating anything and the constant is simply too low.
+
+    The two consumers normalise with different constants, so the same run
+    saturates at two different rates. Both are reported: a signal that is
+    healthy for `normalized_score` can still be flat by the time it reaches
+    the risk score.
+    """
+    lines, findings = [], []
+    worst = 0.0
+    for table, sites in sorted(tables.items()):
+        if table not in RAW_SIGNAL_TABLES:
+            continue
+        present = {k for v in sites.values() for k in v}
+        for label, consts in SATURATION_SETS:
+            lines.append(f"  {label}")
+            for field in sorted(present & set(consts)):
+                sat = consts[field]
+                values = [v[field] for v in sites.values()
+                          if field in v and is_number(v[field])]
+                if len(values) < 2:
+                    continue
+                hit = sum(1 for x in values if float(x) >= sat)
+                pct = 100.0 * hit / len(values)
+                worst = max(worst, pct)
+                headroom = max(values) / sat if sat > 0 else float("inf")
+                flag = "FAIL " if pct > SATURATED_FAIL_PCT else "     "
+                lines.append(
+                    f"  {flag} {field:<16} SAT={sat:<6g} saturated {hit:>3}/{len(values)} "
+                    f"= {pct:5.1f}%   max/SAT = {headroom:.2f}x"
+                )
+                findings.append({"table": table, "consumer": label, "metric": field,
+                                 "saturation": sat, "saturated": hit, "of": len(values),
+                                 "pct_saturated": round(pct, 1),
+                                 "max_over_saturation": round(headroom, 2)})
+    if not findings:
+        lines.append("  no raw-signal fields in this run — nothing to saturate")
+        return True, lines, findings
+    if worst > SATURATED_FAIL_PCT:
+        lines.append(f"  FAIL  a raw signal saturates on more than {SATURATED_FAIL_PCT:.0f}% of sites: "
+                     "above the cap every site scores 1.0, so the metric no longer ranks them")
+    else:
+        lines.append(f"  worst saturation {worst:.1f}% of sites — under the "
+                     f"{SATURATED_FAIL_PCT:.0f}% discrimination-loss threshold")
+    return worst <= SATURATED_FAIL_PCT, lines, findings
 
 
 CLASSES = [("SAFE", 0.0, 0.3), ("WARNING", 0.3, 0.6), ("HIGH_RISK", 0.6, 0.8), ("DANGEROUS", 0.8, 1.0)]
@@ -411,37 +579,49 @@ def main() -> int:
     results["coordinates"] = check_coordinates(ref, conflicts, downstream)
     results["fallback"] = check_fallback(tables)
     results["dynamic_range"] = check_dynamic_range(run_dir)
+    results["saturation"] = check_saturation(tables)
 
     titles = {
         "degeneracy": "1. DEGENERACY — does any metric actually vary across sites?",
         "ranges": "2. PHYSICAL RANGE — are the values physically possible?",
         "coordinates": "3. COORDINATE CONSISTENCY — do the stages agree where each site is?",
-        "fallback": "4. FALLBACK RATE — measured data, or the neutral 0.5 sentinel?",
+        "fallback": "4. FALLBACK RATE — measured data, or a no-data sentinel?",
         "dynamic_range": "5. DYNAMIC RANGE — which risk classes can this run reach?",
+        "saturation": "6. SATURATION HEADROOM — does normalisation flatten the raw signals?",
     }
 
     n_sites = max(len(v) for v in tables.values())
+    failed = [name for name, (ok, _, _) in results.items() if not ok]
+
+    # --json emits ONLY json, so the output can be piped to jq or read by a
+    # hook. It used to append the json after the human report behind a
+    # "--- json ---" line, which made the documented "machine-readable"
+    # contract false: nothing could parse it.
+    if args.json:
+        payload = {
+            "run": args.run,
+            "sites": n_sites,
+            "tables": len(tables),
+            "verdict": "FAIL" if failed else "PASS",
+            "failed": failed,
+            "checks": {name: {"pass": ok, "findings": findings}
+                       for name, (ok, _, findings) in results.items()},
+        }
+        print(json.dumps(payload, indent=2, default=str))
+        return 1 if failed else 0
+
     print(f"\norcSONAR run audit — {args.run}   ({n_sites} sites, {len(tables)} per-site tables)")
     print("=" * 78)
-    failed = []
     for name, (ok, lines, _) in results.items():
         print(f"\n[{'PASS' if ok else 'FAIL'}] {titles[name]}")
         for line in lines:
             print(line)
-        if not ok:
-            failed.append(name)
 
     print("\n" + "=" * 78)
     if failed:
-        print(f"VERDICT: FAIL — {len(failed)} of 5 checks failed: {', '.join(failed)}")
+        print(f"VERDICT: FAIL — {len(failed)} of {len(results)} checks failed: {', '.join(failed)}")
     else:
-        print("VERDICT: PASS — all 5 checks passed")
-
-    if args.json:
-        payload = {name: {"pass": ok, "findings": findings}
-                   for name, (ok, _, findings) in results.items()}
-        print("\n--- json ---")
-        print(json.dumps(payload, indent=2, default=str))
+        print(f"VERDICT: PASS — all {len(results)} checks passed")
 
     return 1 if failed else 0
 
