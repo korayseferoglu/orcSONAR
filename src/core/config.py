@@ -21,7 +21,7 @@ class ScoringWeights(BaseSettings):
     execution_safety: float = 0.20
 
     @model_validator(mode="after")
-    def weights_sum_to_one(self) -> "ScoringWeights":
+    def weights_sum_to_one(self) -> ScoringWeights:
         total = (
             self.sequence_specificity
             + self.variant_toxicity

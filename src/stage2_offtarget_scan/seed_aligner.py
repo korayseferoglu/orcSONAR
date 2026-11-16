@@ -364,8 +364,14 @@ def run(
     for raw in raw_transcripts:
         try:
             transcripts.append(TranscriptInfo(**raw))
-        except Exception:
-            pass
+        except Exception as exc:
+            # Never swallow this silently: a dropped transcript is one fewer
+            # place an off-target can be found, so the failure biases the run
+            # toward SAFE. Say which record was lost and why.
+            logger.warning(
+                f"seed_aligner: skipping unusable transcript record "
+                f"{raw.get('transcript_id', raw)!r}: {exc}"
+            )
 
     sequences: dict[str, str] = {}
     for t in transcripts:

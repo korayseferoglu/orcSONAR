@@ -9,9 +9,9 @@ from typing import Any
 
 from loguru import logger
 
-from src.stage6_execution.ago2_loading import assess_ago2_loading
 from src.core.config import OrcSonarConfig
 from src.core.site_keys import site_ids_and_regions
+from src.stage6_execution.ago2_loading import assess_ago2_loading
 
 
 def run(

@@ -205,12 +205,15 @@ def _run_pipeline(args: argparse.Namespace) -> int:
             line_s = line.rstrip()
 
             for rule_name, label in _STAGE_LABELS.items():
-                if rule_name in line_s and rule_name not in completed_jobs:
-                    if any(kw in line_s for kw in ("Finished", "Done", "rule " + rule_name)):
-                        completed_jobs.add(rule_name)
-                        pbar.set_description(label[:45])
-                        pbar.update(1)
-                        break
+                if (
+                    rule_name in line_s
+                    and rule_name not in completed_jobs
+                    and any(kw in line_s for kw in ("Finished", "Done", "rule " + rule_name))
+                ):
+                    completed_jobs.add(rule_name)
+                    pbar.set_description(label[:45])
+                    pbar.update(1)
+                    break
 
             if not args.quiet:
                 tqdm.write(line_s)

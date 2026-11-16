@@ -4,7 +4,6 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Optional
 
 import pandas as pd
 import requests
@@ -18,7 +17,7 @@ from tenacity import (
 
 from src.core.cache import Cache
 from src.core.config import OrcSonarConfig
-from src.core.exceptions import APIError, DataSourceError
+from src.core.exceptions import DataSourceError
 from src.core.models import GenomicRegion, TSSInfo
 
 _EPD_COLS = ["chrom", "start", "end", "name", "score", "strand", "thickStart", "thickEnd"]
@@ -70,7 +69,7 @@ def find_tss(gene_name: str, config: OrcSonarConfig) -> TSSInfo:
     raise DataSourceError(f"TSS not found for '{gene_name}' in EPDnew or FANTOM5")
 
 
-def _search_epdnew(gene_name: str, bed_path: Path) -> Optional[TSSInfo]:
+def _search_epdnew(gene_name: str, bed_path: Path) -> TSSInfo | None:
     """Search EPDnew BED for a gene's TSS by name prefix.
 
     EPDnew name format: ``GENENAME_isoform`` (e.g. VEGFA_1). The gene is
@@ -127,7 +126,7 @@ def _search_fantom5(
     gene_name: str,
     bed_path: Path,
     config: OrcSonarConfig,
-) -> Optional[TSSInfo]:
+) -> TSSInfo | None:
     """Find the highest-scoring FANTOM5 CAGE peak near a gene.
 
     Fetches gene coordinates from Ensembl, then selects the CAGE peak with
@@ -207,7 +206,7 @@ def _ensembl_get(url: str) -> dict:
 def _get_gene_coordinates_ensembl(
     gene_name: str,
     config: OrcSonarConfig,
-) -> Optional[GenomicRegion]:
+) -> GenomicRegion | None:
     """Fetch hg38 gene coordinates from Ensembl REST API with SQLite caching.
 
     Args:

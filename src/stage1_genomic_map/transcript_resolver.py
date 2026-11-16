@@ -7,7 +7,6 @@ All API results are cached in SQLite (TTL = 1 week).
 from __future__ import annotations
 
 import time
-from typing import Optional
 
 import requests
 from loguru import logger
@@ -313,7 +312,7 @@ def _query_refseq_fallback(
 
 def _ncbi_esearch_gene_id(
     gene_name: str, config: OrcSonarConfig
-) -> Optional[str]:
+) -> str | None:
     """Return the NCBI Gene UID for a human gene symbol.
 
     Args:
@@ -340,7 +339,7 @@ def _ncbi_esearch_gene_id(
 
 def _ncbi_gene_summary(
     gene_id: str, config: OrcSonarConfig
-) -> Optional[dict]:
+) -> dict | None:
     """Return genomic position dict from NCBI Gene esummary.
 
     Returns a dict with keys ``chrom``, ``start``, ``end``, ``strand``,

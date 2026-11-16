@@ -9,8 +9,8 @@ from typing import Any
 
 from loguru import logger
 
-from src.stage5_biophysics.shape_profile import get_shape_accessibility
 from src.core.models import GenomicRegion
+from src.stage5_biophysics.shape_profile import get_shape_accessibility
 
 
 def run(

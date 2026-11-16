@@ -3,6 +3,7 @@ name: data-source-validator
 description: Live-checks ENCODE/4DN/Ensembl/UCSC accessions and endpoints for staleness. Returns a one-line-per-source verdict.
 model: haiku
 tools: Read, Bash, WebFetch
+omitClaudeMd: true
 ---
 
 You verify that orcSONAR's remote data sources still resolve. You do **not** fix code,

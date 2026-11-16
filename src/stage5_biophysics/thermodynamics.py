@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import os
-from typing import Optional
 
 from loguru import logger
 
@@ -181,7 +180,7 @@ class TurnerCalculator:
         self,
         pair1: tuple[str, str],
         pair2: tuple[str, str],
-    ) -> Optional[float]:
+    ) -> float | None:
         """Look up stacking energy for two consecutive base pairs.
 
         Args:

@@ -26,7 +26,6 @@ import gzip
 import math
 import os
 from functools import lru_cache
-from typing import Optional
 
 from loguru import logger
 
@@ -46,7 +45,7 @@ _NULL_TOKENS: frozenset[str] = frozenset(
 # ---------------------------------------------------------------------------
 
 
-def _load_shape_data(cell_line: str, data_dir: str) -> Optional[dict[int, float]]:
+def _load_shape_data(cell_line: str, data_dir: str) -> dict[int, float] | None:
     """Load a legacy two-column SHAPE/.map profile for a cell line.
 
     Searches *data_dir*/{cell_line}/ for any .shape or .map file and
@@ -123,7 +122,7 @@ def _strip_ensembl_version(transcript_id: str) -> str:
     return transcript_id.split(".", 1)[0]
 
 
-def _find_icshape_file(cell_line: str, data_dir: str) -> Optional[str]:
+def _find_icshape_file(cell_line: str, data_dir: str) -> str | None:
     """Return the path to a ``*icSHAPE*.txt.gz`` file under data_dir/{cell_line}/.
 
     The match is case-insensitive on the cell-line directory name and on the
@@ -157,7 +156,7 @@ def _find_icshape_file(cell_line: str, data_dir: str) -> Optional[str]:
 @lru_cache(maxsize=8)
 def _load_icshape_data(
     cell_line: str, data_dir: str
-) -> Optional[dict[str, "array.array[float]"]]:
+) -> dict[str, array.array[float]] | None:
     """Load a per-transcript icSHAPE table into memory (cached per process).
 
     File format (whitespace = TAB):
@@ -180,7 +179,7 @@ def _load_icshape_data(
     if path is None:
         return None
 
-    table: dict[str, "array.array[float]"] = {}
+    table: dict[str, array.array[float]] = {}
     try:
         with gzip.open(path, mode="rt", encoding="utf-8") as fh:
             for raw in fh:
@@ -252,9 +251,9 @@ def get_shape_accessibility(
     region: GenomicRegion,
     cell_line: str,
     data_dir: str,
-    transcript_id: Optional[str] = None,
-    tx_start: Optional[int] = None,
-    tx_end: Optional[int] = None,
+    transcript_id: str | None = None,
+    tx_start: int | None = None,
+    tx_end: int | None = None,
 ) -> ShapeResult:
     """Compute SHAPE-derived accessibility for an off-target site.
 

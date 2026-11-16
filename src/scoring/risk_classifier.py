@@ -15,9 +15,9 @@ from typing import Any
 from loguru import logger
 
 from src.core.config import RiskThresholds
+from src.core.models import DomainScores
 from src.scoring.classifier import RiskClass, classify, get_recommendation
 from src.scoring.integrator import ScoreIntegrator
-from src.core.models import DomainScores
 
 _RISK_ORDER = [RiskClass.SAFE, RiskClass.WARNING, RiskClass.HIGH_RISK, RiskClass.DANGEROUS]
 

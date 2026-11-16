@@ -16,7 +16,6 @@ from __future__ import annotations
 
 from collections import defaultdict
 from pathlib import Path
-from typing import Optional
 
 from loguru import logger
 
@@ -128,7 +127,7 @@ def _find_overlaps(
 
 def check_circrna_overlap(
     regions: list[GenomicRegion],
-    circrna_path: Optional[str | Path] = None,
+    circrna_path: str | Path | None = None,
 ) -> list[CircRNAResult]:
     """Check whether off-target regions overlap circRNA loci.
 
@@ -151,7 +150,7 @@ def check_circrna_overlap(
         return []
 
     # Resolve BED path
-    bed_path: Optional[Path] = None
+    bed_path: Path | None = None
     if circrna_path is not None:
         bed_path = Path(circrna_path)
         if not bed_path.exists():

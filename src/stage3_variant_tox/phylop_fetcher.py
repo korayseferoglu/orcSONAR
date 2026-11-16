@@ -9,8 +9,8 @@ from typing import Any
 
 from loguru import logger
 
-from src.stage3_variant_tox.phylop_scorer import score_phylop
 from src.core.site_keys import site_ids_and_regions
+from src.stage3_variant_tox.phylop_scorer import score_phylop
 
 
 def run(

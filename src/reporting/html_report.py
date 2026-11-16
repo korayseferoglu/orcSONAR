@@ -17,7 +17,7 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 from loguru import logger
 
 from src.core.models import DomainScores, FinalReport
-from src.scoring.classifier import RiskClass, classify
+from src.scoring.classifier import classify
 
 _TEMPLATES_DIR: Path = Path(__file__).parent / "templates"
 _ORCSONAR_VERSION: str = "0.1.0"

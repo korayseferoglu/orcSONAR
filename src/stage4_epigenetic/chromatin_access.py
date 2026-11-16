@@ -11,9 +11,8 @@ fails; the Stage 7 scoring engine normalises raw signals to [0, 1].
 
 from __future__ import annotations
 
-from src.core.config import OrcSonarConfig
 from src.core.models import GenomicRegion
-from src.stage4_epigenetic.encode_reader import EncodeSignalReader, _NEUTRAL_SIGNAL
+from src.stage4_epigenetic.encode_reader import _NEUTRAL_SIGNAL, EncodeSignalReader
 
 _ATAC_SIGNAL_TYPE: str = "atac_seq"
 

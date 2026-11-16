@@ -6,7 +6,6 @@ import json
 import sqlite3
 import time
 from pathlib import Path
-from typing import Optional
 
 from loguru import logger
 
@@ -43,7 +42,7 @@ class Cache:
         logger.debug(f"Cache initialised at {self._path}")
 
     # ------------------------------------------------------------------
-    def get(self, key: str) -> Optional[dict]:  # type: ignore[type-arg]
+    def get(self, key: str) -> dict | None:  # type: ignore[type-arg]
         """Return cached value if present and not expired, else None.
 
         Args:
@@ -91,7 +90,7 @@ class Cache:
             raise CacheError(f"Cache set failed for key '{key}': {exc}") from exc
 
     # ------------------------------------------------------------------
-    def clear(self, source: Optional[str] = None) -> int:
+    def clear(self, source: str | None = None) -> int:
         """Delete cache entries, optionally filtered by source prefix.
 
         Args:
@@ -119,7 +118,7 @@ class Cache:
         """Close the underlying SQLite connection."""
         self._conn.close()
 
-    def __enter__(self) -> "Cache":
+    def __enter__(self) -> Cache:
         return self
 
     def __exit__(self, *_: object) -> None:

@@ -9,7 +9,11 @@ from loguru import logger
 from src.core.config import RiskThresholds
 
 
-class RiskClass(str, Enum):
+class RiskClass(str, Enum):  # noqa: UP042
+    # Deliberately NOT enum.StrEnum. Switching changes what str() returns
+    # ("SAFE" instead of "RiskClass.SAFE"), which would alter the risk class
+    # written into results/*.json and rendered in the HTML report. That is a
+    # serialisation change, not a lint cleanup, so it does not belong here.
     """Enumeration of saRNA off-target risk levels."""
 
     SAFE = "SAFE"

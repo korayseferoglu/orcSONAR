@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Literal, Optional
+from typing import Literal
 
 from pydantic import BaseModel, Field, computed_field, field_validator
 
@@ -118,8 +118,8 @@ class OffTargetSite(BaseModel):
     seed_match_type: Literal["perfect", "G:U_wobble", "mismatch", "bulge"]
     mismatches: int = Field(ge=0)
     alignment_score: float
-    tx_start: Optional[int] = Field(default=None, ge=0)
-    tx_end: Optional[int] = Field(default=None, ge=0)
+    tx_start: int | None = Field(default=None, ge=0)
+    tx_end: int | None = Field(default=None, ge=0)
 
     @computed_field  # type: ignore[prop-decorator]
     @property
@@ -182,7 +182,7 @@ class CosmicMutation(BaseModel):
     gene: str
     so_term: str
     sample_count: int = Field(ge=0, default=0)
-    tier: Optional[int] = None  # 1 or 2 if in Cancer Gene Census; None otherwise
+    tier: int | None = None  # 1 or 2 if in Cancer Gene Census; None otherwise
 
 
 class CosmicResult(BaseModel):
@@ -199,7 +199,7 @@ class ClinvarVariant(BaseModel):
     """A single ClinVar variant (pathogenic or likely pathogenic)."""
 
     uid: str
-    position: Optional[int] = None
+    position: int | None = None
     significance: str
     condition: str = ""
     gene: str = ""

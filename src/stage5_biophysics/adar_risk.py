@@ -12,8 +12,6 @@ Final risk is a weighted combination: 0.6 × alu_risk + 0.4 × shape_risk.
 
 from __future__ import annotations
 
-from typing import Optional
-
 from loguru import logger
 
 from src.core.models import AdarRiskResult, GenomicRegion, RepeatResult, ShapeResult
@@ -43,7 +41,7 @@ def _alu_risk(repeat_result: RepeatResult) -> float:
     return round(risk, 4)
 
 
-def _shape_ds_risk(shape_result: Optional[ShapeResult]) -> float:
+def _shape_ds_risk(shape_result: ShapeResult | None) -> float:
     """Derive double-strandedness risk from SHAPE data.
 
     Returns:
@@ -60,7 +58,7 @@ def _shape_ds_risk(shape_result: Optional[ShapeResult]) -> float:
 def calculate_adar_risk(
     region: GenomicRegion,
     repeat_result: RepeatResult,
-    shape_result: Optional[ShapeResult] = None,
+    shape_result: ShapeResult | None = None,
 ) -> AdarRiskResult:
     """Calculate ADAR A-to-I editing risk for an off-target region.
 

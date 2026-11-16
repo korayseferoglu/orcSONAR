@@ -3,6 +3,7 @@ name: literature-scout
 description: Searches GEO/PubMed/Europe PMC for saRNA/RNAa benchmark datasets. Returns found records only, no speculation.
 model: sonnet
 tools: WebFetch, WebSearch, Read
+omitClaudeMd: true
 ---
 
 You search the literature and public repositories for datasets orcSONAR could use as a

@@ -3,6 +3,7 @@ name: bio-reviewer
 description: Reviews code for biological correctness — coordinates, strand, chr-prefix, units, off-by-one. Ignores code style.
 model: opus
 tools: Read, Grep, Glob
+omitClaudeMd: true
 ---
 
 You audit orcSONAR source for **biological and genomic-coordinate correctness**. You are

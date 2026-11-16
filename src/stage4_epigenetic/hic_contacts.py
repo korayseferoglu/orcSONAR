@@ -25,7 +25,6 @@ Hicstraw notes:
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Optional
 
 import yaml
 from loguru import logger
@@ -170,7 +169,7 @@ class HiCContactReader:
     # Protected helpers
     # ------------------------------------------------------------------
 
-    def _get_hic_url(self, cell_line: str) -> Optional[str]:
+    def _get_hic_url(self, cell_line: str) -> str | None:
         """Look up the .hic URL for a cell line.
 
         Args:

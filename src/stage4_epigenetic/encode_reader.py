@@ -20,7 +20,6 @@ from __future__ import annotations
 import urllib.error
 import urllib.request
 from pathlib import Path
-from typing import Optional
 
 import pyBigWig
 import requests
@@ -267,7 +266,7 @@ class EncodeSignalReader:
 
     def _get_url_for_cell_line(
         self, cell_line: str, signal_type: str
-    ) -> Optional[str]:
+    ) -> str | None:
         """Look up a BigWig URL from the loaded cell_lines.yaml.
 
         Args:

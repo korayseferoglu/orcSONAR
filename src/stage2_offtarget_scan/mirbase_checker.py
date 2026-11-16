@@ -48,7 +48,11 @@ def check_mirbase_overlap(sarna_seq: str, mirbase_path: str) -> MirbaseResult:
     for mirna in mirnas:
         score = _compare_seeds(sarna_seed, mirna.seed)
         if score > 0.0:
-            matched = sum(a == b for a, b in zip(sarna_seed, mirna.seed))
+            # strict=True asserts what _compare_seeds already guarantees: a
+            # score above 0.0 is only returned when both seeds are exactly
+            # _SEED_LENGTH. A silent zip truncation here would score a short
+            # seed as a full match.
+            matched = sum(a == b for a, b in zip(sarna_seed, mirna.seed, strict=True))
             overlaps.append(
                 MirbaseOverlap(
                     mirna_id=mirna.mirna_id,
@@ -152,7 +156,7 @@ def _compare_seeds(sarna_seed: str, mirna_seed: str) -> float:
     """
     if len(sarna_seed) != _SEED_LENGTH or len(mirna_seed) != _SEED_LENGTH:
         return 0.0
-    matched = sum(a == b for a, b in zip(sarna_seed, mirna_seed))
+    matched = sum(a == b for a, b in zip(sarna_seed, mirna_seed, strict=True))
     return _SCORE_TABLE.get(matched, 0.0)
 
 

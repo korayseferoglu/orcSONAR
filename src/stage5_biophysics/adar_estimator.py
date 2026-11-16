@@ -9,8 +9,8 @@ from typing import Any
 
 from loguru import logger
 
+from src.core.models import GenomicRegion, RepeatResult
 from src.stage5_biophysics.adar_risk import calculate_adar_risk
-from src.core.models import GenomicRegion, RepeatResult, ShapeResult
 
 
 def run(

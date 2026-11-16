@@ -32,7 +32,6 @@ Implementation notes:
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Optional
 
 import pandas as pd
 import yaml
@@ -108,7 +107,7 @@ class CCLEReader:
         )
         return result
 
-    def _find_gene_column(self, gene_name: str) -> Optional[str]:
+    def _find_gene_column(self, gene_name: str) -> str | None:
         """Return the full CSV column name for a gene, or None if not found.
 
         Args:
@@ -154,7 +153,7 @@ class CCLEReader:
 
     def _load_expression(
         self, ach_id: str, col_name: str, cell_line: str
-    ) -> tuple[Optional[float], float]:
+    ) -> tuple[float | None, float]:
         """Load one gene column from the CSV; compute value and percentile.
 
         Reads only the three relevant columns (ModelID, IsDefaultEntryForModel,

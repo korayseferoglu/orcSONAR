@@ -19,7 +19,7 @@ from loguru import logger
 
 from src.core.config import OrcSonarConfig
 from src.core.models import Ago2Result, GenomicRegion
-from src.stage4_epigenetic.encode_reader import EncodeSignalReader, _NEUTRAL_SIGNAL
+from src.stage4_epigenetic.encode_reader import _NEUTRAL_SIGNAL, EncodeSignalReader
 
 _AGO2_SIGNAL_KEY: str = "ago2_eclip"
 _AGO2_SATURATION: float = 20.0   # FC ≥ 20 → loading score clamped to 1.0
@@ -113,7 +113,7 @@ def assess_ago2_loading(
     raw_signals = reader.get_ago2_signal_bulk(regions, cell_line)
 
     results: list[Ago2Result] = []
-    for region, raw in zip(regions, raw_signals):
+    for region, raw in zip(regions, raw_signals, strict=True):
         score = _loading_score(raw)
         results.append(
             Ago2Result(

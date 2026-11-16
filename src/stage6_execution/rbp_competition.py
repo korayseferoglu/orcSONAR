@@ -19,7 +19,7 @@ from loguru import logger
 
 from src.core.config import OrcSonarConfig
 from src.core.models import GenomicRegion, RBPResult
-from src.stage4_epigenetic.encode_reader import EncodeSignalReader, _NEUTRAL_SIGNAL
+from src.stage4_epigenetic.encode_reader import _NEUTRAL_SIGNAL, EncodeSignalReader
 
 _HNRNPA1_SIGNAL_KEY: str = "hnrnpa1_eclip"
 _RBP_SATURATION: float = 20.0        # FC ≥ 20 → competition score clamped to 1.0
@@ -117,7 +117,7 @@ def assess_rbp_competition(
     raw_signals = reader.get_rbp_signal_bulk(regions, cell_line)
 
     results: list[RBPResult] = []
-    for region, raw in zip(regions, raw_signals):
+    for region, raw in zip(regions, raw_signals, strict=True):
         score = _competition_score(raw)
         results.append(
             RBPResult(

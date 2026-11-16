@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-from typing import Optional
-
 import pysam
 from loguru import logger
 
@@ -26,7 +24,7 @@ def _query_tabix(
     chrom: str,
     start: int,
     end: int,
-    cell_line: Optional[str] = None,
+    cell_line: str | None = None,
 ) -> list[M6ASite]:
     """Fetch m6A sites from a tabix-indexed BED file for one region.
 

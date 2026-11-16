@@ -20,9 +20,8 @@ Returns 0.0 (neutral) when the URL is absent or on any read failure.
 
 from __future__ import annotations
 
-from src.core.config import OrcSonarConfig
 from src.core.models import GenomicRegion
-from src.stage4_epigenetic.encode_reader import EncodeSignalReader, _NEUTRAL_SIGNAL
+from src.stage4_epigenetic.encode_reader import _NEUTRAL_SIGNAL, EncodeSignalReader
 
 _H3K4ME3_KEY: str = "h3k4me3_chip"
 _H3K27AC_KEY: str = "h3k27ac_chip"

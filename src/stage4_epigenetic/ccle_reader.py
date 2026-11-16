@@ -9,8 +9,8 @@ from typing import Any
 
 from loguru import logger
 
-from src.stage4_epigenetic.ccle_expression import CCLEReader
 from src.core.config import OrcSonarConfig
+from src.stage4_epigenetic.ccle_expression import CCLEReader
 
 
 def run(

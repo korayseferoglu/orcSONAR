@@ -9,8 +9,8 @@ from typing import Any
 
 from loguru import logger
 
-from src.stage1_genomic_map.promoter_region import define_promoter
 from src.core.models import TSSInfo
+from src.stage1_genomic_map.promoter_region import define_promoter
 
 
 def run(

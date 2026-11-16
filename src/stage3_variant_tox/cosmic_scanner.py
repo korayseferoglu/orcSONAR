@@ -8,8 +8,6 @@ COSMIC VCF quirk: chromosome column has NO "chr" prefix (e.g. "1", not "chr1").
 
 from __future__ import annotations
 
-from typing import Optional
-
 import pysam
 from loguru import logger
 
@@ -102,7 +100,7 @@ def _fetch_mutations(tbx: pysam.TabixFile, region: GenomicRegion) -> list[Cosmic
     return mutations
 
 
-def _parse_vcf_record(record: str) -> Optional[CosmicMutation]:
+def _parse_vcf_record(record: str) -> CosmicMutation | None:
     """Parse one VCF tab-delimited line into a CosmicMutation.
 
     VCF columns: chrom, pos, id, ref, alt, qual, filter, info
@@ -131,7 +129,7 @@ def _parse_vcf_record(record: str) -> Optional[CosmicMutation]:
     gene = info.get("GENE", "")
     so_term = info.get("SO_TERM", "")
 
-    tier: Optional[int] = None
+    tier: int | None = None
     tier_str = info.get("TIER", "")
     if tier_str in ("1", "2"):
         tier = int(tier_str)

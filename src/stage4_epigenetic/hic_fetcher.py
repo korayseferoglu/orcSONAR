@@ -9,9 +9,9 @@ from typing import Any
 
 from loguru import logger
 
-from src.stage4_epigenetic.hic_contacts import HiCContactReader
 from src.core.config import OrcSonarConfig
 from src.core.site_keys import site_ids_and_regions
+from src.stage4_epigenetic.hic_contacts import HiCContactReader
 
 
 def run(

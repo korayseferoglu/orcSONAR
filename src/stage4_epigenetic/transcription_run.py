@@ -30,9 +30,8 @@ YAML keys used (in cell_lines.yaml):
 
 from __future__ import annotations
 
-from src.core.config import OrcSonarConfig
 from src.core.models import GenomicRegion, GROseqResult
-from src.stage4_epigenetic.encode_reader import EncodeSignalReader, _NEUTRAL_SIGNAL
+from src.stage4_epigenetic.encode_reader import _NEUTRAL_SIGNAL, EncodeSignalReader
 
 _GROSEQ_PLUS_KEY: str = "gro_seq_plus_url"
 _GROSEQ_MINUS_KEY: str = "gro_seq_minus_url"
@@ -128,7 +127,7 @@ class GROseqReader(EncodeSignalReader):
                         minus_signal=_NEUTRAL_SIGNAL,
                         combined_signal=c,
                     )
-                    for region, c in zip(regions, combined_signals)
+                    for region, c in zip(regions, combined_signals, strict=True)
                 ]
 
         plus_signals = (
@@ -149,5 +148,5 @@ class GROseqReader(EncodeSignalReader):
                 minus_signal=m,
                 combined_signal=p + m,
             )
-            for region, p, m in zip(regions, plus_signals, minus_signals)
+            for region, p, m in zip(regions, plus_signals, minus_signals, strict=True)
         ]

@@ -228,8 +228,14 @@ def _parse_esummary_entry(uid: str, entry: dict) -> ClinvarVariant | None:
             if loc.get("assembly_name", "") == "GRCh38":
                 try:
                     position = int(loc.get("start", 0))
-                except (ValueError, TypeError):
-                    pass
+                except (ValueError, TypeError) as exc:
+                    # Leaving position as None drops the variant downstream,
+                    # which lowers the site's apparent risk. Log it rather
+                    # than losing it quietly.
+                    logger.debug(
+                        f"clinvar_client: unparsable GRCh38 start "
+                        f"{loc.get('start')!r}: {exc}"
+                    )
                 break
 
     return ClinvarVariant(

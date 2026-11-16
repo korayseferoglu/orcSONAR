@@ -21,8 +21,8 @@ from typing import Any
 
 from loguru import logger
 
-from src.scoring.integrator import ScoreIntegrator
 from src.core.models import DomainScores
+from src.scoring.integrator import ScoreIntegrator
 
 _NEUTRAL = 0.5
 

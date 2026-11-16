@@ -10,7 +10,6 @@ from typing import Any
 from loguru import logger
 
 from src.stage5_biophysics.thermodynamics import TurnerCalculator
-from src.core.config import OrcSonarConfig
 
 _DG_NEUTRAL = -15.0  # kcal/mol neutral fallback
 _DG_STRONG = -30.0
