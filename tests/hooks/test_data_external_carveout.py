@@ -125,6 +125,34 @@ def test_guards_fail_open_on_unusable_payload() -> None:
         assert proc.returncode == ALLOW, f"{hook} should fail open"
 
 
+def test_manifest_and_readme_are_not_gitignored() -> None:
+    """The manifest has to be in version control, or provenance is local-only.
+
+    `data/` is ignored wholesale, and git cannot re-include a file below an
+    excluded directory — so the obvious `data/` + `!data/external/manifest.json`
+    silently keeps the manifest untracked. It did exactly that on the first
+    attempt. The artifacts themselves must stay ignored: they are large and
+    re-downloadable, which is what the checksum is for.
+    """
+    repo = HOOKS.parents[1]
+    tracked = ["data/external/manifest.json", "data/external/README.md"]
+    ignored = [
+        "data/external/gencode.v48.annotation.gtf.gz",
+        "data/external/sub/x.bw",
+        "data/cache/orcsonar_cache.db",
+    ]
+    for path in tracked:
+        rc = subprocess.run(
+            ["git", "check-ignore", "-q", path], cwd=repo, timeout=30
+        ).returncode
+        assert rc != 0, f"{path} is gitignored; provenance would not survive a clone"
+    for path in ignored:
+        rc = subprocess.run(
+            ["git", "check-ignore", "-q", path], cwd=repo, timeout=30
+        ).returncode
+        assert rc == 0, f"{path} is tracked; downloaded artifacts do not belong in git"
+
+
 def test_manifest_is_valid_and_declares_its_schema() -> None:
     """The manifest is the record that makes a download reproducible.
 

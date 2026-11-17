@@ -1,6 +1,19 @@
 # Data (read-only, never commit)
-data/
+# data/* rather than data/, because git cannot re-include anything below an
+# excluded directory — the exceptions underneath would be dead letters.
+data/*
 !data/.gitkeep
+
+# data/external/ holds machine-downloaded artifacts. The artifacts themselves
+# stay out of git (large, and re-downloadable by definition), but its manifest
+# and README must be tracked: the manifest is the record that makes a download
+# reproducible, and H10 copies its checksums into every run's provenance. An
+# untracked manifest would leave results traceable only on the machine that
+# produced them, which is the opposite of the point.
+!data/external/
+data/external/*
+!data/external/README.md
+!data/external/manifest.json
 
 # Secrets
 .env
