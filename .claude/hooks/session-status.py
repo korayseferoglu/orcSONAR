@@ -72,9 +72,15 @@ def run(args: list[str], timeout: int) -> tuple[int | None, str]:
 
 
 def git(*args: str, timeout: int = 10) -> str | None:
-    """Return trimmed git output, or ``None`` if the call did not succeed."""
+    """Return git output with trailing whitespace removed, or ``None`` on failure.
+
+    Only the *trailing* end is trimmed. ``git status --porcelain`` is column
+    formatted (``XY path``) and an unstaged change leaves the first column
+    blank, so stripping both ends shifts that line left by one and the caller's
+    ``line[3:]`` then starts inside the filename.
+    """
     code, output = run(["git", *args], timeout)
-    return output.strip() if code == 0 else None
+    return output.rstrip() if code == 0 else None
 
 
 def lint(name: str, args: list[str], timeout: int) -> tuple[bool, int | None, str]:
@@ -178,12 +184,13 @@ def main() -> str:
     return _status.render(header, rows, FOOTER)
 
 
-try:
-    sys.stdout.write(main() + "\n")
-except Exception as exc:  # noqa: BLE001 - a status line must never wedge a launch
-    sys.stdout.write(
-        f"orcSONAR durumu {_status.NOT_MEASURED} — session-status.py düştü: "
-        f"{type(exc).__name__}: {exc}\n"
-        f"  SCIENTIFIC_ROADMAP.md'yi elle oku; durum satırına bu oturumda güvenme.\n"
-    )
-sys.exit(0)
+if __name__ == "__main__":  # importable, so the collectors above can be tested
+    try:
+        sys.stdout.write(main() + "\n")
+    except Exception as exc:  # noqa: BLE001 - a status line must never wedge a launch
+        sys.stdout.write(
+            f"orcSONAR durumu {_status.NOT_MEASURED} — session-status.py düştü: "
+            f"{type(exc).__name__}: {exc}\n"
+            f"  SCIENTIFIC_ROADMAP.md'yi elle oku; durum satırına bu oturumda güvenme.\n"
+        )
+    sys.exit(0)

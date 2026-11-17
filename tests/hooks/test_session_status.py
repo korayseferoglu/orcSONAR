@@ -20,6 +20,7 @@ happened in this repo:
 
 from __future__ import annotations
 
+import importlib.util
 import json
 import os
 import subprocess
@@ -279,6 +280,36 @@ def test_hook_prints_every_required_section(label: str) -> None:
     proc = _run_hook(json.dumps({"hook_event_name": "SessionStart", "source": "startup"}))
     assert proc.returncode == 0, proc.stderr
     assert label in proc.stdout, f"missing section: {label}\n{proc.stdout}"
+
+
+def _session_status() -> object:
+    """Import the hyphenated hook script as a module."""
+    spec = importlib.util.spec_from_file_location("session_status", HOOKS / "session-status.py")
+    assert spec is not None and spec.loader is not None
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def test_git_keeps_the_porcelain_status_columns(monkeypatch: pytest.MonkeyPatch) -> None:
+    """`git status --porcelain` writes ` M path`; trimming that pad trims a letter.
+
+    An unstaged change has a blank first status column, so a whole-output
+    ``strip()`` shifts the line left and ``line[3:]`` then starts inside the
+    filename. The collector and the wording function are each correct alone —
+    the loss happens at the seam, which is why no existing test saw it.
+    """
+    module = _session_status()
+    monkeypatch.setattr(module, "run", lambda args, timeout: (0, " M SCIENTIFIC_ROADMAP.md\n"))
+    assert module.git("status", "--porcelain") == " M SCIENTIFIC_ROADMAP.md"
+
+
+def test_unstaged_file_is_named_in_full(monkeypatch: pytest.MonkeyPatch) -> None:
+    """The other end of the seam: invariant 4's line must name the real file."""
+    module = _session_status()
+    monkeypatch.setattr(module, "run", lambda args, timeout: (0, " M SCIENTIFIC_ROADMAP.md\n"))
+    line = _status.uncommitted_text(module.git("status", "--porcelain"))
+    assert "SCIENTIFIC_ROADMAP.md" in line, line
 
 
 def test_hook_exits_zero_on_a_garbage_payload() -> None:
