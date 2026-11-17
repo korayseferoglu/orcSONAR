@@ -48,6 +48,22 @@ def under(path: str, *relative_dirs: str) -> bool:
     return False
 
 
+# The one writable path below data/. Everything else there is hand-curated
+# reference data that no pipeline may touch; data/external/ is where machine
+# downloads land (GENCODE and friends), each recorded in its manifest.
+#
+# The split exists because the guards and the planned sandbox rule would
+# otherwise have to be switched off the week the GENCODE download lands — a
+# rule declared and then disabled is worse than no rule, and is the exact
+# failure mode this project keeps hitting. See SCIENTIFIC_ROADMAP.md H1.
+DATA_EXTERNAL = "data/external"
+
+
+def is_writable_data(path: str) -> bool:
+    """True if ``path`` is inside the writable machine-download area."""
+    return under(path, DATA_EXTERNAL)
+
+
 def rel(path: str) -> str:
     """Path relative to the project root, for readable messages."""
     try:

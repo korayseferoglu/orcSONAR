@@ -23,13 +23,18 @@ PRINT_CALL = re.compile(r"(?<![\w.])print\s*\(")
 payload = read_payload()
 path = target_path(payload)
 
-if path and path.endswith(".py") and under(path, "src") and not path.endswith("/src/cli.py"):
-    if PRINT_CALL.search(written_text(payload)):
-        block(
-            f"BLOCKED: this writes a print() call into {rel(path)}.\n"
-            "orcSONAR logs with loguru, never print() — stdout from a pipeline module\n"
-            "is not captured as log output. Use:\n"
-            "    from loguru import logger\n"
-            "    logger.info(...) / logger.warning(...) / logger.debug(...)\n"
-            "src/cli.py is the only exemption, since its output goes to the user."
-        )
+if (
+    path
+    and path.endswith(".py")
+    and under(path, "src")
+    and not path.endswith("/src/cli.py")
+    and PRINT_CALL.search(written_text(payload))
+):
+    block(
+        f"BLOCKED: this writes a print() call into {rel(path)}.\n"
+        "orcSONAR logs with loguru, never print() — stdout from a pipeline module\n"
+        "is not captured as log output. Use:\n"
+        "    from loguru import logger\n"
+        "    logger.info(...) / logger.warning(...) / logger.debug(...)\n"
+        "src/cli.py is the only exemption, since its output goes to the user."
+    )
