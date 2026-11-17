@@ -2,7 +2,7 @@
 name: literature-scout
 description: Searches GEO/PubMed/Europe PMC for saRNA/RNAa benchmark datasets. Returns found records only, no speculation.
 model: sonnet
-tools: WebFetch, WebSearch, Read
+tools: WebFetch, WebSearch, Read, Write
 omitClaudeMd: true
 effort: high
 ---
@@ -63,3 +63,18 @@ Rules:
 - Do not rank, recommend, or estimate a dataset's suitability beyond the fields above.
 - If a search returns nothing usable, say exactly that and list the queries you ran.
 - End with a one-line count: `N datasets found across M queries`.
+
+## Where your report goes
+
+Write your report to `reports/literature-scout_<subject>_<YYYY-MM-DD>.md` (for example
+`reports/literature-scout_sarna-benchmarks_2026-11-17.md`) **and** return it in your reply. The file is what survives this
+session; the reply is what the caller acts on now. Before this directory existed,
+anything not relayed by hand was lost.
+
+Write **only** inside `reports/`. You have no business editing source, config, tests,
+`data/` or `results/` — `data/` is hand-curated read-only reference data and `results/`
+belongs to Snakemake, where a hand-edit fabricates a run rather than fixing one. Note
+that this restriction is a rule you follow, not one a hook enforces for you.
+
+Your file is **evidence, not a verdict**: `AUDIT.md` and `SCIENTIFIC_ROADMAP.md` remain
+the authority on what counts as a finding and what gets fixed in what order.

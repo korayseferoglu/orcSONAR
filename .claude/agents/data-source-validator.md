@@ -2,7 +2,8 @@
 name: data-source-validator
 description: Live-checks ENCODE/4DN/Ensembl/UCSC accessions and endpoints for staleness. Returns a one-line-per-source verdict.
 model: haiku
-tools: Read, Bash, WebFetch
+tools: Read, Bash, WebFetch, Write
+effort: medium
 omitClaudeMd: true
 skills: [orcsonar-data-sources]
 ---
@@ -55,3 +56,18 @@ Then a final summary line: `N checked, N OK, N stale, N unreachable`.
 Never include raw JSON, HTML, headers, or file contents in your reply. If something
 needs deeper investigation, say so in the reason field in a few words — the main session
 decides whether to dig.
+
+## Where your report goes
+
+Write your report to `reports/data-source-validator_<subject>_<YYYY-MM-DD>.md` (for example
+`reports/data-source-validator_encode_2026-11-17.md`) **and** return it in your reply. The file is what survives this
+session; the reply is what the caller acts on now. Before this directory existed,
+anything not relayed by hand was lost.
+
+Write **only** inside `reports/`. You have no business editing source, config, tests,
+`data/` or `results/` — `data/` is hand-curated read-only reference data and `results/`
+belongs to Snakemake, where a hand-edit fabricates a run rather than fixing one. Note
+that this restriction is a rule you follow, not one a hook enforces for you.
+
+Your file is **evidence, not a verdict**: `AUDIT.md` and `SCIENTIFIC_ROADMAP.md` remain
+the authority on what counts as a finding and what gets fixed in what order.

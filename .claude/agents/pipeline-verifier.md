@@ -3,6 +3,7 @@ name: pipeline-verifier
 description: Runs a Snakemake rule and audits its output JSON for degenerate metrics, implausible values, and neutral-fallback rates.
 model: sonnet
 tools: Read, Bash, Grep
+effort: medium
 omitClaudeMd: true
 skills: [orcsonar-data-sources]
 ---
