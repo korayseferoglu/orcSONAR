@@ -33,7 +33,7 @@ NULL_GATE_GLOBS = ("reports/null_gate*.json", "results/*/null_gate*.json")
 _PHASE = re.compile(r"^###\s+(FAZ\s+[^\n]*?)\s*$")
 _ROW = re.compile(r"^\|\s*\*\*([A-Z]\d+[a-z]?)\*\*\s*\|(.*)$")
 _ID = re.compile(r"\b([A-Z]\d+[a-z]?)\b")
-_STATUS = re.compile(r"^(TODO|DOING|DONE|BLOCKED\([^)]*\)|DROPPED\([^)]*\))$")
+_STATUS = re.compile(r"^(TODO|DOING|DONE(\([^)]*\))?|BLOCKED\([^)]*\)|DROPPED\([^)]*\))$")
 
 _NONE_CELL = {"—", "-", "–", ""}
 
@@ -105,6 +105,26 @@ def parse_roadmap(text: str) -> list[Item]:
     return items
 
 
+def is_done(status: str) -> bool:
+    """Whether a status cell counts as closed.
+
+    ``DONE`` means an acceptance script ran and exited 0. ``DONE(beyan)`` means
+    no script could express the criterion, so a human-readable declaration was
+    recorded instead (roadmap `H5`): auditable, but not verified. The weaker
+    word is deliberate and must stay visible in the table — but both are
+    closed, so work behind them may start and both are counted. Treating the
+    declared form as open would stall the queue; leaving it out of the counts
+    is exactly how `DOING` already vanished from the launch block (`H11`).
+
+    Args:
+        status: A parsed status cell.
+
+    Returns:
+        ``True`` for either closing verdict.
+    """
+    return status == "DONE" or status.startswith("DONE(")
+
+
 def ready_items(items: list[Item]) -> list[Item]:
     """Every ``TODO`` whose dependencies are all ``DONE``, in file order.
 
@@ -122,7 +142,7 @@ def ready_items(items: list[Item]) -> list[Item]:
     return [
         item
         for item in items
-        if item.status == "TODO" and all(status.get(dep) == "DONE" for dep in item.deps)
+        if item.status == "TODO" and all(is_done(status.get(dep, "")) for dep in item.deps)
     ]
 
 
@@ -153,7 +173,7 @@ def phase_text(items: list[Item], current: Item | None) -> str:
         return "sıradaki madde yok — her bağımlılığı karşılanmış madde kapandı"
     phase = current.phase or "faz başlığı bulunamadı"
     in_phase = [item for item in items if item.phase == current.phase]
-    done = sum(1 for item in in_phase if item.status == "DONE")
+    done = sum(1 for item in in_phase if is_done(item.status))
     todo = sum(1 for item in in_phase if item.status == "TODO")
     return f"{phase} · {len(in_phase)} madde: {done} DONE, {todo} TODO"
 
@@ -261,7 +281,7 @@ def prereg_text(*, exists: bool, committed: str | None, a12_status: str, enforce
     guard = "yaptırım: H8 kurulu" if enforced else "yaptırım: H8 kurulmadı"
     if not exists:
         return f"docs/PRE_REGISTRATION.md yok · A12 {a12_status} · {guard}"
-    if a12_status == "DONE":
+    if is_done(a12_status):
         sha = committed or "commit yok (!)"
         warn = "" if enforced else "  ⚠️ belgede kilitli, kodda değil"
         return f"KİLİTLİ — A12 {sha} · {guard}{warn}"
