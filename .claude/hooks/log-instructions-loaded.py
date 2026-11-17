@@ -14,8 +14,10 @@ Read it with:
 
     python3 -c "import json;[print(json.loads(l)['file_path']) for l in open('.claude/instructions-loaded.log')]"
 
-or let the SessionStart hook (roadmap H4) summarise it. Advisory only: this
-event cannot block, and any failure here exits 0 rather than disturbing a load.
+The SessionStart status line (H4) does *not* summarise it — that was considered
+and left out, because H4's six measurements were specified without it; it is a
+candidate for H11. Advisory only: this event cannot block, and any failure here
+exits 0 rather than disturbing a load.
 """
 
 from __future__ import annotations

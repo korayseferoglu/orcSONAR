@@ -10,30 +10,22 @@ failing the edit.
 from __future__ import annotations
 
 import json
-import os
-import shutil
 import subprocess
 import sys
 
 sys.path.insert(0, __file__.rsplit("/", 1)[0])
 
-from _hooklib import PROJECT_ROOT, read_payload, rel, target_path, under  # noqa: E402
+from _hooklib import PROJECT_ROOT, find_tool, read_payload, rel, target_path, under  # noqa: E402
 
 
 def find_ruff() -> list[str] | None:
-    """Locate ruff: active venv, then the project venvs, then PATH."""
-    candidates = []
-    venv = os.environ.get("VIRTUAL_ENV")
-    if venv:
-        candidates.append(os.path.join(venv, "bin", "ruff"))
-    candidates += [
-        os.path.join(PROJECT_ROOT, ".venv", "bin", "ruff"),
-        os.path.expanduser("~/.venvs/orcsonar/bin/ruff"),
-    ]
-    for candidate in candidates:
-        if os.path.isfile(candidate) and os.access(candidate, os.X_OK):
-            return [candidate]
-    found = shutil.which("ruff")
+    """Locate ruff: active venv, then the project venvs, then PATH.
+
+    The lookup itself lives in ``_hooklib.find_tool`` because the SessionStart
+    hook (H4) needs the same one for both ruff and mypy, and a second copy of a
+    tool path is how the stale copy survives (roadmap H9).
+    """
+    found = find_tool("ruff")
     return [found] if found else None
 
 

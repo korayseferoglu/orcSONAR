@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import json
 import os
+import shutil
 import sys
 from typing import Any
 
@@ -62,6 +63,34 @@ DATA_EXTERNAL = "data/external"
 def is_writable_data(path: str) -> bool:
     """True if ``path`` is inside the writable machine-download area."""
     return under(path, DATA_EXTERNAL)
+
+
+def find_tool(name: str) -> str | None:
+    """Locate a dev tool: the active venv, then the project venvs, then PATH.
+
+    Hooks run with whatever environment the editor had, which is often not the
+    project venv — ruff and mypy live in ``~/.venvs/orcsonar`` on this machine
+    and are on no default PATH. One copy of that lookup, because two copies of
+    a path are how the wrong one survives (roadmap H9).
+
+    Args:
+        name: Executable to look for, e.g. ``"ruff"``.
+
+    Returns:
+        Absolute path to the executable, or ``None`` if nothing was found.
+    """
+    candidates = []
+    venv = os.environ.get("VIRTUAL_ENV")
+    if venv:
+        candidates.append(os.path.join(venv, "bin", name))
+    candidates += [
+        os.path.join(PROJECT_ROOT, ".venv", "bin", name),
+        os.path.expanduser(f"~/.venvs/orcsonar/bin/{name}"),
+    ]
+    for candidate in candidates:
+        if os.path.isfile(candidate) and os.access(candidate, os.X_OK):
+            return candidate
+    return shutil.which(name)
 
 
 def rel(path: str) -> str:
