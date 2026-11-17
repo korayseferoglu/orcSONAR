@@ -25,7 +25,7 @@ is the authority on what to work on and in what order.
 | Area | What the code actually does | Target |
 |---|---|---|
 | Off-target search space (Bulgu-6) | `_BACKGROUND_GENES` in `src/stage2_offtarget_scan/transcriptome_fetcher.py` is a hand-curated **183-gene** set fetched over Ensembl REST. Not the transcriptome. | Full GENCODE scan (~250k transcripts) with a local seed index; thresholds must be recalibrated. |
-| ΔG (Bulgu-1) | `src/stage5_biophysics/delta_g_calculator.py` uses the reverse complement of the saRNA **itself** as the duplex target, never the off-target mRNA. Every site in a run gets one identical, **positive** ΔG (+31.1 for VEGFA_HeLa) → `risk_score` 0.0 everywhere. The biophysics pillar is decorative. | Real per-site duplex ΔG. Blocked on stage 2: `stage2_offtargets.json` stores coordinates and `tx_start`/`tx_end`, not the sequence. |
+| ΔG (Bulgu-1) | `src/stage5_biophysics/delta_g_calculator.py` uses the reverse complement of the saRNA **itself** as the duplex target, never the off-target mRNA, **and** applies a stray `reversed()` on top. Every site in a run gets one identical, **positive** ΔG (+31.1 for VEGFA_HeLa) → `risk_score` 0.0 everywhere. The biophysics pillar is decorative. | Real per-site duplex ΔG — `SCIENTIFIC_ROADMAP.md` C3, fixed as a package (alignment + target + threshold together: correcting the alignment alone yields −43.8, which clears the `≤ −30` threshold and pins every site at 1.0). **NOT blocked on stage 2** — an earlier version of this row claimed it was; `tx_start`/`tx_end` *are* in the payload (`"tx_start": 7093, "tx_end": 7113`), so the target is sliced from the cached cDNA. Cleaner still: have stage 2 also emit the 20-nt `target_window` (~3 lines). |
 | Genomic coordinates are splice-blind (Bulgu-8) | `seed_aligner.py:105-112` adds a **cDNA** offset (`transcriptome_fetcher.py:346` fetches `type="cdna"`) to a **genomic** span boundary, and `TranscriptInfo` carries no exon structure. Every site on a multi-exon transcript is placed wrongly: for MTOR only the top 8.7 kb of a 156 kb gene is reachable, so 94% of the locus can never be emitted. Affects every genomic-locus source (COSMIC, gnomAD, ClinVar, phyloP, ATAC, ChIP, GRO-seq, Hi-C, Ago2, RBP, m6A, circRNA, RepeatMasker); not SHAPE/ΔG/G4/miRBase/immune/CCLE. | Exon structure on `TranscriptInfo` (Ensembl `/lookup/id?expand=1`) and a cDNA→genomic walk over exons. |
 
 Two docstrings still claim "~250 genes" (`transcriptome_fetcher.py:133`,
@@ -71,9 +71,18 @@ risk class: [0.0, 0.3) 🟢 SAFE · [0.3, 0.6) 🟡 WARNING ·
 
 Known divergence — see AUDIT.md Bulgu-7. Note: epigenetic and execution signals enter
 BOTH base_score and cell_modifier (double-counted); config weights do not mean what they
-appear to mean. All four completed runs score 0.298-0.408, so HIGH_RISK and DANGEROUS are
-never reached in practice — the dead ΔG pillar and frequent neutral fallbacks compress
-the range (Bulgu-4).
+appear to mean.
+
+All four completed runs score 0.298-0.408, so the top classes are never reached. Be
+precise about why, because it changes where the fix belongs: with the observed
+`cell_modifier` (0.707-0.809) **HIGH_RISK needs a base of 0.741-0.848 and is reachable**
+— the base ceiling is 0.836 even with biophysics stuck at its current 0.345 cap — while
+DANGEROUS needs 1.05 and is genuinely unreachable. So HIGH_RISK is empirically unreached,
+not mathematically impossible, and the cause is **dead channels** (`_NEUTRAL_SIGNAL = 0.0`,
+roadmap B2) **plus intronic loci** (D2) — not the saturation constant. Dropping
+`_ATAC_SAT` 50-fold only moves the threshold 0.789 → 0.728. Recalibrating the class
+thresholds before B2 and D2 land would be compensating for dead channels, which roadmap
+invariant 7 forbids.
 
 ## Key Design Decisions
 - Off-target scanning: full transcript bodies, not just promoter regions — but currently
@@ -111,7 +120,11 @@ the range (Bulgu-4).
 - Results: `results/{gene}_{cell_line}/stageX_output.json`
 
 ## DO NOT
-- Modify anything under `data/` (read-only)
+- Modify anything under `data/` — it is hand-curated reference data, read-only.
+  Machine-downloaded data (GENCODE and friends) goes under `data/external/` with a
+  manifest; that is the only writable path below `data/`.
+- Hand-edit anything under `results/` — only Snakemake writes there. Editing a result
+  does not fix it, it fabricates one.
 - Use `print()` for logging (use loguru)
 - Skip type hints or docstrings
 - Skip unit tests
