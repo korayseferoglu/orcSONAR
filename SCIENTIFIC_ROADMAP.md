@@ -98,6 +98,42 @@ yürüyüşünü (`D2`) **beklemez**.
 
 ## 3. MADDELER
 
+> **Fazlar gruplamadır; otorite bağımlılık grafiğidir.** Birkaç madde kendi fazından
+> sonraki bir fazdaki maddeye bağlıdır — en belirgini `C0` (bölge anotasyonu), GENCODE
+> GTF'yi gerektirdiği için `D0`'a bağlı. `/next-fix` sırayı **grafikten** çözer, dosya
+> sırasından değil.
+>
+> Grafiğin tutarlılığı (benzersiz id, tanımsız bağımlılık, döngü, kapsam ihlali, kapsam
+> sayılarının tutması) mekanik olarak kontrol edilebilir. Kontrol **henüz CI'da değil** —
+> prototip `/home/koray/orcSONAR-denetim/check_roadmap.py`, CI'a bağlanması `H6`/`H9`.
+> Bu kontrol yazıldığı ilk gün gerçek bir çelişki yakaladı (`F4` üç aylık kapsamın
+> içindeyken bağımlılığı `F1` dışarıdaydı) — hatırlanacak bir şey değil, kapı olmalı.
+
+### FAZ 0 — Harness (≈3 gün)
+
+> Tasarım gerekçeleri: `/home/koray/orcSONAR-denetim/PLAN_A_CLAUDE_MIMARISI.md`.
+> Buradaki maddeler **sıra**, o dosya **neden**. Harness, projenin beş arıza tipini
+> (H1 beyan-bağlanmamış · H2 commit'siz-yapılmış · H3 arıza yönü · H4 kopya-kayma ·
+> H5 ölü kodda yeşil test) yapısal olarak imkânsız kılmak için var.
+
+| id | iş | bağımlılık | kabul kriteri | durum |
+|---|---|---|---|---|
+| **H1** | **Dizin sözleşmesi kararı.** `data/` elle küratörlü salt-okunur; **`data/external/`** makine-indirilen, manifest'li, yazılabilir; `results/` yalnız Snakemake. ⚠️ `H12` ve `D0` ikisi de buna bağlı — karar önce verilmezse sandbox kuralı bir hafta sonra devre dışı bırakılır (= H1 arıza tipi). | — | sözleşme `CLAUDE.md` ve `.claude/rules/00-degismezler.md`'de yazılı | TODO |
+| **H2** | **`.claude/rules/`** — `00-degismezler.md` (paths yok), `10-koordinatlar.md`, `20-skor-degismezleri.md`, `30-veri-kaynaklari.md` (`paths:` ile). CLAUDE.md'den kopya tablolar çıkar; ajanlar `skills: [orcsonar-data-sources]` ile preload eder. | H1 | kanonik gerçek tek dosyada; CLAUDE.md < 200 satır | TODO |
+| **H3** | **Ajanlar:** her opus ajanına **açık `effort`** (⚠️ Opus 5.5 varsayılanı `medium` — bugünkü `bio-reviewer` koordinat denetimini medium'da yapıyor); `bio-reviewer` → xhigh; `literature-scout` → high; 🆕 `biostatistician` (opus/xhigh) ve `coordinate-engineer` (opus/xhigh + `isolation: worktree`); üç ajana rapor dizinine **Write**. | H2 | `.claude/agents/*.md` frontmatter'ında `effort` var | TODO |
+| **H4** | **`SessionStart` hook'u** — faz, sıradaki madde, ön kayıt kilidi durumu, commit'siz dosya sayısı, ruff/mypy, null kapısının son sonucu. H1+H2 arıza tiplerini birlikte kapatır. | H2 | oturum açılışında durum basılıyor | TODO |
+| **H5** | **`next-fix` + `fix-done` + `pre-register` skill'leri.** `fix-done` kabul komutunu koşar, geçmezse **reddeder**, ve **"kırmızı-önce" kanıtını sorar** (değişmez 5 — hiçbir hook bunu ölçemez). `pre-register` Faz A'dan önce hazır olmalı. | H4 | üçü de çalışıyor; `fix-done` geçmeyen maddeyi reddediyor | TODO |
+| **H6** | **CI** — `pytest` + `ruff check src/` **bloke edici**, `mypy` **bilgilendirici**, null kapısı (`E1`) eklendiğinde bloke edici. ⚠️ `B10`'a **da** `B10a`'ya **da** bağlı değil: 39 kosmetik generic anotasyon ana deneyin kritik yolunda duramaz, ve mypy bilgilendirici kurulduğu için hata sayısı CI'ı kırmaz. | H2 | CI yeşil ve zorunlu | TODO |
+| **H7** | **Commit kapısı** — `PreToolUse` + `if: "Bash(git commit *)"`. ⚠️ pytest işareti **mtime-taze** olmalı: düzenlemeden *önce* koşulan pytest kapıyı açarsa kapının kendisi H1 arızası üretir. `src/`→`tests/` koşulu **uyarı**, bloke edici değil (proxy çok kaba; saf refaktörü ve Faz D worktree'sini engeller). | H6 | eski pytest ile commit reddediliyor | TODO |
+| **H8** | **Ön kayıt kilidi** — `PreToolUse` + `if: "Edit(docs/PRE_REGISTRATION.md)"` → `A12` commit'i varsa reddet. ⚠️ **Faz A'dan ÖNCE bitmeli.** Değişmez 6 bugün yalnız bir belge cümlesi; ihlali en sinsi arıza (sonucu görüp eşiği oynatmak). | — | kilitli dosyaya edit reddediliyor | TODO |
+| **H9** | **Tek-kopya kapısı (H4 arıza tipinin gerçek çözümü).** Kanonik gerçekler otorite listesi dışında bir dosyada görünürse CI kırmızı. ⚠️ Otorite listesi önce tanımlanır — ham grep `docs/DATA_SOURCES.md`'deki **meşru** kopyaya takılır ve kapı ilk günde kapatılır. | H2, H6 | otorite tablosu yazılı; kapı CI'da | TODO |
+| **H10** | **Run manifest** — her koşu çıktısına git SHA, config hash, kaynak sürümleri, seed'ler, `data/external/` checksum'ları. *Dört mevcut koşunun "eski iki-parçalı `site_id`" formatında olduğu elle keşfedildi.* `G-VI` kapısının parçası. | H6 | her `results/*/` altında `manifest.json` | TODO |
+| **H11** | `FileChanged` (config anahtarı eklendi ama üretim çağıranı yok → uyarı) + `PostToolUse`'a mypy + `Stop`'ta **bloke etmeyen** özet. ⚠️ `Stop` üzerinde bloke etme **düşürüldü**: `H7` aynı kuralı daha iyi bir noktada uyguluyor. | H6 | üçü de çalışıyor | TODO |
+| **H12** | **Sandbox** — `sandbox.filesystem.denyWrite`: `data/` **minus** `data/external/**`. `results/` sandbox'a **konmaz** (Snakemake yazacak). `block-bash-writes.py`'nin kabul ettiği `python3 -c open(...)` deliğini kapatır. Sıra: `failIfUnavailable: false` → `snakemake -n` + tam koşu ile doğrula → kalıcı. | H1, H6 | `data/` yazma engelleniyor, `data/external/` ve `results/` çalışıyor | TODO |
+| **H13** | `null-check` + `claim-check` skill'leri (`claim-check`: `context: fork`, sonnet/high). | H3, H6 | ikisi de çalışıyor | TODO |
+
+---
+
 ### FAZ A — Ön kayıt (kod yazılmaz, 2-3 gün)
 
 > `biostatistician` ajanı **burada** devreye girer, Faz E'de değil — en pahalı hatalar
@@ -105,7 +141,7 @@ yürüyüşünü (`D2`) **beklemez**.
 
 | id | iş | bağımlılık | kabul kriteri | durum |
 |---|---|---|---|---|
-| **A1** | Mekanizma kararı: modellenen şey **saRNA dupleksinin her iki ipliğinin** siRNA-benzeri seed off-target'ı. ⚠️ "guide ipliğinin" demek PR-AUC tavanını düşürür — etiketteki pasajer-iplik pozitifleri tanım gereği görülemez (bkz. `C0b`). | — | `docs/PRE_REGISTRATION.md` §1 mekanizmayı tek cümlede söylüyor | TODO |
+| **A1** | Mekanizma kararı: modellenen şey **saRNA dupleksinin her iki ipliğinin** siRNA-benzeri seed off-target'ı. ⚠️ "guide ipliğinin" demek PR-AUC tavanını düşürür — etiketteki pasajer-iplik pozitifleri tanım gereği görülemez (bkz. `C0b`). | H5 | `docs/PRE_REGISTRATION.md` §1 mekanizmayı tek cümlede söylüyor | TODO |
 | **A2** | Gerçek referans setini kilitle: **GSE5814** (68 örnek, HeLa, seed pozisyon mutantları — en güçlü), GSE5769, GSE5291, GSE41924, GSE44256/44105, GSE278438/9. | A1 | §2'de accession + n + tasarım | TODO |
 | **A2b** | **Her accession'ın kimliğini, yayınını ve tasarımını NCBI'dan doğrula — kilitlemeden önce.** Ön kayıt kilitli olduğu için yanlış accession geri alınamaz. *Yapıldı: GSE5814 = Jackson ve ark. 2006, PMID **16682560**, "Widespread siRNA off-target transcript silencing mediated by seed region sequence complementarity". (Birmingham 2006 Nat Methods 3:199 **başka** bir veri setidir.)* | A2 | her accession için doğrulanmış PMID + örnek sayısı | TODO |
 | **A3** | Etiket tanımı: gen düzeyinde belirgin aşağı regülasyon, eşik önceden sabit (öneri `log2FC ≤ −0.3`). | A2b | §3'te eşik sayı olarak | TODO |
@@ -117,7 +153,7 @@ yürüyüşünü (`D2`) **beklemez**.
 | **A9** | **On-target ve ikincil etki dışlaması:** hedef genin kendisi ve bilinen doğrudan alt akışı pozitif sayılamaz. | A3 | §9'da dışlama listesi kuralı | TODO |
 | **A10** | **`_clamp` yerine gelecek haritalamayı ön kayda yaz.** `alignment_score`'u [0,1]'e **nasıl** haritalayacağın bir modelleme kararıdır (min-max? teorik maksimuma bölme? yüzdelik?) ve sonucu gördükten sonra değiştirilemez. Bugünkü `_clamp` bir hata; yerine gelecek şey bir **karar**. | A4 | §10'da haritalama formülü | TODO |
 | **A11** | **RNAa'nın yeri:** promoter/RNAa arama uzayı ikinci bir çıktı sütunu olarak **raporlanır ama doğrulanmaz** — her saRNA için promoter penceresine seed eşleşmesi hesaplanır, `validated: false` etiketiyle sunulur. `promoter_region.py` zaten var, iplik-farkında ve doğru, yalnız hiç okunmuyor. Maliyet ~0; projenin kimliğini korur, doğrulanmamış iddia üretmez. | A1 | §11'de yazılı | TODO |
-| **A12** | Ön kaydı commit'le, hash'ini not et. Bundan sonraki her analiz bu hash'e atıf yapar. **Bu commit'ten sonra dosya kilitlidir** (`A2.6` hook'u). | A6a, A7–A11 | `git log -1 --format=%H docs/PRE_REGISTRATION.md` | TODO |
+| **A12** | Ön kaydı commit'le, hash'ini not et. Bundan sonraki her analiz bu hash'e atıf yapar. **Bu commit'ten sonra dosya kilitlidir** — kilidi `H8` uygular, o yüzden `H8` bu maddeden önce bitmiş olmalı. | H8, A6a, A7, A8, A9, A10, A11 | `git log -1 --format=%H docs/PRE_REGISTRATION.md` | TODO |
 
 ---
 
@@ -134,7 +170,7 @@ yürüyüşünü (`D2`) **beklemez**.
 | **B2** | **Fallback'i *bilinmiyor* tipine çevir.** `_NEUTRAL_SIGNAL = 0.0` → açık sentinel. ⚠️ Sentinel'i 0.5 yapmak **yetmez**: sabit ham-sinyal uzayında, 0.5 sözleşmesi skor uzayında (AUDIT.md Bulgu-10). | — | hiçbir fallback yolu sayısal risk değeri dönmüyor | TODO |
 | **B4** | **gnomAD işaretini düzelt** — üretici "korunmuş = 1.0 = yüksek risk", tüketici `variant_merger.py:36-38` `1.0 - skor` ile tersliyor. | — | işaret testi: korunmuş > polimorfik | TODO |
 | **B10a** | **İki gerçek mypy hatasını düzelt** (geri kalan 72 değil): `shape_profile.py:300-301` `max()`/`min()` çağrısı `int \| None` üzerinde ve üstündeki `type: ignore[arg-type]` mypy'nin bildirdiği kodu bile kapsamıyor; `transcriptome_fetcher.py:258-267` `None` koordinatı `TranscriptInfo`'ya verebiliyor → ValidationError → `seed_aligner`'ın **sessiz düşürme** yoluna gidiyor. ⚠️ İkincisi `D1`'de 250k transkriptle **ölçeklenerek** sessiz kayıp üretir. | — | iki hata kapandı, regresyon testi var | TODO |
-| **B11** | **CI kur** — `pytest` + `ruff check src/` bloke edici; `mypy` **bilgilendirici (non-blocking)**; null kapısı (`E1`) eklendiğinde bloke edici. ⚠️ `B10`'a bağlı **değil**. | B10a | CI yeşil ve zorunlu | TODO |
+| *(CI)* | CI kurulumu **`H6`**'dadır — Faz 0'a taşındı, burada tekrar edilmez. | — | — | — |
 
 ---
 
@@ -164,8 +200,8 @@ yürüyüşünü (`D2`) **beklemez**.
 | **D0** | GENCODE sürümünü seç ve indir (GTF + transkript FASTA) → **`data/external/`** (bkz. değişmez 1; `data/` sandbox'ı bu dizini dışarıda bırakır). | — | sürüm + checksum `docs/DATA_SOURCES.md`'de | TODO |
 | **D1** | **Yerel seed indeksi** (~250k transkript) — **checkpoint 1, merge edilebilir.** Mevcut `_BACKGROUND_GENES` 183 gen (iki docstring "~250 genes" diyor, o da yanlış). Geçerlilik itirazının kökü: 41 hit'in geldiği 29 genin **tamamı** listeden; zenginleşme biyolojiden değil **transkript uzunluğundan** (r = 0.349, medyan cDNA 5.326 vs 2.828 nt). | D0 | 183-gen listesi kodda yok; tarama tam transkriptom üzerinde | TODO |
 | **D2** | **Ekzon yapısı + cDNA→genomik yürüyüş** — checkpoint 2. *Ölçüm: medyan sapma **30.732 bp**, maks 182.707 (EGFR), 39/41 site >1 kb; "doğru" çıkan 2 site retained-intron izoformu.* Pencereler sistematik olarak **intron içine** düşüyor → korunmasız, mutasyon-seyrek, kapalı kromatin → **risk sistematik olarak küçümseniyor.** | D1 | ekzon-farkında koordinatlar; `D3` sayıları tutuyor | TODO |
-| **D3** | **Yeniden koş ve doğrula.** Beklenen: COSMIC 31→**350**, phyloP ort. 0.027→**0.418**, phyloP>2 site 0→**16**, m6A 0→**10**. | D2, D5 | ölçülen değerler bu mertebelerde | TODO |
 | **D5** | **Toplu/yerel anotasyon mimarisi — planın eksik maliyeti.** Site-başına uzak sorgu → yerel, indeksli, önceden materyalize edilmiş anotasyon deposu (BigWig aralık çıkarımı tek seferde; COSMIC/gnomAD/ClinVar bölgesel dökümü yerel tabix/parquet; interval-tree aralık sorgusu). ⚠️ **Aritmetik:** 4⁷ = 16.384 nt'de bir rastgele 7-mer → ~450 Mb GENCODE cDNA'da **~24.000 site/koşu**. Yalnız gnomAD (1 req/s) tek koşuda **6,7 saat**; `E3b` için 100-150 siRNA → **2-4 milyon site-anotasyonu**. **Bu madde olmadan `E3b` koşamaz.** | D1 | tam koşu site-başına uzak sorgu yapmıyor; 24k site < 1 saat | TODO |
+| **D3** | **Yeniden koş ve doğrula.** Beklenen: COSMIC 31→**350**, phyloP ort. 0.027→**0.418**, phyloP>2 site 0→**16**, m6A 0→**10**. | D2, D5 | ölçülen değerler bu mertebelerde | TODO |
 | **D4** | **Eşikleri yeniden kalibre et.** `max_mismatches: 12` şu an **hiçbir adayı elemiyor** (≤12→41, ≤8→28, ≤6→7, ≤4→0, ≤3→0); modül docstring'i "max 3" diyor, 3 olsaydı çıktı boş olurdu. (Not: `core/config.py:82` varsayılanı 3 ama `rules/stage2_offtarget.smk:16` configfile'dan 12 alıyor — iki paralel config yolu.) | D3 | eşik gerekçesi + hassasiyet analizi | TODO |
 | **C2** | **Satürasyon sabitlerini veriden türet.** ⚠️ **`D3`'ten ÖNCE YAPILAMAZ.** Faz D'den önceki dağılımlar **intron içinden** ölçülmüştür; sabitleri onlardan türetmek **koordinat hatasını kalibrasyona gömer** ve `D3`'ün doğrulamasını kendi kendini doğrulayan hale getirir — değişmez 7 ihlali. *(`hic_contact` CEBPA_HepG2'de 16.226× SAT.)* | D3 | satüre site oranı hiçbir ham sinyalde >%50 değil | TODO |
 
@@ -183,9 +219,9 @@ yürüyüşünü (`D2`) **beklemez**.
 | **B6** | **`cell_modifier`'ı site-başına yap** — `epigenetic_merger.py:137-147` tüm sitelerin ortalamasını üretiyor, `risk_classifier.py:73` aynı sözlüğü herkese veriyor → koşu başına **tek sabit çarpan** (`final/base` 6. haneye kadar sabit; Spearman(base,final) = 1.000000 4/4 koşuda). Monoton sabit çarpan sıralamayı değiştiremez. | D3 | aynı koşuda ≥2 farklı çarpan; Spearman < 1.0 | TODO |
 | **B8** | **Ölü `domain_scores.py`'ı sil.** ⚠️ **Önce 44 testin davranışsal niyetini üretim yoluna aktar** — o testler projedeki tek yerde yazılı niyeti taşıyor (H3K27me3 yönü, RBP işareti, satürasyon sabitleri). Değişmez 5 gereği yeni testlerin önce kırmızı olduğu gösterilir, sonra modül silinir. | D3 | `git grep domain_scores src/` boş; niyet testleri üretim yoluna karşı yeşil | TODO |
 | **B9** | **AGO2 accession'larını düzelt** — K562 ENCFF426YFB = shRNA-KD RNA-seq, HepG2 ENCFF097LEQ = ChIP-seq; **ikisi de eCLIP değil**. HeLa'da zaten `null` (8 hattın 6'sında null). | D3 | accession'lar gerçekten AGO2 eCLIP | TODO |
-| **B10** | mypy strict'i sıfıra indir (72 hata, 39'u eksik generic), sonra CI'da bloke ediciye çevir. | B11 | `mypy src/` 0 hata | TODO |
+| **B10** | mypy strict'i sıfıra indir (72 hata, 39'u eksik generic), sonra CI'da bloke ediciye çevir. | H6 | `mypy src/` 0 hata | TODO |
 | **G0** | **API yanıtlarını dondur** — tüm uzak kaynakların versiyonlu snapshot'ı + checksum. ⚠️ **`G-VI` bugünkü haliyle yapısal olarak geçilemez:** Stage 7 tekrarlanabilir olsa da Stage 2-6 canlı API'lere bağlı. | D5 | taze makinede aynı snapshot ile aynı sayılar | TODO |
-| **H1** | **Run manifest** — her koşu çıktısına git SHA, config hash, kaynak sürümleri, seed'ler. *Dört mevcut koşunun "eski iki-parçalı site_id" formatında olduğu elle keşfedildi; manifest bunu otomatik yapardı.* | — | her `results/*/` altında `manifest.json` | TODO |
+| *(manifest)* | Run manifest **`H10`**'dadır — Faz 0'a taşındı, burada tekrar edilmez. | — | — | — |
 
 ---
 
@@ -193,7 +229,7 @@ yürüyüşünü (`D2`) **beklemez**.
 
 | id | iş | bağımlılık | kabul kriteri | durum |
 |---|---|---|---|---|
-| **E1** | **Null kapısını kalıcı hale getir** — 16.384 7-mer ampirik null. *Ölçüm: gözlenen 42 hit vs beklenen 52.7 (%47.4 yüzdelik, ortalamanın **altında**); BH-FDR sonrası **0/41** anlamlı.* | B11 | CI'da koşuyor, p-değeri raporlanıyor | TODO |
+| **E1** | **Null kapısını kalıcı hale getir** — 16.384 7-mer ampirik null. *Ölçüm: gözlenen 42 hit vs beklenen 52.7 (%47.4 yüzdelik, ortalamanın **altında**); BH-FDR sonrası **0/41** anlamlı.* | H6, H13 | CI'da koşuyor, p-değeri raporlanıyor | TODO |
 | **E2** | **Scrambled saRNA negatif kontrolü** — aynı boru hattı rastgele dizilerle. Veri gerektirmeyen en ucuz adım. | E1 | skor dağılımı karşılaştırması | TODO |
 | **E0** | **GEO veri mühendisliği** — 6 seriyi indir, normalize et, prob→Ensembl gen eşlemesi, replikatlar, log2FC matrisi. ⚠️ Plan bunu "accession kilitle" sanıyordu; gerçekte **3-5 günlük ayrı iş** ve `E3a`'nın gerçek ön koşulu. | A12 | log2FC matrisi + eşleme raporu | TODO |
 | **E0b** | **siSPOTR POTS tabanını uygula** — 3'UTR seed frekans tablosu. Taban kendiliğinden gelmiyor, kurulması gereken bir araç. | C0 | POTS skoru hesaplanıyor, referans değerlerle doğrulandı | TODO |
@@ -233,12 +269,23 @@ yürüyüşünü (`D2`) **beklemez**.
 Tam kapsam **4,5-6 ay**. Üç ayda savunulabilir bir preprint ancak kapsamı keserek:
 
 ```
-İÇERİDE:   A (tamamı) → B-hızlı → C1, C3, C0, C0b → D0, D1
-           → E0, E0b, E1, E2, E3a, E4a → F4, F5, G1
+İÇERİDE (47 madde):
+  H1 H2 H3 H4 H5 H6 H7 H8 H9 H10 H11 H12 H13
+  A1 A2 A2b A3 A4 A5 A6a A7 A8 A9 A10 A11 A12
+  B0 B1 B2 B4 B10a
+  C0 C0b C1 C3
+  D0 D1
+  E0 E0b E1 E2 E3a E4a E6
+  F4 F5 G1
 
-DIŞARIDA (ikinci yayın):
-           D2, D3, D4, D5, C2, B-sonra (B3/B5/B6/B8/B9/B10/G0),
-           E3b, E4b, E5, B7, F1, F3, İddia 2'nin tamamı
+DIŞARIDA — ikinci yayın (21 madde):
+  B3 B5 B6 B7 B8 B9 B10
+  C2 C4
+  D2 D3 D4 D5
+  E3b E4b E5
+  F1 F3
+  G0 G2 G3
+  + İddia 2'nin tamamı
 ```
 
 Bu kapsam **tek bir yanlışlanabilir iddiayı** (İddia 1) gerçekten kapatır.
