@@ -53,48 +53,26 @@ and still carry two-part ids; re-run them before comparing against VEGFA_HeLa.
 in parallel, all depending on `stage2_offtargets.json`) → 7 Scoring over the four merged
 domain files → risk class → JSON/HTML report.
 
-## Scoring Architecture
-As implemented in `src/scoring/integrator.py` — all five domains enter `base_score`, and
-`apply_cell_modifier` does **not** read `scoring_weights`:
+## Scoring
+`base_score` is a weighted sum of five domains, scaled by a `cell_modifier` derived from
+chromatin accessibility and expression; `final_risk = clamp(base × modifier, 0, 1)`.
 
-```
-base_score    = 0.20·sequence_specificity + 0.15·variant_toxicity
-              + 0.25·biophysics_structure + 0.20·epigenetic_context
-              + 0.20·execution_safety      # config/config.yaml, must sum to 1.0
-cell_activity = 0.40·atac + 0.40·expression + 0.20·execution   # missing → 0.5
-cell_modifier = 0.30 + 1.40·cell_activity                      # range [0.3, 1.7]
-final_risk    = clamp(base_score × cell_modifier, 0, 1)
-
-risk class: [0.0, 0.3) 🟢 SAFE · [0.3, 0.6) 🟡 WARNING ·
-            [0.6, 0.8) 🟠 HIGH_RISK · [0.8, 1.0] 🔴 DANGEROUS
-```
-
-Known divergence — see AUDIT.md Bulgu-7. Note: epigenetic and execution signals enter
-BOTH base_score and cell_modifier (double-counted); config weights do not mean what they
-appear to mean.
-
-All four completed runs score 0.298-0.408, so the top classes are never reached. Be
-precise about why, because it changes where the fix belongs: with the observed
-`cell_modifier` (0.707-0.809) **HIGH_RISK needs a base of 0.741-0.848 and is reachable**
-— the base ceiling is 0.836 even with biophysics stuck at its current 0.345 cap — while
-DANGEROUS needs 1.05 and is genuinely unreachable. So HIGH_RISK is empirically unreached,
-not mathematically impossible, and the cause is **dead channels** (`_NEUTRAL_SIGNAL = 0.0`,
-roadmap B2) **plus intronic loci** (D2) — not the saturation constant. Dropping
-`_ATAC_SAT` 50-fold only moves the threshold 0.789 → 0.728. Recalibrating the class
-thresholds before B2 and D2 land would be compensating for dead channels, which roadmap
-invariant 7 forbids.
+The formula, the ways it diverges from what the weights suggest (double counting, the
+constant-per-run modifier, which channels carry no information, why the top risk classes
+are unreached) and the `site_id` contract are in
+**`.claude/rules/20-skor-degismezleri.md`**, which loads automatically when you touch
+`src/scoring/`, `src/stage7_*/` or `src/reporting/`. Do not restate those numbers here.
 
 ## Key Design Decisions
 - Off-target scanning: full transcript bodies, not just promoter regions — but currently
   only across the curated 183-gene background set (full GENCODE scan planned)
 - Default test cell line: **HeLa**
-- Supported cell lines: A549, GM12878, HEK293T, HeLa, HepG2, Huh7, K562, MCF7
-- Score weights: config/config.yaml, but see Scoring Architecture — they are
-  double-counted and not independently interpretable (AUDIT.md Bulgu-7)
-- All coordinates are hg38/GRCh38
-- COSMIC VCF: NO "chr" prefix (1, 2, 3...)
-- m6A BED: HAS "chr" prefix (chr1, chr2...)
-- EPDnew/FANTOM5: HAS "chr" prefix
+- Supported cell lines: see `config/cell_lines.yaml` — that file is the authority
+- Score weights: `config/config.yaml`, but they are double-counted and not independently
+  interpretable (rule 20)
+- Coordinate bases, strand semantics, the seed slice and the hg38-everywhere rule:
+  **`.claude/rules/10-koordinatlar.md`** (loads when you touch `src/`, `tests/` or
+  `rules/*.smk`). Per-source chr-prefix and column layouts: `docs/DATA_SOURCES.md`.
 
 ## Coding Standards
 - Type hints on ALL functions
@@ -103,13 +81,9 @@ invariant 7 forbids.
 - Use `loguru` for logging, NEVER `print()`
 - Use `tenacity` for ALL API calls (retry with exponential backoff)
 - Cache ALL API/BigWig results to `data/cache/` using SQLite
-- Graceful degradation: if data source fails → log warning → substitute a neutral
-  score. **The intended value is 0.5 and the code does not do this** — production
-  writes `_NEUTRAL_SIGNAL = 0.0` (`encode_reader.py:35`) in raw-signal space, which
-  reads as *low risk* rather than *unknown*, so a failed source silently makes a
-  site look safe (AUDIT.md Bulgu-10). `epigenetic_merger.py:12` defines
-  `_NEUTRAL = 0.5` and nothing reads it. Do not restate 0.5 as the behaviour; the
-  fix is `SCIENTIFIC_ROADMAP.md` B2/B3 and is its own session's work.
+- Graceful degradation: a failed source must never make a site look *safer*. What the
+  code actually substitutes today, and why writing `0.5` would not fix it, is
+  invariant 2 in `.claude/rules/00-degismezler.md`
 - Every module MUST have corresponding unit tests in `tests/unit/`
 - Use `responses` library for mocking HTTP calls in tests
 
@@ -120,11 +94,13 @@ invariant 7 forbids.
 - Results: `results/{gene}_{cell_line}/stageX_output.json`
 
 ## DO NOT
-- Modify anything under `data/` — it is hand-curated reference data, read-only.
-  Machine-downloaded data (GENCODE and friends) goes under `data/external/` with a
-  manifest; that is the only writable path below `data/`.
+The eight invariants live in `.claude/rules/00-degismezler.md`, which loads on every
+session; the short version, plus the rules specific to this codebase:
+
+- Modify anything under `data/` — read-only. Machine downloads go to `data/external/`
+  with a manifest entry; that is the only writable path below `data/`
 - Hand-edit anything under `results/` — only Snakemake writes there. Editing a result
-  does not fix it, it fabricates one.
+  does not fix it, it fabricates one
 - Use `print()` for logging (use loguru)
 - Skip type hints or docstrings
 - Skip unit tests

@@ -4,6 +4,7 @@ description: Live-checks ENCODE/4DN/Ensembl/UCSC accessions and endpoints for st
 model: haiku
 tools: Read, Bash, WebFetch
 omitClaudeMd: true
+skills: [orcsonar-data-sources]
 ---
 
 You verify that orcSONAR's remote data sources still resolve. You do **not** fix code,
@@ -12,12 +13,9 @@ do not edit files, and do not paste raw HTTP bodies back to the caller.
 ## orcSONAR context (you do not inherit CLAUDE.md or the main session's memory)
 
 - Genome build is **hg38/GRCh38** everywhere. A source serving hg19/GRCh37 is a finding.
-- chr-prefix conventions, which differ per source and are a recurring bug source:
-  - COSMIC VCF: **no** `chr` prefix (`1`, `2`, `X`)
-  - m6A BED, EPDnew, FANTOM5, ENCODE BigWig/BED: **has** `chr` prefix (`chr1`, `chrX`)
-- Coordinate bases: **BED is 0-based half-open** `[start, end)`; **VCF is 1-based
-  inclusive**. Ensembl REST and UCSC API responses are 1-based inclusive.
-- Supported cell lines: A549, GM12878, HEK293T, HeLa, HepG2, Huh7, K562, MCF7.
+- Endpoints, chr-prefix conventions, coordinate bases and rate limits are in the
+  preloaded `orcsonar-data-sources` skill — use it rather than restating them.
+- Supported cell lines and their accessions: `config/cell_lines.yaml` is the authority.
 - `data/` and `results/` are **read-only**. Never write, move or delete anything under
   them. Use the session scratchpad for any temp file.
 

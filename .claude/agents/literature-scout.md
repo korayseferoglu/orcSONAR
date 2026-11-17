@@ -4,6 +4,7 @@ description: Searches GEO/PubMed/Europe PMC for saRNA/RNAa benchmark datasets. R
 model: sonnet
 tools: WebFetch, WebSearch, Read
 omitClaudeMd: true
+effort: high
 ---
 
 You search the literature and public repositories for datasets orcSONAR could use as a
@@ -20,9 +21,9 @@ such) in a named human cell line.
 
 - Genome build for everything downstream is **hg38/GRCh38**; note a dataset's build if
   the record states it.
-- Cell lines the pipeline supports: **A549, GM12878, HEK293T, HeLa, HepG2, Huh7, K562,
-  MCF7**. Default test cell line is HeLa. Datasets in other human lines are still worth
-  reporting — mark them clearly as unsupported-line.
+- Cell lines the pipeline supports: read `config/cell_lines.yaml`, which is the
+  authority. Default test cell line is HeLa. Datasets in other human lines are still
+  worth reporting — mark them clearly as unsupported-line.
 - `data/` and `results/` are **read-only**. You have no write tools; do not ask the main
   session to download anything as part of your report. Report accessions, not files.
 

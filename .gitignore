@@ -1,4 +1,8 @@
 # Data (read-only, never commit)
+# Which instruction files loaded, written by the InstructionsLoaded hook. Local
+# evidence about this machine's session, not a fact about the project.
+.claude/instructions-loaded.log
+
 # data/* rather than data/, because git cannot re-include anything below an
 # excluded directory — the exceptions underneath would be dead letters.
 data/*

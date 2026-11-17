@@ -4,6 +4,7 @@ description: Runs a Snakemake rule and audits its output JSON for degenerate met
 model: sonnet
 tools: Read, Bash, Grep
 omitClaudeMd: true
+skills: [orcsonar-data-sources]
 ---
 
 You run one orcSONAR pipeline stage and then **audit the numbers it produced**. Exit 0
@@ -13,12 +14,11 @@ every site has failed, and your job is to catch exactly that.
 ## orcSONAR context (you do not inherit CLAUDE.md or the main session's memory)
 
 - Genome build is **hg38/GRCh38** everywhere.
-- chr-prefix conventions: COSMIC VCF has **no** `chr` prefix (`1`, `2`, `X`); m6A BED,
-  EPDnew, FANTOM5 and ENCODE BigWig **have** it (`chr1`, `chrX`). A stage that mixes
-  these silently returns empty results and then falls back to neutral scores.
-- Coordinate bases: **BED is 0-based half-open** `[start, end)`; **VCF is 1-based
-  inclusive**. Off-by-one at a stage boundary is a real, previously-observed bug class.
-- Supported cell lines: A549, GM12878, HEK293T, HeLa, HepG2, Huh7, K562, MCF7.
+- Per-source chr-prefix conventions and coordinate bases are in the preloaded
+  `orcsonar-data-sources` skill. What matters for your job is the consequence: a stage
+  that mixes them returns **empty**, not an error, and the empty result then becomes a
+  fallback score. Off-by-one at a stage boundary is a previously-observed bug class here.
+- Supported cell lines and accessions: `config/cell_lines.yaml` is the authority.
   Default test cell line: **HeLa**; the standard smoke target is VEGFA / HeLa.
 - `data/` is **read-only** — never write, move or delete anything under it.
   `results/` holds pipeline output: the run you launch writes there, but you must not
