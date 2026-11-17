@@ -212,7 +212,7 @@ yürüyüşünü (`D2`) **beklemez**.
 |---|---|---|---|---|
 | **F1** | **Risk sınıfı eşiklerini `E3b`'nin eğrisinden türet.** ⚠️ **`B2` ve `D2` bitmeden kalibre etme** — aksi halde ölü kanalları telafi etmek için eşik indirmiş olursun, ki bu değişmez 7'nin ihlali ve bir risk aracında en tehlikeli hamledir. *Düzeltilmiş ölçüm: gözlenen çarpan 0.707–0.809; HIGH_RISK için gereken base 0.741–0.848, base tavanı 0.836 (biyofizik bugünkü tavanıyla) → **HIGH_RISK erişilebilir ama ulaşılmamış**; DANGEROUS için 1.05 gerekiyor → **erişilemez**. Erişilememenin kök nedeni `_ATAC_SAT` değil (SAT'ı 50× düşürmek eşiği yalnız 0.789→0.728 indiriyor), **`_NEUTRAL_SIGNAL = 0.0` + intronik lokuslar**.* | E3b, B2, D2 | eşikler veriden; her sınıf erişilebilir | TODO |
 | **F3** | **Belirsizlik raporlama** — `B3`'ün `coverage` alanı üstüne güven/tahmin aralığı. | B3, E3b | her tahmin yanında belirsizlik | TODO |
-| **F4** | **`docs/METHODS.md`** — hakem okuyacak düzeyde. `docs/` şu an yalnız `DATA_SOURCES.md` içeriyor. | F1 | her aşama, sabit ve eşik gerekçeli | TODO |
+| **F4** | **`docs/METHODS.md`** — hakem okuyacak düzeyde. `docs/` şu an yalnız `DATA_SOURCES.md` içeriyor. ⚠️ Bağımlılığı `E4a`, `F1` **değil**: yöntem belgesi *yapılmış olanı* anlatır. Üç aylık kapsamda `F1` dışarıda kaldığı için risk sınıfı eşikleri o sürümde **kalibre edilmemiş olarak** raporlanır; `F1` indiğinde belge güncellenir. | E4a | her aşama, sabit ve eşik gerekçeli (ya da gerekçesizliği açıkça yazılı) | TODO |
 | **F5** | **`docs/LIMITATIONS.md`** — İddia 2 ve İddia 3'ün doğrulanamadığı, hangi veriyle doğrulanabileceği, hangi kaynakların ölü/vekil olduğu. §5 tablosu buraya taşınır. | F4 | her satır ölçümlü | TODO |
 
 ---
