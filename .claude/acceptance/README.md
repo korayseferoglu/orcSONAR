@@ -30,11 +30,20 @@ yazmak kapıyı yalanlamaktır: `fix-done` geçtiğini sanır, kimse bir şey ö
 
 Test koşan betikler `pytest`i olan bir yorumlayıcıya ihtiyaç duyar ve bunu
 `$PYTHON`, `python3`, `python` sırasıyla arar; bulamazsa **geçmez** (sessizce
-atlamaz). Bugün bu ortam adı `envs/orcsonar.yaml`'daki `orcsonar` ile
-eşleşmiyor — kurulu ve `pytest` içeren env `orccatch`. Kanonik yorumlayıcıyı
-`H6` (CI) belirleyecek; o zamana kadar:
+atlamaz).
+
+Projenin yorumlayıcısı bu makinede **`~/.venvs/orcsonar`** (Python 3.12.3,
+`pytest` 9.0.3 — `pyproject.toml`'daki pin'in aynısı). `envs/orcsonar.yaml`
+bunun conda aynası; o conda ortamı henüz oluşturulmuş değil. Sistem `python3`'ü
+`pytest` içermiyor, o yüzden:
 
 ```bash
-PYTHON=~/miniforge3/envs/orccatch/bin/python \
+PYTHON=~/.venvs/orcsonar/bin/python \
   python3 .claude/skills/fix-done/scripts/fix_done.py <ID> --red-first "..."
 ```
+
+⚠️ `~/miniforge3/envs/orccatch` **bu projenin ortamı değil** — orcCATCH ayrı
+bir proje (`/home/koray/orccatch.md`), Python 3.11.15 ve `orcsonar` içinde
+kurulu değil. `~/miniforge3/envs` altında tek ortam olduğu için bir kez yanlış
+seçildi; bu not o hatanın tekrarlanmaması için burada. Kanonik yorumlayıcıyı
+CI'da `H6` sabitleyecek.
