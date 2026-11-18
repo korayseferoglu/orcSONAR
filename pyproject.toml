@@ -39,10 +39,14 @@ dev = [
     "pytest==9.0.3",
     "pytest-cov==7.1.0",
     "responses==0.26.0",
-    "ruff>=0.6",
-    "mypy>=1.11",
-    "types-requests>=2.31",
-    "types-PyYAML>=6.0",
+    # Pinned exactly, not floored: CI's verdict on an unchanged tree must not
+    # depend on the day it runs. ruff adds and changes rules between minor
+    # releases, and the stub versions move mypy's error count, which the
+    # session status block reports as a number (roadmap H6).
+    "ruff==0.16.7",
+    "mypy==2.4.1",
+    "types-requests==2.33.0.20261030",
+    "types-PyYAML==6.0.12.20261113",
 ]
 
 [project.scripts]
