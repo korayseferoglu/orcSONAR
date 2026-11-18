@@ -26,6 +26,24 @@ basılıyor" — ancak sonraki oturumda gözlenebilir) `exit 0` içeren bir beti
 yazmak kapıyı yalanlamaktır: `fix-done` geçtiğini sanır, kimse bir şey ölçmez.
 Öyle maddelerde betik **yazılmaz**, `--declare` kullanılır.
 
+## GitHub tarafı ölçülebilir — bir sınırla
+
+`gh` kurulu (`~/.local/bin/gh`) ve giriş yapılmış, yani bir kabul betiği GitHub
+tarafını **ölçebilir**: `gh run list`, `gh api repos/.../actions/runs/<id>/jobs`
+gibi çağrılar çalışıyor.
+
+İki tuzak:
+
+- **Plan kapılı endpoint'ler 403 döner.** `branches/main/protection` ve
+  `rulesets` bu repoda (private + ücretsiz plan) **HTTP 403** veriyor. 403'ü
+  "kural yok" diye okuyan bir kapı, özelliğin kapalı olduğunu "koruma
+  kapalı" ile karıştırır; ikisi ayrı şeyler ve ayrı yazılmalı (değişmez 2).
+- **`continue-on-error` ile maskelenen başarısızlık API'de `success` görünür.**
+  mypy çıkış 1 verdiği koşuda adım sonucu `success`, hata yalnız annotation'da.
+  Bir adımın gerçekten geçtiğini API'nin adım sonucundan **çıkaramazsın**.
+
+Ağ gerektiren bir kapı yazarken: ağ yoksa **geçmemeli**, sessizce atlamamalı.
+
 ## Python yorumlayıcısı
 
 Test koşan betikler `pytest`i olan bir yorumlayıcıya ihtiyaç duyar ve bunu
