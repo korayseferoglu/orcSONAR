@@ -25,13 +25,20 @@ consulted at all.
 from __future__ import annotations
 
 import argparse
-import subprocess
 import sys
 from datetime import date
 from pathlib import Path
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = SCRIPT_DIR.parents[3]
+HOOKS = PROJECT_ROOT / ".claude" / "hooks"
+
+sys.path.insert(0, str(HOOKS))
+
+# Tek otorite: "kilitli mi?" sorusunun git tarafı `_prereg.py`'de, H8'in
+# hook'uyla paylaşılıyor. İki kopya kayar ve kayan kopya korumayı bırakan
+# kopyadır (yol haritası H9).
+from _prereg import git_committed  # noqa: E402
 
 TEMPLATE = """\
 # Ön kayıt — orcSONAR
@@ -105,47 +112,6 @@ sonradan buradan birincil metriğe taşımak değil.>
 Bu dosya kilitlendikten sonra plandan her sapma buraya **değil**,
 `docs/PRE_REGISTRATION_v2.md`'ye yazılır. Bu bölüm kasıtlı olarak boştur.
 """
-
-
-def _git(args: list[str], repo: Path) -> subprocess.CompletedProcess[str] | None:
-    """Run git in ``repo``, or return ``None`` if it could not run at all."""
-    try:
-        return subprocess.run(
-            ["git", *args], cwd=repo, capture_output=True, text=True, timeout=30
-        )
-    except (OSError, subprocess.SubprocessError):
-        return None
-
-
-def git_committed(path: Path, repo: Path) -> bool | None:
-    """Whether this path has at least one commit behind it.
-
-    Three states, kept apart on purpose. A repository with no commits yet is
-    not the same as a repository git could not read: in the first, nothing is
-    committed and the answer is a confident ``False``; in the second there is
-    no answer, and guessing "not locked" would be a guess in the one direction
-    invariant 2 forbids.
-
-    Args:
-        path: The file to ask about.
-        repo: Repository to run git in.
-
-    Returns:
-        ``True`` if committed, ``False`` if certainly not, ``None`` if git
-        could not be consulted.
-    """
-    inside = _git(["rev-parse", "--is-inside-work-tree"], repo)
-    if inside is None or inside.returncode != 0:
-        return None
-    head = _git(["rev-parse", "--verify", "-q", "HEAD"], repo)
-    if head is None:
-        return None
-    if head.returncode != 0:
-        return False  # a repository with no commits: nothing in it is locked
-    log = _git(["log", "-1", "--format=%H", "--", str(path)], repo)
-    if log is None or log.returncode != 0:
-        return None
-    return bool(log.stdout.strip())
 
 
 def main() -> int:
