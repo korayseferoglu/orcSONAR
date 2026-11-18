@@ -143,6 +143,37 @@ def _validate_sequence(seq: str) -> str:
     return cleaned
 
 
+def _purge_stale_cache(config_path: str) -> None:
+    """Drop cache entries written by an older schema version, and say so.
+
+    Called once before Snakemake starts, so a run that suddenly goes back to
+    the network has a line explaining why (roadmap B0). `Cache.get` already
+    refuses a stale entry on its own; this exists to make the invalidation
+    visible instead of silent.
+
+    Never fails the run: a cache that cannot be purged is still correct,
+    because the per-read check stands on its own. The failure is logged rather
+    than swallowed.
+
+    Args:
+        config_path: Path to the YAML config naming the cache database.
+    """
+    from loguru import logger
+
+    from src.core.cache import Cache
+    from src.core.config import load_config
+
+    try:
+        cfg = load_config(config_path)
+        with Cache(cfg.data_paths.cache_db) as cache:
+            cache.purge_stale()
+    except Exception as exc:  # noqa: BLE001 - never block a run over the cache
+        logger.warning(
+            f"cli: could not purge the cache ({type(exc).__name__}: {exc}). "
+            "Stale entries are still refused per read, so the run is unaffected."
+        )
+
+
 def _run_pipeline(args: argparse.Namespace) -> int:
     """Invoke Snakemake and stream output through a tqdm progress bar.
 
@@ -170,6 +201,8 @@ def _run_pipeline(args: argparse.Namespace) -> int:
 
     if args.dry_run:
         cmd.append("--dry-run")
+    else:
+        _purge_stale_cache(args.config)
     if args.quiet:
         cmd.extend(["--quiet", "all"])
 
