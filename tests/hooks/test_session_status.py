@@ -312,6 +312,21 @@ def test_unstaged_file_is_named_in_full(monkeypatch: pytest.MonkeyPatch) -> None
     assert "SCIENTIFIC_ROADMAP.md" in line, line
 
 
+def test_the_block_reports_the_pre_registration_lock_as_enforced() -> None:
+    """H8 is installed, so the one screen every session reads must say so.
+
+    The detector originally grepped settings.json for the literal string
+    "PRE_REGISTRATION", which is how the roadmap *described* the planned hook
+    (`if: "Edit(docs/PRE_REGISTRATION.md)"`). The hook that was actually built
+    is a script that resolves the path itself, so the detector kept reporting
+    "yaptırım: H8 kurulmadı" after H8 shipped — looking for the shape of a
+    declaration instead of for the thing being true.
+    """
+    proc = _run_hook(json.dumps({"hook_event_name": "SessionStart", "source": "startup"}))
+    assert proc.returncode == 0, proc.stderr
+    assert "yaptırım: H8 kurulu" in proc.stdout, proc.stdout
+
+
 def test_hook_exits_zero_on_a_garbage_payload() -> None:
     """A status line must never be able to wedge a session start."""
     proc = _run_hook("not json at all")

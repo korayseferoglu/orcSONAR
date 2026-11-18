@@ -34,6 +34,7 @@ from datetime import UTC, datetime
 
 sys.path.insert(0, __file__.rsplit("/", 1)[0])
 
+import _prereg  # noqa: E402, I001
 import _status  # noqa: E402
 from _hooklib import PROJECT_ROOT, find_tool, read_payload  # noqa: E402
 
@@ -172,7 +173,7 @@ def main() -> str:
                     exists=os.path.exists(prereg_path),
                     committed=git("log", "-1", "--format=%h", "--", PRE_REGISTRATION) or None,
                     a12_status=statuses.get("A12", "?"),
-                    enforced="PRE_REGISTRATION" in settings,
+                    enforced=_prereg.HOOK_FILENAME in settings,
                 )
             ],
         ),

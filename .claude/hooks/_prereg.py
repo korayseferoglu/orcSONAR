@@ -26,6 +26,13 @@ import subprocess
 #: The file invariant 6 locks, relative to the project root.
 LOCKED_RELATIVE = "docs/PRE_REGISTRATION.md"
 
+#: The hook that enforces this lock. Named here because two places need to
+#: agree on it: the `PreToolUse` wiring in settings.json and the launch status
+#: block, which reports whether the lock has any enforcement at all. That
+#: detector used to grep settings.json for "PRE_REGISTRATION" — the shape the
+#: roadmap *described* — and so kept printing "H8 kurulmadı" after H8 shipped.
+HOOK_FILENAME = "block-prereg-writes.py"
+
 #: Where a change goes instead. Never blocked — it is the escape hatch, and a
 #: lock with no legal route around it gets defeated rather than followed.
 SUCCESSOR_RELATIVE = "docs/PRE_REGISTRATION_v2.md"
