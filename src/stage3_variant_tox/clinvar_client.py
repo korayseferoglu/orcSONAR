@@ -9,12 +9,15 @@ All results are cached in SQLite (30-day TTL) to stay well within limits.
 
 from __future__ import annotations
 
+from typing import Any
+
 import requests
 from loguru import logger
 from tenacity import retry, stop_after_attempt, wait_exponential
 
 from src.core.cache import Cache
 from src.core.config import OrcSonarConfig
+from src.core.exceptions import APIError
 from src.core.models import ClinvarResult, ClinvarVariant, GenomicRegion
 from src.core.site_keys import site_ids_and_regions
 
@@ -109,6 +112,47 @@ def _search_clinvar_region(
     return variants
 
 
+#: E-utilities messages that describe a legitimately empty window rather than a
+#: malformed query. Everything else means the server did not run the search we
+#: thought we sent.
+_BENIGN_ESEARCH_MESSAGES = frozenset({"No items found."})
+
+
+def _raise_on_query_complaint(result: dict[str, Any], term: str) -> None:
+    """Fail loudly when E-utilities says it could not use our query.
+
+    E-utilities answers a malformed term with **HTTP 200**, an empty ``idlist``
+    and a diagnostic buried in ``warninglist.outputmessages``. Reading only the
+    idlist turns "your query is broken" into "there are no pathogenic variants
+    here", which is the safe-looking direction and is exactly how this source
+    stayed dead across four runs without a single error (roadmap B1).
+
+    "No items found." on its own is a real answer and passes through.
+
+    Args:
+        result: The ``esearchresult`` object from the response.
+        term: The term that was sent, for the error message.
+
+    Raises:
+        APIError: If the server reported anything other than a benign message.
+    """
+    messages: list[str] = []
+    for list_key in ("warninglist", "errorlist"):
+        block = result.get(list_key) or {}
+        if isinstance(block, dict):
+            for value in block.values():
+                if isinstance(value, list):
+                    messages.extend(str(item) for item in value)
+    complaints = [m for m in messages if m and m not in _BENIGN_ESEARCH_MESSAGES]
+    if complaints:
+        raise APIError(
+            "clinvar",
+            f"esearch refused the query {term!r}: {'; '.join(complaints)}. "
+            "An empty result here would read as 'no pathogenic variants', which "
+            "lowers the risk score on the strength of a broken request.",
+        )
+
+
 @retry(
     stop=stop_after_attempt(3),
     wait=wait_exponential(multiplier=1, min=2, max=20),
@@ -132,9 +176,19 @@ def _esearch(region: GenomicRegion, base_url: str) -> list[str]:
     """
     # ClinVar CHR field uses no "chr" prefix
     chrom = region.chrom[3:] if region.chrom.startswith("chr") else region.chrom
+    # Boolean operators are separated by SPACES, not by "+".
+    #
+    # This used to read `+AND+`. The term goes out through `params=`, so
+    # requests percent-encodes it and the server receives `%2BAND%2B` — a
+    # literal plus where a boolean AND was meant. E-utilities then answers
+    # "Invalid range operand" / "No items found" with HTTP 200 and an empty
+    # idlist, so every site in every run got zero pathogenic variants and the
+    # source looked merely quiet (roadmap B1; the audit found ClinVar 100%
+    # dead). Measured live on chr17:7,668,000-7,688,000 (TP53): the encoded
+    # form returns 0, this one returns 972.
     term = (
-        f"{chrom}[CHR]+AND+"
-        f"{region.start}:{region.end}[CHRPOS]+AND+"
+        f"{chrom}[CHR] AND "
+        f"{region.start}:{region.end}[CHRPOS] AND "
         "clinsig_pathogenic[prop]"
     )
     params = {
@@ -145,7 +199,9 @@ def _esearch(region: GenomicRegion, base_url: str) -> list[str]:
     }
     resp = requests.get(f"{base_url}esearch.fcgi", params=params, timeout=30)
     resp.raise_for_status()
-    uids: list[str] = resp.json().get("esearchresult", {}).get("idlist", [])
+    result = resp.json().get("esearchresult", {})
+    _raise_on_query_complaint(result, term)
+    uids: list[str] = result.get("idlist", [])
     logger.debug(f"clinvar esearch: {region} → {len(uids)} UID(s)")
     return uids
 
@@ -262,7 +318,6 @@ def run(
     import json
     import sys
     from pathlib import Path as _Path
-    from typing import Any
 
     _Path(log_path).parent.mkdir(parents=True, exist_ok=True)
     logger.remove()

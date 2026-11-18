@@ -51,7 +51,11 @@ _CREATE_INDEX = "CREATE INDEX IF NOT EXISTS idx_expires ON cache(expires_at);"
 _SCHEMA_VERSIONS: dict[str, int] = {
     "bg": 1,  # transcriptome_fetcher: bg:canonical:{GENE}
     "ccle": 1,  # ccle_expression
-    "clinvar": 1,  # clinvar_client
+    # v2 (B1): the query used to send `+AND+`, which reached E-utilities as a
+    # literal plus, so every cached answer is an empty result set from a term
+    # the server rejected. Those entries are not merely stale, they are
+    # meaningless — this is the bump B0 was built for.
+    "clinvar": 2,
     "encode_signal": 1,  # encode_reader: encode_signal:{file}:{chrom}:{start}:{end}
     "encode_url": 1,  # encode_reader: accession -> download URL
     "ensembl": 1,  # transcript_resolver, tss_mapper

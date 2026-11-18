@@ -8,6 +8,7 @@ import pytest
 import responses as resp_mock
 
 from src.core.config import OrcSonarConfig
+from src.core.exceptions import APIError
 from src.core.models import ClinvarResult, ClinvarVariant, GenomicRegion
 from src.stage3_variant_tox.clinvar_client import (
     _esearch,
@@ -178,6 +179,99 @@ class TestEsearch:
         # The term must use "1[CHR]" not "chr1[CHR]"
         assert "1%5BCHR%5D" in call_url or "1[CHR]" in call_url
         assert "chr1" not in call_url.lower().split("term=")[1].split("&")[0]
+
+    @resp_mock.activate
+    def test_the_boolean_separator_is_not_sent_as_a_literal_plus(self) -> None:
+        """`+AND+` inside a `params` value becomes `%2BAND%2B` on the wire.
+
+        E-utilities then reads a literal plus sign where a boolean `AND` was
+        meant, the term matches nothing, and the response is an empty — but
+        perfectly valid — result set. No error, no warning, and ClinVar
+        contributes zero to every site in every run (roadmap B1, and the reason
+        the audit found the source 100% dead).
+
+        Decoding tells the two forms apart: `unquote_plus` renders `%2B` as a
+        plus and an encoded space as a space, so the broken term still reads
+        `[CHR]+AND+` while the correct one reads `[CHR] AND `.
+        """
+        from urllib.parse import unquote_plus
+
+        resp_mock.add(resp_mock.GET, ESEARCH_URL, json=_esearch_payload(["1"]), status=200)
+        _esearch(REGION_A, EUTILS_BASE)
+
+        raw_term = resp_mock.calls[0].request.url.split("term=")[1].split("&")[0]
+        term = unquote_plus(raw_term)
+        assert "+AND+" not in term, (
+            f"the separator reached the server as a literal plus: {term!r}"
+        )
+        assert term.count(" AND ") == 2, f"expected two boolean ANDs, got {term!r}"
+
+    @resp_mock.activate
+    def test_a_query_complaint_raises_instead_of_reading_as_empty(self) -> None:
+        """E-utilities rejects a bad term with HTTP 200 and an empty idlist.
+
+        Measured live with the old `+AND+` term: `count=0` plus
+        `outputmessages: ['Invalid range operand', 'No items found.']`. The
+        server said the query was broken; the client read only `idlist` and
+        reported "no pathogenic variants", which lowers the risk score on the
+        strength of a malformed request (roadmap B1, invariant 2).
+        """
+        resp_mock.add(
+            resp_mock.GET,
+            ESEARCH_URL,
+            json={
+                "esearchresult": {
+                    "count": "0",
+                    "idlist": [],
+                    "warninglist": {
+                        "phrasesignored": [],
+                        "quotedphrasesnotfound": [],
+                        "outputmessages": ["Invalid range operand", "No items found."],
+                    },
+                }
+            },
+            status=200,
+        )
+        with pytest.raises(APIError, match="Invalid range operand"):
+            _esearch(REGION_A, EUTILS_BASE)
+
+    @resp_mock.activate
+    def test_an_empty_window_is_not_an_error(self) -> None:
+        """"No items found." on its own is a real answer and must pass through.
+
+        Most windows genuinely hold no pathogenic variant. Raising here would
+        turn the normal case into a failure and make the guard useless.
+        """
+        resp_mock.add(
+            resp_mock.GET,
+            ESEARCH_URL,
+            json={
+                "esearchresult": {
+                    "count": "0",
+                    "idlist": [],
+                    "warninglist": {"outputmessages": ["No items found."]},
+                }
+            },
+            status=200,
+        )
+        assert _esearch(REGION_EMPTY, EUTILS_BASE) == []
+
+    @resp_mock.activate
+    def test_an_errorlist_complaint_also_raises(self) -> None:
+        """Diagnostics arrive under either list depending on the failure."""
+        resp_mock.add(
+            resp_mock.GET,
+            ESEARCH_URL,
+            json={
+                "esearchresult": {
+                    "idlist": [],
+                    "errorlist": {"fieldsnotfound": ["CHRPOS"]},
+                }
+            },
+            status=200,
+        )
+        with pytest.raises(APIError, match="CHRPOS"):
+            _esearch(REGION_A, EUTILS_BASE)
 
     @resp_mock.activate
     def test_http_error_raises(self) -> None:
