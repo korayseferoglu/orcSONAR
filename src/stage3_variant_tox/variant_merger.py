@@ -33,9 +33,16 @@ def _normalize(
     """Compute normalized variant toxicity score in [0, 1]."""
     cosmic_risk = float(cosmic.get("density_score", 0.0))
     tier1_boost = 0.15 if cosmic.get("has_tier1_gene", False) else 0.0
-    # High polymorphism (common in pop) = lower off-target disruption risk
-    gnomad_poly = float(gnomad.get("polymorphism_score", 1.0))
-    gnomad_risk = max(0.0, 1.0 - gnomad_poly)
+    # `polymorphism_score` is named for what was measured but its contract is
+    # already a RISK score, as gnomad_client's own docstring states: no common
+    # variants -> conserved -> 1.0; a common variant present -> tolerated ->
+    # 0.0. So it is used as-is. Inverting it here (`1.0 - score`) read the
+    # field name instead of the contract and pointed the whole channel
+    # backwards: every conserved site scored zero risk and every polymorphic
+    # one scored maximum (roadmap B4). The default also matters — a missing
+    # field becomes 1.0, the risky end, which is the direction absent data must
+    # fail in (invariant 2).
+    gnomad_risk = float(gnomad.get("polymorphism_score", 1.0))
     clinvar_risk = 0.8 if clinvar.get("pathogenic_count", 0) > 0 else (
         0.4 if clinvar.get("likely_pathogenic_count", 0) > 0 else 0.0
     )
