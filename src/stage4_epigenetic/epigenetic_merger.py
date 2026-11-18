@@ -32,33 +32,134 @@ def _load(path: str) -> dict[str, Any]:
         return {}
 
 
-def _normalize_signal(raw: float, saturation: float) -> float:
+def _as_optional(value: Any) -> float | None:
+    """Coerce a raw JSON value to a float, keeping an unknown unknown.
+
+    ``None`` — whether it was an explicit ``null`` or a site absent from a
+    channel's output — stays ``None``. Both mean the same thing: nothing was
+    measured here (roadmap B2).
+
+    Args:
+        value: Raw value from a stage JSON.
+
+    Returns:
+        The value as a float, or ``None`` if it was absent or unparseable.
+    """
+    if value is None:
+        return None
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        logger.warning(f"epigenetic_merger: unparseable signal {value!r} — treated as unknown")
+        return None
+
+
+def _mean_of_known(values: list[float | None]) -> float | None:
+    """Mean over the measured values, or ``None`` if none were measured.
+
+    Counting unknowns as zeros would drag a cell-level mean toward "closed
+    chromatin" / "not expressed", which is the safe-looking direction.
+
+    Args:
+        values: Per-site values, some possibly unknown.
+
+    Returns:
+        Mean of the known values, or ``None``.
+    """
+    known = [v for v in values if v is not None]
+    return sum(known) / len(known) if known else None
+
+
+def _round_or_none(value: float | None, digits: int = 4) -> float | None:
+    """Round a value, or pass an unknown through untouched."""
+    return None if value is None else round(value, digits)
+
+
+#: Channel weights and the saturation each raw signal is scaled against. They
+#: sum to 1.0, so with every channel measured the result is unchanged from the
+#: fixed-weight version this replaced.
+_CHANNELS: dict[str, tuple[float, float]] = {
+    "atac": (0.25, _ATAC_SAT),
+    "h3k4me3": (0.15, _H3K4ME3_SAT),
+    "h3k27ac": (0.15, _H3K27AC_SAT),
+    "groseq": (0.10, _GROSEQ_SAT),
+    "hic": (0.15, _HIC_SAT),
+    "ccle": (0.20, _CCLE_SAT),
+}
+
+
+def _normalize_signal(raw: float | None, saturation: float) -> float | None:
+    """Scale a raw signal into [0, 1], propagating an unknown unchanged.
+
+    ``None`` means the source could not be read (roadmap B2). It is never
+    turned into a number here. A 0.0 would assert "no signal", and for every
+    source in this stage less signal reads as *lower* risk — which is how a
+    dead source produced a site that looked safe rather than an error
+    (AUDIT.md Bulgu-10).
+
+    Args:
+        raw: Raw signal in native units, or ``None`` if not measured.
+        saturation: Value mapped to 1.0.
+
+    Returns:
+        Normalised signal, or ``None`` if the input was unknown.
+    """
+    if raw is None:
+        return None
     return min(1.0, max(0.0, raw / saturation)) if saturation > 0 else 0.0
 
 
 def _compute_normalized(
-    atac: float,
-    h3k4me3: float,
-    h3k27ac: float,
-    groseq: float,
-    hic: float,
-    ccle: float,
-) -> float:
-    atac_n = _normalize_signal(atac, _ATAC_SAT)
-    k4_n = _normalize_signal(h3k4me3, _H3K4ME3_SAT)
-    k27_n = _normalize_signal(h3k27ac, _H3K27AC_SAT)
-    gro_n = _normalize_signal(groseq, _GROSEQ_SAT)
-    hic_n = _normalize_signal(hic, _HIC_SAT)
-    ccle_n = _normalize_signal(ccle, _CCLE_SAT)
-    return round(
-        0.25 * atac_n
-        + 0.15 * k4_n
-        + 0.15 * k27_n
-        + 0.10 * gro_n
-        + 0.15 * hic_n
-        + 0.20 * ccle_n,
-        4,
-    )
+    atac: float | None,
+    h3k4me3: float | None,
+    h3k27ac: float | None,
+    groseq: float | None,
+    hic: float | None,
+    ccle: float | None,
+) -> float | None:
+    """Weighted epigenetic score over the channels that were measured.
+
+    An unknown channel is **excluded** and the remaining weights are
+    renormalised, rather than contributing a zero. Contributing zero would pull
+    the score toward "safe" on the strength of data nobody has — the whole of
+    Bulgu-10. Excluding it reports what the measured channels actually say.
+
+    Whether a score may be produced at all when too little was measured is a
+    separate question with a separate answer: roadmap ``B3`` adds ``coverage``
+    and refuses below a threshold. This function only declines the degenerate
+    case where *nothing* was measured.
+
+    Args:
+        atac: Raw ATAC signal, or ``None``.
+        h3k4me3: Raw H3K4me3 signal, or ``None``.
+        h3k27ac: Raw H3K27ac signal, or ``None``.
+        groseq: Raw nascent-transcription signal, or ``None``.
+        hic: Raw Hi-C contact, or ``None``.
+        ccle: Raw CCLE expression, or ``None``.
+
+    Returns:
+        Score in [0, 1], or ``None`` if no channel was measured.
+    """
+    raw: dict[str, float | None] = {
+        "atac": atac,
+        "h3k4me3": h3k4me3,
+        "h3k27ac": h3k27ac,
+        "groseq": groseq,
+        "hic": hic,
+        "ccle": ccle,
+    }
+    total = 0.0
+    weight_used = 0.0
+    for name, value in raw.items():
+        weight, saturation = _CHANNELS[name]
+        normalised = _normalize_signal(value, saturation)
+        if normalised is None:
+            continue
+        total += weight * normalised
+        weight_used += weight
+    if weight_used == 0.0:
+        return None
+    return round(total / weight_used, 4)
 
 
 def run(
@@ -113,14 +214,14 @@ def run(
         # If that ever changes, this lookup misses for every site and silently
         # degrades expression to 0.0.
         gene = site_id.split(":", 1)[0]
-        atac = float(atac_signals.get(site_id, 0.0))
-        k4 = float(h3k4me3_signals.get(site_id, 0.0))
-        k27 = float(h3k27ac_signals.get(site_id, 0.0))
-        gro = float(groseq_signals.get(site_id, 0.0))
-        hic = float(hic_contacts.get(site_id, 0.0))
-        ccle_expr = float(
-            ccle_results.get(gene, {}).get("expression_value", 0.0)
-        )
+        # Absent from a channel's output means never measured there, which is
+        # the same unknown as an explicit null — not a measured zero (B2).
+        atac = _as_optional(atac_signals.get(site_id))
+        k4 = _as_optional(h3k4me3_signals.get(site_id))
+        k27 = _as_optional(h3k27ac_signals.get(site_id))
+        gro = _as_optional(groseq_signals.get(site_id))
+        hic = _as_optional(hic_contacts.get(site_id))
+        ccle_expr = _as_optional(ccle_results.get(gene, {}).get("expression_value"))
 
         normalized = _compute_normalized(atac, k4, k27, gro, hic, ccle_expr)
         epigenetic_scores[site_id] = {
@@ -132,18 +233,21 @@ def run(
             "ccle_expression": ccle_expr,
             "normalized_score": normalized,
         }
-        logger.debug(f"epigenetic_merger: {site_id} → normalized={normalized:.4f}")
+        shown = "ÖLÇÜLMEDİ" if normalized is None else f"{normalized:.4f}"
+        logger.debug(f"epigenetic_merger: {site_id} → normalized={shown}")
 
-    # Compute cell-level context scores (means across sites)
-    n = max(len(epigenetic_scores), 1)
-    mean_atac = sum(v["atac_signal"] for v in epigenetic_scores.values()) / n
-    mean_ccle = sum(v["ccle_expression"] for v in epigenetic_scores.values()) / n
-    mean_norm = sum(v["normalized_score"] for v in epigenetic_scores.values()) / n
+    # Cell-level context, averaged over the sites that were actually measured.
+    # An unknown is skipped rather than counted as zero: a mean dragged down by
+    # missing data reads as closed chromatin or an unexpressed gene, and both
+    # of those lower the final risk (B2 / AUDIT.md Bulgu-10).
+    mean_atac = _mean_of_known([v["atac_signal"] for v in epigenetic_scores.values()])
+    mean_ccle = _mean_of_known([v["ccle_expression"] for v in epigenetic_scores.values()])
+    mean_norm = _mean_of_known([v["normalized_score"] for v in epigenetic_scores.values()])
 
-    cell_context: dict[str, float] = {
-        "atac_score": round(_normalize_signal(mean_atac, _ATAC_SAT), 4),
-        "expression_score": round(_normalize_signal(mean_ccle, _CCLE_SAT), 4),
-        "execution_score": round(mean_norm, 4),
+    cell_context: dict[str, float | None] = {
+        "atac_score": _round_or_none(_normalize_signal(mean_atac, _ATAC_SAT)),
+        "expression_score": _round_or_none(_normalize_signal(mean_ccle, _CCLE_SAT)),
+        "execution_score": _round_or_none(mean_norm),
     }
 
     payload: dict[str, Any] = {

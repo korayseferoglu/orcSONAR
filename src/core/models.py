@@ -275,21 +275,30 @@ class GROseqResult(BaseModel):
     """GRO-seq transcriptional activity result for one region (Stage 4)."""
 
     region: GenomicRegion
-    plus_signal: float = 0.0
-    minus_signal: float = 0.0
-    combined_signal: float = 0.0
+    # `None` means not measured, which is not the same as a measured 0.0:
+    # for every signal in this stage, less signal reads as lower risk
+    # (roadmap B2, AUDIT.md Bulgu-10).
+    plus_signal: float | None = None
+    minus_signal: float | None = None
+    combined_signal: float | None = None
 
 
 class EpigeneticScore(BaseModel):
     """Stage 4 — epigenetic & topology sub-scores."""
 
-    atac_signal: float = 0.0
-    h3k4me3_signal: float = 0.0
-    h3k27ac_signal: float = 0.0
-    groseq_signal: float = 0.0
-    hic_contact: float = 0.0
-    ccle_expression: float = 0.0
-    normalized_score: float = Field(ge=0.0, le=1.0, default=0.5)
+    # Raw signals stay in native units (rule 10) and are `None` when the
+    # source could not be read. The old 0.0 defaults made an unread source
+    # indistinguishable from a silent locus, and silence lowers risk (B2).
+    atac_signal: float | None = None
+    h3k4me3_signal: float | None = None
+    h3k27ac_signal: float | None = None
+    groseq_signal: float | None = None
+    hic_contact: float | None = None
+    ccle_expression: float | None = None
+    # `None` when no channel was measured at all. The old 0.5 default was a
+    # number nobody measured; roadmap B3 adds the coverage threshold that
+    # decides when a score may be produced.
+    normalized_score: float | None = Field(default=None, ge=0.0, le=1.0)
 
 
 class ThermoResult(BaseModel):
@@ -381,9 +390,12 @@ class Ago2Result(BaseModel):
 
     region: GenomicRegion
     cell_line: str
-    raw_signal: float = 0.0
-    loading_score: float = Field(ge=0.0, le=1.0, default=0.0)
-    is_loaded: bool = False
+    raw_signal: float | None = None
+    loading_score: float | None = Field(default=None, ge=0.0, le=1.0)
+    # `None` when loading_score is unknown: a verdict derived from an
+    # unmeasured signal is itself unknown, and `False` would assert "not
+    # loaded" — the safe-looking direction B2 removes.
+    is_loaded: bool | None = None
 
 
 class RBPResult(BaseModel):
@@ -392,9 +404,10 @@ class RBPResult(BaseModel):
     region: GenomicRegion
     cell_line: str
     rbp_name: str = "hnRNPA1"
-    raw_signal: float = 0.0
-    competition_score: float = Field(ge=0.0, le=1.0, default=0.0)
-    is_competing: bool = False
+    raw_signal: float | None = None
+    competition_score: float | None = Field(default=None, ge=0.0, le=1.0)
+    # `None` when competition_score is unknown (see Ago2Result.is_loaded).
+    is_competing: bool | None = None
 
 
 class CircRNAEntry(BaseModel):

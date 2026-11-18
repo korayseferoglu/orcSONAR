@@ -11,7 +11,7 @@ import yaml as _yaml
 from src.core.config import load_config
 from src.core.models import GenomicRegion
 from src.stage4_epigenetic.histone_marks import HistoneMarkReader
-from src.stage4_epigenetic.encode_reader import _NEUTRAL_SIGNAL
+from src.stage4_epigenetic.encode_reader import UNKNOWN_SIGNAL
 
 # ---------------------------------------------------------------------------
 # Fixtures
@@ -95,14 +95,14 @@ class TestGetH3K4me3:
         assert result == pytest.approx(6.0)
         mock_open.assert_called_once_with(H3K4ME3_URL)
 
-    def test_missing_key_returns_neutral(self, tmp_path: Path) -> None:
+    def test_missing_key_returns_unknown(self, tmp_path: Path) -> None:
         reader = _make_reader(tmp_path)
         # A549 has no h3k27ac but has h3k4me3; try a missing key for A549
-        assert reader.get_h3k4me3(REGION, "Ghost") == pytest.approx(_NEUTRAL_SIGNAL)
+        assert reader.get_h3k4me3(REGION, "Ghost") is UNKNOWN_SIGNAL
 
     @patch("src.stage4_epigenetic.encode_reader.Cache")
     @patch("src.stage4_epigenetic.encode_reader.pyBigWig.open")
-    def test_bigwig_open_failure_returns_neutral(
+    def test_bigwig_open_failure_returns_unknown(
         self, mock_open, MockCache, tmp_path: Path
     ) -> None:
         mock_open.side_effect = OSError("network error")
@@ -110,7 +110,7 @@ class TestGetH3K4me3:
         MockCache.return_value.__exit__ = MagicMock(return_value=False)
 
         reader = _make_reader(tmp_path)
-        assert reader.get_h3k4me3(REGION, "HeLa") == pytest.approx(_NEUTRAL_SIGNAL)
+        assert reader.get_h3k4me3(REGION, "HeLa") is UNKNOWN_SIGNAL
 
     @patch("src.stage4_epigenetic.encode_reader.Cache")
     def test_cache_hit_returns_cached(self, MockCache, tmp_path: Path) -> None:
@@ -142,18 +142,18 @@ class TestGetH3K27ac:
         assert result == pytest.approx(8.3)
         mock_open.assert_called_once_with(H3K27AC_URL)
 
-    def test_missing_key_returns_neutral(self, tmp_path: Path) -> None:
+    def test_missing_key_returns_unknown(self, tmp_path: Path) -> None:
         reader = _make_reader(tmp_path)
         # A549 has no h3k27ac_chip key
-        assert reader.get_h3k27ac(REGION, "A549") == pytest.approx(_NEUTRAL_SIGNAL)
+        assert reader.get_h3k27ac(REGION, "A549") is UNKNOWN_SIGNAL
 
-    def test_unknown_cell_line_returns_neutral(self, tmp_path: Path) -> None:
+    def test_unknown_cell_line_returns_unknown(self, tmp_path: Path) -> None:
         reader = _make_reader(tmp_path)
-        assert reader.get_h3k27ac(REGION, "UnknownLine") == pytest.approx(_NEUTRAL_SIGNAL)
+        assert reader.get_h3k27ac(REGION, "UnknownLine") is UNKNOWN_SIGNAL
 
     @patch("src.stage4_epigenetic.encode_reader.Cache")
     @patch("src.stage4_epigenetic.encode_reader.pyBigWig.open")
-    def test_bigwig_failure_returns_neutral(
+    def test_bigwig_failure_returns_unknown(
         self, mock_open, MockCache, tmp_path: Path
     ) -> None:
         mock_open.side_effect = OSError("timeout")
@@ -161,7 +161,7 @@ class TestGetH3K27ac:
         MockCache.return_value.__exit__ = MagicMock(return_value=False)
 
         reader = _make_reader(tmp_path)
-        assert reader.get_h3k27ac(REGION, "HeLa") == pytest.approx(_NEUTRAL_SIGNAL)
+        assert reader.get_h3k27ac(REGION, "HeLa") is UNKNOWN_SIGNAL
 
 
 # ---------------------------------------------------------------------------
@@ -186,23 +186,23 @@ class TestGetH3K27me3:
         assert result == pytest.approx(5.0)
         mock_open.assert_called_once_with(H3K27ME3_URL)
 
-    def test_null_url_returns_neutral(self, tmp_path: Path) -> None:
+    def test_null_url_returns_unknown(self, tmp_path: Path) -> None:
         reader = _make_reader(tmp_path)
         # K562 has h3k27me3_chip: null
-        assert reader.get_h3k27me3(REGION, "K562") == pytest.approx(_NEUTRAL_SIGNAL)
+        assert reader.get_h3k27me3(REGION, "K562") is UNKNOWN_SIGNAL
 
-    def test_missing_key_returns_neutral(self, tmp_path: Path) -> None:
+    def test_missing_key_returns_unknown(self, tmp_path: Path) -> None:
         reader = _make_reader(tmp_path)
         # A549 has no h3k27me3_chip key
-        assert reader.get_h3k27me3(REGION, "A549") == pytest.approx(_NEUTRAL_SIGNAL)
+        assert reader.get_h3k27me3(REGION, "A549") is UNKNOWN_SIGNAL
 
-    def test_unknown_cell_line_returns_neutral(self, tmp_path: Path) -> None:
+    def test_unknown_cell_line_returns_unknown(self, tmp_path: Path) -> None:
         reader = _make_reader(tmp_path)
-        assert reader.get_h3k27me3(REGION, "Jurkat") == pytest.approx(_NEUTRAL_SIGNAL)
+        assert reader.get_h3k27me3(REGION, "Jurkat") is UNKNOWN_SIGNAL
 
     @patch("src.stage4_epigenetic.encode_reader.Cache")
     @patch("src.stage4_epigenetic.encode_reader.pyBigWig.open")
-    def test_bigwig_failure_returns_neutral(
+    def test_bigwig_failure_returns_unknown(
         self, mock_open, MockCache, tmp_path: Path
     ) -> None:
         mock_open.side_effect = OSError("refused")
@@ -210,7 +210,7 @@ class TestGetH3K27me3:
         MockCache.return_value.__exit__ = MagicMock(return_value=False)
 
         reader = _make_reader(tmp_path)
-        assert reader.get_h3k27me3(REGION, "HeLa") == pytest.approx(_NEUTRAL_SIGNAL)
+        assert reader.get_h3k27me3(REGION, "HeLa") is UNKNOWN_SIGNAL
 
 
 # ---------------------------------------------------------------------------
@@ -234,7 +234,7 @@ class TestBulkMethods:
     def test_null_url_bulk_all_neutral(self, tmp_path: Path) -> None:
         reader = _make_reader(tmp_path)
         results = reader.get_h3k27me3_bulk([REGION, REGION_2], "K562")
-        assert results == [_NEUTRAL_SIGNAL, _NEUTRAL_SIGNAL]
+        assert results == [UNKNOWN_SIGNAL, UNKNOWN_SIGNAL]
 
     @patch("src.stage4_epigenetic.encode_reader.Cache")
     @patch("src.stage4_epigenetic.encode_reader.pyBigWig.open")

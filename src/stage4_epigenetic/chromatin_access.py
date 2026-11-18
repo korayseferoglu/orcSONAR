@@ -12,7 +12,7 @@ fails; the Stage 7 scoring engine normalises raw signals to [0, 1].
 from __future__ import annotations
 
 from src.core.models import GenomicRegion
-from src.stage4_epigenetic.encode_reader import _NEUTRAL_SIGNAL, EncodeSignalReader
+from src.stage4_epigenetic.encode_reader import UNKNOWN_SIGNAL, EncodeSignalReader
 
 _ATAC_SIGNAL_TYPE: str = "atac_seq"
 
@@ -43,7 +43,7 @@ class ATACSeqReader(EncodeSignalReader):
         """
         url = self._get_url_for_cell_line(cell_line, _ATAC_SIGNAL_TYPE)
         if url is None:
-            return _NEUTRAL_SIGNAL
+            return UNKNOWN_SIGNAL
         return self.read_signal(url, region)
 
     def get_accessibility_bulk(
@@ -61,5 +61,5 @@ class ATACSeqReader(EncodeSignalReader):
         """
         url = self._get_url_for_cell_line(cell_line, _ATAC_SIGNAL_TYPE)
         if url is None:
-            return [_NEUTRAL_SIGNAL] * len(regions)
+            return [UNKNOWN_SIGNAL] * len(regions)
         return self.read_signal_bulk(url, regions)

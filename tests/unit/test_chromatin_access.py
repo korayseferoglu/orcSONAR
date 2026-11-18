@@ -11,7 +11,7 @@ import yaml as _yaml
 from src.core.config import load_config
 from src.core.models import GenomicRegion
 from src.stage4_epigenetic.chromatin_access import ATACSeqReader
-from src.stage4_epigenetic.encode_reader import _NEUTRAL_SIGNAL
+from src.stage4_epigenetic.encode_reader import UNKNOWN_SIGNAL
 
 # ---------------------------------------------------------------------------
 # Fixtures
@@ -72,17 +72,17 @@ class TestGetAccessibility:
         result = reader.get_accessibility(REGION, "HeLa")
         assert result == pytest.approx(4.2)
 
-    def test_null_url_returns_neutral(self, tmp_path: Path) -> None:
+    def test_null_url_returns_unknown(self, tmp_path: Path) -> None:
         reader = _make_reader(tmp_path)
-        assert reader.get_accessibility(REGION, "K562") == pytest.approx(_NEUTRAL_SIGNAL)
+        assert reader.get_accessibility(REGION, "K562") is UNKNOWN_SIGNAL
 
-    def test_missing_key_returns_neutral(self, tmp_path: Path) -> None:
+    def test_missing_key_returns_unknown(self, tmp_path: Path) -> None:
         reader = _make_reader(tmp_path)
-        assert reader.get_accessibility(REGION, "HepG2") == pytest.approx(_NEUTRAL_SIGNAL)
+        assert reader.get_accessibility(REGION, "HepG2") is UNKNOWN_SIGNAL
 
-    def test_unknown_cell_line_returns_neutral(self, tmp_path: Path) -> None:
+    def test_unknown_cell_line_returns_unknown(self, tmp_path: Path) -> None:
         reader = _make_reader(tmp_path)
-        assert reader.get_accessibility(REGION, "Jurkat") == pytest.approx(_NEUTRAL_SIGNAL)
+        assert reader.get_accessibility(REGION, "Jurkat") is UNKNOWN_SIGNAL
 
     @patch("src.stage4_epigenetic.encode_reader.Cache")
     @patch("src.stage4_epigenetic.encode_reader.pyBigWig.open")
@@ -100,7 +100,7 @@ class TestGetAccessibility:
 
     @patch("src.stage4_epigenetic.encode_reader.Cache")
     @patch("src.stage4_epigenetic.encode_reader.pyBigWig.open")
-    def test_bigwig_failure_returns_neutral(
+    def test_bigwig_failure_returns_unknown(
         self, mock_open, MockCache, tmp_path: Path
     ) -> None:
         mock_open.side_effect = OSError("cannot reach host")
@@ -110,7 +110,7 @@ class TestGetAccessibility:
 
         reader = _make_reader(tmp_path)
         result = reader.get_accessibility(REGION, "HeLa")
-        assert result == pytest.approx(_NEUTRAL_SIGNAL)
+        assert result is UNKNOWN_SIGNAL
 
 
 # ---------------------------------------------------------------------------
@@ -126,12 +126,12 @@ class TestGetAccessibilityBulk:
     def test_null_url_returns_all_neutral(self, tmp_path: Path) -> None:
         reader = _make_reader(tmp_path)
         results = reader.get_accessibility_bulk([REGION, REGION_2], "K562")
-        assert results == [_NEUTRAL_SIGNAL, _NEUTRAL_SIGNAL]
+        assert results == [UNKNOWN_SIGNAL, UNKNOWN_SIGNAL]
 
     def test_unknown_cell_line_returns_all_neutral(self, tmp_path: Path) -> None:
         reader = _make_reader(tmp_path)
         results = reader.get_accessibility_bulk([REGION, REGION_2], "Ghost")
-        assert results == [_NEUTRAL_SIGNAL, _NEUTRAL_SIGNAL]
+        assert results == [UNKNOWN_SIGNAL, UNKNOWN_SIGNAL]
 
     @patch("src.stage4_epigenetic.encode_reader.Cache")
     @patch("src.stage4_epigenetic.encode_reader.pyBigWig.open")
@@ -170,7 +170,7 @@ class TestGetAccessibilityBulk:
 
     @patch("src.stage4_epigenetic.encode_reader.Cache")
     @patch("src.stage4_epigenetic.encode_reader.pyBigWig.open")
-    def test_bigwig_failure_returns_neutral_list(
+    def test_bigwig_failure_returns_unknown_list(
         self, mock_open, MockCache, tmp_path: Path
     ) -> None:
         mock_open.side_effect = OSError("timeout")
@@ -180,4 +180,4 @@ class TestGetAccessibilityBulk:
 
         reader = _make_reader(tmp_path)
         results = reader.get_accessibility_bulk([REGION, REGION_2], "HeLa")
-        assert results == pytest.approx([_NEUTRAL_SIGNAL, _NEUTRAL_SIGNAL])
+        assert results == [UNKNOWN_SIGNAL, UNKNOWN_SIGNAL]

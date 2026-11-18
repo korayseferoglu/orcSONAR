@@ -154,9 +154,18 @@ class TestNormalisedScores:
         v = VariantScore()
         assert 0.0 <= v.normalized_score <= 1.0
 
-    def test_epigenetic_score_defaults(self):
-        e = EpigeneticScore()
-        assert 0.0 <= e.normalized_score <= 1.0
+    def test_epigenetic_score_defaults_to_unknown(self):
+        """A freshly constructed score has measured nothing, so it has no value.
+
+        This used to assert ``0.0 <= normalized_score <= 1.0``, which passed
+        only because the default was 0.5 — a number nobody measured, standing
+        in for every unread source (roadmap B2). The range rule still holds
+        for a value that *is* set, so both halves are checked here.
+        """
+        assert EpigeneticScore().normalized_score is None
+        assert 0.0 <= EpigeneticScore(normalized_score=0.5).normalized_score <= 1.0
+        with pytest.raises(ValidationError):
+            EpigeneticScore(normalized_score=1.5)
 
     def test_biophysics_score_defaults(self):
         b = BiophysicsScore()

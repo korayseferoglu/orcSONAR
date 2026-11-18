@@ -19,7 +19,7 @@ from loguru import logger
 
 from src.core.config import OrcSonarConfig
 from src.core.models import GenomicRegion, RBPResult
-from src.stage4_epigenetic.encode_reader import _NEUTRAL_SIGNAL, EncodeSignalReader
+from src.stage4_epigenetic.encode_reader import UNKNOWN_SIGNAL, EncodeSignalReader
 
 _HNRNPA1_SIGNAL_KEY: str = "hnrnpa1_eclip"
 _RBP_SATURATION: float = 20.0        # FC ≥ 20 → competition score clamped to 1.0
@@ -52,7 +52,7 @@ class RBPCompetitionReader(EncodeSignalReader):
         """
         url = self._get_url_for_cell_line(cell_line, _HNRNPA1_SIGNAL_KEY)
         if url is None:
-            return _NEUTRAL_SIGNAL
+            return UNKNOWN_SIGNAL
         return self.read_signal(url, region)
 
     def get_rbp_signal_bulk(
@@ -69,19 +69,29 @@ class RBPCompetitionReader(EncodeSignalReader):
         """
         url = self._get_url_for_cell_line(cell_line, _HNRNPA1_SIGNAL_KEY)
         if url is None:
-            return [_NEUTRAL_SIGNAL] * len(regions)
+            return [UNKNOWN_SIGNAL] * len(regions)
         return self.read_signal_bulk(url, regions)
 
 
-def _competition_score(raw_signal: float) -> float:
+
+def _fmt(value: float | None) -> str:
+    """Format a possibly-unknown signal for a log line (roadmap B2)."""
+    return "ÖLÇÜLMEDİ" if value is None else f"{value:.3f}"
+def _competition_score(raw_signal: float | None) -> float | None:
     """Normalise raw hnRNPA1 fold-change to [0, 1] competition score.
 
     Args:
-        raw_signal: Raw fold-change value from eCLIP BigWig.
+        raw_signal: Raw fold-change value from eCLIP BigWig, or ``None``
+            if nothing was measured there.
 
     Returns:
-        Competition score clamped to [0, 1].
+        Competition score in [0, 1], or ``None`` when the signal was not measured.
     """
+    # An unmeasured signal is not a zero. Zero here means "no eCLIP signal",
+    # which lowers the risk this channel contributes; returning it for a failed
+    # read is how a dead source produced a safe-looking site (roadmap B2).
+    if raw_signal is None:
+        return None
     if raw_signal <= 0.0:
         return 0.0
     return min(1.0, raw_signal / _RBP_SATURATION)
@@ -126,12 +136,12 @@ def assess_rbp_competition(
                 rbp_name=rbp_name,
                 raw_signal=raw,
                 competition_score=score,
-                is_competing=score > _COMPETITION_THRESHOLD,
+                is_competing=None if score is None else score > _COMPETITION_THRESHOLD,
             )
         )
         logger.debug(
             f"rbp_competition: {region} cell={cell_line} rbp={rbp_name} "
-            f"raw={raw:.3f} score={score:.3f}"
+            f"raw={_fmt(raw)} score={_fmt(score)}"
         )
 
     return results

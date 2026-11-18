@@ -10,7 +10,7 @@ import yaml as _yaml
 
 from src.core.config import load_config
 from src.core.models import GenomicRegion, RBPResult
-from src.stage4_epigenetic.encode_reader import _NEUTRAL_SIGNAL
+from src.stage4_epigenetic.encode_reader import UNKNOWN_SIGNAL
 from src.stage6_execution.rbp_competition import (
     RBPCompetitionReader,
     _COMPETITION_THRESHOLD,
@@ -107,17 +107,17 @@ class TestGetRBPSignal:
         reader = _make_reader(tmp_path)
         assert reader.get_rbp_signal(REGION, "HeLa") == pytest.approx(5.5)
 
-    def test_null_url_returns_neutral(self, tmp_path: Path) -> None:
+    def test_null_url_returns_unknown(self, tmp_path: Path) -> None:
         reader = _make_reader(tmp_path)
-        assert reader.get_rbp_signal(REGION, "K562") == pytest.approx(_NEUTRAL_SIGNAL)
+        assert reader.get_rbp_signal(REGION, "K562") is UNKNOWN_SIGNAL
 
-    def test_missing_key_returns_neutral(self, tmp_path: Path) -> None:
+    def test_missing_key_returns_unknown(self, tmp_path: Path) -> None:
         reader = _make_reader(tmp_path)
-        assert reader.get_rbp_signal(REGION, "HepG2") == pytest.approx(_NEUTRAL_SIGNAL)
+        assert reader.get_rbp_signal(REGION, "HepG2") is UNKNOWN_SIGNAL
 
-    def test_unknown_cell_line_returns_neutral(self, tmp_path: Path) -> None:
+    def test_unknown_cell_line_returns_unknown(self, tmp_path: Path) -> None:
         reader = _make_reader(tmp_path)
-        assert reader.get_rbp_signal(REGION, "Jurkat") == pytest.approx(_NEUTRAL_SIGNAL)
+        assert reader.get_rbp_signal(REGION, "Jurkat") is UNKNOWN_SIGNAL
 
     @patch("src.stage4_epigenetic.encode_reader.Cache")
     @patch("src.stage4_epigenetic.encode_reader.pyBigWig.open")
@@ -134,7 +134,7 @@ class TestGetRBPSignal:
 
     @patch("src.stage4_epigenetic.encode_reader.Cache")
     @patch("src.stage4_epigenetic.encode_reader.pyBigWig.open")
-    def test_bigwig_failure_returns_neutral(
+    def test_bigwig_failure_returns_unknown(
         self, mock_open, MockCache, tmp_path: Path
     ) -> None:
         mock_open.side_effect = OSError("network error")
@@ -143,7 +143,7 @@ class TestGetRBPSignal:
         MockCache.return_value.__exit__ = MagicMock(return_value=False)
 
         reader = _make_reader(tmp_path)
-        assert reader.get_rbp_signal(REGION, "HeLa") == pytest.approx(_NEUTRAL_SIGNAL)
+        assert reader.get_rbp_signal(REGION, "HeLa") is UNKNOWN_SIGNAL
 
 
 # ---------------------------------------------------------------------------
@@ -159,7 +159,7 @@ class TestGetRBPSignalBulk:
     def test_null_url_returns_all_neutral(self, tmp_path: Path) -> None:
         reader = _make_reader(tmp_path)
         results = reader.get_rbp_signal_bulk([REGION, REGION_2], "K562")
-        assert results == [_NEUTRAL_SIGNAL, _NEUTRAL_SIGNAL]
+        assert results == [UNKNOWN_SIGNAL, UNKNOWN_SIGNAL]
 
     @patch("src.stage4_epigenetic.encode_reader.Cache")
     @patch("src.stage4_epigenetic.encode_reader.pyBigWig.open")
@@ -306,7 +306,7 @@ class TestAssessRBPCompetition:
         )
         assert results[0].rbp_name == "ELAVL1"
 
-    def test_null_url_returns_neutral_results(self, tmp_path: Path) -> None:
+    def test_null_url_returns_unknown_results(self, tmp_path: Path) -> None:
         cfg_file = tmp_path / "config.yaml"
         cfg_file.write_text(
             "target_gene: X\ncell_line: K562\nsarna_sequence: GCAACCATAGCCTCGGCCGC\n",
@@ -320,8 +320,9 @@ class TestAssessRBPCompetition:
         results = assess_rbp_competition([REGION, REGION_2], "K562", config, yaml_path)
         assert len(results) == 2
         for r in results:
-            assert r.competition_score == pytest.approx(0.0)
-            assert r.is_competing is False
+            # Nothing measured for this cell line: unknown, not "no competition".
+            assert r.competition_score is UNKNOWN_SIGNAL
+            assert r.is_competing is None
 
     @patch("src.stage4_epigenetic.encode_reader.Cache")
     @patch("src.stage4_epigenetic.encode_reader.pyBigWig.open")

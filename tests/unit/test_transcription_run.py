@@ -10,7 +10,7 @@ import yaml as _yaml
 
 from src.core.config import load_config
 from src.core.models import GenomicRegion, GROseqResult
-from src.stage4_epigenetic.encode_reader import _NEUTRAL_SIGNAL
+from src.stage4_epigenetic.encode_reader import UNKNOWN_SIGNAL
 from src.stage4_epigenetic.transcription_run import GROseqReader
 
 # ---------------------------------------------------------------------------
@@ -97,24 +97,28 @@ class TestGetTranscription:
         assert result.combined_signal == pytest.approx(6.6)
         assert result.region == REGION
 
-    def test_both_urls_absent_returns_all_neutral(self, tmp_path: Path) -> None:
+    def test_both_urls_absent_returns_all_unknown(self, tmp_path: Path) -> None:
         reader = _make_reader(tmp_path)
         result = reader.get_transcription(REGION, "A549")
-        assert result.plus_signal == pytest.approx(_NEUTRAL_SIGNAL)
-        assert result.minus_signal == pytest.approx(_NEUTRAL_SIGNAL)
-        assert result.combined_signal == pytest.approx(0.0)
+        assert result.plus_signal is UNKNOWN_SIGNAL
+        assert result.minus_signal is UNKNOWN_SIGNAL
+        # combined_signal is a TOTAL. With a strand unmeasured the total is
+        # unknown, not smaller — a partial total understates transcription and
+        # less transcription reads as lower risk (roadmap B2). The measured
+        # strand is still recorded in plus_signal/minus_signal.
+        assert result.combined_signal is UNKNOWN_SIGNAL
 
-    def test_null_urls_returns_all_neutral(self, tmp_path: Path) -> None:
+    def test_null_urls_returns_all_unknown(self, tmp_path: Path) -> None:
         reader = _make_reader(tmp_path)
         result = reader.get_transcription(REGION, "HepG2")
-        assert result.plus_signal == pytest.approx(_NEUTRAL_SIGNAL)
-        assert result.minus_signal == pytest.approx(_NEUTRAL_SIGNAL)
+        assert result.plus_signal is UNKNOWN_SIGNAL
+        assert result.minus_signal is UNKNOWN_SIGNAL
 
-    def test_unknown_cell_line_returns_all_neutral(self, tmp_path: Path) -> None:
+    def test_unknown_cell_line_returns_all_unknown(self, tmp_path: Path) -> None:
         reader = _make_reader(tmp_path)
         result = reader.get_transcription(REGION, "Jurkat")
-        assert result.plus_signal == pytest.approx(_NEUTRAL_SIGNAL)
-        assert result.minus_signal == pytest.approx(_NEUTRAL_SIGNAL)
+        assert result.plus_signal is UNKNOWN_SIGNAL
+        assert result.minus_signal is UNKNOWN_SIGNAL
 
     @patch("src.stage4_epigenetic.encode_reader.Cache")
     @patch("src.stage4_epigenetic.encode_reader.pyBigWig.open")
@@ -131,8 +135,12 @@ class TestGetTranscription:
         result = reader.get_transcription(REGION, "K562")
 
         assert result.plus_signal == pytest.approx(3.0)
-        assert result.minus_signal == pytest.approx(_NEUTRAL_SIGNAL)
-        assert result.combined_signal == pytest.approx(3.0)
+        assert result.minus_signal is UNKNOWN_SIGNAL
+        # combined_signal is a TOTAL. With a strand unmeasured the total is
+        # unknown, not smaller — a partial total understates transcription and
+        # less transcription reads as lower risk (roadmap B2). The measured
+        # strand is still recorded in plus_signal/minus_signal.
+        assert result.combined_signal is UNKNOWN_SIGNAL
 
     @patch("src.stage4_epigenetic.encode_reader.Cache")
     @patch("src.stage4_epigenetic.encode_reader.pyBigWig.open")
@@ -154,7 +162,7 @@ class TestGetTranscription:
 
     @patch("src.stage4_epigenetic.encode_reader.Cache")
     @patch("src.stage4_epigenetic.encode_reader.pyBigWig.open")
-    def test_bigwig_failure_returns_neutral_strand(
+    def test_bigwig_failure_returns_unknown_strand(
         self, mock_open, MockCache, tmp_path: Path
     ) -> None:
         mock_open.side_effect = OSError("network error")
@@ -164,9 +172,13 @@ class TestGetTranscription:
         reader = _make_reader(tmp_path)
         result = reader.get_transcription(REGION, "HeLa")
 
-        assert result.plus_signal == pytest.approx(_NEUTRAL_SIGNAL)
-        assert result.minus_signal == pytest.approx(_NEUTRAL_SIGNAL)
-        assert result.combined_signal == pytest.approx(0.0)
+        assert result.plus_signal is UNKNOWN_SIGNAL
+        assert result.minus_signal is UNKNOWN_SIGNAL
+        # combined_signal is a TOTAL. With a strand unmeasured the total is
+        # unknown, not smaller — a partial total understates transcription and
+        # less transcription reads as lower risk (roadmap B2). The measured
+        # strand is still recorded in plus_signal/minus_signal.
+        assert result.combined_signal is UNKNOWN_SIGNAL
 
     @patch("src.stage4_epigenetic.encode_reader.Cache")
     def test_cache_hit_returns_cached_signal(self, MockCache, tmp_path: Path) -> None:
@@ -208,18 +220,18 @@ class TestGetTranscriptionBulk:
         reader = _make_reader(tmp_path)
         assert reader.get_transcription_bulk([], "HeLa") == []
 
-    def test_all_absent_returns_all_neutral(self, tmp_path: Path) -> None:
+    def test_all_absent_returns_all_unknown(self, tmp_path: Path) -> None:
         reader = _make_reader(tmp_path)
         results = reader.get_transcription_bulk([REGION, REGION_2], "A549")
         for r in results:
-            assert r.plus_signal == pytest.approx(_NEUTRAL_SIGNAL)
-            assert r.minus_signal == pytest.approx(_NEUTRAL_SIGNAL)
-            assert r.combined_signal == pytest.approx(0.0)
+            assert r.plus_signal is UNKNOWN_SIGNAL
+            assert r.minus_signal is UNKNOWN_SIGNAL
+            assert r.combined_signal is UNKNOWN_SIGNAL
 
-    def test_unknown_cell_line_returns_all_neutral(self, tmp_path: Path) -> None:
+    def test_unknown_cell_line_returns_all_unknown(self, tmp_path: Path) -> None:
         reader = _make_reader(tmp_path)
         results = reader.get_transcription_bulk([REGION, REGION_2], "Ghost")
-        assert all(r.combined_signal == pytest.approx(0.0) for r in results)
+        assert all(r.combined_signal is UNKNOWN_SIGNAL for r in results)
 
     @patch("src.stage4_epigenetic.encode_reader.Cache")
     @patch("src.stage4_epigenetic.encode_reader.pyBigWig.open")
@@ -283,7 +295,7 @@ class TestGetTranscriptionBulk:
 
     @patch("src.stage4_epigenetic.encode_reader.Cache")
     @patch("src.stage4_epigenetic.encode_reader.pyBigWig.open")
-    def test_bigwig_failure_returns_neutral_bulk(
+    def test_bigwig_failure_returns_unknown_bulk(
         self, mock_open, MockCache, tmp_path: Path
     ) -> None:
         mock_open.side_effect = OSError("timeout")
@@ -293,11 +305,11 @@ class TestGetTranscriptionBulk:
         reader = _make_reader(tmp_path)
         results = reader.get_transcription_bulk([REGION, REGION_2], "HeLa")
 
-        assert all(r.combined_signal == pytest.approx(0.0) for r in results)
+        assert all(r.combined_signal is UNKNOWN_SIGNAL for r in results)
 
     @patch("src.stage4_epigenetic.encode_reader.Cache")
     @patch("src.stage4_epigenetic.encode_reader.pyBigWig.open")
-    def test_minus_only_absent_uses_plus_as_combined(
+    def test_minus_only_absent_makes_the_total_unknown(
         self, mock_open, MockCache, tmp_path: Path
     ) -> None:
         bw = MagicMock()
@@ -313,5 +325,7 @@ class TestGetTranscriptionBulk:
         assert mock_open.call_count == 1
         opened_url = mock_open.call_args_list[0][0][0]
         assert opened_url == PLUS_URL
-        assert results[0].minus_signal == pytest.approx(_NEUTRAL_SIGNAL)
-        assert results[0].combined_signal == pytest.approx(results[0].plus_signal)
+        assert results[0].minus_signal is UNKNOWN_SIGNAL
+        # Was: combined == plus. That asserted a partial total as the total,
+        # which biases every single-strand cell line toward 'safe' (B2).
+        assert results[0].combined_signal is UNKNOWN_SIGNAL

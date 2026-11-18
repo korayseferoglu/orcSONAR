@@ -10,7 +10,7 @@ import yaml as _yaml
 
 from src.core.config import load_config
 from src.core.models import Ago2Result, GenomicRegion
-from src.stage4_epigenetic.encode_reader import _NEUTRAL_SIGNAL
+from src.stage4_epigenetic.encode_reader import UNKNOWN_SIGNAL
 from src.stage6_execution.ago2_loading import (
     Ago2Reader,
     _AGO2_SATURATION,
@@ -107,17 +107,17 @@ class TestGetAgo2Signal:
         reader = _make_reader(tmp_path)
         assert reader.get_ago2_signal(REGION, "HeLa") == pytest.approx(7.5)
 
-    def test_null_url_returns_neutral(self, tmp_path: Path) -> None:
+    def test_null_url_returns_unknown(self, tmp_path: Path) -> None:
         reader = _make_reader(tmp_path)
-        assert reader.get_ago2_signal(REGION, "K562") == pytest.approx(_NEUTRAL_SIGNAL)
+        assert reader.get_ago2_signal(REGION, "K562") is UNKNOWN_SIGNAL
 
-    def test_missing_key_returns_neutral(self, tmp_path: Path) -> None:
+    def test_missing_key_returns_unknown(self, tmp_path: Path) -> None:
         reader = _make_reader(tmp_path)
-        assert reader.get_ago2_signal(REGION, "HepG2") == pytest.approx(_NEUTRAL_SIGNAL)
+        assert reader.get_ago2_signal(REGION, "HepG2") is UNKNOWN_SIGNAL
 
-    def test_unknown_cell_line_returns_neutral(self, tmp_path: Path) -> None:
+    def test_unknown_cell_line_returns_unknown(self, tmp_path: Path) -> None:
         reader = _make_reader(tmp_path)
-        assert reader.get_ago2_signal(REGION, "Jurkat") == pytest.approx(_NEUTRAL_SIGNAL)
+        assert reader.get_ago2_signal(REGION, "Jurkat") is UNKNOWN_SIGNAL
 
     @patch("src.stage4_epigenetic.encode_reader.Cache")
     @patch("src.stage4_epigenetic.encode_reader.pyBigWig.open")
@@ -134,7 +134,7 @@ class TestGetAgo2Signal:
 
     @patch("src.stage4_epigenetic.encode_reader.Cache")
     @patch("src.stage4_epigenetic.encode_reader.pyBigWig.open")
-    def test_bigwig_failure_returns_neutral(
+    def test_bigwig_failure_returns_unknown(
         self, mock_open, MockCache, tmp_path: Path
     ) -> None:
         mock_open.side_effect = OSError("network error")
@@ -143,7 +143,7 @@ class TestGetAgo2Signal:
         MockCache.return_value.__exit__ = MagicMock(return_value=False)
 
         reader = _make_reader(tmp_path)
-        assert reader.get_ago2_signal(REGION, "HeLa") == pytest.approx(_NEUTRAL_SIGNAL)
+        assert reader.get_ago2_signal(REGION, "HeLa") is UNKNOWN_SIGNAL
 
 
 # ---------------------------------------------------------------------------
@@ -159,7 +159,7 @@ class TestGetAgo2SignalBulk:
     def test_null_url_returns_all_neutral(self, tmp_path: Path) -> None:
         reader = _make_reader(tmp_path)
         results = reader.get_ago2_signal_bulk([REGION, REGION_2], "K562")
-        assert results == [_NEUTRAL_SIGNAL, _NEUTRAL_SIGNAL]
+        assert results == [UNKNOWN_SIGNAL, UNKNOWN_SIGNAL]
 
     @patch("src.stage4_epigenetic.encode_reader.Cache")
     @patch("src.stage4_epigenetic.encode_reader.pyBigWig.open")
@@ -278,7 +278,7 @@ class TestAssessAgo2Loading:
         assert results[0].is_loaded is False
         assert results[0].loading_score == pytest.approx(0.1)
 
-    def test_null_url_returns_neutral_results(self, tmp_path: Path) -> None:
+    def test_null_url_returns_unknown_results(self, tmp_path: Path) -> None:
         """Unconfigured cell line → all results have loading_score=0 and is_loaded=False."""
         cfg_file = tmp_path / "config.yaml"
         cfg_file.write_text(
@@ -292,9 +292,12 @@ class TestAssessAgo2Loading:
 
         results = assess_ago2_loading([REGION, REGION_2], "K562", config, yaml_path)
         assert len(results) == 2
+        # No ago2_eclip accession for this cell line, so nothing was measured.
+        # The old contract said 0.0 / not-loaded, which asserted an absence of
+        # Ago2 loading on the strength of a missing config entry (roadmap B2).
         for r in results:
-            assert r.loading_score == pytest.approx(0.0)
-            assert r.is_loaded is False
+            assert r.loading_score is UNKNOWN_SIGNAL
+            assert r.is_loaded is None
 
     @patch("src.stage4_epigenetic.encode_reader.Cache")
     @patch("src.stage4_epigenetic.encode_reader.pyBigWig.open")

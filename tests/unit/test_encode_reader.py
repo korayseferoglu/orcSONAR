@@ -15,7 +15,7 @@ from src.stage4_epigenetic.encode_reader import (
     _bigwig_mean,
     _read_one_region,
     _signal_cache_key,
-    _NEUTRAL_SIGNAL,
+    UNKNOWN_SIGNAL,
 )
 
 # ---------------------------------------------------------------------------
@@ -112,19 +112,43 @@ class TestBigwigMean:
         assert _bigwig_mean(bw, "chr6", 1000, 2000) == pytest.approx(5.2)
         bw.stats.assert_called_once_with("chr6", 1000, 2000, type="mean")
 
-    def test_none_returns_neutral(self) -> None:
-        bw = _make_bw(None)
-        assert _bigwig_mean(bw, "chr6", 1000, 2000) == pytest.approx(_NEUTRAL_SIGNAL)
+    def test_no_intervals_on_a_contig_the_file_has_is_a_measured_zero(self) -> None:
+        """The assay covered this contig and recorded nothing here.
 
-    def test_empty_stats_returns_neutral(self) -> None:
+        That is evidence, not a gap, and it has to keep counting — treating it
+        as unknown would throw away real information (roadmap B2).
+        """
+        bw = _make_bw(None)
+        bw.chroms.return_value = {"chr6": 170_805_979}
+        assert _bigwig_mean(bw, "chr6", 1000, 2000) == pytest.approx(0.0)
+
+    def test_empty_stats_on_a_known_contig_is_also_a_measured_zero(self) -> None:
         bw = MagicMock()
         bw.stats.return_value = []
-        assert _bigwig_mean(bw, "chr6", 1000, 2000) == pytest.approx(_NEUTRAL_SIGNAL)
+        bw.chroms.return_value = {"chr6": 170_805_979}
+        assert _bigwig_mean(bw, "chr6", 1000, 2000) == pytest.approx(0.0)
 
-    def test_exception_returns_neutral(self) -> None:
+    def test_a_contig_the_file_does_not_have_is_unknown(self) -> None:
+        """Nothing was measured, and this is where a "chr" prefix bug lands.
+
+        A file keyed `6` queried as `chr6` returns no intervals for every
+        region. Reported as 0.0 that reads as a genome-wide silent locus, which
+        lowers risk everywhere and looks entirely plausible (Bulgu-10).
+        """
+        bw = _make_bw(None)
+        bw.chroms.return_value = {"6": 170_805_979, "7": 159_345_973}
+        assert _bigwig_mean(bw, "chr6", 1000, 2000) is UNKNOWN_SIGNAL
+
+    def test_exception_returns_unknown(self) -> None:
         bw = MagicMock()
         bw.stats.side_effect = RuntimeError("bad region")
-        assert _bigwig_mean(bw, "chr6", 1000, 2000) == pytest.approx(_NEUTRAL_SIGNAL)
+        assert _bigwig_mean(bw, "chr6", 1000, 2000) is UNKNOWN_SIGNAL
+
+    def test_an_unreadable_contig_list_is_unknown_not_zero(self) -> None:
+        """If even the header cannot be read, nothing about this locus is known."""
+        bw = _make_bw(None)
+        bw.chroms.side_effect = RuntimeError("header unreadable")
+        assert _bigwig_mean(bw, "chr6", 1000, 2000) is UNKNOWN_SIGNAL
 
     def test_negative_value_returned_as_is(self) -> None:
         bw = _make_bw(-1.5)
@@ -146,10 +170,10 @@ class TestReadOneRegion:
         bw.close.assert_called_once()
 
     @patch("src.stage4_epigenetic.encode_reader.pyBigWig.open")
-    def test_open_failure_returns_neutral(self, mock_open) -> None:
+    def test_open_failure_returns_unknown(self, mock_open) -> None:
         mock_open.side_effect = OSError("network error")
         result = _read_one_region(ENCODE_URL, REGION_CHR6)
-        assert result == pytest.approx(_NEUTRAL_SIGNAL)
+        assert result is UNKNOWN_SIGNAL
 
     @patch("src.stage4_epigenetic.encode_reader.pyBigWig.open")
     def test_closed_even_if_stats_raises(self, mock_open) -> None:
@@ -307,7 +331,7 @@ class TestReadSignalBulk:
 
     @patch("src.stage4_epigenetic.encode_reader.Cache")
     @patch("src.stage4_epigenetic.encode_reader.pyBigWig.open")
-    def test_bigwig_open_failure_returns_neutral(
+    def test_bigwig_open_failure_returns_unknown(
         self, mock_open, MockCache, tmp_path: Path
     ) -> None:
         mock_open.side_effect = OSError("connection refused")
@@ -318,7 +342,7 @@ class TestReadSignalBulk:
 
         reader = _make_reader(tmp_path)
         results = reader.read_signal_bulk(ENCODE_URL, [REGION_CHR6, REGION_CHR1])
-        assert results == pytest.approx([_NEUTRAL_SIGNAL, _NEUTRAL_SIGNAL])
+        assert results == [UNKNOWN_SIGNAL, UNKNOWN_SIGNAL]
 
     @patch("src.stage4_epigenetic.encode_reader.Cache")
     @patch("src.stage4_epigenetic.encode_reader.pyBigWig.open")

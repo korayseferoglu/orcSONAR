@@ -24,29 +24,71 @@ def _load(path: str) -> dict[str, Any]:
         return {}
 
 
+
+def _as_optional(value: Any) -> float | None:
+    """Coerce a raw JSON value to a float, keeping an unknown unknown (B2)."""
+    if value is None:
+        return None
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        logger.warning(f"execution_merger: unparseable value {value!r} — treated as unknown")
+        return None
+
+#: Channel weights; they sum to 1.0, so with everything measured the result is
+#: unchanged from the fixed-weight version this replaced.
+_WEIGHTS: dict[str, float] = {"ago2": 0.40, "rbp": 0.15, "circrna": 0.20, "immune": 0.25}
+
+
 def _normalize(
-    ago2_loading: float,
-    rbp_competition: float,
+    ago2_loading: float | None,
+    rbp_competition: float | None,
     circrna_overlap: bool,
     immune_risk: float,
-) -> float:
+) -> float | None:
     """Compute normalised execution safety risk score in [0, 1].
 
     Higher score = more execution risk (more silencing activity expected).
-    - High Ago2 loading → higher risk
-    - High RBP competition → blocks saRNA → lower risk (inverted)
-    - circRNA sponge → potential off-target amplification
-    - Immune motifs → TLR activation risk
+
+    - High Ago2 loading → higher risk.
+    - High RBP competition → blocks saRNA → lower risk, so it is inverted.
+      Unlike the gnomAD channel (roadmap B4), the field name matches its
+      contract here: `_competition_score` really does emit a competition level,
+      and `1 - competition` is the risk it implies. Checked, not assumed.
+    - circRNA sponge → potential off-target amplification.
+    - Immune motifs → TLR activation risk.
+
+    Ago2 and RBP come from eCLIP BigWigs and are ``None`` when nothing was
+    measured (roadmap B2). An unknown channel is excluded and the remaining
+    weights renormalised. Contributing a zero instead would lower the risk on
+    the strength of data nobody has, and for Ago2 — the heaviest channel at
+    0.40 — that single substitution moved a site most of the way to "safe".
+
+    Args:
+        ago2_loading: Ago2 loading score, or ``None`` if not measured.
+        rbp_competition: RBP competition score, or ``None`` if not measured.
+        circrna_overlap: Whether the site overlaps a circRNA.
+        immune_risk: Immune-motif risk score.
+
+    Returns:
+        Score in [0, 1], or ``None`` if nothing was measured.
     """
-    rbp_factor = max(0.0, 1.0 - rbp_competition)  # inverted: high competition → lower risk
-    circrna_factor = 0.5 if circrna_overlap else 0.0
-    return min(1.0, round(
-        0.40 * ago2_loading
-        + 0.15 * rbp_factor
-        + 0.20 * circrna_factor
-        + 0.25 * immune_risk,
-        4,
-    ))
+    contributions: dict[str, float | None] = {
+        "ago2": ago2_loading,
+        "rbp": None if rbp_competition is None else max(0.0, 1.0 - rbp_competition),
+        "circrna": 0.5 if circrna_overlap else 0.0,
+        "immune": immune_risk,
+    }
+    total = 0.0
+    weight_used = 0.0
+    for name, value in contributions.items():
+        if value is None:
+            continue
+        total += _WEIGHTS[name] * value
+        weight_used += _WEIGHTS[name]
+    if weight_used == 0.0:
+        return None
+    return min(1.0, round(total / weight_used, 4))
 
 
 def run(
@@ -92,8 +134,10 @@ def run(
 
     execution_scores: dict[str, Any] = {}
     for site_id in sorted(all_site_ids):
-        ago2 = float(ago2_results.get(site_id, {}).get("loading_score", 0.0))
-        rbp = float(rbp_results.get(site_id, {}).get("competition_score", 0.0))
+        # Absent from a stage's output means never measured there, which is the
+        # same unknown as an explicit null — not a measured zero (roadmap B2).
+        ago2 = _as_optional(ago2_results.get(site_id, {}).get("loading_score"))
+        rbp = _as_optional(rbp_results.get(site_id, {}).get("competition_score"))
         circrna_overlap = bool(
             circrna_results.get(site_id, {}).get("sponge_risk", False)
         )

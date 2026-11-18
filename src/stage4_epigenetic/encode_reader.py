@@ -31,7 +31,21 @@ from src.core.cache import Cache
 from src.core.config import OrcSonarConfig
 from src.core.models import GenomicRegion
 
-_NEUTRAL_SIGNAL: float = 0.0
+#: What a read returns when nothing was measured: an open unknown, not a
+#: number (roadmap B2, AUDIT.md Bulgu-10).
+#:
+#: This replaced `_NEUTRAL_SIGNAL = 0.0`, which six modules reached — ATAC, the
+#: three histone marks, nascent transcription, and Ago2/RBP eCLIP. For every
+#: one of those, *less signal means lower risk*, so substituting a zero on
+#: failure did not make a site neutral. It made it look **safe**, and a wholly
+#: dead source produced plausible output instead of an error. Writing 0.5 here
+#: would not have helped either: this is raw-signal space in native units,
+#: while the documented 0.5 contract lives in score space.
+#:
+#: `None` forces every consumer to say what it does with an unknown. The
+#: mergers exclude the channel and renormalise; roadmap `B3` adds the coverage
+#: threshold that refuses to score a site when too little is known.
+UNKNOWN_SIGNAL: None = None
 _ENCODE_URL_TTL_HOURS: int = 720   # 30 days — accession→URL mapping rarely changes
 _SIGNAL_TTL_HOURS: int = 168       # 1 week — BigWig signal
 _DEFAULT_CELL_LINES_YAML: str = "config/cell_lines.yaml"
@@ -76,7 +90,7 @@ def _resolve_encode_redirect(url: str) -> str:
 # ---------------------------------------------------------------------------
 
 
-def _bigwig_mean(bw: object, chrom: str, start: int, end: int) -> float:
+def _bigwig_mean(bw: object, chrom: str, start: int, end: int) -> float | None:
     """Read mean signal for one region from an open pyBigWig handle.
 
     Args:
@@ -86,18 +100,42 @@ def _bigwig_mean(bw: object, chrom: str, start: int, end: int) -> float:
         end: 0-based end coordinate (exclusive).
 
     Returns:
-        Mean signal, or 0.0 when the region has no coverage or on any error.
+        Mean signal; 0.0 when the contig is present but silent, ``None`` when
+        nothing could be measured (missing contig, or any error).
     """
     try:
         stats = bw.stats(chrom, start, end, type="mean")
         value = stats[0] if stats else None
-        if value is None:
-            logger.debug(f"encode_reader: no coverage for {chrom}:{start}-{end}")
-            return _NEUTRAL_SIGNAL
-        return float(value)
+        if value is not None:
+            return float(value)
+        # No intervals in the range. Two very different causes, and collapsing
+        # them is what made a broken query look like a quiet locus (B2):
+        #   * the file has this contig and records nothing here — a real zero,
+        #   * the file does not have this contig at all — nothing was measured,
+        #     and a "chr" prefix mismatch lands exactly here.
+        try:
+            contigs = bw.chroms()
+        except Exception as exc:  # noqa: BLE001 - any failure here is an unknown
+            logger.warning(f"encode_reader: contig list unreadable for '{chrom}': {exc}")
+            return UNKNOWN_SIGNAL
+        if not isinstance(contigs, dict):
+            logger.warning(
+                f"encode_reader: contig list is {type(contigs).__name__}, not a mapping — "
+                f"cannot tell whether {chrom} exists, so {chrom}:{start}-{end} is UNKNOWN"
+            )
+            return UNKNOWN_SIGNAL
+        if chrom not in contigs:
+            logger.warning(
+                f"encode_reader: {chrom} is not a contig in this BigWig "
+                f"({len(contigs)} contigs, e.g. {sorted(contigs)[:3]}) — "
+                f"{chrom}:{start}-{end} is UNKNOWN, not zero"
+            )
+            return UNKNOWN_SIGNAL
+        logger.debug(f"encode_reader: no intervals in {chrom}:{start}-{end} — measured zero")
+        return 0.0
     except Exception as exc:
         logger.warning(f"encode_reader: stats failed {chrom}:{start}-{end}: {exc}")
-        return _NEUTRAL_SIGNAL
+        return UNKNOWN_SIGNAL
 
 
 def _signal_cache_key(url: str, region: GenomicRegion) -> str:
@@ -181,7 +219,7 @@ class EncodeSignalReader:
             logger.info(f"encode_reader: resolved {file_accession} → {url}")
             return url
 
-    def read_signal(self, url: str, region: GenomicRegion) -> float:
+    def read_signal(self, url: str, region: GenomicRegion) -> float | None:
         """Read mean BigWig signal for a single genomic region.
 
         Opens and closes the BigWig handle per call.  Use ``read_signal_bulk``
@@ -193,19 +231,28 @@ class EncodeSignalReader:
             region: Genomic interval (chr-prefixed, hg38).
 
         Returns:
-            Mean signal value (raw, not normalised), or 0.0 on failure.
+            Mean signal value (raw, not normalised), or ``UNKNOWN_SIGNAL``
+            when nothing could be measured.
         """
         cache_key = _signal_cache_key(url, region)
         with Cache(self._cache_db) as cache:
             cached = cache.get(cache_key)
             if cached is not None:
                 logger.debug(f"encode_reader: signal cache HIT {cache_key}")
-                return float(cached["signal"])
+                value = cached.get("signal")
+                return None if value is None else float(value)
 
             signal = _read_one_region(url, region)
-            cache.set(cache_key, {"signal": signal}, ttl_hours=_SIGNAL_TTL_HOURS)
+            # An unknown is not a measurement and is deliberately NOT cached.
+            # Caching it would remember a transient network failure for
+            # `_SIGNAL_TTL_HOURS` and serve it as though the locus had been
+            # examined — the same "a failure becomes a finding" shape as
+            # roadmap B0, where a stale empty ClinVar answer outlives its fix.
+            if signal is not None:
+                cache.set(cache_key, {"signal": signal}, ttl_hours=_SIGNAL_TTL_HOURS)
 
-        logger.debug(f"encode_reader: {region} signal={signal:.4f} url={url[:60]}")
+        shown = "ÖLÇÜLMEDİ" if signal is None else f"{signal:.4f}"
+        logger.debug(f"encode_reader: {region} signal={shown} url={url[:60]}")
         return signal
 
     def read_signal_bulk(
@@ -226,7 +273,7 @@ class EncodeSignalReader:
         if not regions:
             return []
 
-        results: list[float] = [_NEUTRAL_SIGNAL] * len(regions)
+        results: list[float | None] = [UNKNOWN_SIGNAL] * len(regions)
         miss_indices: list[int] = []
 
         with Cache(self._cache_db) as cache:
@@ -357,7 +404,7 @@ class EncodeSignalReader:
 # ---------------------------------------------------------------------------
 
 
-def _read_one_region(url: str, region: GenomicRegion) -> float:
+def _read_one_region(url: str, region: GenomicRegion) -> float | None:
     """Open a BigWig, read one region, close it, return the mean signal.
 
     Args:
@@ -365,13 +412,13 @@ def _read_one_region(url: str, region: GenomicRegion) -> float:
         region: Target genomic interval.
 
     Returns:
-        Mean signal float, or 0.0 on failure.
+        Mean signal float, or ``None`` when nothing could be measured.
     """
     try:
         bw = pyBigWig.open(_resolve_encode_redirect(url))
     except Exception as exc:
         logger.error(f"encode_reader: cannot open BigWig '{url}': {exc}")
-        return _NEUTRAL_SIGNAL
+        return UNKNOWN_SIGNAL
     try:
         return _bigwig_mean(bw, region.chrom, region.start, region.end)
     finally:

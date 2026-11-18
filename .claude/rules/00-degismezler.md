@@ -19,10 +19,20 @@ koşudan ayırt edilemez.
 **2 — Arıza yönü: veri yokluğu asla riski düşürmez.**
 Yeni bir fallback açık bir *bilinmiyor* tipi döner, sayı dönmez. Sessiz `except: pass`
 yazılmaz. *Ölçüm: üç bağımsız fallback de "güvenli" yönüne arızalanıyordu —
-`encode_reader.py:35` `_NEUTRAL_SIGNAL = 0.0` (ham sinyal uzayında, altı modülden
-ulaşılıyor), ago2 URL yok → `0.0`, `mirbase_checker.py:200` istisna → `"SAFE"`.
-`epigenetic_merger.py:12` `_NEUTRAL = 0.5` tanımlı ve **hiç okunmuyor**.* Düzeltme
-yol haritası `B2`/`B3`; 0.5'i yazmak yetmez, sentinel yanlış uzayda.
+`encode_reader` `_NEUTRAL_SIGNAL = 0.0` (ham sinyal uzayında, altı modülden
+ulaşılıyordu), ago2 URL yok → `0.0`, `mirbase_checker.py:200` istisna → `"SAFE"`.*
+
+**Durum (2026-11-18, `B2` kapandı):** ilk ikisi düzeltildi — sabit artık
+`UNKNOWN_SIGNAL = None` ve türetilmiş değerler de (`is_loaded`, `combined_signal`)
+bilinmiyor olabiliyor; bilinmiyor **cache'lenmiyor**; merger'lar bilinmeyen kanalı
+dışlayıp ağırlıkları yeniden normalize ediyor. `_bigwig_mean` ayrıca *kontig var,
+sinyal yok* (ölçülmüş 0.0, korunuyor) ile *kontig dosyada yok* (bilinmiyor — `chr`
+öneki hatasının düştüğü yer) durumlarını ayırıyor. **Hâlâ açık:**
+`mirbase_checker.py:200` istisna yolunda `"SAFE"` döndürüyor (risk uzayında bir
+fallback), ve `epigenetic_merger.py:12` `_NEUTRAL = 0.5` tanımlı olup **hiç
+okunmuyor** — ölü sabit, kasıtlı olarak `B2`'de silinmedi çünkü bu satırın kanıtı.
+Skor uzayındaki son sınır (`score_integrator._clamp(None) → 0.5`) `B3`'e bırakıldı;
+0.5'i ham sinyal uzayına yazmak hiçbir zaman çözüm değildi, sentinel yanlış uzaydaydı.
 
 **3 — Beyan = uygulanmış değil.**
 Config'e anahtar eklemek onu bağlamaz. `git grep` ile üretim çağıranını göster, yoksa

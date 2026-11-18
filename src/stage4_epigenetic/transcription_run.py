@@ -31,11 +31,29 @@ YAML keys used (in cell_lines.yaml):
 from __future__ import annotations
 
 from src.core.models import GenomicRegion, GROseqResult
-from src.stage4_epigenetic.encode_reader import _NEUTRAL_SIGNAL, EncodeSignalReader
+from src.stage4_epigenetic.encode_reader import UNKNOWN_SIGNAL, EncodeSignalReader
 
 _GROSEQ_PLUS_KEY: str = "gro_seq_plus_url"
 _GROSEQ_MINUS_KEY: str = "gro_seq_minus_url"
 _GROSEQ_UNSTRANDED_KEY: str = "gro_seq_url"
+
+
+def _abs_or_unknown(value: float | None) -> float | None:
+    """Absolute value, keeping an unknown unknown (roadmap B2)."""
+    return None if value is None else abs(value)
+
+
+def _total_or_unknown(*values: float | None) -> float | None:
+    """Total of the stranded signals, or unknown if any strand was not measured.
+
+    A strand that could not be read makes the total **unmeasurable**, not
+    smaller. Summing only what is known would understate transcription, and
+    less transcription reads as lower off-target risk — exactly the direction
+    B2 exists to remove.
+    """
+    if any(value is None for value in values):
+        return None
+    return sum(value for value in values if value is not None)
 
 
 class GROseqReader(EncodeSignalReader):
@@ -72,26 +90,26 @@ class GROseqReader(EncodeSignalReader):
                 cell_line, _GROSEQ_UNSTRANDED_KEY
             )
             if unstranded_url:
-                combined = abs(self.read_signal(unstranded_url, region))
+                combined = _abs_or_unknown(self.read_signal(unstranded_url, region))
                 return GROseqResult(
                     region=region,
-                    plus_signal=_NEUTRAL_SIGNAL,
-                    minus_signal=_NEUTRAL_SIGNAL,
+                    plus_signal=UNKNOWN_SIGNAL,
+                    minus_signal=UNKNOWN_SIGNAL,
                     combined_signal=combined,
                 )
 
         plus_signal = (
-            self.read_signal(plus_url, region) if plus_url else _NEUTRAL_SIGNAL
+            self.read_signal(plus_url, region) if plus_url else UNKNOWN_SIGNAL
         )
         minus_signal = (
-            abs(self.read_signal(minus_url, region)) if minus_url else _NEUTRAL_SIGNAL
+            _abs_or_unknown(self.read_signal(minus_url, region)) if minus_url else UNKNOWN_SIGNAL
         )
 
         return GROseqResult(
             region=region,
             plus_signal=plus_signal,
             minus_signal=minus_signal,
-            combined_signal=plus_signal + minus_signal,
+            combined_signal=_total_or_unknown(plus_signal, minus_signal),
         )
 
     def get_transcription_bulk(
@@ -118,13 +136,13 @@ class GROseqReader(EncodeSignalReader):
             )
             if unstranded_url:
                 combined_signals = [
-                    abs(v) for v in self.read_signal_bulk(unstranded_url, regions)
+                    _abs_or_unknown(v) for v in self.read_signal_bulk(unstranded_url, regions)
                 ]
                 return [
                     GROseqResult(
                         region=region,
-                        plus_signal=_NEUTRAL_SIGNAL,
-                        minus_signal=_NEUTRAL_SIGNAL,
+                        plus_signal=UNKNOWN_SIGNAL,
+                        minus_signal=UNKNOWN_SIGNAL,
                         combined_signal=c,
                     )
                     for region, c in zip(regions, combined_signals, strict=True)
@@ -133,12 +151,12 @@ class GROseqReader(EncodeSignalReader):
         plus_signals = (
             self.read_signal_bulk(plus_url, regions)
             if plus_url
-            else [_NEUTRAL_SIGNAL] * len(regions)
+            else [UNKNOWN_SIGNAL] * len(regions)
         )
         minus_signals = (
-            [abs(v) for v in self.read_signal_bulk(minus_url, regions)]
+            [_abs_or_unknown(v) for v in self.read_signal_bulk(minus_url, regions)]
             if minus_url
-            else [_NEUTRAL_SIGNAL] * len(regions)
+            else [UNKNOWN_SIGNAL] * len(regions)
         )
 
         return [
@@ -146,7 +164,7 @@ class GROseqReader(EncodeSignalReader):
                 region=region,
                 plus_signal=p,
                 minus_signal=m,
-                combined_signal=p + m,
+                combined_signal=_total_or_unknown(p, m),
             )
             for region, p, m in zip(regions, plus_signals, minus_signals, strict=True)
         ]

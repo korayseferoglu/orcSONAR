@@ -21,7 +21,7 @@ Returns 0.0 (neutral) when the URL is absent or on any read failure.
 from __future__ import annotations
 
 from src.core.models import GenomicRegion
-from src.stage4_epigenetic.encode_reader import _NEUTRAL_SIGNAL, EncodeSignalReader
+from src.stage4_epigenetic.encode_reader import UNKNOWN_SIGNAL, EncodeSignalReader
 
 _H3K4ME3_KEY: str = "h3k4me3_chip"
 _H3K27AC_KEY: str = "h3k27ac_chip"
@@ -51,7 +51,7 @@ class HistoneMarkReader(EncodeSignalReader):
         """
         url = self._get_url_for_cell_line(cell_line, _H3K4ME3_KEY)
         if url is None:
-            return _NEUTRAL_SIGNAL
+            return UNKNOWN_SIGNAL
         return self.read_signal(url, region)
 
     def get_h3k27ac(self, region: GenomicRegion, cell_line: str) -> float:
@@ -66,7 +66,7 @@ class HistoneMarkReader(EncodeSignalReader):
         """
         url = self._get_url_for_cell_line(cell_line, _H3K27AC_KEY)
         if url is None:
-            return _NEUTRAL_SIGNAL
+            return UNKNOWN_SIGNAL
         return self.read_signal(url, region)
 
     def get_h3k27me3(self, region: GenomicRegion, cell_line: str) -> float:
@@ -87,7 +87,7 @@ class HistoneMarkReader(EncodeSignalReader):
         """
         url = self._get_url_for_cell_line(cell_line, _H3K27ME3_KEY)
         if url is None:
-            return _NEUTRAL_SIGNAL
+            return UNKNOWN_SIGNAL
         return self.read_signal(url, region)
 
     def get_h3k4me3_bulk(
@@ -104,7 +104,7 @@ class HistoneMarkReader(EncodeSignalReader):
         """
         url = self._get_url_for_cell_line(cell_line, _H3K4ME3_KEY)
         if url is None:
-            return [_NEUTRAL_SIGNAL] * len(regions)
+            return [UNKNOWN_SIGNAL] * len(regions)
         return self.read_signal_bulk(url, regions)
 
     def get_h3k27ac_bulk(
@@ -121,7 +121,7 @@ class HistoneMarkReader(EncodeSignalReader):
         """
         url = self._get_url_for_cell_line(cell_line, _H3K27AC_KEY)
         if url is None:
-            return [_NEUTRAL_SIGNAL] * len(regions)
+            return [UNKNOWN_SIGNAL] * len(regions)
         return self.read_signal_bulk(url, regions)
 
     def get_h3k27me3_bulk(
@@ -138,5 +138,5 @@ class HistoneMarkReader(EncodeSignalReader):
         """
         url = self._get_url_for_cell_line(cell_line, _H3K27ME3_KEY)
         if url is None:
-            return [_NEUTRAL_SIGNAL] * len(regions)
+            return [UNKNOWN_SIGNAL] * len(regions)
         return self.read_signal_bulk(url, regions)
