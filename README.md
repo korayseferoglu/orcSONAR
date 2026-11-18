@@ -21,17 +21,28 @@ should be read alongside the per-stage evidence the pipeline emits.
 
 ## Current state — read this before the description above
 
-The five pillars are the **design**. Measured on the reference run
-(VEGFA / HeLa, 41 off-target sites, measured 2026-11-18), the implementation is
-not there yet, and two of the five domains carry little or no information:
+The five pillars are the **design**. The implementation is not there yet, and
+two of the five domains carry little or no information.
 
-| domain | distinct values across the 41 sites |
-|---|---|
-| `sequence_specificity` | **1** — every site scores 1.0, so its 0.20 weight carries no information |
-| `execution_safety` | **2** — 31 of 41 sites identical |
-| `biophysics_structure` | 19, but its duplex ΔG term is **+31.1 for all 41 sites**: one identical, *positive* value, and a positive duplex ΔG means no duplex formed at all |
-| `variant_toxicity` | 35 |
-| `epigenetic_context` | 40 |
+The figures below were read on 2026-11-18 from the reference run stored under
+`results/VEGFA_HeLa/` (41 off-target sites). **That run was produced on
+2026-09-17 and predates three fixes landed since** — an inverted gnomAD sign,
+the no-data fallback, and a ClinVar query the server was rejecting. So the two
+marked **code** still describe today's code, while the ones marked **run** will
+move when the run is reproduced (tracked as `B12` in
+[`SCIENTIFIC_ROADMAP.md`](SCIENTIFIC_ROADMAP.md)):
+
+| domain | distinct values across the 41 sites | |
+|---|---|---|
+| `sequence_specificity` | **1** — every site scores 1.0, so its 0.20 weight carries no information | **code** — a clamp flattens the raw seed scores; still open |
+| `biophysics_structure` | 19, but its duplex ΔG term is **+31.1 for all 41 sites**: one identical, *positive* value, and a positive duplex ΔG means no duplex formed at all | **code** — the duplex target is wrong; still open |
+| `execution_safety` | **2** — 31 of 41 sites identical | run |
+| `variant_toxicity` | 35 | run — every value changes under the corrected gnomAD sign |
+| `epigenetic_context` | 40 | run |
+
+Risk classes reached by that run: **36 `SAFE`, 5 `WARNING`**, none `HIGH_RISK`
+or `DANGEROUS` — also a **run** figure, and the corrected gnomAD sign raises
+mean `variant_toxicity` from 0.124 to 0.228 on its own.
 
 Other open findings — evidence in [`AUDIT.md`](AUDIT.md), ordered work queue in
 [`SCIENTIFIC_ROADMAP.md`](SCIENTIFIC_ROADMAP.md):
@@ -43,9 +54,10 @@ Other open findings — evidence in [`AUDIT.md`](AUDIT.md), ordered work queue i
   genomic span boundary — so every locus-based source (COSMIC, gnomAD, ClinVar,
   phyloP, ATAC, ChIP, Hi-C, …) reads from the wrong position. *Which* gene a
   seed hits is unaffected; where in the genome it sits is not.
-- The top two risk classes are **unreached**: the reference run classifies 36
-  sites `SAFE` and 5 `WARNING`, none `HIGH_RISK` or `DANGEROUS`.
-- ClinVar contributes nothing in the current wiring.
+- The top two risk classes have not been reached by any run so far — see the
+  table above. Whether they are reachable at all is a separate question that
+  the scoring rules work through; dead channels, not the arithmetic, are the
+  reason.
 
 Nothing in this repository has been validated against experimental off-target
 measurements, and no wet-lab work exists. Read it as an instrument under
@@ -391,18 +403,26 @@ with sparse coverage.
   of this section said the affected sub-score falls back to a neutral **0.5**.
   That is not what the code does, and the difference matters in a risk tool:
 
-  - `epigenetic_merger.py:12` does define `_NEUTRAL = 0.5` — and **nothing in
-    that file reads it.**
-  - What production substitutes is `encode_reader.py:34`
-    `_NEUTRAL_SIGNAL = 0.0`, in **raw-signal space**, reached from six modules
-    (ATAC, three histone marks, GRO-seq, Ago2/RBP). For every one of those
-    sources, less signal reads as **lower** risk.
-  - So a failed source does not produce a neutral site. It produces a site that
-    looks **safe**. A completely dead source yields plausible output instead of
-    an error. This is `AUDIT.md`'s Bulgu-10 and it is open.
-  - The `0.5` default that *is* read (`score_integrator.py:27`) applies only to
-    a non-numeric value or a site missing from a stage's output — not to a
-    source that failed.
+  - **Until 2026-11-18** the code substituted `_NEUTRAL_SIGNAL = 0.0` in
+    **raw-signal space**, from six modules (ATAC, three histone marks,
+    GRO-seq, Ago2/RBP). For every one of those sources less signal reads as
+    **lower** risk, so a failed source did not produce a neutral site — it
+    produced one that looks **safe**, and a wholly dead source yielded
+    plausible output instead of an error (`AUDIT.md` Bulgu-10).
+  - **Now** an unread source is recorded as an explicit unknown — `null`, not a
+    number — and the mergers exclude that channel and renormalise the remaining
+    weights rather than letting it contribute a zero. A raw `0.0` means the
+    assay covered the locus and recorded nothing. `encode_reader` also tells
+    "this contig is not in the file" (unknown, and where a `chr` prefix
+    mismatch lands) apart from "this contig is present and silent" (a real
+    zero). Derived values follow: a strand that was not read makes the
+    stranded total unknown rather than smaller.
+  - **Still open:** `score_integrator._clamp()` turns an unknown into `0.5` in
+    *score* space, where that value is the documented "unknown". Replacing it
+    with a per-site coverage threshold that refuses to score at all is roadmap
+    `B3`.
+  - **Every run currently under `results/` predates this change**, so its zeros
+    are fallbacks, not measurements.
 
   Inspect the per-stage `data_available` flags in the JSON before interpreting
   a score, and treat a report with several sources unavailable as a prior

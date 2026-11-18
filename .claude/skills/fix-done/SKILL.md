@@ -51,6 +51,18 @@ because the part that matters is the prose next to it:
 4. Commit. Invariant 4: uncommitted is nothing. The `h3k27me3 "wired ✅"` note
    existed in no commit, and the project believed it for months.
 
+## It only closes an open item
+
+`TODO` and `DOING` are the statuses it will act on. An item marked
+`BLOCKED(...)` is refused, and that friction is deliberate: an item was blocked
+for a reason, and clearing it should mean someone looked at whether the reason
+still holds, not that a gate happened to pass.
+
+So an unblocked item is moved back to `TODO` **by hand** first, in the same
+edit that records why the block is gone. That happened to `H6b`: it was blocked
+on a claim of mine that turned out to be wrong, and the block had to be
+retracted in the row before the item could close.
+
 ## When it refuses
 
 Then the item is not done. Do not loosen the acceptance script, lower a

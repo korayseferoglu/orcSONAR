@@ -74,11 +74,22 @@ Known API quirks:
   pip wheel cannot open an https URL.
 
 All API calls go through `tenacity` retry and are cached in SQLite under
-`data/cache/`. On any source failure the pipeline logs a warning and substitutes a
-sentinel rather than aborting — but **the sentinel is not the documented 0.5.**
-Production writes `_NEUTRAL_SIGNAL = 0.0` (`encode_reader.py:35`) in raw-signal
-space; `epigenetic_merger.py:12` defines `_NEUTRAL = 0.5` and nothing reads it.
-For every ENCODE-derived source less signal means lower risk, so a dead source
-does not yield an unknown site, it yields one that looks safe (AUDIT.md
-Bulgu-10). A report produced with several sources unavailable is therefore not
-merely closer to a prior than to a measurement — it is biased toward SAFE.
+`data/cache/`. On any source failure the pipeline logs a warning and continues
+rather than aborting, and **what it substitutes changed with roadmap B2.**
+
+Since B2 an unread source is recorded as an explicit unknown — `null`, not a
+number — and the mergers exclude that channel and renormalise the remaining
+weights instead of letting it contribute a zero. A raw `0.0` now means the
+assay covered the locus and found nothing.
+
+Before B2, production wrote `_NEUTRAL_SIGNAL = 0.0` in raw-signal space from
+six modules. For every ENCODE-derived source less signal means lower risk, so a
+dead source did not yield an unknown site — it yielded one that looks **safe**
+(AUDIT.md Bulgu-10), and a report with several sources unavailable was biased
+toward SAFE rather than merely closer to a prior. **Every run under `results/`
+predates B2**, so read its zeros with that in mind.
+
+The cache carries a `schema_version` per source (`B0`): when the meaning of a
+source's cached answers changes, bumping `_SCHEMA_VERSIONS` in
+`src/core/cache.py` makes every older entry unusable. `clinvar` is at **v2**
+because every answer cached before `B1` came from a query E-utilities rejected.

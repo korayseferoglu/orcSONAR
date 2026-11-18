@@ -44,16 +44,29 @@ one exists, use it and say so.
   going green means the stages agree on a locus, not that the locus is right:
   the genomic coordinates are computed splice-blind (AUDIT.md Bulgu-8). Never
   report a green check 3 as biological accuracy.
-- Graceful degradation is projectwide, and **the value it substitutes is not the
-  documented one.** CLAUDE.md promises a neutral `0.5`, and
-  `epigenetic_merger.py:12` defines `_NEUTRAL = 0.5` — but nothing reads it.
-  What production writes is `encode_reader.py:35` `_NEUTRAL_SIGNAL = 0.0`, in
-  raw-signal space, reached from six modules (ATAC, the three histone marks,
-  GRO-seq, Ago2, RBP). `0.5` means "unknown"; `0.0` means "no signal", and for
-  every one of these sources less signal reads as **lower** risk. So a failed
-  source does not produce a neutral site, it produces a site that looks safe
-  (AUDIT.md Bulgu-10). That is why a completely dead source produces
-  plausible-looking output instead of an error.
+- Graceful degradation changed with roadmap **B2**, and which contract a run
+  followed decides how you read its zeros.
+  - **Since B2:** an unread source is written as **`null`**. A raw `0.0` means
+    the assay covered the locus and recorded nothing. `encode_reader` also
+    separates "this contig is not in the file" (unknown — where a `chr` prefix
+    mismatch lands) from "this contig is present and silent" (a real `0.0`).
+    The mergers exclude an unknown channel and renormalise the remaining
+    weights, so `normalized_score` is `null` only when nothing at all was
+    measured.
+  - **Before B2** — which includes **every run currently under `results/`** —
+    production substituted `_NEUTRAL_SIGNAL = 0.0` in raw-signal space, reached
+    from six modules (ATAC, the three histone marks, GRO-seq, Ago2, RBP).
+    `0.5` means "unknown", `0.0` means "no signal", and for every one of these
+    sources less signal reads as **lower** risk, so a failed source did not
+    produce a neutral site — it produced one that looks safe (AUDIT.md
+    Bulgu-10), which is why a wholly dead source yielded plausible output
+    instead of an error.
+  - The result JSON does not say which era it came from (`H10` adds a run
+    manifest). **Check the run's git SHA before reading its zeros as
+    measurements.** Check 4 counts nulls and zeros separately and says so.
+  - Still open: `score_integrator._clamp(None)` yields `0.5` in *score* space,
+    where that value is the documented "unknown". `B3` replaces it with a
+    coverage threshold that refuses to score a site at all.
 - Risk classes: `[0, 0.3)` SAFE, `[0.3, 0.6)` WARNING, `[0.6, 0.8)` HIGH_RISK,
   `[0.8, 1.0]` DANGEROUS.
 - `results/` and `data/` are **read-only** — this is an audit. Never edit a

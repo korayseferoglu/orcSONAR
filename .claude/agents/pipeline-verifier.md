@@ -53,13 +53,21 @@ matching `src/` module, which reads input JSON and writes
    `[-20, 10]`; genomic coordinates positive and `start < end`; ATAC/expression signal
    non-negative. Flag anything outside its plausible range.
 
-   **(c) Real data vs. no-data sentinel.** A failed data source logs a warning and
-   substitutes a sentinel. **Count both sentinels, because they live in different
-   spaces:** the documented score-space **0.5** (`epigenetic_merger.py:12`, defined
-   but never read), and the raw-space **0.0** that production actually writes
-   (`encode_reader.py:35` `_NEUTRAL_SIGNAL`, reached from ATAC, the three histone
-   marks, GRO-seq, Ago2 and RBP). Counting only 0.5 is how dead channels passed
-   this check for months.
+   **(c) Real data vs. no data.** **Count three things, because they live in
+   different spaces and mean different things:**
+
+   - **`null`** — not measured. Since roadmap `B2` this is how an unread source
+     is recorded, and it is attributable on its own. Count it *before* any
+     numeric filter: dropping non-numbers is what used to make it invisible.
+   - **raw `0.0`** — a measured zero under today's contract, but the fallback in
+     any run produced **before** `B2`, which includes every run under
+     `results/`. The JSON cannot date itself (`H10`), so check the run's git
+     SHA before reading zeros as measurements.
+   - **score-space `0.5`** — the documented contract, still reached via
+     `score_integrator._clamp(None)`; `B3` replaces it with a coverage
+     threshold that refuses to score.
+
+   Counting only 0.5 is how dead channels passed this check for months.
 
    Report per metric how many sites sit at each. A stage where most sites are
    sentinel is producing decoration, not signal — say so plainly. But do **not**

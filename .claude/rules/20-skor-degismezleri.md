@@ -51,7 +51,11 @@ Dört koşu da 0.298-0.408 aralığında, üst sınıflar hiç görülmüyor. Am
 | DANGEROUS (final ≥ 0.8) | ≈1.05 | 0.836 | gerçekten erişilemez |
 
 Yani HIGH_RISK *matematiksel olarak imkânsız* değil — **kanallar ölü olduğu için**
-ulaşılmıyor: `_NEUTRAL_SIGNAL = 0.0` (`B2`) + intronik lokuslar (`D2`). Doygunluk sabiti
+ulaşılmıyor: eskiden `_NEUTRAL_SIGNAL = 0.0` (**`B2` 2026-11-18'de kapandı**: fallback
+artık açık bir *bilinmiyor* ve merger'lar bilinmeyen kanalı dışlayıp ağırlıkları yeniden
+normalize ediyor, yani ölü kanal artık skoru aşağı çekmiyor) + intronik lokuslar (`D2`).
+⚠️ Bu tablodaki sayılar **`B2`/`B4`/`B1` öncesi** bir koşudan (VEGFA_HeLa) ölçüldü;
+`results/` yeniden koşulana kadar (`B12`) tavanları bu gözle oku. Doygunluk sabiti
 birinci mertebe etken **değil**: `_ATAC_SAT`'ı 50 kat düşürmek eşiği yalnız
 0.789 → 0.728 indiriyor.
 

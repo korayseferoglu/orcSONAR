@@ -121,26 +121,37 @@ SATURATED_FAIL_PCT = 50.0  # past half the sites, the metric ranks nothing
 # and `epigenetic_merger.py:12` does define `_NEUTRAL = 0.5`. That constant is
 # never read: grep across the repo finds its own definition and nothing else.
 #
-# What production actually substitutes is `encode_reader.py:35`
-# `_NEUTRAL_SIGNAL = 0.0`, in RAW-SIGNAL space, reached from six modules
-# (ATAC, the three histone marks, GRO-seq, Ago2, RBP). The two values mean
-# opposite things in a safety tool: 0.5 is "unknown", 0.0 is "no signal",
-# and for every one of these sources less signal reads as LOWER risk. A
-# failed source therefore pushes a site toward SAFE.
+# Production used to substitute `_NEUTRAL_SIGNAL = 0.0` in RAW-SIGNAL space,
+# reached from six modules (ATAC, the three histone marks, GRO-seq, Ago2, RBP).
+# 0.5 and 0.0 mean opposite things in a safety tool: 0.5 is "unknown", 0.0 is
+# "no signal", and for every one of those sources less signal reads as LOWER
+# risk, so a failed source pushed a site toward SAFE.
 #
-# This check counts both, separately, because the old single `NEUTRAL = 0.5`
-# made it blind: a metric sitting at 100% 0.0 produced no finding at all and
-# the run was reported as carrying measured data everywhere.
+# **Roadmap B2 changed this, and this comment used to claim otherwise.** The
+# fallback is now an explicit unknown — `null` in the JSON — and a raw `0.0`
+# means the assay covered the locus and recorded nothing. So there are three
+# things to count, not two:
 #
-# Caveat that must stay in the output: a raw 0.0 cannot be told apart from a
-# genuinely silent locus using the result JSON alone. Attributing it needs the
-# per-site provenance field (SCIENTIFIC_ROADMAP.md B3). Until that lands, this
-# check reports the count and says plainly that it cannot attribute it.
+#   null  not measured. ATTRIBUTABLE on its own: this is the unavailability
+#         rate the check was built to report, and before B2 it could not be
+#         measured at all.
+#   0.0   a measured zero under today's contract — but still the fallback in
+#         any run produced BEFORE B2. The result JSON cannot date itself
+#         (SCIENTIFIC_ROADMAP.md H10 adds a run manifest), so it is reported
+#         without being attributed, and the wording says which reading applies
+#         to which era rather than asserting one.
+#   0.5   the documented score-space contract, still reached through
+#         `score_integrator._clamp(None)`. B3 replaces it with a coverage
+#         threshold that refuses to score.
+#
+# Counting nulls is not cosmetic: `is_number()` drops them, so after B2 the
+# old accounting would have shown the fallback rate FALLING — an improvement
+# that never happened.
 # --------------------------------------------------------------------------
 SENTINEL_SCORE = 0.5  # the documented contract; expected to be unreachable
-SENTINEL_RAW = 0.0  # _NEUTRAL_SIGNAL: what the code really writes
+MEASURED_ZERO = 0.0  # post-B2: a real zero; pre-B2 runs: the old fallback
 
-# Fields held in raw-signal space, where 0.0 is the no-data sentinel.
+# Fields held in raw-signal space, where `null` means not measured.
 NO_DATA_FIELDS = RAW_SIGNAL_FIELDS | {"raw_signal"}
 
 
@@ -408,13 +419,12 @@ def check_coordinates(ref, multi_hit, downstream) -> tuple[bool, list[str], list
 def check_fallback(tables) -> tuple[bool, list[str], list[dict]]:
     """How much of this run is measured data rather than a no-data sentinel?
 
-    Counts both sentinels (see SENTINEL_SCORE / SENTINEL_RAW above): the
-    documented score-space 0.5, and the raw-space 0.0 the code actually
-    writes. A metric that is wholly sentinel is decoration — the source
-    failed and the pipeline substituted a number that reads like a result.
-
-    The raw-space count is reported but NOT attributed: 0.0 may equally be a
-    genuinely silent locus, and the result JSON cannot tell the two apart.
+    Counts three things (see the block above SENTINEL_SCORE): `null`, which
+    since roadmap B2 is how an unread source is recorded and is attributable on
+    its own; a raw `0.0`, which is a measured zero today but was the fallback
+    before B2; and the documented score-space `0.5`. A metric that is wholly
+    sentinel is decoration — the source failed and the pipeline substituted a
+    number that reads like a result.
     """
     lines, findings = [], []
     worst = 0.0
@@ -422,11 +432,26 @@ def check_fallback(tables) -> tuple[bool, list[str], list[dict]]:
     for table, sites in sorted(tables.items()):
         fields = sorted({f for v in sites.values() for f in v})
         for field in fields:
-            values = [float(v[field]) for v in sites.values()
-                      if field in v and is_number(v[field])]
+            present = [v[field] for v in sites.values() if field in v]
+            values = [float(x) for x in present if is_number(x)]
+            base = field.split("[")[0]
+
+            # Not measured. Counted before the numeric filter, because that
+            # filter is what used to make this invisible.
+            n_unknown = sum(1 for x in present if x is None)
+            if n_unknown and base in NO_DATA_FIELDS:
+                pct = 100.0 * n_unknown / len(present)
+                worst = max(worst, pct)
+                findings.append({"table": table, "metric": field, "space": "unknown",
+                                 "sentinel": None, "hits": n_unknown,
+                                 "of": len(present), "pct": round(pct, 1),
+                                 "attributable": True})
+                lines.append(f"  {pct:5.1f}%  {table}  {field}: {n_unknown}/{len(present)} "
+                             f"sites NOT MEASURED (null) — source unavailable, "
+                             f"not a silent locus")
+
             if len(values) < 2:
                 continue
-            base = field.split("[")[0]
 
             n_score = sum(1 for x in values if abs(x - SENTINEL_SCORE) < 1e-9)
             if n_score:
@@ -439,27 +464,30 @@ def check_fallback(tables) -> tuple[bool, list[str], list[dict]]:
                 lines.append(f"  {pct:5.1f}%  {table}  {field}: {n_score}/{len(values)} "
                              f"sites at the documented {SENTINEL_SCORE} sentinel")
 
-            n_raw = sum(1 for x in values if abs(x - SENTINEL_RAW) < 1e-9)
+            n_raw = sum(1 for x in values if abs(x - MEASURED_ZERO) < 1e-9)
             if n_raw and base in NO_DATA_FIELDS:
                 saw_raw = True
                 pct = 100.0 * n_raw / len(values)
                 worst = max(worst, pct)
                 findings.append({"table": table, "metric": field, "space": "raw",
-                                 "sentinel": SENTINEL_RAW, "hits": n_raw,
+                                 "sentinel": MEASURED_ZERO, "hits": n_raw,
                                  "of": len(values), "pct": round(pct, 1),
                                  "attributable": False})
                 lines.append(f"  {pct:5.1f}%  {table}  {field}: {n_raw}/{len(values)} "
-                             f"sites at the real 0.0 no-data sentinel "
-                             f"(_NEUTRAL_SIGNAL, AUDIT.md Bulgu-10)")
+                             f"sites at 0.0 — a measured zero since B2, but the "
+                             f"old fallback in any run made before it")
 
     if not findings:
         lines.append("  no metric sits at either sentinel — every site carries measured data")
     if saw_raw:
-        lines.append("  0.0 is NOT attributable from the JSON alone: it is either a failed")
-        lines.append("  source or a genuinely silent locus. Telling them apart needs the")
-        lines.append("  per-site provenance field (SCIENTIFIC_ROADMAP.md B3). Note that for")
-        lines.append("  every one of these sources less signal reads as LOWER risk, so a")
-        lines.append("  failed source pushes the site toward SAFE rather than toward unknown.")
+        lines.append("  0.0 is NOT attributable from the JSON alone. Since roadmap B2 an")
+        lines.append("  unread source is written as null, so a 0.0 should mean the assay")
+        lines.append("  covered the locus and found nothing — but a run produced BEFORE B2")
+        lines.append("  used 0.0 as its fallback, and the result JSON cannot date itself")
+        lines.append("  (H10 adds a run manifest). Check the run's git SHA before reading")
+        lines.append("  these zeros as measurements. For every one of these sources less")
+        lines.append("  signal reads as LOWER risk, so under the old contract a failed")
+        lines.append("  source pushed the site toward SAFE rather than toward unknown.")
     # Advisory: a high fallback rate is a warning, not a hard failure.
     return worst < 50.0, lines, findings
 
