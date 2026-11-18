@@ -60,8 +60,8 @@ PYTHON=~/.venvs/orcsonar/bin/python \
   python3 .claude/skills/fix-done/scripts/fix_done.py <ID> --red-first "..."
 ```
 
-⚠️ `~/miniforge3/envs/orccatch` **bu projenin ortamı değil** — orcCATCH ayrı
-bir proje (`/home/koray/orccatch.md`), Python 3.11.15 ve `orcsonar` içinde
-kurulu değil. `~/miniforge3/envs` altında tek ortam olduğu için bir kez yanlış
-seçildi; bu not o hatanın tekrarlanmaması için burada. Kanonik yorumlayıcıyı
-CI'da `H6` sabitleyecek.
+⚠️ `~/miniforge3/envs` altındaki conda ortamları **bu projeye ait değil** —
+başka çalışmalara ait ve `orcsonar` onların içinde kurulu değil. Orada tek bir
+ortam bulunduğu için bir kez yanlış seçildi ve testler yanlış yorumlayıcıda
+koştu; bu not o hatanın tekrarlanmaması için burada. Yorumlayıcıyı aramak
+yerine yukarıdaki yoldan oku; CI'da `H6` onu sabitliyor.

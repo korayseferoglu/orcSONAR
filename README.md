@@ -19,6 +19,40 @@ should be read alongside the per-stage evidence the pipeline emits.
 
 ---
 
+## Current state — read this before the description above
+
+The five pillars are the **design**. Measured on the reference run
+(VEGFA / HeLa, 41 off-target sites, measured 2026-11-18), the implementation is
+not there yet, and two of the five domains carry little or no information:
+
+| domain | distinct values across the 41 sites |
+|---|---|
+| `sequence_specificity` | **1** — every site scores 1.0, so its 0.20 weight carries no information |
+| `execution_safety` | **2** — 31 of 41 sites identical |
+| `biophysics_structure` | 19, but its duplex ΔG term is **+31.1 for all 41 sites**: one identical, *positive* value, and a positive duplex ΔG means no duplex formed at all |
+| `variant_toxicity` | 35 |
+| `epigenetic_context` | 40 |
+
+Other open findings — evidence in [`AUDIT.md`](AUDIT.md), ordered work queue in
+[`SCIENTIFIC_ROADMAP.md`](SCIENTIFIC_ROADMAP.md):
+
+- The off-target search space is a **hand-curated 183-gene background set**, not
+  the transcriptome. Any threshold calibrated on it does not transfer to a full
+  scan.
+- Genomic coordinates are computed **splice-blind** — a cDNA offset added to a
+  genomic span boundary — so every locus-based source (COSMIC, gnomAD, ClinVar,
+  phyloP, ATAC, ChIP, Hi-C, …) reads from the wrong position. *Which* gene a
+  seed hits is unaffected; where in the genome it sits is not.
+- The top two risk classes are **unreached**: the reference run classifies 36
+  sites `SAFE` and 5 `WARNING`, none `HIGH_RISK` or `DANGEROUS`.
+- ClinVar contributes nothing in the current wiring.
+
+Nothing in this repository has been validated against experimental off-target
+measurements, and no wet-lab work exists. Read it as an instrument under
+construction, not as a predictor.
+
+---
+
 ## Table of contents
 
 - [How it works](#how-it-works)
@@ -351,12 +385,28 @@ orcSONAR is honest about being incomplete. Read a score as a **prior informed by
 whatever data was available**, not as a measurement — especially for cell lines
 with sparse coverage.
 
-- **Graceful degradation.** Every source can fail independently (network
-  timeout, missing local file, unmapped cell line). When one does, the affected
-  sub-score falls back to a neutral **0.5**, a warning is logged, and the run
-  continues. A report produced with several sources unavailable is closer to a
-  prior than to a measurement. Inspect the per-stage `data_available` flags in
-  the JSON before interpreting a score.
+- **Graceful degradation — and the direction it fails in.** Every source can
+  fail independently (network timeout, missing local file, unmapped cell line).
+  When one does, a warning is logged and the run continues. An earlier version
+  of this section said the affected sub-score falls back to a neutral **0.5**.
+  That is not what the code does, and the difference matters in a risk tool:
+
+  - `epigenetic_merger.py:12` does define `_NEUTRAL = 0.5` — and **nothing in
+    that file reads it.**
+  - What production substitutes is `encode_reader.py:34`
+    `_NEUTRAL_SIGNAL = 0.0`, in **raw-signal space**, reached from six modules
+    (ATAC, three histone marks, GRO-seq, Ago2/RBP). For every one of those
+    sources, less signal reads as **lower** risk.
+  - So a failed source does not produce a neutral site. It produces a site that
+    looks **safe**. A completely dead source yields plausible output instead of
+    an error. This is `AUDIT.md`'s Bulgu-10 and it is open.
+  - The `0.5` default that *is* read (`score_integrator.py:27`) applies only to
+    a non-numeric value or a site missing from a stage's output — not to a
+    source that failed.
+
+  Inspect the per-stage `data_available` flags in the JSON before interpreting
+  a score, and treat a report with several sources unavailable as a prior
+  rather than a measurement.
 
 - **SHAPE reactivity exists for HeLa only** (icSHAPE, GSM4333258). The other
   seven `SHAPE_Seq/` directories are empty placeholders; for those cell lines

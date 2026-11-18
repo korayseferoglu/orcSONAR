@@ -3,7 +3,7 @@
 Bu dosyanın `paths:` frontmatter'ı **yoktur** — her oturumda yüklenir. Sekiz kural, ve
 her birinin arkasında bu repoda gerçekten olmuş bir ölçüm var. Gerekçeleri
 `SCIENTIFIC_ROADMAP.md` §2'de, kanıtları `AUDIT.md` ve
-`/home/koray/orcSONAR-denetim/DENETIM_RAPORU.md`'de.
+`orcSONAR-denetim/DENETIM_RAPORU.md`'de (repo dışı bir dizin, yayında yok).
 
 **Oturuma `SCIENTIFIC_ROADMAP.md` ile başla.** Bağımlılığı karşılanmış ilk `TODO`
 maddesini al, **yalnız onu** yap, kabul kriterini koş.
