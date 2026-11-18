@@ -135,7 +135,7 @@ def test_passing_acceptance_script_closes_the_item_as_verified(roadmap: Path, tm
     proc = run_fix_done(roadmap, "Z2", "--red-first", "iki test fix'ten önce kırmızıydı", acceptance=gate)
     assert proc.returncode == 0, proc.stdout
     assert "**DONE**" in proc.stdout, proc.stdout
-    assert "beyan" not in proc.stdout.split("REDDEDİLDİ")[0] or "DONE(beyan)" not in proc.stdout
+    assert "DONE(beyan)" not in proc.stdout, "a verified pass must not print the declared verdict"
 
 
 def test_a_declaration_cannot_override_a_failing_gate(roadmap: Path, tmp_path: Path) -> None:
