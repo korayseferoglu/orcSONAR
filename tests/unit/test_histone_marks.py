@@ -10,8 +10,8 @@ import yaml as _yaml
 
 from src.core.config import load_config
 from src.core.models import GenomicRegion
-from src.stage4_epigenetic.histone_marks import HistoneMarkReader
 from src.stage4_epigenetic.encode_reader import UNKNOWN_SIGNAL
+from src.stage4_epigenetic.histone_marks import HistoneMarkReader
 
 # ---------------------------------------------------------------------------
 # Fixtures

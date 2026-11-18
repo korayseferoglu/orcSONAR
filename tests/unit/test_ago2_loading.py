@@ -12,9 +12,9 @@ from src.core.config import load_config
 from src.core.models import Ago2Result, GenomicRegion
 from src.stage4_epigenetic.encode_reader import UNKNOWN_SIGNAL
 from src.stage6_execution.ago2_loading import (
-    Ago2Reader,
     _AGO2_SATURATION,
     _LOADING_THRESHOLD,
+    Ago2Reader,
     _loading_score,
     assess_ago2_loading,
 )

@@ -10,7 +10,6 @@ import pytest
 from src.core.models import CosmicMutation, CosmicResult, GenomicRegion
 from src.stage3_variant_tox.cosmic_scanner import (
     _calculate_mutation_density,
-    _fetch_mutations,
     _parse_info,
     _parse_vcf_record,
     scan_cosmic,

@@ -57,7 +57,7 @@ jobs:
 
       - name: ruff (blocking)
         # Scope authority is `_status.RUFF_SCOPE`. `tests/` at large carries 50
-        # findings, 19 of them not cosmetic, and widening this before they are
+        # findings, 18 of them judgement calls, and widening this before they are
         # dealt with would make the gate red on arrival.
         run: python -m ruff check src .claude/hooks tests/hooks
 

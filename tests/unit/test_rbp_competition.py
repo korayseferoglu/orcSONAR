@@ -12,9 +12,9 @@ from src.core.config import load_config
 from src.core.models import GenomicRegion, RBPResult
 from src.stage4_epigenetic.encode_reader import UNKNOWN_SIGNAL
 from src.stage6_execution.rbp_competition import (
-    RBPCompetitionReader,
     _COMPETITION_THRESHOLD,
     _RBP_SATURATION,
+    RBPCompetitionReader,
     _competition_score,
     assess_rbp_competition,
 )

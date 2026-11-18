@@ -13,7 +13,7 @@ from __future__ import annotations
 
 import textwrap
 from pathlib import Path
-from unittest.mock import MagicMock, patch
+from unittest.mock import patch
 
 import pytest
 import yaml as _yaml
@@ -22,7 +22,6 @@ from src.core.config import load_config
 from src.core.models import CCLEResult
 from src.stage4_epigenetic.ccle_expression import (
     CCLEReader,
-    _EXPRESSION_THRESHOLD,
 )
 
 # ---------------------------------------------------------------------------

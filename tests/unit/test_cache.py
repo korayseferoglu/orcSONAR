@@ -1,8 +1,7 @@
 """Unit tests for src/core/cache.py."""
 
 import sqlite3
-import time
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock
 
 import pytest
 

@@ -11,8 +11,8 @@ import yaml as _yaml
 from src.core.config import load_config
 from src.core.models import GenomicRegion, HiCResult
 from src.stage4_epigenetic.hic_contacts import (
-    HiCContactReader,
     _NEUTRAL_CONTACT,
+    HiCContactReader,
     _contact_cache_key,
     _round_bin,
 )

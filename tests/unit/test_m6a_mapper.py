@@ -16,7 +16,6 @@ _M6A_PRESENT = os.path.exists(_M6A_BED) and os.path.exists(_M6A_BED + ".tbi")
 
 from src.stage5_biophysics.m6a_mapper import _query_tabix, scan_m6a_sites
 
-
 # ---------------------------------------------------------------------------
 # Tests against the real file (skipped when absent)
 # ---------------------------------------------------------------------------

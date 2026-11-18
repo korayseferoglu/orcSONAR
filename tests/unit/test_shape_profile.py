@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import gzip
 import os
-import tempfile
 
 import pytest
 

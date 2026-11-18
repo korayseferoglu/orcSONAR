@@ -28,7 +28,7 @@ NOT_MEASURED = "ÖLÇÜLMEDİ"
 #: cannot drift apart in a merge.
 #:
 #: `tests/` at large carries 50 findings and an earlier version of this comment
-#: called all of them cosmetic. Measured 2026-11-18: 31 are (21 F401, 10 I001,
+#: called all of them cosmetic. Measured 2026-11-18: 32 are (21 F401, 10 I001,
 #: 1 UP041 — all autofixable), but 7 are `B017` blind `pytest.raises(Exception)`
 #: assertions, sitting on the scoring-weight validator and on the ClinVar and
 #: gnomAD clients — modules with open findings. Those are a finding of their

@@ -11,11 +11,11 @@ import responses as responses_lib
 from src.core.config import OrcSonarConfig
 from src.core.models import GenomicRegion
 from src.stage4_epigenetic.encode_reader import (
+    UNKNOWN_SIGNAL,
     EncodeSignalReader,
     _bigwig_mean,
     _read_one_region,
     _signal_cache_key,
-    UNKNOWN_SIGNAL,
 )
 
 # ---------------------------------------------------------------------------

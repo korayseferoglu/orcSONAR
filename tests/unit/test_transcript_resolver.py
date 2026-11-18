@@ -12,8 +12,6 @@ from src.core.config import OrcSonarConfig
 from src.core.exceptions import DataSourceError
 from src.stage1_genomic_map.transcript_resolver import (
     _ncbi_esearch_gene_id,
-    _query_ensembl,
-    _query_refseq_fallback,
     get_transcript_sequence,
     resolve_transcripts,
 )

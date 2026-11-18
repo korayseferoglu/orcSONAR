@@ -9,9 +9,8 @@ import pytest
 import responses as resp_mock
 
 from src.core.config import OrcSonarConfig
-from src.core.models import GnomadResult, GnomadVariant, GenomicRegion
+from src.core.models import GenomicRegion, GnomadResult, GnomadVariant
 from src.stage3_variant_tox.gnomad_client import (
-    _build_result,
     _calculate_polymorphism_score,
     _fetch_variants,
     _graphql_query,

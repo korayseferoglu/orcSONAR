@@ -5,15 +5,14 @@ from pydantic import ValidationError
 
 from src.core.models import (
     BiophysicsScore,
-    DomainScores,
     EpigeneticScore,
     ExecutionScore,
     FinalReport,
     GenomicRegion,
     OffTargetSite,
     SarnaInput,
-    TSSInfo,
     TranscriptInfo,
+    TSSInfo,
     VariantScore,
 )
 

@@ -14,18 +14,15 @@ All tests run without network access. Snakemake is not invoked.
 from __future__ import annotations
 
 import json
-import socket
-import time
 from pathlib import Path
 from typing import Any
 from unittest.mock import patch
 
 import pytest
 
-from src.scoring.score_integrator import run as score_integrator_run
-from src.scoring.risk_classifier import run as risk_classifier_run
 from src.reporting.report_generator import run as report_generator_run
-
+from src.scoring.risk_classifier import run as risk_classifier_run
+from src.scoring.score_integrator import run as score_integrator_run
 
 # ---------------------------------------------------------------------------
 # Helpers — synthetic stage JSON factories
@@ -785,7 +782,7 @@ class TestGracefulDegradationAPITimeout:
         out = str(tmp_path / "scores.json")
 
         def _raise_timeout(*args: object, **kwargs: object) -> None:
-            raise socket.timeout("Simulated API timeout")
+            raise TimeoutError("Simulated API timeout")
 
         with patch("socket.create_connection", side_effect=_raise_timeout):
             score_integrator_run(

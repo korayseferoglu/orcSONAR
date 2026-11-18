@@ -4,8 +4,6 @@ from __future__ import annotations
 
 from pathlib import Path
 
-import pytest
-
 from src.core.models import CircRNAResult, GenomicRegion
 from src.stage6_execution.circrna_sponge import (
     _find_overlaps,

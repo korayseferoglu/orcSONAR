@@ -2,7 +2,7 @@
 
 import pytest
 
-from src.core.config import OrcSonarConfig, ScoringWeights, load_config
+from src.core.config import ScoringWeights, load_config
 
 
 class TestScoringWeights:

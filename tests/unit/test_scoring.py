@@ -12,7 +12,6 @@ from src.core.models import (
     Ago2Result,
     CircRNAResult,
     ClinvarResult,
-    ClinvarVariant,
     CosmicResult,
     DomainScores,
     G4Result,

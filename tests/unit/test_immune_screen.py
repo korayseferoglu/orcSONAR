@@ -6,7 +6,7 @@ from pathlib import Path
 
 import pytest
 
-from src.core.models import ImmuneResult, MotifHit
+from src.core.models import ImmuneResult
 from src.stage6_execution.immune_screen import (
     _classify_risk,
     _load_motifs,
