@@ -296,7 +296,13 @@ def _embed_offtarget(
     # the two are tied together here. (`t_seed_end - t_seed_start + 1 ==
     # seed_length` was asserted first and removed: it follows algebraically
     # from the two lines above, so it could never fail.)
-    assert sarna[seed_start : seed_end + 1] == _extract_seed(sarna, seed_start, seed_length)
+    seed = _extract_seed(sarna, seed_start, seed_length)
+    assert sarna[seed_start : seed_end + 1] == seed
+    # And the span the two indices describe really does hold the planted
+    # reverse complement, which is what `p` below points callers at.
+    assert perfect_window[t_seed_start : t_seed_end + 1] == _reverse_complement(seed).replace(
+        "U", "T"
+    )
 
     padding = 50
     insert_pos = padding  # where the window starts in the mRNA
