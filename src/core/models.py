@@ -190,9 +190,11 @@ class CosmicResult(BaseModel):
 
     region: GenomicRegion
     mutations: list[CosmicMutation] = Field(default_factory=list)
-    mutation_count: int = Field(ge=0, default=0)
-    has_tier1_gene: bool = False
-    density_score: float = Field(ge=0.0, le=1.0, default=0.0)
+    # None where the source could not be read: a failed VCF is not "no
+    # mutations here" (audit 2026-11-19, Bulgu 2).
+    mutation_count: int | None = Field(ge=0, default=None)
+    has_tier1_gene: bool | None = None
+    density_score: float | None = Field(ge=0.0, le=1.0, default=None)
 
 
 class ClinvarVariant(BaseModel):
@@ -229,17 +231,17 @@ class GnomadResult(BaseModel):
 
     region: GenomicRegion
     variants: list[GnomadVariant] = Field(default_factory=list)
-    variant_count: int = Field(ge=0, default=0)
-    max_af: float = Field(ge=0.0, le=1.0, default=0.0)
-    polymorphism_score: float = Field(ge=0.0, le=1.0, default=1.0)
+    variant_count: int | None = Field(ge=0, default=None)
+    max_af: float | None = Field(ge=0.0, le=1.0, default=None)
+    polymorphism_score: float | None = Field(ge=0.0, le=1.0, default=None)
 
 
 class PhylopResult(BaseModel):
     """phyloP evolutionary conservation result for one off-target region (Stage 3)."""
 
     region: GenomicRegion
-    mean_score: float = 0.0  # raw phyloP value (can be negative)
-    conservation_score: float = Field(ge=0.0, le=1.0, default=0.5)
+    mean_score: float | None = None  # raw phyloP value (can be negative)
+    conservation_score: float | None = Field(ge=0.0, le=1.0, default=None)
 
 
 class VariantScore(BaseModel):

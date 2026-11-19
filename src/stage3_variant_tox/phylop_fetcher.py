@@ -52,8 +52,8 @@ def run(
             for site_id, region in zip(site_ids, regions, strict=True):
                 phylop_results[site_id] = {
                     "region": region.model_dump(),
-                    "mean_score": 0.0,
-                    "conservation_score": 0.5,
+                    "mean_score": None,
+                    "conservation_score": None,
                 }
 
     payload: dict[str, Any] = {"phylop_results": phylop_results}

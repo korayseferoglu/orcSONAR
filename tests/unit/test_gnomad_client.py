@@ -346,15 +346,18 @@ class TestQueryGnomad:
 
     @patch("src.stage3_variant_tox.gnomad_client.Cache")
     @resp_mock.activate
-    def test_api_failure_returns_neutral_score(self, MockCache) -> None:
+    def test_api_failure_is_unknown_not_a_mid_scale_score(self, MockCache) -> None:
         resp_mock.add(resp_mock.POST, GNOMAD_API, status=503)
         MockCache.return_value.__enter__ = lambda s: _mock_cache(hit=None)
         MockCache.return_value.__exit__ = MagicMock(return_value=False)
         config = OrcSonarConfig()
         results = query_gnomad([REGION_A], config)
-        # On failure: neutral score 0.5
-        assert results[0].polymorphism_score == pytest.approx(0.5)
-        assert results[0].variant_count == 0
+        # Inverted 2026-11-19 (audit Bulgu 2/5). This asserted the
+        # fallback *numbers*, pinning "a dead source reads as a measurement"
+        # as the contract. The name said "returns neutral"; there is no
+        # neutral value on a risk channel, only an unknown one.
+        assert results[0].polymorphism_score is None
+        assert results[0].variant_count is None
 
     @patch("src.stage3_variant_tox.gnomad_client.Cache")
     def test_cache_hit_skips_http(self, MockCache) -> None:

@@ -211,6 +211,9 @@ class TestScanCosmicRealVcf:
     def test_empty_region_gives_zero_mutations(self) -> None:
         """Region with no COSMIC entries → mutation_count=0, density=0."""
         results = scan_cosmic([REGION_EMPTY], COSMIC_VCF)
+        # A successful scan that finds nothing is a MEASURED zero and must
+        # stay 0, not become None. Keeping these two apart is the whole point
+        # of the unknown sentinel (audit 2026-11-19, Bulgu 2).
         assert results[0].mutation_count == 0
         assert results[0].density_score == pytest.approx(0.0)
         assert results[0].has_tier1_gene is False
@@ -243,15 +246,18 @@ class TestScanCosmicRealVcf:
 
 
 class TestScanCosmicMocked:
-    def test_invalid_vcf_path_returns_neutral(self) -> None:
+    def test_invalid_vcf_path_is_unknown_not_zero_mutations(self) -> None:
         results = scan_cosmic(
             [REGION_KNOWN],
             "/nonexistent/path/file.vcf.gz",
         )
         assert len(results) == 1
-        assert results[0].mutation_count == 0
-        assert results[0].density_score == pytest.approx(0.0)
-        assert results[0].has_tier1_gene is False
+        # Inverted 2026-11-19 (audit Bulgu 2). This asserted the fallback
+        # numbers, pinning "a VCF that could not be opened reads as zero
+        # mutations" as the contract — the safe direction on a risk channel.
+        assert results[0].mutation_count is None
+        assert results[0].density_score is None
+        assert results[0].has_tier1_gene is None
 
     def test_empty_input_returns_empty_list(self) -> None:
         results = scan_cosmic([], COSMIC_VCF)

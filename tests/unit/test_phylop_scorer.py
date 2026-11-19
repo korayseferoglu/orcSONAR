@@ -199,12 +199,16 @@ class TestScorePhylop:
         assert results[0].conservation_score == pytest.approx(0.0)
 
     @patch("src.stage3_variant_tox.phylop_scorer.pyBigWig.open")
-    def test_bigwig_open_failure_returns_neutral(self, mock_open) -> None:
+    def test_bigwig_open_failure_is_unknown(self, mock_open) -> None:
         mock_open.side_effect = OSError("connection refused")
         results = score_phylop([REGION_CHR1], BIGWIG_URL)
         assert len(results) == 1
-        assert results[0].conservation_score == pytest.approx(0.5)  # neutral
-        assert results[0].mean_score == pytest.approx(0.0)
+        # Inverted 2026-11-19 (audit Bulgu 2/5). This asserted the
+        # fallback *numbers*, pinning "a dead source reads as a measurement"
+        # as the contract. The name said "returns neutral"; there is no
+        # neutral value on a risk channel, only an unknown one.
+        assert results[0].conservation_score is None
+        assert results[0].mean_score is None
 
     @patch("src.stage3_variant_tox.phylop_scorer.pyBigWig.open")
     def test_empty_input_returns_empty_list(self, mock_open) -> None:

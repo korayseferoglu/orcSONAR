@@ -83,9 +83,15 @@ def query_gnomad(
         for region in regions:
             result = _query_gnomad_region(region, config, cache)
             results.append(result)
+            # A failed query now yields unknowns, and formatting one with
+            # `:.4f` raises (audit 2026-11-19, Bulgu 6's shape).
+            def _shown(value: float | None, digits: int) -> str:
+                return "ÖLÇÜLMEDİ" if value is None else f"{value:.{digits}f}"
+
             logger.info(
                 f"gnomad_client: {region} → {result.variant_count} variant(s), "
-                f"max_af={result.max_af:.4f}, polymorphism_score={result.polymorphism_score:.3f}"
+                f"max_af={_shown(result.max_af, 4)}, "
+                f"polymorphism_score={_shown(result.polymorphism_score, 3)}"
             )
     return results
 
@@ -122,12 +128,16 @@ def _query_gnomad_region(
     except Exception as exc:
         logger.warning(f"gnomad_client: query failed for {region} — returning neutral: {exc}")
         # Neutral score (0.5) on API failure — unknown polymorphism state
+        # A source that could not be read knows nothing. Writing a
+        # number here makes an outage indistinguishable from a
+        # measurement, and for these channels it is the safe
+        # direction (audit 2026-11-19, Bulgu 2/5).
         return GnomadResult(
             region=region,
             variants=[],
-            variant_count=0,
-            max_af=0.0,
-            polymorphism_score=0.5,
+            variant_count=None,
+            max_af=None,
+            polymorphism_score=None,
         )
 
     cache.set(cache_key, {"variants": [v.model_dump() for v in variants]}, ttl_hours=_GNOMAD_TTL_HOURS)

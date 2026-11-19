@@ -3,8 +3,12 @@
 # da her yeni hata gerekçesiyle kapatıldı".
 #
 # Dört ölçüm:
-#   1  mypy sayısı: `B2` öncesi 72 idi; bugün ≤ 73 olmalı ve fazlası YALNIZ
-#      ölü `domain_scores.py` olabilir (gerekçe aşağıda)
+#   1  opsiyonel-tip (`None`/`Optional`) mypy hatası **yalnız** izin verilen
+#      iki dosyada olabilir. ⚠️ Bu kontrol toplam sayıyı **basar ama ona
+#      bakmaz**; eski yorumu "bugün ≤ 73 olmalı" diyordu ve bu, kapının
+#      gerçekte zorladığı şey değildi — beyan ≠ uygulama (2026-11-19
+#      denetiminin kendi bulgu sınıfı, kapının üstünde). Sayı R2'de 74'e
+#      çıktı: üçü de ölü `domain_scores.py`'da, yani kuralın içinde.
 #   2  stage-4 adapter'larının hiçbiri arıza hâlinde sıfır yazmıyor
 #   3  `round(None)` çökmesi yok: okuyucu `None` döndüğünde adapter `null` yazar
 #   4  birim testleri yeşil

@@ -62,11 +62,11 @@ def score_phylop(
     except Exception as exc:
         logger.error(f"phylop_scorer: cannot open BigWig '{bigwig_url}': {exc}")
         return [
-            PhylopResult(
-                region=r,
-                mean_score=_NEUTRAL_MEAN_SCORE,
-                conservation_score=_NEUTRAL_CONSERVATION_SCORE,
-            )
+            # A source that could not be read knows nothing. Writing a
+            # number here makes an outage indistinguishable from a
+            # measurement, and for these channels it is the safe
+            # direction (audit 2026-11-19, Bulgu 2/5).
+            PhylopResult(region=r, mean_score=None, conservation_score=None)
             for r in regions
         ]
 

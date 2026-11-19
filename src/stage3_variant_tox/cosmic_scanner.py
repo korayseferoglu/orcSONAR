@@ -42,7 +42,11 @@ def scan_cosmic(
     except Exception as exc:
         logger.error(f"cosmic_scanner: failed to open VCF '{vcf_path}': {exc}")
         return [
-            CosmicResult(region=r, mutations=[], mutation_count=0, has_tier1_gene=False, density_score=0.0)
+            # A source that could not be read knows nothing. Writing a
+            # number here makes an outage indistinguishable from a
+            # measurement, and for these channels it is the safe
+            # direction (audit 2026-11-19, Bulgu 2/5).
+            CosmicResult(region=r, mutations=[], mutation_count=None, has_tier1_gene=None, density_score=None)
             for r in regions
         ]
 
