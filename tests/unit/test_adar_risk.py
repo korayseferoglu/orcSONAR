@@ -84,12 +84,23 @@ class TestAluRisk:
 
 
 class TestShapeDsRisk:
-    def test_none_returns_neutral(self):
-        assert _shape_ds_risk(None) == pytest.approx(0.5)
+    # Inverted 2026-11-19 (audit Bulgu 2): these asserted a 0.5 in risk space
+    # for "no SHAPE data". The combined score already handled that case by
+    # going 100% Alu-based, so the 0.5 only ever reached the *reported*
+    # shape_ds_risk field — where it was indistinguishable from a measured
+    # half-double-stranded window.
+    def test_no_shape_result_is_unknown(self):
+        assert _shape_ds_risk(None) is None
 
-    def test_unavailable_returns_neutral(self):
+    def test_unavailable_shape_is_unknown(self):
         s = _shape(ss_frac=1.0, available=False)
-        assert _shape_ds_risk(s) == pytest.approx(0.5)
+        assert _shape_ds_risk(s) is None
+
+    def test_consulted_but_nothing_measured_is_unknown(self):
+        """data_available=True with a null fraction — `1.0 - None` used to raise."""
+        s = _shape(ss_frac=1.0, available=True)
+        s.single_stranded_fraction = None
+        assert _shape_ds_risk(s) is None
 
     def test_fully_single_stranded(self):
         # ss_frac=1.0 → ds_frac=0.0 → risk 0.0

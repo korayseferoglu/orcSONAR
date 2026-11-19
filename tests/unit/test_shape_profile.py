@@ -97,12 +97,16 @@ class TestLoadShapeData:
 
 
 class TestGetShapeAccessibility:
-    def test_no_data_returns_neutral(self, tmp_path):
+    def test_no_data_is_unknown_reactivity(self, tmp_path):
         region = GenomicRegion(chrom="chr1", start=0, end=100)
         result = get_shape_accessibility(region, "HeLa", str(tmp_path))
+        # Inverted 2026-11-19 (audit Bulgu 2). 0.5 was written both for a
+        # measured mid-reactivity and for a window where nothing was
+        # measured, so the run could not tell them apart. data_available
+        # still distinguishes 'file consulted' from 'no file'.
         assert result.data_available is False
-        assert result.accessibility_score == pytest.approx(0.5)
-        assert result.single_stranded_fraction == pytest.approx(0.5)
+        assert result.accessibility_score is None
+        assert result.single_stranded_fraction is None
 
     def test_accessible_region(self, tmp_path):
         """All positions highly reactive → near-maximum accessibility."""
@@ -135,15 +139,19 @@ class TestGetShapeAccessibility:
         assert result.accessibility_score == pytest.approx(0.05, abs=0.01)
         assert result.single_stranded_fraction == pytest.approx(0.0)
 
-    def test_no_overlap_returns_neutral(self, tmp_path):
+    def test_no_overlap_is_unknown_reactivity(self, tmp_path):
         """SHAPE data present but no positions overlap the region."""
         cell_dir = tmp_path / "HeLa"
         cell_dir.mkdir()
         _write_shape_file(str(cell_dir), "r.shape", ["1000\t1.0"])
         region = GenomicRegion(chrom="chr1", start=0, end=5)
         result = get_shape_accessibility(region, "HeLa", str(tmp_path))
+        # Inverted 2026-11-19 (audit Bulgu 2). 0.5 was written both for a
+        # measured mid-reactivity and for a window where nothing was
+        # measured, so the run could not tell them apart. data_available
+        # still distinguishes 'file consulted' from 'no file'.
         assert result.data_available is True
-        assert result.accessibility_score == pytest.approx(0.5)
+        assert result.accessibility_score is None
 
     def test_mixed_reactivity(self, tmp_path):
         """Half single-stranded, half double-stranded."""
@@ -301,7 +309,7 @@ class TestGetShapeAccessibilityIcshape:
         assert result.data_available is True
         assert result.single_stranded_fraction == pytest.approx(1.0)
 
-    def test_null_window_returns_neutral_with_data_available(self, tmp_path):
+    def test_null_window_is_unknown_with_data_available(self, tmp_path):
         cell_dir = tmp_path / "HeLa"
         cell_dir.mkdir()
         _write_icshape_file(
@@ -316,11 +324,13 @@ class TestGetShapeAccessibilityIcshape:
             tx_start=0,
             tx_end=3,
         )
-        # Transcript present, but every measured slot was NULL → neutral, but
-        # data_available stays True so consumers know icSHAPE was consulted.
+        # Transcript present, but every measured slot was NULL → the
+        # reactivity is unknown, while data_available stays True so consumers
+        # can still tell "icSHAPE was consulted" from "there was no file"
+        # (audit 2026-11-19, Bulgu 2).
         assert result.data_available is True
-        assert result.accessibility_score == pytest.approx(0.5)
-        assert result.single_stranded_fraction == pytest.approx(0.5)
+        assert result.accessibility_score is None
+        assert result.single_stranded_fraction is None
 
     def test_unknown_transcript_falls_back_to_legacy(self, tmp_path):
         cell_dir = tmp_path / "HeLa"

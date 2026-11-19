@@ -317,9 +317,11 @@ class ShapeResult(BaseModel):
     """SHAPE-Seq accessibility result for one genomic region (Stage 5)."""
 
     region: GenomicRegion
-    mean_reactivity: float = 0.0
-    accessibility_score: float = Field(ge=0.0, le=1.0, default=0.5)
-    single_stranded_fraction: float = Field(ge=0.0, le=1.0, default=0.5)
+    # None when no icSHAPE data was consulted: 0.5 was written both for a
+    # measured mid-reactivity and for a missing file (audit Bulgu 2).
+    mean_reactivity: float | None = None
+    accessibility_score: float | None = Field(ge=0.0, le=1.0, default=None)
+    single_stranded_fraction: float | None = Field(ge=0.0, le=1.0, default=None)
     data_available: bool = False
 
 
@@ -341,17 +343,17 @@ class M6AResult(BaseModel):
     region: GenomicRegion
     cell_line: str
     sites: list[M6ASite] = Field(default_factory=list)
-    site_count: int = Field(ge=0, default=0)
-    m6a_score: float = Field(ge=0.0, le=1.0, default=0.0)
+    site_count: int | None = Field(ge=0, default=None)
+    m6a_score: float | None = Field(ge=0.0, le=1.0, default=None)
 
 
 class AdarRiskResult(BaseModel):
     """ADAR A-to-I editing risk for one genomic region (Stage 5)."""
 
     region: GenomicRegion
-    alu_risk: float = Field(ge=0.0, le=1.0, default=0.0)
-    shape_ds_risk: float = Field(ge=0.0, le=1.0, default=0.5)
-    adar_score: float = Field(ge=0.0, le=1.0, default=0.0)
+    alu_risk: float | None = Field(ge=0.0, le=1.0, default=None)
+    shape_ds_risk: float | None = Field(ge=0.0, le=1.0, default=None)
+    adar_score: float | None = Field(ge=0.0, le=1.0, default=None)
     shape_used: bool = False
 
 
@@ -371,9 +373,9 @@ class G4Result(BaseModel):
     """G4 structure detection result for a nucleotide sequence (Stage 5)."""
 
     motifs: list[G4Motif] = Field(default_factory=list)
-    g4_count: int = Field(ge=0, default=0)
-    g4_density: float = 0.0  # motifs per kb
-    risk_score: float = Field(ge=0.0, le=1.0, default=0.0)
+    g4_count: int | None = Field(ge=0, default=None)
+    g4_density: float | None = None  # motifs per kb
+    risk_score: float | None = Field(ge=0.0, le=1.0, default=None)
 
 
 class BiophysicsScore(BaseModel):

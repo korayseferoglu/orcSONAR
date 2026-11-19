@@ -312,13 +312,13 @@ def get_shape_accessibility(
                         data_available=True,
                     )
                 # Transcript present but every measured slot in the window is
-                # NULL — fall through to neutral with data_available=True so
+                # NULL — report the reactivity as UNKNOWN, with data_available=True so
                 # downstream code knows icSHAPE *was* consulted.
                 return ShapeResult(
                     region=region,
-                    mean_reactivity=0.0,
-                    accessibility_score=0.5,
-                    single_stranded_fraction=0.5,
+                    mean_reactivity=None,
+                    accessibility_score=None,
+                    single_stranded_fraction=None,
                     data_available=True,
                 )
             logger.debug(
@@ -330,15 +330,15 @@ def get_shape_accessibility(
     raw = _load_shape_data(cell_line, data_dir)
     if raw is None:
         logger.debug(
-            "SHAPE data unavailable for {} in {}; using neutral score",
+            "SHAPE data unavailable for {} in {}; reactivity is unknown",
             cell_line,
             region,
         )
         return ShapeResult(
             region=region,
-            mean_reactivity=0.0,
-            accessibility_score=0.5,
-            single_stranded_fraction=0.5,
+            mean_reactivity=None,
+            accessibility_score=None,
+            single_stranded_fraction=None,
             data_available=False,
         )
 
@@ -349,13 +349,13 @@ def get_shape_accessibility(
 
     if not region_reactivities:
         logger.debug(
-            "No SHAPE positions overlap region {}; returning neutral score", region
+            "No SHAPE positions overlap region {}; reactivity is unknown", region
         )
         return ShapeResult(
             region=region,
-            mean_reactivity=0.0,
-            accessibility_score=0.5,
-            single_stranded_fraction=0.5,
+            mean_reactivity=None,
+            accessibility_score=None,
+            single_stranded_fraction=None,
             data_available=True,
         )
 

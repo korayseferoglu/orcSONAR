@@ -187,7 +187,7 @@ def run(
             for site_id, region in zip(site_ids, regions, strict=True):
                 m6a_results[site_id] = {
                     "region": region.model_dump(), "cell_line": cell_line,
-                    "sites": [], "site_count": 0, "m6a_score": 0.0,
+                    "sites": [], "site_count": None, "m6a_score": None,
                 }
 
     payload: dict[str, Any] = {"m6a_results": m6a_results}

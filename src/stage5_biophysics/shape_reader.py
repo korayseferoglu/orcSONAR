@@ -62,9 +62,11 @@ def run(
             logger.debug(f"shape_reader: failed for {site_id}: {exc}")
             new_payload = {
                 "region": s.get("region", {}),
-                "mean_reactivity": 0.0,
-                "accessibility_score": 0.5,
-                "single_stranded_fraction": 0.5,
+                # A dead source knows nothing; on these channels a
+                # smaller number is a lower risk (audit Bulgu 2).
+                "mean_reactivity": None,
+                "accessibility_score": None,
+                "single_stranded_fraction": None,
                 "data_available": False,
             }
         # site_id includes the locus, so each window has its own key and no

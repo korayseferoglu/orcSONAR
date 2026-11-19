@@ -41,15 +41,21 @@ def _alu_risk(repeat_result: RepeatResult) -> float:
     return round(risk, 4)
 
 
-def _shape_ds_risk(shape_result: ShapeResult | None) -> float:
+def _shape_ds_risk(shape_result: ShapeResult | None) -> float | None:
     """Derive double-strandedness risk from SHAPE data.
 
     Returns:
         0.5 (neutral) if no SHAPE data are available, otherwise the
         fraction of double-stranded positions (reactivity < 0.3).
     """
+    # No SHAPE at all, *or* icSHAPE consulted with nothing measured in the
+    # window: `single_stranded_fraction` is None in the second case, and
+    # `1.0 - None` raises. Both are unknowns, not a neutral 0.5 in risk space
+    # (audit 2026-11-19, Bulgu 2).
     if shape_result is None or not shape_result.data_available:
-        return 0.5  # graceful degradation
+        return None
+    if shape_result.single_stranded_fraction is None:
+        return None
 
     ds_frac = 1.0 - shape_result.single_stranded_fraction
     return round(ds_frac, 4)
@@ -75,19 +81,18 @@ def calculate_adar_risk(
     """
     alu = _alu_risk(repeat_result)
     shape_ds = _shape_ds_risk(shape_result)
-    shape_available = shape_result is not None and shape_result.data_available
-
-    # When SHAPE is unavailable, the combined score is 100% Alu-based
-    if not shape_available:
-        combined = alu
-    else:
-        combined = round(_ALU_WEIGHT * alu + _SHAPE_WEIGHT * shape_ds, 4)
+    # When SHAPE says nothing, the combined score is 100% Alu-based.
+    combined = (
+        alu
+        if shape_ds is None
+        else round(_ALU_WEIGHT * alu + _SHAPE_WEIGHT * shape_ds, 4)
+    )
 
     logger.debug(
-        "ADAR risk for {}: alu={:.3f}, shape_ds={:.3f}, combined={:.3f}",
+        "ADAR risk for {}: alu={:.3f}, shape_ds={}, combined={:.3f}",
         region,
         alu,
-        shape_ds,
+        "ÖLÇÜLMEDİ" if shape_ds is None else f"{shape_ds:.3f}",
         combined,
     )
 
@@ -96,5 +101,7 @@ def calculate_adar_risk(
         alu_risk=alu,
         shape_ds_risk=shape_ds,
         adar_score=combined,
-        shape_used=shape_available,
+        # `shape_used` is True only when SHAPE actually contributed, which is
+        # exactly when shape_ds is a number.
+        shape_used=shape_ds is not None,
     )

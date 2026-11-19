@@ -62,12 +62,17 @@ def run(
             logger.debug(f"adar_estimator: failed for {site_id}: {exc}")
             adar_results[site_id] = {
                 "region": s.get("region", {}),
-                "alu_risk": 0.0, "shape_ds_risk": 0.5,
-                "adar_score": 0.0, "shape_used": False,
+                # A dead source knows nothing; on these channels a
+                # smaller number is a lower risk (audit Bulgu 2).
+                "alu_risk": None, "shape_ds_risk": None,
+                "adar_score": None, "shape_used": False,
             }
+        # `.get(key, default)` does not fire on a present-but-null value, and
+        # a failed source now writes null — formatting it raises (Bulgu 6).
+        _score = adar_results[site_id].get("adar_score")
         logger.debug(
             f"adar_estimator: {site_id} → "
-            f"adar_score={adar_results[site_id].get('adar_score', 0.0):.3f}"
+            f"adar_score={'ÖLÇÜLMEDİ' if _score is None else f'{_score:.3f}'}"
         )
 
     payload: dict[str, Any] = {"adar_results": adar_results}

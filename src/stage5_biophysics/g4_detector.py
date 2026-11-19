@@ -133,7 +133,11 @@ def detect_g4(sequence: str) -> G4Result:
         stable motifs saturate the score.
     """
     if not sequence:
-        return G4Result()
+        # A scan that ran and found nothing is a MEASURED zero, stated
+        # explicitly: the model's defaults are None so that a *failed* scan
+        # can say "unknown", and relying on them here would confuse the two
+        # (audit 2026-11-19, Bulgu 2).
+        return G4Result(motifs=[], g4_count=0, g4_density=0.0, risk_score=0.0)
 
     seq_len = len(sequence)
 
@@ -229,7 +233,7 @@ def run(
         except Exception as exc:
             logger.debug(f"g4_detector: detection failed for {site_id}: {exc}")
             g4_results[site_id] = {
-                "motifs": [], "g4_count": 0, "g4_density": 0.0, "risk_score": 0.0,
+                "motifs": [], "g4_count": None, "g4_density": None, "risk_score": None,
             }
         logger.debug(
             f"g4_detector: {site_id} → "
