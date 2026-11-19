@@ -150,9 +150,25 @@ class ScoreIntegrator:
         Returns:
             Final risk score in [0, 1].
         """
-        atac = max(0.0, min(1.0, epigenetic_context.get("atac_score", 0.5)))
-        expr = max(0.0, min(1.0, epigenetic_context.get("expression_score", 0.5)))
-        exec_ = max(0.0, min(1.0, epigenetic_context.get("execution_score", 0.5)))
+        # `.get(key, default)` does NOT fire when the key is present with value
+        # null, and epigenetic_merger types cell_context as
+        # dict[str, float | None], emitting None when no site had a measured
+        # ATAC or CCLE. So these defaults never applied and `min(1.0, None)`
+        # raised instead — B2's unknown path could not reach this function
+        # at all (audit 2026-11-19, Bulgu 6).
+        #
+        # An explicit null is treated exactly like an absent key, which is the
+        # contract this docstring already states. That is deliberately NOT a
+        # ruling on whether 0.5 is the right stand-in for an unmeasured
+        # channel in score space: that question is roadmap B3's, and it is
+        # still open (audit Bulgu 7 / R1.3).
+        def _known(key: str) -> float:
+            value = epigenetic_context.get(key)
+            return 0.5 if value is None else float(value)
+
+        atac = max(0.0, min(1.0, _known("atac_score")))
+        expr = max(0.0, min(1.0, _known("expression_score")))
+        exec_ = max(0.0, min(1.0, _known("execution_score")))
 
         cell_activity = 0.40 * atac + 0.40 * expr + 0.20 * exec_
         modifier = 0.30 + 1.40 * cell_activity

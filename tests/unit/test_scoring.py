@@ -812,3 +812,36 @@ class TestScoreIntegratorScore:
             scores.append(final)
         for i in range(len(scores) - 1):
             assert scores[i] <= scores[i + 1]
+
+
+class TestUnknownValuesDoNotCrashTheScorers:
+    """B2's unknown path has never actually executed.
+
+    Audit 2026-11-19, Bulgu 6. B2 taught the stage-4 producers to write null
+    and taught execution_merger's `_normalize` to renormalise around an
+    unknown channel — but two unguarded sites raise TypeError before that
+    code can run, so the behaviour B2 is credited with was never demonstrated
+    in a pipeline. These must be fixed *before* the remaining producers start
+    emitting the sentinel (ordering rule 2), or every run with an unmeasured
+    channel dies.
+    """
+
+    def test_apply_cell_modifier_survives_a_null_cell_context(self) -> None:
+        """`.get(key, default)` does not fire when the key exists with value null.
+
+        epigenetic_merger types cell_context as dict[str, float | None] and
+        emits None when no site had a measured ATAC or CCLE, so the 0.5
+        defaults here never applied — `min(1.0, None)` raised instead.
+        """
+        integrator = ScoreIntegrator()
+        out = integrator.apply_cell_modifier(
+            0.4, {"atac_score": None, "expression_score": None, "execution_score": None}
+        )
+        assert 0.0 <= out <= 1.0
+
+    def test_apply_cell_modifier_treats_a_null_like_a_missing_key(self) -> None:
+        """An explicit null and an absent key must mean the same thing."""
+        integrator = ScoreIntegrator()
+        from_null = integrator.apply_cell_modifier(0.4, {"atac_score": None})
+        from_absent = integrator.apply_cell_modifier(0.4, {})
+        assert from_null == from_absent

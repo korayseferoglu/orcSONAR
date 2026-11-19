@@ -458,3 +458,94 @@ class TestResolveFileUrl:
         mock_cache.set.assert_called_once()
         key = mock_cache.set.call_args[0][0]
         assert f"encode_url:{ACCESSION}" == key
+
+
+class TestBulkHandlesUnknownsEndToEnd:
+    """B2 converted this module's returns to ``float | None`` but left three
+    places in ``read_signal_bulk`` that cannot survive one.
+
+    Audit 2026-11-19, found while sweeping for Bulgu 6's shape:
+
+    * the per-region debug log formats the signal with ``:.4f``, so the first
+      unknown raises ``TypeError`` and kills the whole bulk read;
+    * the unknown is written to the cache first, although B2's roadmap entry
+      states plainly that an unknown is *not* cached — "a failure is not a
+      measurement; caching it would serve a transient network error as 'this
+      locus was examined' for the whole TTL";
+    * and a cached null is read back through ``float(hit["signal"])``, which
+      raises in turn — so the previous defect poisons the next run.
+    """
+
+    @patch("src.stage4_epigenetic.encode_reader.Cache")
+    @patch("src.stage4_epigenetic.encode_reader.pyBigWig.open")
+    def test_an_unknown_region_does_not_crash_the_bulk_read(
+        self, mock_open, MockCache, tmp_path: Path
+    ) -> None:
+        bw = MagicMock()
+        bw.stats.return_value = [None]
+        bw.chroms.return_value = {"6": 1_000_000}  # "chr" prefix mismatch → unknown
+        mock_open.return_value = bw
+
+        mock_cache = MagicMock()
+        mock_cache.get.return_value = None
+        MockCache.return_value.__enter__ = lambda s: mock_cache
+        MockCache.return_value.__exit__ = MagicMock(return_value=False)
+
+        reader = _make_reader(tmp_path)
+        results = reader.read_signal_bulk(ENCODE_URL, [REGION_CHR6])
+        assert results == [None]
+
+    @patch("src.stage4_epigenetic.encode_reader.Cache")
+    @patch("src.stage4_epigenetic.encode_reader.pyBigWig.open")
+    def test_an_unknown_is_not_written_to_the_cache(
+        self, mock_open, MockCache, tmp_path: Path
+    ) -> None:
+        bw = MagicMock()
+        bw.stats.return_value = [None]
+        bw.chroms.return_value = {"6": 1_000_000}
+        mock_open.return_value = bw
+
+        mock_cache = MagicMock()
+        mock_cache.get.return_value = None
+        MockCache.return_value.__enter__ = lambda s: mock_cache
+        MockCache.return_value.__exit__ = MagicMock(return_value=False)
+
+        reader = _make_reader(tmp_path)
+        reader.read_signal_bulk(ENCODE_URL, [REGION_CHR6])
+        mock_cache.set.assert_not_called()
+
+    @patch("src.stage4_epigenetic.encode_reader.Cache")
+    @patch("src.stage4_epigenetic.encode_reader.pyBigWig.open")
+    def test_a_cached_null_is_read_back_as_unknown_not_a_crash(
+        self, mock_open, MockCache, tmp_path: Path
+    ) -> None:
+        """Defensive: older cache rows may already hold a null."""
+        mock_cache = MagicMock()
+        mock_cache.get.return_value = {"signal": None}
+        MockCache.return_value.__enter__ = lambda s: mock_cache
+        MockCache.return_value.__exit__ = MagicMock(return_value=False)
+
+        reader = _make_reader(tmp_path)
+        results = reader.read_signal_bulk(ENCODE_URL, [REGION_CHR6])
+        assert results == [None]
+
+    @patch("src.stage4_epigenetic.encode_reader.Cache")
+    @patch("src.stage4_epigenetic.encode_reader.pyBigWig.open")
+    def test_a_measured_zero_is_still_cached_and_kept(
+        self, mock_open, MockCache, tmp_path: Path
+    ) -> None:
+        """A measured 0.0 is real information and must not be confused with unknown."""
+        bw = MagicMock()
+        bw.stats.return_value = [None]
+        bw.chroms.return_value = {"chr6": 1_000_000}  # contig present, no signal
+        mock_open.return_value = bw
+
+        mock_cache = MagicMock()
+        mock_cache.get.return_value = None
+        MockCache.return_value.__enter__ = lambda s: mock_cache
+        MockCache.return_value.__exit__ = MagicMock(return_value=False)
+
+        reader = _make_reader(tmp_path)
+        results = reader.read_signal_bulk(ENCODE_URL, [REGION_CHR6])
+        assert results == [0.0]
+        mock_cache.set.assert_called_once()

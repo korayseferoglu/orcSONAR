@@ -160,9 +160,18 @@ def run(
             "immune_motifs_found": immune_motifs,
             "normalized_score": normalized,
         }
+        # Formatting an unknown with `:.3f` raises, and this line sits inside
+        # the per-site loop outside any try — so the very first null Ago2
+        # killed run() before `_normalize`'s renormalisation (the behaviour
+        # B2 is credited with) could ever write a score. epigenetic_merger
+        # already guards its equivalent log line; this one did not
+        # (audit 2026-11-19, Bulgu 6).
+        def _shown(value: float | None, digits: int) -> str:
+            return "ÖLÇÜLMEDİ" if value is None else f"{value:.{digits}f}"
+
         logger.debug(
-            f"execution_merger: {site_id} → ago2={ago2:.3f} "
-            f"rbp={rbp:.3f} normalized={normalized:.4f}"
+            f"execution_merger: {site_id} → ago2={_shown(ago2, 3)} "
+            f"rbp={_shown(rbp, 3)} normalized={_shown(normalized, 4)}"
         )
 
     payload: dict[str, Any] = {"execution_scores": execution_scores}

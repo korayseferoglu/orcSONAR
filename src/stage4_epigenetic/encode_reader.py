@@ -285,8 +285,13 @@ class EncodeSignalReader:
             for i, region in enumerate(regions):
                 key = _signal_cache_key(url, region)
                 hit = cache.get(key)
-                if hit is not None:
+                if hit is not None and hit.get("signal") is not None:
                     results[i] = float(hit["signal"])
+                elif hit is not None:
+                    # A null already in the cache (written before unknowns
+                    # stopped being cached, below). Read it back as unknown
+                    # rather than through float(None), which raises.
+                    results[i] = UNKNOWN_SIGNAL
                 else:
                     miss_indices.append(i)
 
@@ -304,9 +309,19 @@ class EncodeSignalReader:
                     region = regions[i]
                     signal = _bigwig_mean(bw, region.chrom, region.start, region.end)
                     results[i] = signal
-                    key = _signal_cache_key(url, region)
-                    cache.set(key, {"signal": signal}, ttl_hours=_SIGNAL_TTL_HOURS)
-                    logger.debug(f"encode_reader: {region} signal={signal:.4f}")
+                    # An unknown is not a measurement, so it is not cached:
+                    # caching it would serve a transient failure as "this
+                    # locus was examined" for the whole TTL. B2's roadmap
+                    # entry states this contract; the bulk path did not keep
+                    # it (audit 2026-11-19). A measured 0.0 *is* information
+                    # and is still cached.
+                    if signal is not None:
+                        key = _signal_cache_key(url, region)
+                        cache.set(key, {"signal": signal}, ttl_hours=_SIGNAL_TTL_HOURS)
+                    # Formatting an unknown with `:.4f` raises, which killed
+                    # the entire bulk read on the first unmeasured region.
+                    shown = "ÖLÇÜLMEDİ" if signal is None else f"{signal:.4f}"
+                    logger.debug(f"encode_reader: {region} signal={shown}")
             finally:
                 bw.close()
 
