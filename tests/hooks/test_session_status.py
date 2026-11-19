@@ -23,6 +23,7 @@ from __future__ import annotations
 import importlib.util
 import json
 import os
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -280,6 +281,29 @@ def test_hook_prints_every_required_section(label: str) -> None:
     proc = _run_hook(json.dumps({"hook_event_name": "SessionStart", "source": "startup"}))
     assert proc.returncode == 0, proc.stderr
     assert label in proc.stdout, f"missing section: {label}\n{proc.stdout}"
+
+
+def test_every_roadmap_row_has_exactly_the_expected_columns() -> None:
+    """An unescaped `|` inside a cell silently shifts every column after it.
+
+    Measured while adding `B2a`: the text `float | None` split the work cell in
+    two, so the parser read part of the prose as the dependency list and
+    returned `['B2', 'B1', 'H6', 'B8', 'B2']` — all real item ids, so nothing
+    downstream could notice. The queue's order is computed from that column,
+    which makes this a correctness problem, not a formatting one. Pipes inside
+    a cell have to be written `\\|`.
+    """
+    text = (ROOT / "SCIENTIFIC_ROADMAP.md").read_text(encoding="utf-8")
+    bad: list[str] = []
+    for line in text.splitlines():
+        if not re.match(r"^\|\s*\*\*[A-Z]\d+[a-z]?\*\*\s*\|", line):
+            continue
+        cells = line.replace(r"\|", "\0").split("|")
+        # A five-column row splits into: leading "", id, work, deps, criterion,
+        # status, trailing "". FAZ G's four-column table drops the criterion.
+        if len(cells) not in (6, 7):
+            bad.append(f"{line.split('|')[1].strip()}: {len(cells) - 2} cells")
+    assert not bad, f"rows with unescaped pipes: {bad}"
 
 
 def _session_status() -> object:

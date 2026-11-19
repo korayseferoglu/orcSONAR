@@ -6,6 +6,7 @@ import json
 from unittest.mock import MagicMock, patch
 
 import pytest
+import requests
 import responses as resp_mock
 
 from src.core.config import OrcSonarConfig
@@ -261,7 +262,7 @@ class TestFetchVariants:
     @resp_mock.activate
     def test_http_error_raises(self) -> None:
         resp_mock.add(resp_mock.POST, GNOMAD_API, status=500)
-        with pytest.raises(Exception):
+        with pytest.raises(requests.HTTPError, match="500"):
             _fetch_variants(REGION_A, GNOMAD_API)
 
     @resp_mock.activate
@@ -296,7 +297,11 @@ class TestFetchVariants:
             json={"errors": [{"message": "bad argument"}]},
             status=200,
         )
-        with pytest.raises(Exception):
+        # A GraphQL error arrives with HTTP 200, so this is NOT an HTTPError.
+        # Today the client raises a bare RuntimeError rather than the project's
+        # APIError; the test records what it does, and the inconsistency is
+        # noted in H15's row rather than changed here (invariant 8).
+        with pytest.raises(RuntimeError, match="GraphQL"):
             _fetch_variants(REGION_A, GNOMAD_API)
 
 

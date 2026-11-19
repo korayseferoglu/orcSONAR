@@ -246,11 +246,10 @@ class TestGUWobble:
     def test_gu_wobble_more_stable_than_same_position_mismatch(self, calc) -> None:
         # GU wobble vs AA mismatch at same terminal position
         gu_result = calc.calculate_duplex_dg("GUAG", "UAUC")  # G-U wobble
-        mm_result = calc.calculate_duplex_dg("AUAG", "UAUC")  # A-U ok, but different seq
-        # Replace GU wobble with AC mismatch: sarna[0]=A→G already WC (AU table)
-        # Use explicit mismatch case
-        mm_result2 = calc.calculate_duplex_dg("CUAG", "UAUC")  # C-U mismatch at pos 0
-        assert gu_result.delta_g < mm_result2.delta_g
+        # `AUAG` was tried first and discarded: A-U is Watson-Crick, so it is
+        # not the mismatch this test needs. Its result sat unused here (H15).
+        mm_result = calc.calculate_duplex_dg("CUAG", "UAUC")  # C-U mismatch at pos 0
+        assert gu_result.delta_g < mm_result.delta_g
 
     @pytest.mark.skipif(not TURNER_FILES_PRESENT, reason="Turner data files absent")
     def test_ug_wobble_also_valid(self, calc) -> None:

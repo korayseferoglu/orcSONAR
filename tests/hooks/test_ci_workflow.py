@@ -157,16 +157,19 @@ def test_ruff_gates_exactly_the_clean_scope(workflow: dict[str, Any]) -> None:
         assert directory in step["run"], f"ruff does not cover {directory}"
 
 
-def test_ruff_does_not_gate_the_wider_tests_tree(workflow: dict[str, Any]) -> None:
-    """Measured: 50 findings outside the clean scope, 19 of them not cosmetic.
+def test_ruff_now_gates_the_whole_tests_tree(workflow: dict[str, Any]) -> None:
+    """The debt that kept `tests/` out of the gate is gone (H14 + H15).
 
-    Widening the gate silently would make CI red on day one. Those 19 are a
-    finding with their own roadmap row, not debt to be swept through here.
+    This test used to assert the opposite — that `tests` must *not* appear —
+    because the tree carried 50 findings and widening the gate would have made
+    CI red on arrival. 32 were mechanical (H14) and 18 needed judgement (H15),
+    including 7 blind `pytest.raises(Exception)` that were findings rather than
+    debt. With all of them closed, the premise is gone and leaving the gate
+    narrow would let the debt build back up unseen.
     """
     step = step_with(workflow, "ruff check")
     assert step is not None
-    args = step["run"].split()
-    assert "tests" not in args, "ruff must not gate tests/ at large yet"
+    assert "tests" in step["run"].split(), "ruff should gate tests/ now that it is clean"
 
 
 def test_ruff_and_pytest_block_the_job(workflow: dict[str, Any]) -> None:

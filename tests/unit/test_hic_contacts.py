@@ -297,6 +297,8 @@ class TestGetContactsBulk:
 class TestCallStraw:
     def test_raises_runtimeerror_when_hicstraw_missing(self, tmp_path: Path) -> None:
         reader = _make_reader(tmp_path)
-        with patch.dict("sys.modules", {"hicstraw": None}):
-            with pytest.raises((RuntimeError, ImportError)):
+        with (
+            patch.dict("sys.modules", {"hicstraw": None}),
+            pytest.raises((RuntimeError, ImportError)),
+        ):
                 reader._call_straw(HIC_URL, "KR", "6:0:25000", "17:0:25000", RESOLUTION)

@@ -98,9 +98,9 @@ class TestScoreG4Stability:
         assert _score_g4_stability(m) == pytest.approx(0.25, abs=0.001)
 
     def test_score_in_bounds(self):
-        for g in ([3, 3, 3, 3], [6, 6, 6, 6], [3, 4, 5, 6]):
-            for l in ([1, 1, 1], [7, 7, 7], [3, 5, 2]):
-                s = _score_g4_stability(_motif(g, l))
+        for g_runs in ([3, 3, 3, 3], [6, 6, 6, 6], [3, 4, 5, 6]):
+            for loops in ([1, 1, 1], [7, 7, 7], [3, 5, 2]):
+                s = _score_g4_stability(_motif(g_runs, loops))
                 assert 0.0 <= s <= 1.0
 
 

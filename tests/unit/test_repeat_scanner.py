@@ -5,6 +5,7 @@ from __future__ import annotations
 from unittest.mock import MagicMock, patch
 
 import pytest
+import requests
 import responses as resp_mock
 
 from src.core.config import OrcSonarConfig
@@ -196,7 +197,8 @@ class TestFetchRmsk:
     def test_all_retries_exhausted_raises(self, _mock_sleep) -> None:
         for _ in range(3):
             resp_mock.add(resp_mock.GET, UCSC_URL, status=503)
-        with pytest.raises(Exception):
+        # All three attempts exhausted; tenacity reraises the last HTTPError.
+        with pytest.raises(requests.HTTPError, match="503"):
             _fetch_rmsk(REGION_EMPTY, UCSC_URL)
 
     @resp_mock.activate

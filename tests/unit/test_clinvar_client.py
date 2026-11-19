@@ -5,6 +5,7 @@ from __future__ import annotations
 from unittest.mock import MagicMock, patch
 
 import pytest
+import requests
 import responses as resp_mock
 
 from src.core.config import OrcSonarConfig
@@ -276,7 +277,8 @@ class TestEsearch:
     @resp_mock.activate
     def test_http_error_raises(self) -> None:
         resp_mock.add(resp_mock.GET, ESEARCH_URL, status=500)
-        with pytest.raises(Exception):
+        # tenacity reraises the last HTTPError after its three attempts (H15).
+        with pytest.raises(requests.HTTPError, match="500"):
             _esearch(REGION_A, EUTILS_BASE)
 
 
@@ -319,7 +321,7 @@ class TestEsummary:
     @resp_mock.activate
     def test_http_error_raises(self) -> None:
         resp_mock.add(resp_mock.GET, ESUMMARY_URL, status=503)
-        with pytest.raises(Exception):
+        with pytest.raises(requests.HTTPError, match="503"):
             _esummary(["1"], EUTILS_BASE)
 
 

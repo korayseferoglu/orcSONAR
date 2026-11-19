@@ -406,7 +406,7 @@ class TestScoreIntegrator:
             log_path=str(tmp_path / "si.log"),
         )
         data = json.loads(Path(out).read_text())
-        for site_id, ds in data["domain_scores"].items():
+        for ds in data["domain_scores"].values():
             assert ds["variant_toxicity"] == pytest.approx(0.5)
 
     def test_zero_sites_produces_empty_domain_scores(self, tmp_path: Path) -> None:
@@ -706,7 +706,7 @@ class TestGracefulDegradationAPITimeout:
             log_path=str(tmp_path / "si.log"),
         )
         data = json.loads(Path(out).read_text())
-        for site_id, ds in data["domain_scores"].items():
+        for ds in data["domain_scores"].values():
             assert ds["epigenetic_context"] == pytest.approx(0.5)
 
     def test_missing_execution_json_uses_neutral(self, tmp_path: Path) -> None:
@@ -727,7 +727,7 @@ class TestGracefulDegradationAPITimeout:
             log_path=str(tmp_path / "si.log"),
         )
         data = json.loads(Path(out).read_text())
-        for site_id, ds in data["domain_scores"].items():
+        for ds in data["domain_scores"].values():
             assert ds["execution_safety"] == pytest.approx(0.5)
 
     def test_all_stages_missing_pipeline_still_completes(self, tmp_path: Path) -> None:

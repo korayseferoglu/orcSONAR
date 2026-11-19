@@ -174,7 +174,9 @@ def test_fantom5_returns_none_when_ensembl_fails(
 
 def test_find_tss_uses_epdnew_without_api_call(test_config: OrcSonarConfig) -> None:
     """VEGFA is in the EPDnew fixture; no HTTP call should be made."""
-    with resp_mock.RequestsMock(assert_all_requests_are_fired=False) as rsps:
+    # No responses registered, so any HTTP call would fail the block — that is
+    # the assertion. The handle itself is unused on purpose (H15).
+    with resp_mock.RequestsMock(assert_all_requests_are_fired=False):
         tss = find_tss("VEGFA", test_config)
     assert tss.source == "EPDnew"
     assert tss.gene == "VEGFA"

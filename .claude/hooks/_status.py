@@ -27,15 +27,14 @@ NOT_MEASURED = "ÖLÇÜLMEDİ"
 #: `tests/hooks/test_ci_workflow.py` pins that copy to this tuple, so the two
 #: cannot drift apart in a merge.
 #:
-#: `tests/` at large carries 50 findings and an earlier version of this comment
-#: called all of them cosmetic. Measured 2026-11-18: 32 are (21 F401, 10 I001,
-#: 1 UP041 — all autofixable), but 7 are `B017` blind `pytest.raises(Exception)`
-#: assertions, sitting on the scoring-weight validator and on the ClinVar and
-#: gnomAD clients — modules with open findings. Those are a finding of their
-#: own, not debt to sweep through the gate. Widening this tuple before they are
-#: dealt with makes CI red on day one, and a CI that is red on arrival gets
-#: switched off.
-RUFF_SCOPE = ("src", ".claude/hooks", "tests/hooks")
+#: `tests/` was outside this tuple until 2026-11-19 because it carried 50
+#: findings, and an earlier version of this comment called all of them
+#: cosmetic. Measured: 32 were (21 F401, 10 I001, 1 UP041 — all autofixable,
+#: closed in `H14`), and 18 needed judgement (`H15`), of which 7 were `B017`
+#: blind `pytest.raises(Exception)` sitting on the scoring-weight validator and
+#: the ClinVar and gnomAD clients — findings, not debt. With all 50 closed the
+#: tree is gated, which is what stops the debt rebuilding unseen.
+RUFF_SCOPE = ("src", ".claude/hooks", "tests")
 
 #: Where the empirical null gate (roadmap E1) is expected to leave its result.
 NULL_GATE_GLOBS = ("reports/null_gate*.json", "results/*/null_gate*.json")

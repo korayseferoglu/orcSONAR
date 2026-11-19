@@ -288,7 +288,10 @@ def _embed_offtarget(
     # target positions for seed: from n-1-seed_end to n-1-seed_start (inclusive)
     t_seed_start = n - 1 - seed_end  # lower index in target
     t_seed_end = n - 1 - seed_start   # upper index in target (inclusive)
-    # rc_seed in target runs from t_seed_start .. t_seed_end (7 positions)
+    # rc_seed in target runs from t_seed_start .. t_seed_end (7 positions).
+    # Asserted rather than left as a comment: an off-by-one in the seed span
+    # changes every hit in a run (rule 10), and this was dead code (H15).
+    assert t_seed_end - t_seed_start + 1 == seed_length
 
     padding = 50
     insert_pos = padding  # where the window starts in the mRNA
@@ -433,12 +436,10 @@ class TestFindOfftargets:
     def test_window_boundary_not_included(self) -> None:
         """Off-target windows that reach beyond transcript boundaries are skipped."""
         config = _default_config()
-        comp = {"A": "T", "U": "A", "G": "C", "C": "G"}
-        win = "".join(comp[b] for b in reversed(SARNA))
-        # Place window at start so win_start < 0
-        mRNA = win + "A" * 50  # rc_seed is at offset 12 from window start = 12 in mRNA
-        # win_start = 12 - (20-1-7) = 12 - 12 = 0 → valid; test with offset 1 less
-        # Place rc_seed at position 0 so win_start would be 0-12 = -12
+        # A window placed at offset 12 would give win_start = 12 - 12 = 0, which
+        # is still valid. The edge case below puts rc_seed at position 0 so that
+        # win_start would be -12. (A half-written `mRNA` variable for the first
+        # case sat here unused until H15.)
         seed = _extract_seed(SARNA)
         rc_seed_t = _reverse_complement(seed).replace("U", "T")
         mRNA_edge = rc_seed_t + "A" * 100  # rc_seed at position 0 → win_start = -12

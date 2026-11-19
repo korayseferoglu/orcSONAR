@@ -247,6 +247,14 @@ class TestGetTranscriptionBulk:
         reader = _make_reader(tmp_path)
         results = reader.get_transcription_bulk([REGION, REGION_2], "HeLa")
 
+        # The returned values were discarded here until H15, so this checked
+        # the plumbing and never the output — in a module whose output contract
+        # B2 had just changed. stats yields 2.0, 3.0 for the plus track and
+        # 1.5, 0.5 for the minus one, and the minus strand is taken absolute.
+        assert [r.plus_signal for r in results] == [2.0, 3.0]
+        assert [r.minus_signal for r in results] == [1.5, 0.5]
+        assert [r.combined_signal for r in results] == [3.5, 3.5]
+
         # pyBigWig.open must be called once for plus and once for minus
         assert mock_open.call_count == 2
         opened_urls = {call[0][0] for call in mock_open.call_args_list}

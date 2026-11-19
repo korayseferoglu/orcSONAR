@@ -56,10 +56,10 @@ jobs:
           python -m pip install -e ".[dev]"
 
       - name: ruff (blocking)
-        # Scope authority is `_status.RUFF_SCOPE`. `tests/` at large carries 50
-        # findings, 18 of them judgement calls, and widening this before they are
-        # dealt with would make the gate red on arrival.
-        run: python -m ruff check src .claude/hooks tests/hooks
+        # Scope authority is `_status.RUFF_SCOPE`, pinned by
+        # tests/hooks/test_ci_workflow.py. `tests/` joined the gate on
+        # 2026-11-19, once H14 and H15 had closed all 50 findings it carried.
+        run: python -m ruff check src .claude/hooks tests
 
       - name: pytest (blocking)
         # -rs lists what was skipped. `data/` is not in the repository, so ~71
