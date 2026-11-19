@@ -5,9 +5,11 @@ from __future__ import annotations
 from pathlib import Path
 from unittest.mock import patch
 
+import pytest
 import responses as resp_mock
 
 from src.core.config import OrcSonarConfig
+from src.core.exceptions import DataSourceError
 from src.stage2_offtarget_scan.transcriptome_fetcher import (
     _BACKGROUND_GENES,
     _batch_fetch_sequences,
@@ -317,28 +319,86 @@ class TestGetBackgroundTranscriptome:
         """Target gene must not appear in the background gene list."""
         config = _default_config(tmp_path)
 
-        # Patch the inner fetcher to return nothing so we test only gene filtering
+        # One resolved transcript, so the call reaches the end: an empty result
+        # now raises (Bulgu 12), and this test is about gene filtering, not the
+        # outage guard — it must not depend on that guard either way.
+        from src.core.models import TranscriptInfo
+
+        t_info = TranscriptInfo(
+            transcript_id="ENST00000000001",
+            gene="TESTGENE",
+            chrom="chr1",
+            start=0,
+            end=100,
+            strand="+",
+            source="Ensembl",
+        )
         with patch(
-            "src.stage2_offtarget_scan.transcriptome_fetcher._load_canonical_transcripts"
-        ) as mock_load:
-            mock_load.return_value = {}
-            transcripts, sequences = get_background_transcriptome(config, exclude_gene="VEGFA")
+            "src.stage2_offtarget_scan.transcriptome_fetcher._load_canonical_transcripts",
+            return_value={"TESTGENE": t_info},
+        ) as mock_load, patch(
+            "src.stage2_offtarget_scan.transcriptome_fetcher._load_sequences",
+            return_value={"ENST00000000001": "ATCGATCG"},
+        ):
+            get_background_transcriptome(config, exclude_gene="VEGFA")
 
             # Verify VEGFA was excluded from the genes passed to _load_canonical_transcripts
             genes_passed = mock_load.call_args[0][0]
             assert "VEGFA" not in genes_passed
 
-    def test_api_failure_returns_empty_gracefully(self, tmp_path: Path) -> None:
+    def test_total_resolution_failure_raises_rather_than_returning_empty(
+        self, tmp_path: Path
+    ) -> None:
+        """Losing every background gene is an outage, not a measurement.
+
+        This test replaces ``test_api_failure_returns_empty_gracefully``, which
+        asserted the opposite and so defended the bug (audit 2026-11-19,
+        Bulgu 12). Returning ``[]`` here made the whole search space vanish:
+        ``seed_aligner`` then scanned the target gene alone, found zero
+        off-target sites, and the run reported ``risk=SAFE (0.0000)`` with
+        exit 0 — a failed data source producing the safest possible answer,
+        which is the direction invariant 2 exists to forbid.
+        """
         config = _default_config(tmp_path)
 
         with patch(
             "src.stage2_offtarget_scan.transcriptome_fetcher._load_canonical_transcripts"
         ) as mock_load:
             mock_load.return_value = {}
-            transcripts, sequences = get_background_transcriptome(config)
+            with pytest.raises(DataSourceError, match="no canonical transcripts"):
+                get_background_transcriptome(config)
 
-        assert transcripts == []
-        assert sequences == {}
+    def test_partial_resolution_is_a_measurement_and_passes_through(
+        self, tmp_path: Path
+    ) -> None:
+        """Some genes resolving is real data; only *total* loss is an outage.
+
+        The guard must not turn an ordinary partial result into a failure —
+        that would make the pipeline unrunnable whenever one symbol is retired.
+        """
+        from src.core.models import TranscriptInfo
+
+        config = _default_config(tmp_path)
+        t_info = TranscriptInfo(
+            transcript_id="ENST00000000001",
+            gene="TESTGENE",
+            chrom="chr1",
+            start=0,
+            end=100,
+            strand="+",
+            source="Ensembl",
+        )
+
+        with patch(
+            "src.stage2_offtarget_scan.transcriptome_fetcher._load_canonical_transcripts",
+            return_value={"TESTGENE": t_info},
+        ), patch(
+            "src.stage2_offtarget_scan.transcriptome_fetcher._load_sequences",
+            return_value={"ENST00000000001": "ATCGATCG"},
+        ):
+            transcripts, _ = get_background_transcriptome(config)
+
+        assert len(transcripts) == 1
 
     def test_sequences_normalised_to_rna_u(self, tmp_path: Path) -> None:
         """get_background_transcriptome itself returns T-alphabet; caller normalises."""

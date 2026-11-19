@@ -23,6 +23,7 @@ from tenacity import (
 
 from src.core.cache import Cache
 from src.core.config import OrcSonarConfig
+from src.core.exceptions import DataSourceError
 from src.core.models import TranscriptInfo
 
 _ENSEMBL_DELAY = 1 / 15        # 15 req/s
@@ -139,15 +140,32 @@ def get_background_transcriptome(
     Returns:
         Tuple of (list[TranscriptInfo], dict[transcript_id → mRNA sequence]).
         Both containers have the same set of transcript IDs.
-        Returns empty containers on complete API failure (graceful degradation).
+        A *partial* result passes through — some symbols retiring is normal.
+
+    Raises:
+        DataSourceError: If no canonical transcript resolves at all. That is an
+            upstream outage, and returning empty instead would hand the caller
+            an empty search space that reads as "no off-targets found".
     """
     exclude_upper = exclude_gene.upper() if exclude_gene else ""
     genes = [g for g in _BACKGROUND_GENES if g.upper() != exclude_upper]
 
     canonical = _load_canonical_transcripts(genes, config)
     if not canonical:
-        logger.warning("transcriptome_fetcher: no canonical transcripts resolved — returning empty")
-        return [], {}
+        # Losing *every* background gene is an outage, not a measurement, and
+        # returning empty here is the most dangerous thing this module can do:
+        # the search space vanishes, seed_aligner scans the target gene alone,
+        # zero off-target sites are found, and the run reports SAFE with exit 0
+        # (audit 2026-11-19, Bulgu 12 — observed, not hypothetical: Ensembl
+        # answered 504 and a clean "no risk" report came out the other end).
+        # A failed source must never make the result look safer (invariant 2),
+        # so this fails loudly instead.
+        raise DataSourceError(
+            f"transcriptome_fetcher: no canonical transcripts resolved for any of "
+            f"{len(genes)} background genes — the off-target search space would be "
+            f"empty, which would make this run report SAFE on no evidence. "
+            f"This is an upstream outage (check Ensembl REST), not a result."
+        )
 
     transcript_infos = list(canonical.values())
     sequences = _load_sequences([t.transcript_id for t in transcript_infos], config)

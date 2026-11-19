@@ -2,8 +2,10 @@
 
 from __future__ import annotations
 
+import json
 import random
 import time
+from pathlib import Path
 
 import pytest
 
@@ -17,6 +19,9 @@ from src.stage2_offtarget_scan.seed_aligner import (
     _reverse_complement,
     _score_alignment,
     find_offtargets,
+)
+from src.stage2_offtarget_scan.seed_aligner import (
+    run as seed_aligner_run,
 )
 
 # ---------------------------------------------------------------------------
@@ -498,3 +503,69 @@ def test_performance() -> None:
     elapsed = time.perf_counter() - t0
 
     assert elapsed < 5.0, f"Performance budget exceeded: {elapsed:.2f}s > 5.0s"
+
+
+class TestRunDoesNotSwallowAnOutage:
+    """A lost background transcriptome must stop the run, not shrink it.
+
+    Audit 2026-11-19, Bulgu 12. ``get_background_transcriptome`` now raises
+    when nothing resolves, but that fix is worthless on its own: ``run()``
+    wrapped the call in ``except Exception`` and only logged a warning, so the
+    scan continued against the target gene alone, found zero off-target sites,
+    and the pipeline reported ``risk=SAFE (0.0000)`` with exit 0.
+
+    The same "the fix is swallowed one layer up" shape appears three more
+    times in that audit (B1's APIError, B2's sentinel, B4's default), which is
+    why this is pinned by a test rather than trusted to the call site.
+    """
+
+    def test_background_outage_propagates_out_of_run(self, tmp_path: Path) -> None:
+        from unittest.mock import patch
+
+        from src.core.exceptions import DataSourceError
+
+        promoter = tmp_path / "stage1_promoter.json"
+        promoter.write_text(
+            json.dumps(
+                {
+                    "transcripts": [
+                        {
+                            "transcript_id": "ENST00000000001",
+                            "gene": "VEGFA",
+                            "chrom": "chr6",
+                            "start": 43770209,
+                            "end": 43786487,
+                            "strand": "+",
+                            "source": "Ensembl",
+                        }
+                    ]
+                }
+            ),
+            encoding="utf-8",
+        )
+        out = tmp_path / "stage2_seed_hits.json"
+
+        # Both are imported *inside* run(), so they must be patched at their
+        # source modules, not on seed_aligner.
+        with patch(
+            "src.stage1_genomic_map.transcript_resolver.get_transcript_sequence",
+            return_value="ACGU" * 50,
+        ), patch(
+            "src.stage2_offtarget_scan.transcriptome_fetcher.get_background_transcriptome",
+            side_effect=DataSourceError("no canonical transcripts resolved"),
+        ), pytest.raises(DataSourceError, match="no canonical transcripts"):
+            seed_aligner_run(
+                sarna_sequence="GCAACCAUAGCCUCGGCCGC",
+                promoter_path=str(promoter),
+                seed_length=7,
+                max_mismatches=12,
+                gc_range=[35.0, 65.0],
+                threads=1,
+                output_path=str(out),
+                log_path=str(tmp_path / "seed.log"),
+            )
+
+        assert not out.exists(), (
+            "run() wrote an output file despite the outage — a downstream stage "
+            "would read it as 'scanned, nothing found'"
+        )

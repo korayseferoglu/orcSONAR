@@ -19,6 +19,7 @@ from typing import Literal
 from loguru import logger
 
 from src.core.config import OrcSonarConfig
+from src.core.exceptions import DataSourceError
 from src.core.models import AlignmentResult, GenomicRegion, OffTargetSite, TranscriptInfo
 
 _COMPLEMENT: dict[str, str] = {"A": "U", "U": "A", "G": "C", "C": "G", "T": "A"}
@@ -396,18 +397,24 @@ def run(
             f"seed_aligner: {gene} — scanning {len(sequences)} transcripts total "
             f"({len(bg_transcripts)} background + target gene)"
         )
+    except DataSourceError:
+        # Deliberately NOT swallowed. Losing the whole background transcriptome
+        # shrinks the search space to the target gene, which yields zero
+        # off-target sites and a SAFE verdict — the audit of 2026-11-19 watched
+        # exactly that happen (Bulgu 12: Ensembl 504 → 0 sites → risk=SAFE,
+        # exit 0). A warning here is indistinguishable from "nothing to find".
+        raise
     except Exception as exc:
         logger.warning(f"seed_aligner: background transcriptome fetch failed: {exc}")
 
     if not sequences:
-        logger.warning(
-            f"seed_aligner: no sequences available for {gene} — returning empty hits"
+        # Same reasoning: no sequences at all is an outage, and writing an
+        # empty hit file lets every downstream stage read it as a measurement.
+        raise DataSourceError(
+            f"seed_aligner: no transcript sequences available for {gene} — "
+            f"the scan would have nothing to search, and an empty hit file "
+            f"reads downstream as 'scanned, nothing found'."
         )
-        payload: dict[str, Any] = {"sites": [], "sequence_scores": {}}
-        out = _Path(output_path)
-        out.parent.mkdir(parents=True, exist_ok=True)
-        out.write_text(json.dumps(payload, indent=2), encoding="utf-8")
-        return
 
     sarna_rna = sarna_sequence.upper().replace("T", "U")
     try:
