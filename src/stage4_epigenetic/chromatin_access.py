@@ -30,7 +30,7 @@ class ATACSeqReader(EncodeSignalReader):
 
     def get_accessibility(
         self, region: GenomicRegion, cell_line: str
-    ) -> float:
+    ) -> float | None:
         """Return mean ATAC-seq signal for a single genomic region.
 
         Args:
@@ -48,7 +48,7 @@ class ATACSeqReader(EncodeSignalReader):
 
     def get_accessibility_bulk(
         self, regions: list[GenomicRegion], cell_line: str
-    ) -> list[float]:
+    ) -> list[float | None]:
         """Return mean ATAC-seq signal for multiple regions (single BigWig open).
 
         Args:
@@ -56,7 +56,8 @@ class ATACSeqReader(EncodeSignalReader):
             cell_line: Cell line name, e.g. ``"HeLa"``.
 
         Returns:
-            Signal values in the same order as ``regions``.  Returns all 0.0
+            Signal values in the same order as ``regions``; ``None`` where
+            nothing could be measured (roadmap B2).  Returns all 0.0
             if the URL is not configured.
         """
         url = self._get_url_for_cell_line(cell_line, _ATAC_SIGNAL_TYPE)

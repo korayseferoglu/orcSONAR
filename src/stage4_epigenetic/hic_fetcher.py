@@ -36,7 +36,7 @@ def run(
     sites: list[dict] = offtargets.get("offtarget_sites", [])
     site_ids, regions = site_ids_and_regions(sites, caller="hic_fetcher")
 
-    hic_contacts: dict[str, float] = {}
+    hic_contacts: dict[str, float | None] = {}
     if regions:
         try:
             config = OrcSonarConfig()
@@ -48,8 +48,8 @@ def run(
             for site_id, res in zip(site_ids, results, strict=True):
                 hic_contacts[site_id] = round(res.contact_frequency, 6)
         except Exception as exc:
-            logger.warning(f"hic_fetcher: extraction failed: {exc} — using 0.0")
-            hic_contacts = {sid: 0.0 for sid in site_ids}
+            logger.warning(f"hic_fetcher: extraction failed: {exc} — writing UNKNOWN")
+            hic_contacts = dict.fromkeys(site_ids)
 
     payload: dict[str, Any] = {"hic_contacts": hic_contacts}
     out = Path(output_path)

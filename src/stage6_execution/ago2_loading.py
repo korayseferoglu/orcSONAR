@@ -38,7 +38,7 @@ class Ago2Reader(EncodeSignalReader):
         cell_lines_yaml: Path to cell_lines.yaml (default: ``config/cell_lines.yaml``).
     """
 
-    def get_ago2_signal(self, region: GenomicRegion, cell_line: str) -> float:
+    def get_ago2_signal(self, region: GenomicRegion, cell_line: str) -> float | None:
         """Return raw mean Ago2 eCLIP fold-change for one region.
 
         Args:
@@ -55,7 +55,7 @@ class Ago2Reader(EncodeSignalReader):
 
     def get_ago2_signal_bulk(
         self, regions: list[GenomicRegion], cell_line: str
-    ) -> list[float]:
+    ) -> list[float | None]:
         """Batch Ago2 eCLIP signal read with a single BigWig open.
 
         Args:
@@ -63,7 +63,8 @@ class Ago2Reader(EncodeSignalReader):
             cell_line: Cell line name.
 
         Returns:
-            Signal values in the same order as ``regions``.
+            Signal values in the same order as ``regions``; ``None`` where
+            nothing could be measured (roadmap B2).
         """
         url = self._get_url_for_cell_line(cell_line, _AGO2_SIGNAL_KEY)
         if url is None:

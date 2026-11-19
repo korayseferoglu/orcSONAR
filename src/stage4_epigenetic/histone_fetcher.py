@@ -36,8 +36,8 @@ def run(
     sites: list[dict] = offtargets.get("offtarget_sites", [])
     site_ids, regions = site_ids_and_regions(sites, caller="histone_fetcher")
 
-    h3k4me3_signals: dict[str, float] = {}
-    h3k27ac_signals: dict[str, float] = {}
+    h3k4me3_signals: dict[str, float | None] = {}
+    h3k27ac_signals: dict[str, float | None] = {}
     if regions:
         try:
             config = OrcSonarConfig()
@@ -45,12 +45,12 @@ def run(
             k4me3 = reader.get_h3k4me3_bulk(regions, cell_line)
             k27ac = reader.get_h3k27ac_bulk(regions, cell_line)
             for site_id, k4, k27 in zip(site_ids, k4me3, k27ac, strict=True):
-                h3k4me3_signals[site_id] = round(k4, 4)
-                h3k27ac_signals[site_id] = round(k27, 4)
+                h3k4me3_signals[site_id] = (None if k4 is None else round(k4, 4))
+                h3k27ac_signals[site_id] = (None if k27 is None else round(k27, 4))
         except Exception as exc:
-            logger.warning(f"histone_fetcher: extraction failed: {exc} — using 0.0")
-            h3k4me3_signals = {sid: 0.0 for sid in site_ids}
-            h3k27ac_signals = {sid: 0.0 for sid in site_ids}
+            logger.warning(f"histone_fetcher: extraction failed: {exc} — writing UNKNOWN")
+            h3k4me3_signals = dict.fromkeys(site_ids)
+            h3k27ac_signals = dict.fromkeys(site_ids)
 
     payload: dict[str, Any] = {
         "h3k4me3_signals": h3k4me3_signals,

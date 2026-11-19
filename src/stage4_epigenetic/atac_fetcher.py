@@ -36,17 +36,17 @@ def run(
     sites: list[dict] = offtargets.get("offtarget_sites", [])
     site_ids, regions = site_ids_and_regions(sites, caller="atac_fetcher")
 
-    atac_signals: dict[str, float] = {}
+    atac_signals: dict[str, float | None] = {}
     if regions:
         try:
             config = OrcSonarConfig()
             reader = ATACSeqReader(config, cell_lines_yaml=cell_lines_cfg)
             signals = reader.get_accessibility_bulk(regions, cell_line)
             for site_id, sig in zip(site_ids, signals, strict=True):
-                atac_signals[site_id] = round(sig, 4)
+                atac_signals[site_id] = (None if sig is None else round(sig, 4))
         except Exception as exc:
-            logger.warning(f"atac_fetcher: signal extraction failed: {exc} — using 0.0")
-            atac_signals = {sid: 0.0 for sid in site_ids}
+            logger.warning(f"atac_fetcher: signal extraction failed: {exc} — writing UNKNOWN")
+            atac_signals = dict.fromkeys(site_ids)
 
     payload: dict[str, Any] = {"atac_signals": atac_signals}
     out = Path(output_path)

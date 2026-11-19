@@ -36,17 +36,17 @@ def run(
     sites: list[dict] = offtargets.get("offtarget_sites", [])
     site_ids, regions = site_ids_and_regions(sites, caller="groseq_fetcher")
 
-    groseq_signals: dict[str, float] = {}
+    groseq_signals: dict[str, float | None] = {}
     if regions:
         try:
             config = OrcSonarConfig()
             reader = GROseqReader(config, cell_lines_yaml=cell_lines_cfg)
             results = reader.get_transcription_bulk(regions, cell_line)
             for site_id, res in zip(site_ids, results, strict=True):
-                groseq_signals[site_id] = round(res.combined_signal, 4)
+                groseq_signals[site_id] = (None if res.combined_signal is None else round(res.combined_signal, 4))
         except Exception as exc:
-            logger.warning(f"groseq_fetcher: extraction failed: {exc} — using 0.0")
-            groseq_signals = {sid: 0.0 for sid in site_ids}
+            logger.warning(f"groseq_fetcher: extraction failed: {exc} — writing UNKNOWN")
+            groseq_signals = dict.fromkeys(site_ids)
 
     payload: dict[str, Any] = {"groseq_signals": groseq_signals}
     out = Path(output_path)

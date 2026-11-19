@@ -20,6 +20,7 @@ from __future__ import annotations
 import urllib.error
 import urllib.request
 from pathlib import Path
+from typing import Any
 
 import pyBigWig
 import requests
@@ -90,7 +91,10 @@ def _resolve_encode_redirect(url: str) -> str:
 # ---------------------------------------------------------------------------
 
 
-def _bigwig_mean(bw: object, chrom: str, start: int, end: int) -> float | None:
+# pyBigWig ships no stubs, so the handle is Any rather than object: typing it
+# as object made every attribute access an error, which is noise that hides
+# the real ones (roadmap B2a).
+def _bigwig_mean(bw: Any, chrom: str, start: int, end: int) -> float | None:
     """Read mean signal for one region from an open pyBigWig handle.
 
     Args:
@@ -257,7 +261,7 @@ class EncodeSignalReader:
 
     def read_signal_bulk(
         self, url: str, regions: list[GenomicRegion]
-    ) -> list[float]:
+    ) -> list[float | None]:
         """Read mean BigWig signal for multiple regions with a single open call.
 
         Checks the cache per region; issues BigWig reads only for misses.
@@ -268,7 +272,8 @@ class EncodeSignalReader:
             regions: Genomic intervals (chr-prefixed, hg38).
 
         Returns:
-            Signal values in the same order as ``regions``.
+            Signal values in the same order as ``regions``; ``None`` where
+            nothing could be measured (roadmap B2).
         """
         if not regions:
             return []

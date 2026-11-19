@@ -39,7 +39,7 @@ class HistoneMarkReader(EncodeSignalReader):
         cell_lines_yaml: Path to cell_lines.yaml (default: ``config/cell_lines.yaml``).
     """
 
-    def get_h3k4me3(self, region: GenomicRegion, cell_line: str) -> float:
+    def get_h3k4me3(self, region: GenomicRegion, cell_line: str) -> float | None:
         """Return mean H3K4me3 signal for a region (active promoter mark).
 
         Args:
@@ -54,7 +54,7 @@ class HistoneMarkReader(EncodeSignalReader):
             return UNKNOWN_SIGNAL
         return self.read_signal(url, region)
 
-    def get_h3k27ac(self, region: GenomicRegion, cell_line: str) -> float:
+    def get_h3k27ac(self, region: GenomicRegion, cell_line: str) -> float | None:
         """Return mean H3K27ac signal for a region (active enhancer/promoter mark).
 
         Args:
@@ -69,7 +69,7 @@ class HistoneMarkReader(EncodeSignalReader):
             return UNKNOWN_SIGNAL
         return self.read_signal(url, region)
 
-    def get_h3k27me3(self, region: GenomicRegion, cell_line: str) -> float:
+    def get_h3k27me3(self, region: GenomicRegion, cell_line: str) -> float | None:
         """Return mean H3K27me3 signal for a region (repressive Polycomb mark).
 
         A high value indicates silenced chromatin; callers should invert this
@@ -92,7 +92,7 @@ class HistoneMarkReader(EncodeSignalReader):
 
     def get_h3k4me3_bulk(
         self, regions: list[GenomicRegion], cell_line: str
-    ) -> list[float]:
+    ) -> list[float | None]:
         """Batch H3K4me3 signal read with a single BigWig open.
 
         Args:
@@ -100,7 +100,8 @@ class HistoneMarkReader(EncodeSignalReader):
             cell_line: Cell line name.
 
         Returns:
-            Signal values in the same order as ``regions``.
+            Signal values in the same order as ``regions``; ``None`` where
+            nothing could be measured (roadmap B2).
         """
         url = self._get_url_for_cell_line(cell_line, _H3K4ME3_KEY)
         if url is None:
@@ -109,7 +110,7 @@ class HistoneMarkReader(EncodeSignalReader):
 
     def get_h3k27ac_bulk(
         self, regions: list[GenomicRegion], cell_line: str
-    ) -> list[float]:
+    ) -> list[float | None]:
         """Batch H3K27ac signal read with a single BigWig open.
 
         Args:
@@ -117,7 +118,8 @@ class HistoneMarkReader(EncodeSignalReader):
             cell_line: Cell line name.
 
         Returns:
-            Signal values in the same order as ``regions``.
+            Signal values in the same order as ``regions``; ``None`` where
+            nothing could be measured (roadmap B2).
         """
         url = self._get_url_for_cell_line(cell_line, _H3K27AC_KEY)
         if url is None:
@@ -126,7 +128,7 @@ class HistoneMarkReader(EncodeSignalReader):
 
     def get_h3k27me3_bulk(
         self, regions: list[GenomicRegion], cell_line: str
-    ) -> list[float]:
+    ) -> list[float | None]:
         """Batch H3K27me3 signal read with a single BigWig open.
 
         Args:
@@ -134,7 +136,8 @@ class HistoneMarkReader(EncodeSignalReader):
             cell_line: Cell line name.
 
         Returns:
-            Signal values in the same order as ``regions``.
+            Signal values in the same order as ``regions``; ``None`` where
+            nothing could be measured (roadmap B2).
         """
         url = self._get_url_for_cell_line(cell_line, _H3K27ME3_KEY)
         if url is None:
