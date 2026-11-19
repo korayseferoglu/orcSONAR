@@ -477,6 +477,9 @@ class FinalReport(BaseModel):
     sarna_input: SarnaInput
     offtarget_sites: list[OffTargetSite] = Field(default_factory=list)
     domain_scores_per_site: dict[str, DomainScores] = Field(default_factory=dict)
-    final_risk_score: float = Field(ge=0.0, le=1.0)
-    risk_class: RiskClass
+    # Both are ``None`` when no site was classified: a run that assessed
+    # nothing has no overall risk, and writing 0.0/SAFE there turned an empty
+    # scan into a verdict of safety (audit 2026-11-19, Bulgu 12).
+    final_risk_score: float | None = Field(default=None, ge=0.0, le=1.0)
+    risk_class: RiskClass | None = None
     cell_line_context: str

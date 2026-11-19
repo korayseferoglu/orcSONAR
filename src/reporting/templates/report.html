@@ -31,12 +31,19 @@
 
       <div class="risk-gauge">
         <div class="risk-gauge-emoji">{{ overall_emoji }}</div>
+        {# A run that classified nothing has no score and no class. Rendering
+           0.000/SAFE there would state a verdict the pipeline never reached
+           (audit 2026-11-19, Bulgu 12). #}
         <div class="risk-score-value" style="color: {{ overall_color }}">
-          {{ "%.3f"|format(report.final_risk_score) }}
+          {% if report.final_risk_score is none %}—{% else %}{{ "%.3f"|format(report.final_risk_score) }}{% endif %}
         </div>
+        {% if report.risk_class is none %}
+        <div class="risk-badge">NOT ASSESSED</div>
+        {% else %}
         <div class="risk-badge c-{{ report.risk_class|lower|replace('_','-') }}">
           {{ report.risk_class|replace('_',' ') }}
         </div>
+        {% endif %}
       </div>
 
       <div class="risk-meta">

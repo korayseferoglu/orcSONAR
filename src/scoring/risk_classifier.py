@@ -97,19 +97,31 @@ def run(
     cell_line_context = (
         f"Active chromatin detected at {active} of {n_sites} off-target sites. "
         f"Overall risk: {worst_class.value}. {get_recommendation(worst_class)}"
-    ) if n_sites else "No off-target sites detected."
+    ) if n_sites else (
+        "No off-target sites were classified, so no risk class was computed. "
+        "This is not a finding of safety — check the scan logs for why the "
+        "site list is empty."
+    )
 
+    # Classifying nothing is not a verdict. `worst_class` starts at SAFE so
+    # that the max-reduction below works, but emitting that initial value when
+    # the loop never ran turns "there was nothing to classify" into "the worst
+    # site was safe" (audit 2026-11-19, Bulgu 12). An unknown is written as an
+    # unknown, the same way B2 handles an unmeasured channel.
     payload: dict[str, Any] = {
         "site_classifications": site_classifications,
-        "overall_risk_score": round(worst_score, 6),
-        "overall_risk_class": worst_class.value,
+        "overall_risk_score": round(worst_score, 6) if n_sites else None,
+        "overall_risk_class": worst_class.value if n_sites else None,
         "cell_line_context": cell_line_context,
     }
 
     out = Path(output_path)
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
+    overall_shown = (
+        f"{worst_class.value} ({worst_score:.4f})" if n_sites else "NOT ASSESSED (no sites)"
+    )
     logger.info(
         f"risk_classifier: {n_sites} sites classified — "
-        f"overall={worst_class.value} ({worst_score:.4f}) → {output_path}"
+        f"overall={overall_shown} → {output_path}"
     )

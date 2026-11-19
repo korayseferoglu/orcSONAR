@@ -223,8 +223,10 @@ def generate_html_report(
     env = _build_env()
     template = env.get_template("report.html")
 
-    overall_color = _RISK_COLORS.get(report.risk_class, "#818cf8")
-    overall_emoji = _RISK_EMOJIS.get(report.risk_class, "❓")
+    # `risk_class` is None when nothing was classified (Bulgu 12); both lookups
+    # then fall through to the neutral colour and the "unknown" glyph.
+    overall_color = _RISK_COLORS.get(report.risk_class or "", "#818cf8")
+    overall_emoji = _RISK_EMOJIS.get(report.risk_class or "", "❓")
 
     html = template.render(
         report=report,

@@ -617,3 +617,48 @@ class TestReportingIntegration:
         assert "TP53" in html
         assert "BRCA1" in html
         assert Path(pdf_path).stat().st_size > 500
+
+
+class TestUnassessedRunRenders:
+    """A run that classified nothing must render as unassessed, not as 0.000/SAFE.
+
+    Audit 2026-11-19, Bulgu 12. The JSON side is pinned in
+    ``test_risk_classifier.py``; this covers the Jinja template, which is the
+    fragile half — ``report.risk_class|lower`` on ``None`` renders the string
+    "none" rather than raising, so a missing guard here fails silently and
+    looks like a styling bug instead of a false verdict.
+    """
+
+    def test_html_says_not_assessed_and_omits_a_score(self, tmp_path: Path) -> None:
+        report = FinalReport(
+            sarna_input=_make_input(),
+            offtarget_sites=[],
+            domain_scores_per_site={},
+            final_risk_score=None,
+            risk_class=None,
+            cell_line_context="No off-target sites were classified.",
+        )
+        out = str(tmp_path / "report.html")
+        generate_html_report(report, out)
+
+        html = Path(out).read_text(encoding="utf-8")
+        assert "NOT ASSESSED" in html
+        assert "0.000" not in html
+        assert ">SAFE<" not in html
+        assert "c-none" not in html, "the |lower filter rendered None as a CSS class"
+
+    def test_json_round_trips_an_unassessed_report(self, tmp_path: Path) -> None:
+        report = FinalReport(
+            sarna_input=_make_input(),
+            offtarget_sites=[],
+            domain_scores_per_site={},
+            final_risk_score=None,
+            risk_class=None,
+            cell_line_context="No off-target sites were classified.",
+        )
+        out = str(tmp_path / "report.json")
+        save_json_report(report, out)
+
+        payload = json.loads(Path(out).read_text(encoding="utf-8"))
+        assert payload["risk_class"] is None
+        assert payload["final_risk_score"] is None

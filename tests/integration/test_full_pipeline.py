@@ -521,8 +521,14 @@ class TestRiskClassifier:
             log_path=str(tmp_path / "rc.log"),
         )
         data = json.loads(Path(classif_path).read_text())
-        assert data["overall_risk_class"] == "SAFE"
-        assert data["overall_risk_score"] == pytest.approx(0.0)
+        # Inverted on 2026-11-19 (audit Bulgu 12). This asserted
+        # `overall_risk_class == "SAFE"` for a run that classified nothing,
+        # i.e. it pinned the defect as the contract: an empty scan read as a
+        # verdict of safety, which is how a 504 from Ensembl produced a clean
+        # "risk=SAFE (0.0000)" report with exit 0.
+        assert data["overall_risk_class"] is None
+        assert data["overall_risk_score"] is None
+        assert "not a finding of safety" in data["cell_line_context"]
 
 
 # ===========================================================================

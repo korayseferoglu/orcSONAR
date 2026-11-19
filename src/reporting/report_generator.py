@@ -124,8 +124,11 @@ def run(
         except Exception as exc:
             logger.warning(f"report_generator: skipping domain scores for {site_id}: {exc}")
 
-    overall_risk_score: float = classification.get("overall_risk_score", 0.5)
-    overall_risk_class: str = classification.get("overall_risk_class", "WARNING")
+    # `.get(key, default)` does NOT fire when the key is present with value
+    # null, so these stay None for an unassessed run rather than silently
+    # becoming 0.5/WARNING (audit 2026-11-19, Bulgu 6 and 12).
+    overall_risk_score: float | None = classification.get("overall_risk_score")
+    overall_risk_class: str | None = classification.get("overall_risk_class")
     cell_line_context: str = classification.get("cell_line_context", f"Analysis performed in {cell_line}.")
 
     sarna_input = SarnaInput(
@@ -142,12 +145,17 @@ def run(
         risk_class=overall_risk_class,  # type: ignore[arg-type]
         cell_line_context=cell_line_context,
     )
+    risk_shown = (
+        f"{overall_risk_class} ({overall_risk_score:.4f})"
+        if overall_risk_class is not None and overall_risk_score is not None
+        else "NOT ASSESSED"
+    )
 
     save_json_report(report, json_output)
     generate_html_report(report, html_output)
 
     logger.info(
         f"report_generator: {len(offtarget_sites)} sites, "
-        f"risk={overall_risk_class} ({overall_risk_score:.4f}) "
+        f"risk={risk_shown} "
         f"→ {html_output}"
     )
