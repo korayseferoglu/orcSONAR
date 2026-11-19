@@ -8,7 +8,7 @@ rule tss_mapping:
         epdnew  = config["data_paths"]["epdnew_bed"],
         fantom5 = config["data_paths"]["fantom5_bed"],
     output:
-        "results/{gene}_{cell_line}/stage1_tss.json",
+        RESULTS_DIR + "/{gene}_{cell_line}/stage1_tss.json",
     log:
         "logs/{gene}_{cell_line}/tss_mapping.log",
     params:
@@ -27,7 +27,7 @@ rule tss_mapping:
 rule transcript_resolution:
     """Fetch all transcripts for the target gene via Ensembl/RefSeq REST API."""
     output:
-        "results/{gene}_{cell_line}/stage1_transcripts.json",
+        RESULTS_DIR + "/{gene}_{cell_line}/stage1_transcripts.json",
     log:
         "logs/{gene}_{cell_line}/transcript_resolution.log",
     params:
@@ -47,10 +47,10 @@ rule transcript_resolution:
 rule promoter_definition:
     """Define promoter windows around each TSS using upstream/downstream config."""
     input:
-        tss         = "results/{gene}_{cell_line}/stage1_tss.json",
-        transcripts = "results/{gene}_{cell_line}/stage1_transcripts.json",
+        tss         = RESULTS_DIR + "/{gene}_{cell_line}/stage1_tss.json",
+        transcripts = RESULTS_DIR + "/{gene}_{cell_line}/stage1_transcripts.json",
     output:
-        "results/{gene}_{cell_line}/stage1_promoter.json",
+        RESULTS_DIR + "/{gene}_{cell_line}/stage1_promoter.json",
     log:
         "logs/{gene}_{cell_line}/promoter_definition.log",
     params:

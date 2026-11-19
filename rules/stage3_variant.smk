@@ -5,10 +5,10 @@
 rule cosmic_scan:
     """Query COSMIC VCF (tabix-indexed) for mutations in off-target regions."""
     input:
-        offtargets = "results/{gene}_{cell_line}/stage2_offtargets.json",
+        offtargets = RESULTS_DIR + "/{gene}_{cell_line}/stage2_offtargets.json",
         cosmic_vcf = config["data_paths"]["cosmic_vcf"],
     output:
-        "results/{gene}_{cell_line}/stage3_cosmic.json",
+        RESULTS_DIR + "/{gene}_{cell_line}/stage3_cosmic.json",
     log:
         "logs/{gene}_{cell_line}/cosmic_scan.log",
     run:
@@ -24,9 +24,9 @@ rule cosmic_scan:
 rule gnomad_query:
     """Query gnomAD v4 GraphQL API for population allele frequencies."""
     input:
-        offtargets = "results/{gene}_{cell_line}/stage2_offtargets.json",
+        offtargets = RESULTS_DIR + "/{gene}_{cell_line}/stage2_offtargets.json",
     output:
-        "results/{gene}_{cell_line}/stage3_gnomad.json",
+        RESULTS_DIR + "/{gene}_{cell_line}/stage3_gnomad.json",
     log:
         "logs/{gene}_{cell_line}/gnomad_query.log",
     params:
@@ -44,9 +44,9 @@ rule gnomad_query:
 rule clinvar_check:
     """Query NCBI ClinVar for pathogenic variants in off-target regions."""
     input:
-        offtargets = "results/{gene}_{cell_line}/stage2_offtargets.json",
+        offtargets = RESULTS_DIR + "/{gene}_{cell_line}/stage2_offtargets.json",
     output:
-        "results/{gene}_{cell_line}/stage3_clinvar.json",
+        RESULTS_DIR + "/{gene}_{cell_line}/stage3_clinvar.json",
     log:
         "logs/{gene}_{cell_line}/clinvar_check.log",
     params:
@@ -64,9 +64,9 @@ rule clinvar_check:
 rule phylop_score:
     """Fetch phyloP conservation scores from UCSC remote BigWig."""
     input:
-        offtargets = "results/{gene}_{cell_line}/stage2_offtargets.json",
+        offtargets = RESULTS_DIR + "/{gene}_{cell_line}/stage2_offtargets.json",
     output:
-        "results/{gene}_{cell_line}/stage3_phylop.json",
+        RESULTS_DIR + "/{gene}_{cell_line}/stage3_phylop.json",
     log:
         "logs/{gene}_{cell_line}/phylop_score.log",
     params:
@@ -84,12 +84,12 @@ rule phylop_score:
 rule merge_variants:
     """Merge COSMIC, gnomAD, ClinVar, phyloP into per-site VariantScore objects."""
     input:
-        cosmic  = "results/{gene}_{cell_line}/stage3_cosmic.json",
-        gnomad  = "results/{gene}_{cell_line}/stage3_gnomad.json",
-        clinvar = "results/{gene}_{cell_line}/stage3_clinvar.json",
-        phylop  = "results/{gene}_{cell_line}/stage3_phylop.json",
+        cosmic  = RESULTS_DIR + "/{gene}_{cell_line}/stage3_cosmic.json",
+        gnomad  = RESULTS_DIR + "/{gene}_{cell_line}/stage3_gnomad.json",
+        clinvar = RESULTS_DIR + "/{gene}_{cell_line}/stage3_clinvar.json",
+        phylop  = RESULTS_DIR + "/{gene}_{cell_line}/stage3_phylop.json",
     output:
-        "results/{gene}_{cell_line}/stage3_variants.json",
+        RESULTS_DIR + "/{gene}_{cell_line}/stage3_variants.json",
     log:
         "logs/{gene}_{cell_line}/merge_variants.log",
     run:

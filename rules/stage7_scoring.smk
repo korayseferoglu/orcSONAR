@@ -11,13 +11,13 @@ rule score_integration:
       + execution_safety (0.20)
     """
     input:
-        offtargets  = "results/{gene}_{cell_line}/stage2_offtargets.json",
-        variants    = "results/{gene}_{cell_line}/stage3_variants.json",
-        epigenetic  = "results/{gene}_{cell_line}/stage4_epigenetic.json",
-        biophysics  = "results/{gene}_{cell_line}/stage5_biophysics.json",
-        execution   = "results/{gene}_{cell_line}/stage6_execution.json",
+        offtargets  = RESULTS_DIR + "/{gene}_{cell_line}/stage2_offtargets.json",
+        variants    = RESULTS_DIR + "/{gene}_{cell_line}/stage3_variants.json",
+        epigenetic  = RESULTS_DIR + "/{gene}_{cell_line}/stage4_epigenetic.json",
+        biophysics  = RESULTS_DIR + "/{gene}_{cell_line}/stage5_biophysics.json",
+        execution   = RESULTS_DIR + "/{gene}_{cell_line}/stage6_execution.json",
     output:
-        "results/{gene}_{cell_line}/stage7_scores.json",
+        RESULTS_DIR + "/{gene}_{cell_line}/stage7_scores.json",
     log:
         "logs/{gene}_{cell_line}/score_integration.log",
     params:
@@ -46,9 +46,9 @@ rule risk_classification:
       [0.80, 1.00] → DANGEROUS
     """
     input:
-        scores = "results/{gene}_{cell_line}/stage7_scores.json",
+        scores = RESULTS_DIR + "/{gene}_{cell_line}/stage7_scores.json",
     output:
-        "results/{gene}_{cell_line}/stage7_classification.json",
+        RESULTS_DIR + "/{gene}_{cell_line}/stage7_classification.json",
     log:
         "logs/{gene}_{cell_line}/risk_classification.log",
     params:
@@ -66,16 +66,16 @@ rule risk_classification:
 rule generate_report:
     """Generate final JSON summary and HTML report (Jinja2 + WeasyPrint)."""
     input:
-        classification = "results/{gene}_{cell_line}/stage7_classification.json",
-        scores         = "results/{gene}_{cell_line}/stage7_scores.json",
-        offtargets     = "results/{gene}_{cell_line}/stage2_offtargets.json",
-        variants       = "results/{gene}_{cell_line}/stage3_variants.json",
-        epigenetic     = "results/{gene}_{cell_line}/stage4_epigenetic.json",
-        biophysics     = "results/{gene}_{cell_line}/stage5_biophysics.json",
-        execution      = "results/{gene}_{cell_line}/stage6_execution.json",
+        classification = RESULTS_DIR + "/{gene}_{cell_line}/stage7_classification.json",
+        scores         = RESULTS_DIR + "/{gene}_{cell_line}/stage7_scores.json",
+        offtargets     = RESULTS_DIR + "/{gene}_{cell_line}/stage2_offtargets.json",
+        variants       = RESULTS_DIR + "/{gene}_{cell_line}/stage3_variants.json",
+        epigenetic     = RESULTS_DIR + "/{gene}_{cell_line}/stage4_epigenetic.json",
+        biophysics     = RESULTS_DIR + "/{gene}_{cell_line}/stage5_biophysics.json",
+        execution      = RESULTS_DIR + "/{gene}_{cell_line}/stage6_execution.json",
     output:
-        json_report = "results/{gene}_{cell_line}/final_report.json",
-        html_report = "results/{gene}_{cell_line}/final_report.html",
+        json_report = RESULTS_DIR + "/{gene}_{cell_line}/final_report.json",
+        html_report = RESULTS_DIR + "/{gene}_{cell_line}/final_report.html",
     log:
         "logs/{gene}_{cell_line}/generate_report.log",
     params:

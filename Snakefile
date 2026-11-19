@@ -11,7 +11,15 @@ configfile: "config/config.yaml"
 
 GENE      = config["target_gene"]
 CELL_LINE = config["cell_line"]
-RESULTS   = Path("results") / f"{GENE}_{CELL_LINE}"
+
+# Every rule builds its paths from this prefix. It was hardcoded to "results"
+# in 89 places while `--output-dir` was accepted by the CLI, documented in the
+# README and passed through as `results_dir` -- which no rule read, so the flag
+# raised MissingRuleException and there was no supported way to run without
+# overwriting the reference runs (audit 2026-11-19, Bulgu 11).
+# Rules concatenate rather than f-string it, so the {gene}/{cell_line}
+# wildcards stay literal and need no escaping.
+RESULTS_DIR = config.get("results_dir", "results")
 
 include: "rules/stage1_genomic.smk"
 include: "rules/stage2_offtarget.smk"
@@ -25,7 +33,7 @@ include: "rules/stage7_scoring.smk"
 rule all:
     input:
         expand(
-            "results/{gene}_{cell_line}/final_report.html",
+            RESULTS_DIR + "/{gene}_{cell_line}/final_report.html",
             gene=GENE,
             cell_line=CELL_LINE,
         )

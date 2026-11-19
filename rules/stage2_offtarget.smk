@@ -5,9 +5,9 @@
 rule seed_alignment:
     """Whole-transcriptome seed alignment (7-nt seed, max 3 mismatches)."""
     input:
-        promoter = "results/{gene}_{cell_line}/stage1_promoter.json",
+        promoter = RESULTS_DIR + "/{gene}_{cell_line}/stage1_promoter.json",
     output:
-        "results/{gene}_{cell_line}/stage2_seed_hits.json",
+        RESULTS_DIR + "/{gene}_{cell_line}/stage2_seed_hits.json",
     log:
         "logs/{gene}_{cell_line}/seed_alignment.log",
     params:
@@ -36,7 +36,7 @@ rule mirbase_check:
     input:
         mirbase = config["data_paths"]["mirbase_fa"],
     output:
-        "results/{gene}_{cell_line}/stage2_mirbase.json",
+        RESULTS_DIR + "/{gene}_{cell_line}/stage2_mirbase.json",
     log:
         "logs/{gene}_{cell_line}/mirbase_check.log",
     params:
@@ -54,9 +54,9 @@ rule mirbase_check:
 rule repeat_scan:
     """Annotate seed hits overlapping RepeatMasker elements (UCSC API)."""
     input:
-        seed_hits = "results/{gene}_{cell_line}/stage2_seed_hits.json",
+        seed_hits = RESULTS_DIR + "/{gene}_{cell_line}/stage2_seed_hits.json",
     output:
-        "results/{gene}_{cell_line}/stage2_repeats.json",
+        RESULTS_DIR + "/{gene}_{cell_line}/stage2_repeats.json",
     log:
         "logs/{gene}_{cell_line}/repeat_scan.log",
     params:
@@ -74,11 +74,11 @@ rule repeat_scan:
 rule merge_offtargets:
     """Merge seed hits, miRNA overlaps, and repeat annotations into unified off-target list."""
     input:
-        seed_hits = "results/{gene}_{cell_line}/stage2_seed_hits.json",
-        mirbase   = "results/{gene}_{cell_line}/stage2_mirbase.json",
-        repeats   = "results/{gene}_{cell_line}/stage2_repeats.json",
+        seed_hits = RESULTS_DIR + "/{gene}_{cell_line}/stage2_seed_hits.json",
+        mirbase   = RESULTS_DIR + "/{gene}_{cell_line}/stage2_mirbase.json",
+        repeats   = RESULTS_DIR + "/{gene}_{cell_line}/stage2_repeats.json",
     output:
-        "results/{gene}_{cell_line}/stage2_offtargets.json",
+        RESULTS_DIR + "/{gene}_{cell_line}/stage2_offtargets.json",
     log:
         "logs/{gene}_{cell_line}/merge_offtargets.log",
     run:

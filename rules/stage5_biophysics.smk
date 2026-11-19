@@ -5,10 +5,10 @@
 rule delta_g:
     """Compute RNA:DNA hybrid free energy (ΔG) using Turner nearest-neighbour rules."""
     input:
-        offtargets  = "results/{gene}_{cell_line}/stage2_offtargets.json",
+        offtargets  = RESULTS_DIR + "/{gene}_{cell_line}/stage2_offtargets.json",
         turner_dir  = config["data_paths"]["turner_rules_dir"],
     output:
-        "results/{gene}_{cell_line}/stage5_deltag.json",
+        RESULTS_DIR + "/{gene}_{cell_line}/stage5_deltag.json",
     log:
         "logs/{gene}_{cell_line}/delta_g.log",
     params:
@@ -31,10 +31,10 @@ rule delta_g:
 rule shape_profile:
     """Retrieve SHAPE-seq accessibility scores for off-target regions."""
     input:
-        offtargets = "results/{gene}_{cell_line}/stage2_offtargets.json",
+        offtargets = RESULTS_DIR + "/{gene}_{cell_line}/stage2_offtargets.json",
         shape_dir  = config["data_paths"]["shape_seq_dir"],
     output:
-        "results/{gene}_{cell_line}/stage5_shape.json",
+        RESULTS_DIR + "/{gene}_{cell_line}/stage5_shape.json",
     log:
         "logs/{gene}_{cell_line}/shape_profile.log",
     run:
@@ -51,10 +51,10 @@ rule shape_profile:
 rule m6a_mapping:
     """Identify m6A modification sites overlapping off-target regions (tabix)."""
     input:
-        offtargets = "results/{gene}_{cell_line}/stage2_offtargets.json",
+        offtargets = RESULTS_DIR + "/{gene}_{cell_line}/stage2_offtargets.json",
         m6a_bed    = config["data_paths"]["m6a_bed"],
     output:
-        "results/{gene}_{cell_line}/stage5_m6a.json",
+        RESULTS_DIR + "/{gene}_{cell_line}/stage5_m6a.json",
     log:
         "logs/{gene}_{cell_line}/m6a_mapping.log",
     run:
@@ -71,9 +71,9 @@ rule m6a_mapping:
 rule adar_risk:
     """Estimate A-to-I editing risk via Alu-repeat proxy (RepeatMasker/UCSC API)."""
     input:
-        offtargets = "results/{gene}_{cell_line}/stage2_offtargets.json",
+        offtargets = RESULTS_DIR + "/{gene}_{cell_line}/stage2_offtargets.json",
     output:
-        "results/{gene}_{cell_line}/stage5_adar.json",
+        RESULTS_DIR + "/{gene}_{cell_line}/stage5_adar.json",
     log:
         "logs/{gene}_{cell_line}/adar_risk.log",
     params:
@@ -91,9 +91,9 @@ rule adar_risk:
 rule g4_detection:
     """Detect G-quadruplex motifs in off-target sequences via regex."""
     input:
-        offtargets = "results/{gene}_{cell_line}/stage2_offtargets.json",
+        offtargets = RESULTS_DIR + "/{gene}_{cell_line}/stage2_offtargets.json",
     output:
-        "results/{gene}_{cell_line}/stage5_g4.json",
+        RESULTS_DIR + "/{gene}_{cell_line}/stage5_g4.json",
     log:
         "logs/{gene}_{cell_line}/g4_detection.log",
     run:
@@ -108,13 +108,13 @@ rule g4_detection:
 rule merge_biophysics:
     """Merge ΔG, SHAPE, m6A, ADAR, G4 into per-site BiophysicsScore objects."""
     input:
-        deltag = "results/{gene}_{cell_line}/stage5_deltag.json",
-        shape  = "results/{gene}_{cell_line}/stage5_shape.json",
-        m6a    = "results/{gene}_{cell_line}/stage5_m6a.json",
-        adar   = "results/{gene}_{cell_line}/stage5_adar.json",
-        g4     = "results/{gene}_{cell_line}/stage5_g4.json",
+        deltag = RESULTS_DIR + "/{gene}_{cell_line}/stage5_deltag.json",
+        shape  = RESULTS_DIR + "/{gene}_{cell_line}/stage5_shape.json",
+        m6a    = RESULTS_DIR + "/{gene}_{cell_line}/stage5_m6a.json",
+        adar   = RESULTS_DIR + "/{gene}_{cell_line}/stage5_adar.json",
+        g4     = RESULTS_DIR + "/{gene}_{cell_line}/stage5_g4.json",
     output:
-        "results/{gene}_{cell_line}/stage5_biophysics.json",
+        RESULTS_DIR + "/{gene}_{cell_line}/stage5_biophysics.json",
     log:
         "logs/{gene}_{cell_line}/merge_biophysics.log",
     run:

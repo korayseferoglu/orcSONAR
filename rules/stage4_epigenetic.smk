@@ -6,9 +6,9 @@
 rule atac_signal:
     """Extract ATAC-seq signal at off-target regions from cell-line-specific BigWig."""
     input:
-        offtargets = "results/{gene}_{cell_line}/stage2_offtargets.json",
+        offtargets = RESULTS_DIR + "/{gene}_{cell_line}/stage2_offtargets.json",
     output:
-        "results/{gene}_{cell_line}/stage4_atac.json",
+        RESULTS_DIR + "/{gene}_{cell_line}/stage4_atac.json",
     log:
         "logs/{gene}_{cell_line}/atac_signal.log",
     params:
@@ -27,9 +27,9 @@ rule atac_signal:
 rule histone_marks:
     """Extract H3K4me3 and H3K27ac ChIP-seq signal from cell-line-specific BigWigs."""
     input:
-        offtargets = "results/{gene}_{cell_line}/stage2_offtargets.json",
+        offtargets = RESULTS_DIR + "/{gene}_{cell_line}/stage2_offtargets.json",
     output:
-        "results/{gene}_{cell_line}/stage4_histones.json",
+        RESULTS_DIR + "/{gene}_{cell_line}/stage4_histones.json",
     log:
         "logs/{gene}_{cell_line}/histone_marks.log",
     params:
@@ -48,9 +48,9 @@ rule histone_marks:
 rule groseq_signal:
     """Extract GRO-seq / PRO-seq nascent transcription signal from BigWig."""
     input:
-        offtargets = "results/{gene}_{cell_line}/stage2_offtargets.json",
+        offtargets = RESULTS_DIR + "/{gene}_{cell_line}/stage2_offtargets.json",
     output:
-        "results/{gene}_{cell_line}/stage4_groseq.json",
+        RESULTS_DIR + "/{gene}_{cell_line}/stage4_groseq.json",
     log:
         "logs/{gene}_{cell_line}/groseq_signal.log",
     params:
@@ -69,9 +69,9 @@ rule groseq_signal:
 rule hic_contacts:
     """Extract Hi-C contact frequency at off-target loci using hic-straw."""
     input:
-        offtargets = "results/{gene}_{cell_line}/stage2_offtargets.json",
+        offtargets = RESULTS_DIR + "/{gene}_{cell_line}/stage2_offtargets.json",
     output:
-        "results/{gene}_{cell_line}/stage4_hic.json",
+        RESULTS_DIR + "/{gene}_{cell_line}/stage4_hic.json",
     log:
         "logs/{gene}_{cell_line}/hic_contacts.log",
     params:
@@ -91,9 +91,9 @@ rule ccle_expression:
     """Look up gene expression in target cell line from CCLE CSV (lazy load)."""
     input:
         ccle_csv   = config["data_paths"]["ccle_csv"],
-        offtargets = "results/{gene}_{cell_line}/stage2_offtargets.json",
+        offtargets = RESULTS_DIR + "/{gene}_{cell_line}/stage2_offtargets.json",
     output:
-        "results/{gene}_{cell_line}/stage4_ccle.json",
+        RESULTS_DIR + "/{gene}_{cell_line}/stage4_ccle.json",
     log:
         "logs/{gene}_{cell_line}/ccle_expression.log",
     run:
@@ -110,13 +110,13 @@ rule ccle_expression:
 rule merge_epigenetic:
     """Merge ATAC, histone, GRO-seq, Hi-C, CCLE into per-site EpigeneticScore objects."""
     input:
-        atac     = "results/{gene}_{cell_line}/stage4_atac.json",
-        histones = "results/{gene}_{cell_line}/stage4_histones.json",
-        groseq   = "results/{gene}_{cell_line}/stage4_groseq.json",
-        hic      = "results/{gene}_{cell_line}/stage4_hic.json",
-        ccle     = "results/{gene}_{cell_line}/stage4_ccle.json",
+        atac     = RESULTS_DIR + "/{gene}_{cell_line}/stage4_atac.json",
+        histones = RESULTS_DIR + "/{gene}_{cell_line}/stage4_histones.json",
+        groseq   = RESULTS_DIR + "/{gene}_{cell_line}/stage4_groseq.json",
+        hic      = RESULTS_DIR + "/{gene}_{cell_line}/stage4_hic.json",
+        ccle     = RESULTS_DIR + "/{gene}_{cell_line}/stage4_ccle.json",
     output:
-        "results/{gene}_{cell_line}/stage4_epigenetic.json",
+        RESULTS_DIR + "/{gene}_{cell_line}/stage4_epigenetic.json",
     log:
         "logs/{gene}_{cell_line}/merge_epigenetic.log",
     run:
