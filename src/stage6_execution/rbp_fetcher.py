@@ -49,8 +49,13 @@ def run(
             for site_id, region in zip(site_ids, regions, strict=True):
                 rbp_results[site_id] = {
                     "region": region.model_dump(), "cell_line": cell_line,
-                    "rbp_name": "hnRNPA1", "raw_signal": 0.0,
-                    "competition_score": 0.0, "is_competing": False,
+                    # A dead source knows nothing. Writing 0.0/False here
+                    # asserts "no signal"/"not loaded", which is the safe
+                    # direction on a risk channel — and for Ago2 it is the
+                    # 0.40-weight channel execution_merger's own docstring
+                    # warns about (audit 2026-11-19, Bulgu 3).
+                    "rbp_name": "hnRNPA1", "raw_signal": None,
+                    "competition_score": None, "is_competing": None,
                 }
 
     payload: dict[str, Any] = {"rbp_results": rbp_results}

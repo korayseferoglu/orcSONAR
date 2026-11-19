@@ -46,8 +46,11 @@ def run(
     sites: list[dict] = offtargets.get("offtarget_sites", [])
 
     # Screen the saRNA itself
+    # Not "SAFE" with zero hits: that is a verdict, and if the screen below
+    # fails this placeholder is what gets written for every site. An
+    # unscreened sequence is unknown, not clean (audit 2026-11-19, Bulgu 2).
     sarna_immune: dict[str, Any] = {
-        "motifs_found": [], "total_hits": 0, "risk_score": 0.0, "risk_level": "SAFE",
+        "motifs_found": [], "total_hits": None, "risk_score": None, "risk_level": None,
     }
     try:
         result = screen_immune_motifs(sarna_sequence, immune_motifs_file)

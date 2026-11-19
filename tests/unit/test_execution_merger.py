@@ -9,6 +9,8 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+import pytest
+
 from src.stage6_execution.execution_merger import run as execution_merger_run
 
 
@@ -84,3 +86,51 @@ class TestAnUnknownChannelDoesNotCrashTheMerger:
 
         payload = json.loads(out.read_text(encoding="utf-8"))
         assert site in payload["execution_scores"]
+
+
+class TestCircrnaAndImmuneCanAlsoBeUnknown:
+    """Two of the four channels could never be unknown, so the floor was 0.45.
+
+    Audit 2026-11-19 (statistical review of Bulgu 3). ``circrna`` was
+    ``0.5 if overlap else 0.0`` and ``immune`` was ``.get("risk_score", 0.0)``
+    — neither could ever be ``None``, so ``weight_used == 0.0`` was dead code
+    and ``_normalize`` could never return ``None``. A missing circRNA file
+    yielded "no sponge" and a missing immune file yielded "no motifs", 0.45 of
+    the domain's weight contributing measured-looking zeros from files that
+    were never read.
+    """
+
+    def test_missing_circrna_and_immune_are_excluded_not_scored_as_zero(
+        self, tmp_path: Path
+    ) -> None:
+        site = "MTOR:ENST00000361445:chr1:11255438"
+        ago2 = _write(tmp_path / "ago2.json", {"ago2_results": {site: {"loading_score": 0.8}}})
+        rbp = _write(tmp_path / "rbp.json", {"rbp_results": {site: {"competition_score": 0.2}}})
+        circrna = _write(tmp_path / "circ.json", {"circrna_results": {}})
+        immune = _write(tmp_path / "imm.json", {"offtarget_immune": {}, "sarna_immune": {}})
+        out = tmp_path / "stage6_execution.json"
+
+        execution_merger_run(
+            ago2_path=ago2, rbp_path=rbp, circrna_path=circrna, immune_path=immune,
+            output_path=str(out), log_path=str(tmp_path / "em.log"),
+        )
+        record = json.loads(out.read_text(encoding="utf-8"))["execution_scores"][site]
+
+        # ago2 0.40 * 0.8 + rbp 0.15 * (1 - 0.2) = 0.44, over 0.55 of weight.
+        assert record["normalized_score"] == pytest.approx(round(0.44 / 0.55, 4))
+
+    def test_no_channel_at_all_yields_no_score(self, tmp_path: Path) -> None:
+        """`weight_used == 0.0` stops being dead code."""
+        site = "MTOR:ENST00000361445:chr1:11255438"
+        ago2 = _write(tmp_path / "ago2.json", {"ago2_results": {site: {"loading_score": None}}})
+        rbp = _write(tmp_path / "rbp.json", {"rbp_results": {site: {"competition_score": None}}})
+        circrna = _write(tmp_path / "circ.json", {"circrna_results": {site: {"sponge_risk": None}}})
+        immune = _write(tmp_path / "imm.json", {"offtarget_immune": {}, "sarna_immune": {}})
+        out = tmp_path / "stage6_execution.json"
+
+        execution_merger_run(
+            ago2_path=ago2, rbp_path=rbp, circrna_path=circrna, immune_path=immune,
+            output_path=str(out), log_path=str(tmp_path / "em.log"),
+        )
+        record = json.loads(out.read_text(encoding="utf-8"))["execution_scores"][site]
+        assert record["normalized_score"] is None

@@ -43,8 +43,8 @@ _WEIGHTS: dict[str, float] = {"ago2": 0.40, "rbp": 0.15, "circrna": 0.20, "immun
 def _normalize(
     ago2_loading: float | None,
     rbp_competition: float | None,
-    circrna_overlap: bool,
-    immune_risk: float,
+    circrna_overlap: bool | None,
+    immune_risk: float | None,
 ) -> float | None:
     """Compute normalised execution safety risk score in [0, 1].
 
@@ -73,10 +73,16 @@ def _normalize(
     Returns:
         Score in [0, 1], or ``None`` if nothing was measured.
     """
+    # All four channels can be unknown. circrna and immune used to be
+    # unconditional numbers (`0.5 if overlap else 0.0`, and a `.get(..., 0.0)`),
+    # so `weight_used == 0.0` below was dead code and this function could never
+    # return None: a missing circRNA file read as "no sponge" and a missing
+    # immune file as "no motifs", 0.45 of the weight contributing
+    # measured-looking zeros from files nobody read (audit 2026-11-19).
     contributions: dict[str, float | None] = {
         "ago2": ago2_loading,
         "rbp": None if rbp_competition is None else max(0.0, 1.0 - rbp_competition),
-        "circrna": 0.5 if circrna_overlap else 0.0,
+        "circrna": None if circrna_overlap is None else (0.5 if circrna_overlap else 0.0),
         "immune": immune_risk,
     }
     total = 0.0
@@ -138,11 +144,10 @@ def run(
         # same unknown as an explicit null — not a measured zero (roadmap B2).
         ago2 = _as_optional(ago2_results.get(site_id, {}).get("loading_score"))
         rbp = _as_optional(rbp_results.get(site_id, {}).get("competition_score"))
-        circrna_overlap = bool(
-            circrna_results.get(site_id, {}).get("sponge_risk", False)
-        )
-        immune_risk = float(
-            offtarget_immune.get(site_id, sarna_immune).get("risk_score", 0.0)
+        raw_sponge = circrna_results.get(site_id, {}).get("sponge_risk")
+        circrna_overlap = None if raw_sponge is None else bool(raw_sponge)
+        immune_risk = _as_optional(
+            offtarget_immune.get(site_id, sarna_immune).get("risk_score")
         )
         immune_motifs = [
             h.get("motif", "") if isinstance(h, dict) else str(h)
@@ -154,8 +159,11 @@ def run(
             "ago2_loading": ago2,
             "rbp_competition": rbp,
             "circrna_overlap": circrna_overlap,
-            "immune_motif_count": int(
-                offtarget_immune.get(site_id, sarna_immune).get("total_hits", 0)
+            "immune_motif_count": (
+                None
+                if (_hits := offtarget_immune.get(site_id, sarna_immune).get("total_hits"))
+                is None
+                else int(_hits)
             ),
             "immune_motifs_found": immune_motifs,
             "normalized_score": normalized,

@@ -68,7 +68,12 @@ def run(
                 circrna_results[site_id] = {
                     "region": region.model_dump(),
                     "overlapping_circrnas": [],
-                    "overlap_count": 0, "sponge_risk": False, "data_available": False,
+                    # A dead source knows nothing. Writing 0.0/False here
+                    # asserts "no signal"/"not loaded", which is the safe
+                    # direction on a risk channel — and for Ago2 it is the
+                    # 0.40-weight channel execution_merger's own docstring
+                    # warns about (audit 2026-11-19, Bulgu 3).
+                    "overlap_count": None, "sponge_risk": None, "data_available": False,
                 }
 
     payload: dict[str, Any] = {"circrna_results": circrna_results}
