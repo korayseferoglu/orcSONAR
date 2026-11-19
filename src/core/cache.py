@@ -114,7 +114,12 @@ class Cache:
     #: bump. Same object as the module-level registry.
     SCHEMA_VERSIONS = _SCHEMA_VERSIONS
 
-    def __init__(self, db_path: str | Path = "data/cache/orcsonar_cache.db") -> None:
+    # No default path. A caller that forgot to pass one silently opened the
+    # live database even when the run was configured elsewhere — the deepest
+    # instance of Bulgu 13, and the one that let phylop_scorer and ccle_reader
+    # reach the wrong file (audit 2026-11-19). Making it required turns that
+    # into an immediate TypeError instead of a wrong answer.
+    def __init__(self, db_path: str | Path) -> None:
         self._path = Path(db_path)
         self._path.parent.mkdir(parents=True, exist_ok=True)
         self._conn = sqlite3.connect(str(self._path), check_same_thread=False)

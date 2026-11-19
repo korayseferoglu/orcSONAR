@@ -9,6 +9,7 @@ from typing import Any
 
 from loguru import logger
 
+from src.core.config import config_from_mapping
 from src.core.site_keys import site_ids_and_regions
 from src.stage3_variant_tox.phylop_scorer import score_phylop
 
@@ -18,6 +19,7 @@ def run(
     bigwig_url: str,
     output_path: str,
     log_path: str,
+    config_raw: dict[str, Any] | None = None,
 ) -> None:
     """Score phyloP conservation for off-target regions and write stage3_phylop.json.
 
@@ -44,7 +46,10 @@ def run(
     phylop_results: dict[str, Any] = {}
     if regions:
         try:
-            results = score_phylop(regions, bigwig_url)
+            config = config_from_mapping(config_raw)
+            results = score_phylop(
+                regions, bigwig_url, cache_db=config.data_paths.cache_db
+            )
             for site_id, res in zip(site_ids, results, strict=True):
                 phylop_results[site_id] = res.model_dump()
         except Exception as exc:

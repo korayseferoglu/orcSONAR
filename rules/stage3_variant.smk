@@ -80,6 +80,7 @@ rule phylop_score:
             bigwig_url=params.bigwig_url,
             output_path=output[0],
             log_path=log[0],
+            config_raw=config,
         )
 
 

@@ -19,6 +19,9 @@ from src.stage3_variant_tox.phylop_scorer import (
 # ---------------------------------------------------------------------------
 
 BIGWIG_URL = "https://hgdownload.soe.ucsc.edu/goldenPath/hg38/phyloP100way/hg38.phyloP100way.bw"
+#: score_phylop now requires an explicit cache path — the hardcoded
+#: default sent callers to the live database (audit 2026-11-19).
+CACHE_DB = ":memory:"
 
 REGION_CHR1 = GenomicRegion(chrom="chr1", start=65_790, end=65_810, strand="+")
 REGION_CHR17 = GenomicRegion(chrom="chr17", start=7_668_400, end=7_668_500, strand="-")
@@ -171,7 +174,7 @@ class TestScorePhylop:
         MockCache.return_value.__enter__ = lambda s: _mock_cache(hit=None)
         MockCache.return_value.__exit__ = MagicMock(return_value=False)
 
-        results = score_phylop([REGION_CHR1], BIGWIG_URL)
+        results = score_phylop([REGION_CHR1], BIGWIG_URL, cache_db=CACHE_DB)
         assert len(results) == 1
         assert results[0].conservation_score == pytest.approx(1.0)
 
@@ -183,7 +186,7 @@ class TestScorePhylop:
         MockCache.return_value.__enter__ = lambda s: _mock_cache(hit=None)
         MockCache.return_value.__exit__ = MagicMock(return_value=False)
 
-        results = score_phylop([REGION_CHR17], BIGWIG_URL)
+        results = score_phylop([REGION_CHR17], BIGWIG_URL, cache_db=CACHE_DB)
         assert results[0].conservation_score == pytest.approx(0.0)
 
     @patch("src.stage3_variant_tox.phylop_scorer.Cache")
@@ -194,14 +197,14 @@ class TestScorePhylop:
         MockCache.return_value.__enter__ = lambda s: _mock_cache(hit=None)
         MockCache.return_value.__exit__ = MagicMock(return_value=False)
 
-        results = score_phylop([REGION_CHRX], BIGWIG_URL)
+        results = score_phylop([REGION_CHRX], BIGWIG_URL, cache_db=CACHE_DB)
         assert results[0].mean_score == pytest.approx(0.0)
         assert results[0].conservation_score == pytest.approx(0.0)
 
     @patch("src.stage3_variant_tox.phylop_scorer.pyBigWig.open")
     def test_bigwig_open_failure_is_unknown(self, mock_open) -> None:
         mock_open.side_effect = OSError("connection refused")
-        results = score_phylop([REGION_CHR1], BIGWIG_URL)
+        results = score_phylop([REGION_CHR1], BIGWIG_URL, cache_db=CACHE_DB)
         assert len(results) == 1
         # Inverted 2026-11-19 (audit Bulgu 2/5). This asserted the
         # fallback *numbers*, pinning "a dead source reads as a measurement"
@@ -212,7 +215,7 @@ class TestScorePhylop:
 
     @patch("src.stage3_variant_tox.phylop_scorer.pyBigWig.open")
     def test_empty_input_returns_empty_list(self, mock_open) -> None:
-        results = score_phylop([], BIGWIG_URL)
+        results = score_phylop([], BIGWIG_URL, cache_db=CACHE_DB)
         assert results == []
         mock_open.assert_not_called()
 
@@ -224,7 +227,7 @@ class TestScorePhylop:
         MockCache.return_value.__enter__ = lambda s: _mock_cache(hit=None)
         MockCache.return_value.__exit__ = MagicMock(return_value=False)
 
-        score_phylop([REGION_CHR1, REGION_CHR17, REGION_CHRX], BIGWIG_URL)
+        score_phylop([REGION_CHR1, REGION_CHR17, REGION_CHRX], BIGWIG_URL, cache_db=CACHE_DB)
         mock_open.assert_called_once()  # only one handle opened
         assert mock_bw.stats.call_count == 3
 
@@ -238,7 +241,7 @@ class TestScorePhylop:
         MockCache.return_value.__enter__ = lambda s: _mock_cache(hit=None)
         MockCache.return_value.__exit__ = MagicMock(return_value=False)
 
-        results = score_phylop([REGION_CHR1, REGION_CHR17, REGION_CHRX], BIGWIG_URL)
+        results = score_phylop([REGION_CHR1, REGION_CHR17, REGION_CHRX], BIGWIG_URL, cache_db=CACHE_DB)
         assert len(results) == 3
         assert results[0].region == REGION_CHR1
         assert results[1].region == REGION_CHR17
@@ -255,7 +258,7 @@ class TestScorePhylop:
         MockCache.return_value.__enter__ = lambda s: _mock_cache(hit=None)
         MockCache.return_value.__exit__ = MagicMock(return_value=False)
 
-        results = score_phylop([REGION_CHR1], BIGWIG_URL)
+        results = score_phylop([REGION_CHR1], BIGWIG_URL, cache_db=CACHE_DB)
         assert all(isinstance(r, PhylopResult) for r in results)
 
     @patch("src.stage3_variant_tox.phylop_scorer.Cache")
@@ -266,7 +269,7 @@ class TestScorePhylop:
         MockCache.return_value.__enter__ = lambda s: _mock_cache(hit=None)
         MockCache.return_value.__exit__ = MagicMock(return_value=False)
 
-        score_phylop([REGION_CHR1], BIGWIG_URL)
+        score_phylop([REGION_CHR1], BIGWIG_URL, cache_db=CACHE_DB)
         mock_bw.close.assert_called_once()
 
     @patch("src.stage3_variant_tox.phylop_scorer.Cache")
@@ -280,7 +283,7 @@ class TestScorePhylop:
         MockCache.return_value.__exit__ = MagicMock(return_value=False)
 
         # Should not raise; graceful degradation returns neutral via _get_conservation_score
-        results = score_phylop([REGION_CHR1], BIGWIG_URL)
+        results = score_phylop([REGION_CHR1], BIGWIG_URL, cache_db=CACHE_DB)
         assert len(results) == 1
         mock_bw.close.assert_called_once()
 
@@ -293,6 +296,6 @@ class TestScorePhylop:
         MockCache.return_value.__enter__ = lambda s: _mock_cache(hit=cached)
         MockCache.return_value.__exit__ = MagicMock(return_value=False)
 
-        results = score_phylop([REGION_CHR1], BIGWIG_URL)
+        results = score_phylop([REGION_CHR1], BIGWIG_URL, cache_db=CACHE_DB)
         assert results[0].conservation_score == pytest.approx(0.75)
         mock_bw.stats.assert_not_called()

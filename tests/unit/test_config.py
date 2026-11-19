@@ -146,3 +146,53 @@ class TestAdaptersReceiveTheConfiguredPaths:
             "every unpassed field silently falls back to a hardcoded default:\n  "
             + "\n  ".join(offenders)
         )
+
+
+class TestNoModuleHardcodesTheCachePath:
+    """The guard must not inherit the blind spot of the fix it guards.
+
+    R0.3 found its fourteen adapters by grepping for ``OrcSonarConfig(``, and
+    the test written with it listed those same fourteen. Both missed
+    ``phylop_scorer``, which took ``cache_db`` as a *default parameter*
+    holding the literal live path, and ``ccle_reader``, which passed a
+    ``data_paths`` override that replaced the whole section and reverted
+    ``cache_db`` to its default.
+
+    Neither showed up in any test. They showed up in a real run: the
+    per-rule logs recorded seven opens of ``data/cache/orcsonar_cache.db``
+    while the other forty-seven used the configured path (audit 2026-11-19).
+
+    So this test checks a *property* instead of a list — nothing outside
+    core/config.py may spell the cache path.
+    """
+
+    def test_the_literal_cache_path_appears_only_in_core_config(self) -> None:
+        import pathlib
+
+        root = pathlib.Path(__file__).resolve().parents[2]
+        needle = "data/cache/orcsonar_cache.db"
+        offenders: list[str] = []
+        for path in sorted((root / "src").rglob("*.py")):
+            if path.name == "config.py":
+                continue  # the one legitimate home of the default
+            for lineno, line in enumerate(
+                path.read_text(encoding="utf-8").splitlines(), 1
+            ):
+                if needle in line:
+                    offenders.append(f"{path.relative_to(root)}:{lineno}")
+        assert not offenders, (
+            "these spell the cache path instead of reading it from config, so "
+            "a configured path does not reach them:\n  " + "\n  ".join(offenders)
+        )
+
+    def test_a_nested_override_does_not_wipe_its_siblings(self) -> None:
+        """The bug that sent ccle_reader to the live cache."""
+        cfg = config_from_mapping(
+            {"data_paths": {"cache_db": "/tmp/mine.db", "ccle_csv": "/tmp/old.csv"}},
+            data_paths={"ccle_csv": "/tmp/new.csv"},
+        )
+        assert cfg.data_paths.ccle_csv == "/tmp/new.csv"
+        assert cfg.data_paths.cache_db == "/tmp/mine.db", (
+            "a data_paths override replaced the whole section and cache_db "
+            "fell back to its default"
+        )

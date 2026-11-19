@@ -38,7 +38,11 @@ _PHYLOP_TTL_HOURS: int = 168  # 1 week
 def score_phylop(
     regions: list[GenomicRegion],
     bigwig_url: str,
-    cache_db: str = "data/cache/orcsonar_cache.db",
+    # No default: a hardcoded path here meant phylop_fetcher opened the
+    # live cache while the rest of the run used the configured one
+    # (audit 2026-11-19 — found by watching which file a run touched,
+    # not by reading the code).
+    cache_db: str,
 ) -> list[PhylopResult]:
     """Score phyloP conservation for each off-target region via remote BigWig.
 

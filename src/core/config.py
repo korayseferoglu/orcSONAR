@@ -145,7 +145,18 @@ def config_from_mapping(raw: Mapping[str, Any] | None, **overrides: Any) -> OrcS
         Validated OrcSonarConfig.
     """
     merged: dict[str, Any] = dict(raw or {})
-    merged.update(overrides)
+    for key, value in overrides.items():
+        base = merged.get(key)
+        if isinstance(base, Mapping) and isinstance(value, Mapping):
+            # Nested sections merge key-by-key. A blunt `update()` here was a
+            # real bug: a rule passing `data_paths={"ccle_csv": ...}` replaced
+            # the whole section, so `cache_db` silently reverted to its
+            # default and the run opened the wrong database — which is exactly
+            # the failure Bulgu 13 was about, reintroduced by its own fix and
+            # caught only by watching which file a real run touched.
+            merged[key] = {**base, **value}
+        else:
+            merged[key] = value
     return OrcSonarConfig(**merged)
 
 
