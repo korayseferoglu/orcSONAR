@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from pathlib import Path
 from unittest import mock
+from unittest.mock import patch
 
 import pytest
 import responses as resp_mock
@@ -15,6 +16,7 @@ from src.stage1_genomic_map.transcript_resolver import (
     get_transcript_sequence,
     resolve_transcripts,
 )
+from src.stage1_genomic_map.transcript_resolver import run as transcript_resolver_run
 
 FIXTURES = Path(__file__).parent.parent / "fixtures"
 
@@ -468,3 +470,31 @@ def test_get_sequence_raises_on_api_error(test_config: OrcSonarConfig) -> None:
 
     with pytest.raises(DataSourceError):
         get_transcript_sequence("ENST00000000001", test_config)
+
+
+class TestAFailedResolutionIsNotAnEmptyGene:
+    """Losing the target gene's transcripts must not pass as "none found".
+
+    Audit 2026-11-19. On failure `run()` wrote `{"transcripts": [], "count": 0}`
+    and carried on. The target gene then contributes nothing to the scan: the
+    search space silently shrinks to the background set, which is the Bulgu 12
+    shape at one stage's remove, and the resulting report is a measurement of
+    a different question.
+    """
+
+    def test_resolution_failure_raises_rather_than_writing_an_empty_gene(
+        self, tmp_path: Path
+    ) -> None:
+        out = tmp_path / "stage1_transcripts.json"
+        with patch(
+            "src.stage1_genomic_map.transcript_resolver.resolve_transcripts",
+            side_effect=RuntimeError("Ensembl down"),
+        ), pytest.raises(DataSourceError, match="transcript"):
+            transcript_resolver_run(
+                gene="VEGFA",
+                ensembl_url="https://rest.ensembl.org",
+                ncbi_url="https://eutils.ncbi.nlm.nih.gov/entrez/eutils/",
+                output_path=str(out),
+                log_path=str(tmp_path / "tr.log"),
+            )
+        assert not out.exists()

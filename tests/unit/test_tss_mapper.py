@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+from unittest.mock import patch
 
 import pytest
 import responses as resp_mock
@@ -17,6 +18,7 @@ from src.stage1_genomic_map.tss_mapper import (
     _search_fantom5,
     find_tss,
 )
+from src.stage1_genomic_map.tss_mapper import run as tss_mapper_run
 
 # ---------------------------------------------------------------------------
 # Fixtures
@@ -269,3 +271,40 @@ def test_promoter_reverse_strand_near_zero_clamped() -> None:
     region = define_promoter(tss, upstream=1000, downstream=200)
     assert region.start == 0   # 100 - 200 clamped to 0
     assert region.end == 1100
+
+
+class TestAFailedTssLookupDoesNotInventALocus:
+    """A fabricated TSS is worse than a fabricated score.
+
+    Audit 2026-11-19 (found while clearing Bulgu 2's last producers). On any
+    exception, `run()` wrote::
+
+        "tss": {"chrom": "chr1", "position": 0, "source": "EPDnew", ...}
+
+    That is not a degraded measurement, it is an invented locus carrying a
+    real database's name as its provenance. The promoter window, the
+    transcript models and every off-target coordinate are then built on
+    chr1:0, and nothing downstream can tell that the lookup ever failed — the
+    same shape as Bulgu 12, one stage earlier.
+    """
+
+    def test_lookup_failure_raises_instead_of_writing_chr1_zero(
+        self, tmp_path: Path
+    ) -> None:
+        out = tmp_path / "stage1_tss.json"
+        with patch(
+            "src.stage1_genomic_map.tss_mapper.find_tss",
+            side_effect=RuntimeError("EPDnew unreadable"),
+        ), pytest.raises(DataSourceError, match="TSS"):
+            tss_mapper_run(
+                gene="VEGFA",
+                epdnew_bed="data/1_Temel_Harita/EPDnew/EPDnew_hg38.bed",
+                fantom5_bed="data/1_Temel_Harita/FANTOM5/FANTOM5_hg38_CAGE_peaks.bed",
+                output_path=str(out),
+                log_path=str(tmp_path / "tss.log"),
+            )
+
+        assert not out.exists(), (
+            "a TSS file was written for a lookup that failed; downstream "
+            "stages cannot distinguish it from a real locus"
+        )

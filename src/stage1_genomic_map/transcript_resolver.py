@@ -533,8 +533,15 @@ def run(
         }
         logger.info(f"transcript_resolver: {gene} → {len(transcripts)} transcript(s)")
     except Exception as exc:
-        logger.warning(f"transcript_resolver: failed for '{gene}': {exc} — returning empty")
-        payload = {"gene": gene, "transcripts": [], "count": 0}
+        # An empty transcript list is not "this gene has no transcripts"; it
+        # silently removes the target gene from the scan and leaves only the
+        # background set, so the run answers a different question without
+        # saying so (audit 2026-11-19, the Bulgu 12 shape one stage earlier).
+        raise DataSourceError(
+            f"transcript_resolver: could not resolve any transcript for "
+            f"'{gene}': {exc}. Writing an empty list would drop the target "
+            f"gene from the scan without saying so."
+        ) from exc
 
     out = _Path(output_path)
     out.parent.mkdir(parents=True, exist_ok=True)

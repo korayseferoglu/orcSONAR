@@ -301,14 +301,16 @@ def run(
         payload = {"gene": gene, "tss": tss.model_dump()}
         logger.info(f"tss_mapper: {gene} → {tss.chrom}:{tss.position}({tss.strand})")
     except Exception as exc:
-        logger.warning(f"tss_mapper: TSS lookup failed for '{gene}': {exc} — using fallback")
-        payload = {
-            "gene": gene,
-            "tss": {
-                "gene": gene, "chrom": "chr1", "position": 0,
-                "strand": "+", "source": "EPDnew", "score": 0.0,
-            },
-        }
+        # The old fallback wrote chr1:0 with source "EPDnew" — an invented
+        # locus wearing a real database's name. The promoter window, the
+        # transcript models and every off-target coordinate are built on this
+        # position, so a wrong one is not a degraded result, it is a different
+        # experiment that nothing downstream can detect (audit 2026-11-19).
+        raise DataSourceError(
+            f"tss_mapper: TSS lookup failed for '{gene}': {exc}. Refusing to "
+            f"invent a locus — every coordinate in this run would be built on "
+            f"it."
+        ) from exc
 
     out = Path(output_path)
     out.parent.mkdir(parents=True, exist_ok=True)
