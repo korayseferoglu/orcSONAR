@@ -21,6 +21,7 @@ rule atac_signal:
             cell_lines_cfg=params.cell_lines_cfg,
             output_path=output[0],
             log_path=log[0],
+            config_raw=config,
         )
 
 
@@ -42,6 +43,7 @@ rule histone_marks:
             cell_lines_cfg=params.cell_lines_cfg,
             output_path=output[0],
             log_path=log[0],
+            config_raw=config,
         )
 
 
@@ -63,6 +65,7 @@ rule groseq_signal:
             cell_lines_cfg=params.cell_lines_cfg,
             output_path=output[0],
             log_path=log[0],
+            config_raw=config,
         )
 
 
@@ -84,6 +87,7 @@ rule hic_contacts:
             cell_lines_cfg=params.cell_lines_cfg,
             output_path=output[0],
             log_path=log[0],
+            config_raw=config,
         )
 
 
@@ -104,6 +108,7 @@ rule ccle_expression:
             cell_line=wildcards.cell_line,
             output_path=output[0],
             log_path=log[0],
+            config_raw=config,
         )
 
 

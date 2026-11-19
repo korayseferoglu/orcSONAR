@@ -20,6 +20,7 @@ rule ago2_loading:
             cell_lines_cfg=params.cell_lines_cfg,
             output_path=output[0],
             log_path=log[0],
+            config_raw=config,
         )
 
 
@@ -41,6 +42,7 @@ rule rbp_competition:
             cell_lines_cfg=params.cell_lines_cfg,
             output_path=output[0],
             log_path=log[0],
+            config_raw=config,
         )
 
 

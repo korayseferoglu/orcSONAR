@@ -9,7 +9,7 @@ from typing import Any
 
 from loguru import logger
 
-from src.core.config import OrcSonarConfig
+from src.core.config import config_from_mapping
 from src.core.site_keys import site_ids_and_regions
 from src.stage6_execution.rbp_competition import assess_rbp_competition
 
@@ -20,6 +20,7 @@ def run(
     cell_lines_cfg: str,
     output_path: str,
     log_path: str,
+    config_raw: dict[str, Any] | None = None,
 ) -> None:
     """Extract hnRNPA1 eCLIP signal for off-target regions and write stage6_rbp.json."""
     Path(log_path).parent.mkdir(parents=True, exist_ok=True)
@@ -39,7 +40,7 @@ def run(
     rbp_results: dict[str, Any] = {}
     if regions:
         try:
-            config = OrcSonarConfig(cell_line=cell_line)
+            config = config_from_mapping(config_raw, cell_line=cell_line)
             results = assess_rbp_competition(regions, cell_line, config, cell_lines_cfg)
             for site_id, res in zip(site_ids, results, strict=True):
                 rbp_results[site_id] = res.model_dump()

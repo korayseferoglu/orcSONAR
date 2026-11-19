@@ -9,7 +9,7 @@ from typing import Any
 
 from loguru import logger
 
-from src.core.config import OrcSonarConfig
+from src.core.config import config_from_mapping
 from src.stage4_epigenetic.ccle_expression import CCLEReader
 
 
@@ -19,6 +19,7 @@ def run(
     cell_line: str,
     output_path: str,
     log_path: str,
+    config_raw: dict[str, Any] | None = None,
 ) -> None:
     """Look up CCLE expression for off-target genes and write stage4_ccle.json.
 
@@ -43,7 +44,7 @@ def run(
     sites: list[dict] = offtargets.get("offtarget_sites", [])
     genes: set[str] = {s["gene"] for s in sites if "gene" in s}
 
-    config = OrcSonarConfig(
+    config = config_from_mapping(config_raw, 
         cell_line=cell_line,
         data_paths={"ccle_csv": ccle_csv},
     )

@@ -38,6 +38,7 @@ rule gnomad_query:
             api_url=params.api_url,
             output_path=output[0],
             log_path=log[0],
+            config_raw=config,
         )
 
 
@@ -58,6 +59,7 @@ rule clinvar_check:
             ncbi_url=params.ncbi_url,
             output_path=output[0],
             log_path=log[0],
+            config_raw=config,
         )
 
 

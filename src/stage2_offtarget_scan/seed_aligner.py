@@ -14,7 +14,7 @@ Anti-parallel pairing convention:
 
 from __future__ import annotations
 
-from typing import Literal
+from typing import Any, Literal
 
 from loguru import logger
 
@@ -320,6 +320,7 @@ def run(
     output_path: str,
     log_path: str,
     cell_line: str = "HeLa",
+    config_raw: dict[str, Any] | None = None,
 ) -> None:
     """Run seed alignment against the whole transcriptome and write stage2_seed_hits.json.
 
@@ -331,7 +332,6 @@ def run(
     import json
     import sys
     from pathlib import Path as _Path
-    from typing import Any
 
     _Path(log_path).parent.mkdir(parents=True, exist_ok=True)
     logger.remove()
@@ -348,12 +348,12 @@ def run(
     gene = promoter_data.get("gene", "UNKNOWN")
     raw_transcripts: list[dict] = promoter_data.get("transcripts", [])
 
-    from src.core.config import OrcSonarConfig
+    from src.core.config import config_from_mapping
     from src.core.models import TranscriptInfo
     from src.stage1_genomic_map.transcript_resolver import get_transcript_sequence
     from src.stage2_offtarget_scan.transcriptome_fetcher import get_background_transcriptome
 
-    config = OrcSonarConfig(
+    config = config_from_mapping(config_raw, 
         target_gene=gene,
         seed_length=seed_length,
         max_mismatches=max_mismatches,

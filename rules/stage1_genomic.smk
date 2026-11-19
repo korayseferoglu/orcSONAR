@@ -21,6 +21,7 @@ rule tss_mapping:
             fantom5_bed=input.fantom5,
             output_path=output[0],
             log_path=log[0],
+            config_raw=config,
         )
 
 
@@ -41,6 +42,7 @@ rule transcript_resolution:
             ncbi_url=params.ncbi_url,
             output_path=output[0],
             log_path=log[0],
+            config_raw=config,
         )
 
 

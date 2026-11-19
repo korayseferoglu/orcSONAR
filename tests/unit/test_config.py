@@ -3,7 +3,7 @@
 import pytest
 from pydantic import ValidationError
 
-from src.core.config import ScoringWeights, load_config
+from src.core.config import ScoringWeights, config_from_mapping, load_config
 
 
 class TestScoringWeights:
@@ -60,3 +60,89 @@ class TestLoadConfig:
     def test_scoring_weights_present(self, tmp_config_yaml):
         cfg = load_config(tmp_config_yaml)
         assert cfg.scoring_weights.sequence_specificity == pytest.approx(0.20)
+
+
+class TestConfigFromMapping:
+    """Snakemake's merged config must reach the adapters.
+
+    Audit 2026-11-19, Bulgu 13: ``load_config`` had exactly one production
+    caller, so fourteen adapters built ``OrcSonarConfig(...)`` from their
+    rule's params and every unpassed field fell back to a hardcoded default.
+    ``cache_db`` is read in fourteen places across ten modules and was passed
+    by no rule, which is why a configured cache path was ignored.
+    """
+
+    def test_data_paths_survive_the_hand_off(self) -> None:
+        cfg = config_from_mapping(
+            {"data_paths": {"cache_db": "/tmp/elsewhere/cache.db"}}
+        )
+        assert cfg.data_paths.cache_db == "/tmp/elsewhere/cache.db"
+
+    def test_defaults_apply_when_nothing_is_passed(self) -> None:
+        cfg = config_from_mapping(None)
+        assert cfg.data_paths.cache_db == "data/cache/orcsonar_cache.db"
+
+    def test_overrides_win_over_the_mapping(self) -> None:
+        """A rule's own params beat the file, as --config does in Snakemake."""
+        cfg = config_from_mapping({"target_gene": "VEGFA"}, target_gene="MYC")
+        assert cfg.target_gene == "MYC"
+
+    def test_the_mapping_is_not_mutated(self) -> None:
+        """Snakemake's config dict is shared across rules; it must not be edited."""
+        raw = {"target_gene": "VEGFA"}
+        config_from_mapping(raw, target_gene="MYC")
+        assert raw == {"target_gene": "VEGFA"}
+
+
+class TestAdaptersReceiveTheConfiguredPaths:
+    """Every rule must hand its adapter the merged config.
+
+    Bulgu 13's harm was concrete and measured: ``cache_db`` is read in
+    fourteen places across ten modules and no rule passed it, so a configured
+    cache path was ignored and the audit's own isolation failed — one module
+    honoured the scratch copy while another opened the live database.
+    """
+
+    _ADAPTERS = (
+        "transcript_resolver", "tss_mapper", "repeat_scanner", "seed_aligner",
+        "clinvar_client", "gnomad_client", "atac_fetcher", "ccle_reader",
+        "groseq_fetcher", "hic_fetcher", "histone_fetcher", "g4_detector",
+        "ago2_fetcher", "rbp_fetcher",
+    )
+
+    def test_every_adapter_run_accepts_config_raw(self) -> None:
+        import importlib
+        import inspect
+
+        missing: list[str] = []
+        for name in self._ADAPTERS:
+            module = next(
+                importlib.import_module(f"src.{pkg}.{name}")
+                for pkg in (
+                    "stage1_genomic_map", "stage2_offtarget_scan", "stage3_variant_tox",
+                    "stage4_epigenetic", "stage5_biophysics", "stage6_execution",
+                )
+                if importlib.util.find_spec(f"src.{pkg}.{name}") is not None
+            )
+            if "config_raw" not in inspect.signature(module.run).parameters:
+                missing.append(name)
+        assert not missing, f"these run() adapters cannot receive the config: {missing}"
+
+    def test_every_rule_passes_config_to_its_adapter(self) -> None:
+        import re
+        from pathlib import Path
+
+        root = Path(__file__).resolve().parents[2]
+        call = re.compile(
+            r"\b(" + "|".join(self._ADAPTERS) + r")\.run\(\n((?:.*\n)*?)\s*\)\n"
+        )
+        offenders: list[str] = []
+        for smk in sorted((root / "rules").glob("*.smk")):
+            for match in call.finditer(smk.read_text(encoding="utf-8")):
+                if "config_raw=config" not in match.group(2):
+                    offenders.append(f"{smk.name}: {match.group(1)}.run()")
+        assert not offenders, (
+            "these rules build their adapter's config from params alone, so "
+            "every unpassed field silently falls back to a hardcoded default:\n  "
+            + "\n  ".join(offenders)
+        )

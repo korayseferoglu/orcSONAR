@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from collections.abc import Mapping
 from functools import lru_cache
 from pathlib import Path
 from typing import Any
@@ -118,6 +119,34 @@ def _flatten(d: dict[str, Any], parent: dict[str, Any]) -> dict[str, Any]:
         else:
             parent[k] = v
     return parent
+
+
+def config_from_mapping(raw: Mapping[str, Any] | None, **overrides: Any) -> OrcSonarConfig:
+    """Build a config from Snakemake's merged ``config`` dict, plus overrides.
+
+    Every Snakemake adapter used to call ``OrcSonarConfig(...)`` with only the
+    handful of values its rule passed as params, so every field it did not pass
+    — including all twelve ``data_paths`` entries — silently fell back to the
+    hardcoded defaults in this module. ``config.yaml``'s ``paths:`` block was
+    therefore decorative at runtime: ``cache_db`` alone is read in fourteen
+    places across ten modules and was passed by no rule (audit 2026-11-19,
+    Bulgu 13). That is also how the audit's own cache isolation failed — one
+    module honoured the configured path while another opened the default.
+
+    Snakemake's ``config`` is the YAML merged with any ``--config`` overrides,
+    so it is the *effective* configuration, and preferable to re-reading the
+    file.
+
+    Args:
+        raw: Snakemake's ``config`` mapping, or None to use defaults only.
+        **overrides: Values that win over ``raw`` (a rule's own params).
+
+    Returns:
+        Validated OrcSonarConfig.
+    """
+    merged: dict[str, Any] = dict(raw or {})
+    merged.update(overrides)
+    return OrcSonarConfig(**merged)
 
 
 def load_config(path: str | Path = "config/config.yaml") -> OrcSonarConfig:

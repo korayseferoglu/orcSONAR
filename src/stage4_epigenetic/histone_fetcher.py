@@ -9,7 +9,7 @@ from typing import Any
 
 from loguru import logger
 
-from src.core.config import OrcSonarConfig
+from src.core.config import config_from_mapping
 from src.core.site_keys import site_ids_and_regions
 from src.stage4_epigenetic.histone_marks import HistoneMarkReader
 
@@ -20,6 +20,7 @@ def run(
     cell_lines_cfg: str,
     output_path: str,
     log_path: str,
+    config_raw: dict[str, Any] | None = None,
 ) -> None:
     """Extract H3K4me3 and H3K27ac signals for off-target regions and write stage4_histones.json."""
     Path(log_path).parent.mkdir(parents=True, exist_ok=True)
@@ -40,7 +41,7 @@ def run(
     h3k27ac_signals: dict[str, float | None] = {}
     if regions:
         try:
-            config = OrcSonarConfig()
+            config = config_from_mapping(config_raw)
             reader = HistoneMarkReader(config, cell_lines_yaml=cell_lines_cfg)
             k4me3 = reader.get_h3k4me3_bulk(regions, cell_line)
             k27ac = reader.get_h3k27ac_bulk(regions, cell_line)

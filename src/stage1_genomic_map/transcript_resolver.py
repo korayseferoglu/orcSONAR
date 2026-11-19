@@ -7,6 +7,7 @@ All API results are cached in SQLite (TTL = 1 week).
 from __future__ import annotations
 
 import time
+from typing import Any
 
 import requests
 from loguru import logger
@@ -18,7 +19,7 @@ from tenacity import (
 )
 
 from src.core.cache import Cache
-from src.core.config import OrcSonarConfig
+from src.core.config import OrcSonarConfig, config_from_mapping
 from src.core.exceptions import DataSourceError
 from src.core.models import TranscriptInfo
 
@@ -505,6 +506,7 @@ def run(
     ncbi_url: str,
     output_path: str,
     log_path: str,
+    config_raw: dict[str, Any] | None = None,
 ) -> None:
     """Resolve transcripts for *gene* and write stage1_transcripts.json."""
     import json
@@ -516,7 +518,7 @@ def run(
     logger.add(log_path, level="DEBUG")
     logger.add(sys.stderr, level="INFO")
 
-    config = OrcSonarConfig(
+    config = config_from_mapping(config_raw, 
         target_gene=gene,
         ensembl_base_url=ensembl_url,
         ncbi_eutils_url=ncbi_url,

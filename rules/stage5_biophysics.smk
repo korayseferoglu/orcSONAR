@@ -102,6 +102,7 @@ rule g4_detection:
             offtargets_path=input.offtargets,
             output_path=output[0],
             log_path=log[0],
+            config_raw=config,
         )
 
 

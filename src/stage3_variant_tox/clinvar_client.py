@@ -313,6 +313,7 @@ def run(
     ncbi_url: str,
     output_path: str,
     log_path: str,
+    config_raw: dict[str, Any] | None = None,
 ) -> None:
     """Check ClinVar for each off-target region and write stage3_clinvar.json."""
     import json
@@ -324,7 +325,7 @@ def run(
     logger.add(log_path, level="DEBUG")
     logger.add(sys.stderr, level="INFO")
 
-    from src.core.config import OrcSonarConfig
+    from src.core.config import config_from_mapping
 
     offtargets: dict[str, Any] = {}
     try:
@@ -335,7 +336,7 @@ def run(
     sites: list[dict] = offtargets.get("offtarget_sites", [])
     site_ids, regions = site_ids_and_regions(sites, caller="clinvar_client")
 
-    config = OrcSonarConfig(ncbi_eutils_url=ncbi_url)
+    config = config_from_mapping(config_raw, ncbi_eutils_url=ncbi_url)
     clinvar_results: dict[str, Any] = {}
     if regions:
         try:

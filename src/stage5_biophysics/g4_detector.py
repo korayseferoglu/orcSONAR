@@ -14,6 +14,7 @@ combined risk score.
 from __future__ import annotations
 
 import re
+from typing import Any
 
 from loguru import logger
 
@@ -184,6 +185,7 @@ def run(
     offtargets_path: str,
     output_path: str,
     log_path: str,
+    config_raw: dict[str, Any] | None = None,
 ) -> None:
     """Detect G4 motifs for off-target site sequences and write stage5_g4.json.
 
@@ -194,7 +196,6 @@ def run(
     import json
     import sys
     from pathlib import Path as _Path
-    from typing import Any
 
     _Path(log_path).parent.mkdir(parents=True, exist_ok=True)
     logger.remove()
@@ -210,9 +211,9 @@ def run(
     sites: list[dict] = offtargets.get("offtarget_sites", [])
     g4_results: dict[str, Any] = {}
 
-    from src.core.config import OrcSonarConfig
+    from src.core.config import config_from_mapping
     from src.stage1_genomic_map.transcript_resolver import get_transcript_sequence
-    config = OrcSonarConfig()
+    config = config_from_mapping(config_raw)
 
     for s in sites:
         site_id = s["site_id"]

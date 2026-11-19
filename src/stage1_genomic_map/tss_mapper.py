@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+from typing import Any
 
 import pandas as pd
 import requests
@@ -16,7 +17,7 @@ from tenacity import (
 )
 
 from src.core.cache import Cache
-from src.core.config import OrcSonarConfig
+from src.core.config import OrcSonarConfig, config_from_mapping
 from src.core.exceptions import DataSourceError
 from src.core.models import GenomicRegion, TSSInfo
 
@@ -271,6 +272,7 @@ def run(
     fantom5_bed: str,
     output_path: str,
     log_path: str,
+    config_raw: dict[str, Any] | None = None,
 ) -> None:
     """Map TSS for *gene* from EPDnew/FANTOM5 and write stage1_tss.json.
 
@@ -289,7 +291,7 @@ def run(
     logger.add(log_path, level="DEBUG")
     logger.add(sys.stderr, level="INFO")
 
-    config = OrcSonarConfig(
+    config = config_from_mapping(config_raw, 
         target_gene=gene,
         data_paths={"epdnew_bed": epdnew_bed, "fantom5_bed": fantom5_bed},
     )

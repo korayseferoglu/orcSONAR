@@ -10,6 +10,8 @@ ADAR risk rationale:
 
 from __future__ import annotations
 
+from typing import Any
+
 import requests
 from loguru import logger
 from tenacity import retry, stop_after_attempt, wait_exponential
@@ -189,12 +191,12 @@ def run(
     ucsc_api_url: str,
     output_path: str,
     log_path: str,
+    config_raw: dict[str, Any] | None = None,
 ) -> None:
     """Scan RepeatMasker for off-target regions and write stage2_repeats.json."""
     import json
     import sys
     from pathlib import Path as _Path
-    from typing import Any
 
     _Path(log_path).parent.mkdir(parents=True, exist_ok=True)
     logger.remove()
@@ -209,9 +211,9 @@ def run(
 
     sites: list[dict] = seed_data.get("sites", [])
 
-    from src.core.config import OrcSonarConfig
+    from src.core.config import config_from_mapping
 
-    config = OrcSonarConfig(ucsc_api_url=ucsc_api_url)
+    config = config_from_mapping(config_raw, ucsc_api_url=ucsc_api_url)
 
     site_ids, regions = site_ids_and_regions(sites, caller="repeat_scanner")
 

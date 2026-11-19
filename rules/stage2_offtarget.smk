@@ -28,6 +28,7 @@ rule seed_alignment:
             output_path=output[0],
             log_path=log[0],
             cell_line=wildcards.cell_line,
+            config_raw=config,
         )
 
 
@@ -68,6 +69,7 @@ rule repeat_scan:
             ucsc_api_url=params.ucsc_url,
             output_path=output[0],
             log_path=log[0],
+            config_raw=config,
         )
 
 

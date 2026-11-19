@@ -9,7 +9,7 @@ from typing import Any
 
 from loguru import logger
 
-from src.core.config import OrcSonarConfig
+from src.core.config import config_from_mapping
 from src.core.site_keys import site_ids_and_regions
 from src.stage4_epigenetic.hic_contacts import HiCContactReader
 
@@ -20,6 +20,7 @@ def run(
     cell_lines_cfg: str,
     output_path: str,
     log_path: str,
+    config_raw: dict[str, Any] | None = None,
 ) -> None:
     """Extract Hi-C contact frequencies for off-target regions and write stage4_hic.json."""
     Path(log_path).parent.mkdir(parents=True, exist_ok=True)
@@ -39,7 +40,7 @@ def run(
     hic_contacts: dict[str, float | None] = {}
     if regions:
         try:
-            config = OrcSonarConfig()
+            config = config_from_mapping(config_raw)
             reader = HiCContactReader(config, cell_lines_yaml=cell_lines_cfg)
             # Use the first region as the "target" and all others as off-targets
             # (Hi-C measures contact between the saRNA target locus and off-target loci)

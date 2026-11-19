@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import threading
 import time
+from typing import Any
 
 import requests
 from loguru import logger
@@ -290,19 +291,19 @@ def run(
     api_url: str,
     output_path: str,
     log_path: str,
+    config_raw: dict[str, Any] | None = None,
 ) -> None:
     """Query gnomAD for each off-target region and write stage3_gnomad.json."""
     import json
     import sys
     from pathlib import Path as _Path
-    from typing import Any
 
     _Path(log_path).parent.mkdir(parents=True, exist_ok=True)
     logger.remove()
     logger.add(log_path, level="DEBUG")
     logger.add(sys.stderr, level="INFO")
 
-    from src.core.config import OrcSonarConfig
+    from src.core.config import config_from_mapping
 
     offtargets: dict[str, Any] = {}
     try:
@@ -313,7 +314,7 @@ def run(
     sites: list[dict] = offtargets.get("offtarget_sites", [])
     site_ids, regions = site_ids_and_regions(sites, caller="gnomad_client")
 
-    config = OrcSonarConfig(gnomad_api_url=api_url)
+    config = config_from_mapping(config_raw, gnomad_api_url=api_url)
     gnomad_results: dict[str, Any] = {}
     if regions:
         try:

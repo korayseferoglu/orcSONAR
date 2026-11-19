@@ -9,7 +9,7 @@ from typing import Any
 
 from loguru import logger
 
-from src.core.config import OrcSonarConfig
+from src.core.config import config_from_mapping
 from src.core.site_keys import site_ids_and_regions
 from src.stage4_epigenetic.chromatin_access import ATACSeqReader
 
@@ -20,6 +20,7 @@ def run(
     cell_lines_cfg: str,
     output_path: str,
     log_path: str,
+    config_raw: dict[str, Any] | None = None,
 ) -> None:
     """Extract ATAC-seq signal for off-target regions and write stage4_atac.json."""
     Path(log_path).parent.mkdir(parents=True, exist_ok=True)
@@ -39,7 +40,7 @@ def run(
     atac_signals: dict[str, float | None] = {}
     if regions:
         try:
-            config = OrcSonarConfig()
+            config = config_from_mapping(config_raw)
             reader = ATACSeqReader(config, cell_lines_yaml=cell_lines_cfg)
             signals = reader.get_accessibility_bulk(regions, cell_line)
             for site_id, sig in zip(site_ids, signals, strict=True):
