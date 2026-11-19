@@ -289,9 +289,14 @@ def _embed_offtarget(
     t_seed_start = n - 1 - seed_end  # lower index in target
     t_seed_end = n - 1 - seed_start   # upper index in target (inclusive)
     # rc_seed in target runs from t_seed_start .. t_seed_end (7 positions).
-    # Asserted rather than left as a comment: an off-by-one in the seed span
-    # changes every hit in a run (rule 10), and this was dead code (H15).
-    assert t_seed_end - t_seed_start + 1 == seed_length
+    #
+    # This helper plants a seed into a synthetic mRNA using its own index
+    # arithmetic. If that drifts from what production slices, every alignment
+    # test built on it would plant the wrong subsequence and still pass. So
+    # the two are tied together here. (`t_seed_end - t_seed_start + 1 ==
+    # seed_length` was asserted first and removed: it follows algebraically
+    # from the two lines above, so it could never fail.)
+    assert sarna[seed_start : seed_end + 1] == _extract_seed(sarna, seed_start, seed_length)
 
     padding = 50
     insert_pos = padding  # where the window starts in the mRNA

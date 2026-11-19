@@ -425,6 +425,12 @@ def check_fallback(tables) -> tuple[bool, list[str], list[dict]]:
     before B2; and the documented score-space `0.5`. A metric that is wholly
     sentinel is decoration — the source failed and the pipeline substituted a
     number that reads like a result.
+
+    The advisory pass/fail threshold counts **all three**, nulls included. That
+    is required rather than incidental: before B2 a wholly dead source showed
+    up as 100% zeros and tripped the threshold, and after B2 it shows up as
+    100% nulls. Leaving unknowns out of the count would mean a dead source
+    stopped tripping it — the very regression this function was repaired for.
     """
     lines, findings = [], []
     worst = 0.0
