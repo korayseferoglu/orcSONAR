@@ -36,22 +36,43 @@ def _delta_g_risk(dg: float) -> float:
 
 
 def _normalize(
-    delta_g: float,
-    shape_acc: float,
-    m6a_score: float,
-    adar_score: float,
-    g4_risk: float,
-) -> float:
-    """Compute normalised biophysics risk score in [0, 1]."""
-    dg_risk = _delta_g_risk(delta_g)
-    return min(1.0, round(
-        0.35 * dg_risk
-        + 0.25 * shape_acc
-        + 0.15 * m6a_score
-        + 0.15 * adar_score
-        + 0.10 * g4_risk,
-        4,
-    ))
+    delta_g: float | None,
+    shape_acc: float | None,
+    m6a_score: float | None,
+    adar_score: float | None,
+    g4_risk: float | None,
+) -> float | None:
+    """Weighted biophysics score over the channels that were measured.
+
+    An unknown channel is **excluded** and the remaining weights renormalised,
+    matching the epigenetic, execution and variant mergers. Before this, every
+    missing channel became a number: ΔG fell back to ``_NEUTRAL_DG`` (risk
+    0.25), SHAPE to 0.5, and m6A/ADAR/G4 to 0.0 — three quarters of this
+    domain's weight failing toward "safe" (audit 2026-11-19, Bulgu 2).
+
+    See ``variant_merger._normalize`` for why renormalisation is used here
+    despite roadmap ``B3`` still owning the question.
+
+    Returns:
+        Score in [0, 1], or ``None`` if no channel was measured.
+    """
+    contributions: dict[str, tuple[float, float | None]] = {
+        "delta_g": (0.35, None if delta_g is None else _delta_g_risk(delta_g)),
+        "shape": (0.25, shape_acc),
+        "m6a": (0.15, m6a_score),
+        "adar": (0.15, adar_score),
+        "g4": (0.10, g4_risk),
+    }
+    total = 0.0
+    weight_used = 0.0
+    for weight, value in contributions.values():
+        if value is None:
+            continue
+        total += weight * value
+        weight_used += weight
+    if weight_used == 0.0:
+        return None
+    return min(1.0, round(total / weight_used, 4))
 
 
 def run(
@@ -101,12 +122,23 @@ def run(
 
     biophysics_scores: dict[str, Any] = {}
     for site_id in sorted(all_site_ids):
-        dg = float(deltag_results.get(site_id, {}).get("delta_g", _NEUTRAL_DG))
-        shape_acc = float(shape_results.get(site_id, {}).get("accessibility_score", 0.5))
-        m6a_score = float(m6a_results.get(site_id, {}).get("m6a_score", 0.0))
-        m6a_count = int(m6a_results.get(site_id, {}).get("site_count", 0))
-        adar_score = float(adar_results.get(site_id, {}).get("adar_score", 0.0))
-        g4_risk = float(g4_results.get(site_id, {}).get("risk_score", 0.0))
+        def _opt(results: dict[str, Any], key: str, sid: str = site_id) -> float | None:
+            """Read a channel, keeping an unmeasured one unmeasured.
+
+            A site absent from a stage's output was never measured there, and
+            `.get(key, default)` also does not fire when the key is present
+            with value null — so both routes must be checked.
+            """
+            value = results.get(sid, {}).get(key)
+            return None if value is None else float(value)
+
+        dg = _opt(deltag_results, "delta_g")
+        shape_acc = _opt(shape_results, "accessibility_score")
+        m6a_score = _opt(m6a_results, "m6a_score")
+        raw_count = m6a_results.get(site_id, {}).get("site_count")
+        m6a_count = None if raw_count is None else int(raw_count)
+        adar_score = _opt(adar_results, "adar_score")
+        g4_risk = _opt(g4_results, "risk_score")
 
         normalized = _normalize(dg, shape_acc, m6a_score, adar_score, g4_risk)
         biophysics_scores[site_id] = {
@@ -117,9 +149,12 @@ def run(
             "g4_risk": g4_risk,
             "normalized_score": normalized,
         }
+        def _shown(value: float | None, digits: int) -> str:
+            return "ÖLÇÜLMEDİ" if value is None else f"{value:.{digits}f}"
+
         logger.debug(
-            f"biophysics_merger: {site_id} → "
-            f"ΔG={dg:.2f} shape={shape_acc:.2f} normalized={normalized:.4f}"
+            f"biophysics_merger: {site_id} → ΔG={_shown(dg, 2)} "
+            f"shape={_shown(shape_acc, 2)} normalized={_shown(normalized, 4)}"
         )
 
     payload: dict[str, Any] = {"biophysics_scores": biophysics_scores}

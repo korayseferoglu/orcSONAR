@@ -29,9 +29,33 @@ def _normalize(
     gnomad: dict[str, Any],
     clinvar: dict[str, Any],
     phylop: dict[str, Any],
-) -> float:
-    """Compute normalized variant toxicity score in [0, 1]."""
-    cosmic_risk = float(cosmic.get("density_score", 0.0))
+) -> float | None:
+    """Weighted variant-toxicity score over the channels that were measured.
+
+    An unknown channel is **excluded** and the remaining weights renormalised,
+    matching what B2 did for the epigenetic and execution mergers. Before this,
+    a missing COSMIC record scored 0.0 and a missing ClinVar record scored 0.0
+    — both the *safe* end — so a source that failed made a site look cleaner
+    than one that was measured, and a site with no variant data at all scored a
+    fabricated 0.325 (audit 2026-11-19, Bulgu 2).
+
+    ⚠️ Two notes on what this does and does not settle:
+
+    * Excluding-and-renormalising is a modelling choice, and the audit's
+      statistical review argues it pre-empted roadmap ``B3``. It is matched
+      here anyway because four mergers using three different rules is worse:
+      ``B3`` can then change one rule in one place.
+    * It supersedes ``B4``'s "a missing field defaults to 1.0, the risky end".
+      That default was fabricated too — it claims a site is maximally
+      conserved when nobody measured it. ``B4``'s actual fix, dropping the
+      ``1.0 - score`` inversion, is untouched.
+
+    Returns:
+        Score in [0, 1], or ``None`` if no channel was measured.
+    """
+    cosmic_risk = (
+        float(cosmic["density_score"]) if cosmic.get("density_score") is not None else None
+    )
     tier1_boost = 0.15 if cosmic.get("has_tier1_gene", False) else 0.0
     # `polymorphism_score` is named for what was measured but its contract is
     # already a RISK score, as gnomad_client's own docstring states: no common
@@ -42,19 +66,41 @@ def _normalize(
     # one scored maximum (roadmap B4). The default also matters — a missing
     # field becomes 1.0, the risky end, which is the direction absent data must
     # fail in (invariant 2).
-    gnomad_risk = float(gnomad.get("polymorphism_score", 1.0))
-    clinvar_risk = 0.8 if clinvar.get("pathogenic_count", 0) > 0 else (
-        0.4 if clinvar.get("likely_pathogenic_count", 0) > 0 else 0.0
+    gnomad_risk = (
+        float(gnomad["polymorphism_score"])
+        if gnomad.get("polymorphism_score") is not None
+        else None
     )
-    phylop_risk = float(phylop.get("conservation_score", 0.5))
+    if clinvar.get("pathogenic_count") is None and clinvar.get("likely_pathogenic_count") is None:
+        clinvar_risk = None
+    else:
+        clinvar_risk = 0.8 if clinvar.get("pathogenic_count", 0) > 0 else (
+            0.4 if clinvar.get("likely_pathogenic_count", 0) > 0 else 0.0
+        )
+    phylop_risk = (
+        float(phylop["conservation_score"])
+        if phylop.get("conservation_score") is not None
+        else None
+    )
 
-    score = (
-        0.30 * cosmic_risk
-        + 0.20 * gnomad_risk
-        + 0.25 * clinvar_risk
-        + 0.25 * phylop_risk
-        + tier1_boost
-    )
+    contributions: dict[str, tuple[float, float | None]] = {
+        "cosmic": (0.30, cosmic_risk),
+        "gnomad": (0.20, gnomad_risk),
+        "clinvar": (0.25, clinvar_risk),
+        "phylop": (0.25, phylop_risk),
+    }
+    total = 0.0
+    weight_used = 0.0
+    for weight, value in contributions.values():
+        if value is None:
+            continue
+        total += weight * value
+        weight_used += weight
+    if weight_used == 0.0:
+        return None
+
+    # The tier-1 boost rides on COSMIC, so it only applies when COSMIC spoke.
+    score = total / weight_used + (tier1_boost if cosmic_risk is not None else 0.0)
     return min(1.0, round(score, 4))
 
 
@@ -110,17 +156,36 @@ def run(
 
         normalized = _normalize(cosmic, gnomad, clinvar, phylop)
 
+        # The reported fields follow the same rule as the score: a channel
+        # that was not measured is reported as unknown, not as a confident
+        # zero/False/0.5. These values reach the HTML report, where a
+        # fabricated "0 COSMIC mutations" reads exactly like a measured one.
         variant_scores[site_id] = {
-            "cosmic_count": int(cosmic.get("mutation_count", 0)),
+            "cosmic_count": (
+                int(cosmic["mutation_count"])
+                if cosmic.get("mutation_count") is not None
+                else None
+            ),
             "cosmic_mutations": [
                 m.get("so_term", "") for m in cosmic.get("mutations", [])
             ],
-            "gnomad_max_af": float(gnomad.get("max_af", 0.0)),
-            "clinvar_pathogenic": clinvar.get("pathogenic_count", 0) > 0,
-            "phylop_score": float(phylop.get("conservation_score", 0.5)),
+            "gnomad_max_af": (
+                float(gnomad["max_af"]) if gnomad.get("max_af") is not None else None
+            ),
+            "clinvar_pathogenic": (
+                clinvar["pathogenic_count"] > 0
+                if clinvar.get("pathogenic_count") is not None
+                else None
+            ),
+            "phylop_score": (
+                float(phylop["conservation_score"])
+                if phylop.get("conservation_score") is not None
+                else None
+            ),
             "normalized_score": normalized,
         }
-        logger.debug(f"variant_merger: {site_id} → normalized_score={normalized:.4f}")
+        shown = "ÖLÇÜLMEDİ" if normalized is None else f"{normalized:.4f}"
+        logger.debug(f"variant_merger: {site_id} → normalized_score={shown}")
 
     payload: dict[str, Any] = {"variant_scores": variant_scores}
     out = Path(output_path)

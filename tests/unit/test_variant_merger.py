@@ -24,6 +24,8 @@ from __future__ import annotations
 
 from typing import Any
 
+import pytest
+
 from src.stage3_variant_tox.variant_merger import _normalize
 
 #: Everything except gnomAD held at "no signal", so the comparisons isolate it.
@@ -89,3 +91,50 @@ def test_the_error_path_neutral_lands_between_the_extremes() -> None:
     """
     neutral = score_for({"polymorphism_score": 0.5})
     assert score_for({"polymorphism_score": 0.0}) < neutral < score_for({"polymorphism_score": 1.0})
+
+
+class TestUnknownChannelsAreExcluded:
+    """Two of the four domain mergers never learned B2's sentinel.
+
+    Audit 2026-11-19, Bulgu 2. B2's acceptance criterion reads globally — "no
+    fallback path returns a numeric risk value" — but the work stopped at
+    stage 4 and stage 6. Here cosmic defaulted to 0.0 and clinvar to 0.0, both
+    the *safe* end, so a source that failed made a site look cleaner than one
+    that was actually measured.
+
+    Note on scope: excluding an unknown and renormalising the rest is the
+    estimator B2 chose for the other two mergers, and the audit's statistical
+    review flags that choice as pre-empting roadmap B3. Matching it here is
+    deliberate — four mergers disagreeing is worse than one contested
+    estimator, and B3 can then change one rule in one place.
+    """
+
+    def test_an_unknown_channel_does_not_lower_the_score(self) -> None:
+        full = _normalize(
+            {"density_score": 0.8},
+            {"polymorphism_score": 0.8},
+            {"pathogenic_count": 1},
+            {"conservation_score": 0.8},
+        )
+        without_cosmic = _normalize(
+            {}, {"polymorphism_score": 0.8}, {"pathogenic_count": 1}, {"conservation_score": 0.8}
+        )
+        assert without_cosmic is not None and full is not None
+        assert without_cosmic >= full, (
+            "dropping a high-risk channel lowered the score — the unknown was "
+            "counted as a measured zero"
+        )
+
+    def test_nothing_measured_yields_no_score(self) -> None:
+        assert _normalize({}, {}, {}, {}) is None
+
+    def test_everything_measured_is_unchanged(self) -> None:
+        """Weights sum to 1.0, so full coverage must give the old answer."""
+        score = _normalize(
+            {"density_score": 0.4},
+            {"polymorphism_score": 0.6},
+            {"pathogenic_count": 0, "likely_pathogenic_count": 0},
+            {"conservation_score": 0.2},
+        )
+        expected = 0.30 * 0.4 + 0.20 * 0.6 + 0.25 * 0.0 + 0.25 * 0.2
+        assert score == pytest.approx(round(expected, 4))
