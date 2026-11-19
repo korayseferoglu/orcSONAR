@@ -125,4 +125,58 @@ echo "# 5  birim testleri"
     || fail "B2'nin testleri yeşil değil"
 
 echo
-echo "GEÇTİ — arıza bilinmiyor dönüyor, ölçülmüş sıfır korunuyor, bilinmiyor riski düşürmüyor"
+
+# ----------------------------------- 6  KAPSAM: kriter genel, tarama da genel
+# `B2`'nin kabul kriteri koşulsuz: "hiçbir fallback yolu sayısal risk değeri
+# dönmüyor". Bu kapı 2026-11-19'a kadar yalnız stage-4 okuyucularını ve
+# stage-6 merger'ını sınıyordu — yani düzeltmenin yapıldığı yeri, kriterin
+# kapsadığı yeri değil. Denetim o boşlukta 16 arıza yolu buldu (Bulgu 2).
+# Bu tarama `src/` genelinde `except` bloklarının içinde yazılan sayısal
+# risk yüklerini arar.
+echo "# 6  src/ genelinde arızada sayı yazan yol yok"
+"$PY" -I - <<'INNER' || fail "bir arıza yolu hâlâ sayısal risk değeri yazıyor"
+import pathlib
+import re
+import sys
+
+# Risk uzayına giren alan adları. `data_available`/`shape_used` gibi "bu
+# kaynağa bakıldı mı" bayrakları kasıtlı olarak dışarıda: onlar ölçümün
+# kendisi değil, ölçümün yapılıp yapılmadığının kaydı.
+FIELD = r"\w*(?:score|signal|risk|count|fraction|reactivity)"
+DICT_FORM = re.compile(rf'"({FIELD})"\s*:\s*(-?\d+\.?\d*|False|True)')
+KWARG_FORM = re.compile(rf"\b({FIELD})\s*=\s*(-?\d+\.?\d*|False|True|_NEUTRAL\w*)")
+EXCEPT = re.compile(r"except\s+\w*Exception")
+
+# Gerekçesi yazılı istisnalar. Buraya bir satır eklemek, o yolun neden
+# ölçüm sayıldığını yazmayı gerektirir.
+ALLOWED = {
+    # B11'e bırakıldı: `"SAFE"` fallback'i ve `[:7]` seed dilimi birlikte
+    # ele alınacak (brifing §4, 2026-11-18).
+    "src/stage2_offtarget_scan/mirbase_checker.py",
+}
+
+offenders: list[str] = []
+for path in sorted(pathlib.Path("src").rglob("*.py")):
+    if str(path) in ALLOWED:
+        continue
+    lines = path.read_text(encoding="utf-8").splitlines()
+    for i, line in enumerate(lines):
+        if not EXCEPT.search(line):
+            continue
+        block = "\n".join(lines[i : i + 14])
+        hits = DICT_FORM.findall(block) + KWARG_FORM.findall(block)
+        if hits:
+            shown = ", ".join(f"{k}={v}" for k, v in hits)
+            offenders.append(f"{path}:{i + 1}  {shown}")
+
+for line in offenders:
+    print(f"  HATA: {line}")
+if offenders:
+    sys.exit(
+        f"{len(offenders)} arıza yolu sayısal risk değeri yazıyor — bir kaynak "
+        "arızası bu kanallarda daha az sinyal, yani daha az risk demek"
+    )
+print(f"  temiz ({len(ALLOWED)} gerekçeli istisna hariç)")
+INNER
+
+echo "GEÇTİ — arıza bilinmiyor dönüyor, ölçülmüş sıfır korunuyor, bilinmiyor riski düşürmüyor, kapsam src/ geneli"
