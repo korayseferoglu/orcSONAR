@@ -1,0 +1,1 @@
+2026-11-19 16:19:48.792 | INFO     | src.stage3_variant_tox.clinvar_client:run:352 - clinvar_client: scanned 0 regions → results/VEGFA_HeLa/stage3_clinvar.json

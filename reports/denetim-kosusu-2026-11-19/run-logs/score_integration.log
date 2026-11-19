@@ -1,0 +1,3 @@
+2026-11-19 16:19:54.502 | INFO     | src.scoring.score_integrator:run:135 - score_integrator: loading stage outputs
+2026-11-19 16:19:54.503 | ERROR    | src.scoring.score_integrator:_check_site_id_consistency:70 - score_integrator: stage2_offtargets.json carries no site_id field — cross-stage consistency gate SKIPPED. This run predates the Bulgu-2 fix; its per-site scores may be attributed to the wrong locus.
+2026-11-19 16:19:54.504 | INFO     | src.scoring.score_integrator:run:222 - score_integrator: wrote 0 sites → results/VEGFA_HeLa/stage7_scores.json

@@ -1,0 +1,8 @@
+2026-11-19 16:16:53.055 | WARNING  | src.core.cache:_migrate_schema_version:148 - Cache at data/cache/orcsonar_cache.db predates schema versioning — its entries are now marked unversioned and will not be served (roadmap B0)
+2026-11-19 16:16:53.055 | DEBUG    | src.core.cache:__init__:126 - Cache initialised at data/cache/orcsonar_cache.db
+2026-11-19 16:16:53.056 | WARNING  | src.core.cache:get:178 - Cache STALE: ensembl:transcripts:VEGFA written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:26.954 | WARNING  | src.stage1_genomic_map.transcript_resolver:_query_ensembl:139 - Ensembl transcript lookup failed for 'VEGFA': 504 Server Error: Gateway Time-out for url: https://rest.ensembl.org/lookup/symbol/homo_sapiens/VEGFA?expand=1&content-type=application/json
+2026-11-19 16:17:26.960 | WARNING  | src.stage1_genomic_map.transcript_resolver:resolve_transcripts:56 - 'VEGFA' not found in Ensembl — falling back to RefSeq
+2026-11-19 16:17:26.961 | DEBUG    | src.core.cache:__init__:126 - Cache initialised at data/cache/orcsonar_cache.db
+2026-11-19 16:17:30.675 | DEBUG    | src.core.cache:set:211 - Cache SET: refseq:transcripts:VEGFA (TTL 168h, schema v1)
+2026-11-19 16:17:30.678 | INFO     | src.stage1_genomic_map.transcript_resolver:run:532 - transcript_resolver: VEGFA → 20 transcript(s)

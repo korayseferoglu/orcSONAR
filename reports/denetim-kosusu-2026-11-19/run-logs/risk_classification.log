@@ -1,0 +1,2 @@
+2026-11-19 16:19:56.308 | INFO     | src.scoring.risk_classifier:run:52 - risk_classifier: loading scores
+2026-11-19 16:19:56.309 | INFO     | src.scoring.risk_classifier:run:112 - risk_classifier: 0 sites classified — overall=SAFE (0.0000) → results/VEGFA_HeLa/stage7_classification.json

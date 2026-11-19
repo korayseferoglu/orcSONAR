@@ -1,0 +1,17 @@
+{
+  "offtarget_sites": [],
+  "domain_scores": {},
+  "base_scores": {},
+  "cell_context": {
+    "atac_score": null,
+    "expression_score": null,
+    "execution_score": null
+  },
+  "weights": {
+    "sequence_specificity": 0.2,
+    "variant_toxicity": 0.15,
+    "biophysics_structure": 0.25,
+    "epigenetic_context": 0.2,
+    "execution_safety": 0.2
+  }
+}

@@ -1,0 +1,4 @@
+2026-11-19 16:19:58.130 | INFO     | src.reporting.report_generator:run:112 - report_generator: assembling FinalReport
+2026-11-19 16:19:58.131 | INFO     | src.reporting.json_report:save_json_report:97 - json_report: saved → results/VEGFA_HeLa/final_report.json (1870 bytes)
+2026-11-19 16:19:58.150 | INFO     | src.reporting.html_report:generate_html_report:244 - html_report: saved → results/VEGFA_HeLa/final_report.html (17,313 bytes)
+2026-11-19 16:19:58.150 | INFO     | src.reporting.report_generator:run:149 - report_generator: 0 sites, risk=SAFE (0.0000) → results/VEGFA_HeLa/final_report.html

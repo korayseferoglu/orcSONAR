@@ -1,0 +1,219 @@
+{
+  "gene": "VEGFA",
+  "tss": {
+    "gene": "VEGFA",
+    "chrom": "chr6",
+    "position": 43770210,
+    "strand": "+",
+    "source": "EPDnew",
+    "score": 900.0
+  },
+  "promoter_region": {
+    "chrom": "chr6",
+    "start": 43769210,
+    "end": 43770410,
+    "strand": "+"
+  },
+  "transcripts": [
+    {
+      "transcript_id": "NM_001317010.2",
+      "gene": "VEGFA",
+      "chrom": "chr6",
+      "start": 43770210,
+      "end": 43786486,
+      "strand": "+",
+      "is_canonical": true,
+      "source": "RefSeq"
+    },
+    {
+      "transcript_id": "NM_001171623.2",
+      "gene": "VEGFA",
+      "chrom": "chr6",
+      "start": 43770210,
+      "end": 43786486,
+      "strand": "+",
+      "is_canonical": false,
+      "source": "RefSeq"
+    },
+    {
+      "transcript_id": "NM_001171629.2",
+      "gene": "VEGFA",
+      "chrom": "chr6",
+      "start": 43770210,
+      "end": 43786486,
+      "strand": "+",
+      "is_canonical": false,
+      "source": "RefSeq"
+    },
+    {
+      "transcript_id": "NM_001171627.2",
+      "gene": "VEGFA",
+      "chrom": "chr6",
+      "start": 43770210,
+      "end": 43786486,
+      "strand": "+",
+      "is_canonical": false,
+      "source": "RefSeq"
+    },
+    {
+      "transcript_id": "NM_001171624.2",
+      "gene": "VEGFA",
+      "chrom": "chr6",
+      "start": 43770210,
+      "end": 43786486,
+      "strand": "+",
+      "is_canonical": false,
+      "source": "RefSeq"
+    },
+    {
+      "transcript_id": "NM_001171630.2",
+      "gene": "VEGFA",
+      "chrom": "chr6",
+      "start": 43770210,
+      "end": 43786486,
+      "strand": "+",
+      "is_canonical": false,
+      "source": "RefSeq"
+    },
+    {
+      "transcript_id": "NM_001171628.2",
+      "gene": "VEGFA",
+      "chrom": "chr6",
+      "start": 43770210,
+      "end": 43786486,
+      "strand": "+",
+      "is_canonical": false,
+      "source": "RefSeq"
+    },
+    {
+      "transcript_id": "NM_001171626.2",
+      "gene": "VEGFA",
+      "chrom": "chr6",
+      "start": 43770210,
+      "end": 43786486,
+      "strand": "+",
+      "is_canonical": false,
+      "source": "RefSeq"
+    },
+    {
+      "transcript_id": "NM_001204384.2",
+      "gene": "VEGFA",
+      "chrom": "chr6",
+      "start": 43770210,
+      "end": 43786486,
+      "strand": "+",
+      "is_canonical": false,
+      "source": "RefSeq"
+    },
+    {
+      "transcript_id": "NM_001171625.2",
+      "gene": "VEGFA",
+      "chrom": "chr6",
+      "start": 43770210,
+      "end": 43786486,
+      "strand": "+",
+      "is_canonical": false,
+      "source": "RefSeq"
+    },
+    {
+      "transcript_id": "NM_001025366.3",
+      "gene": "VEGFA",
+      "chrom": "chr6",
+      "start": 43770210,
+      "end": 43786486,
+      "strand": "+",
+      "is_canonical": false,
+      "source": "RefSeq"
+    },
+    {
+      "transcript_id": "NM_001025368.3",
+      "gene": "VEGFA",
+      "chrom": "chr6",
+      "start": 43770210,
+      "end": 43786486,
+      "strand": "+",
+      "is_canonical": false,
+      "source": "RefSeq"
+    },
+    {
+      "transcript_id": "NM_001204385.2",
+      "gene": "VEGFA",
+      "chrom": "chr6",
+      "start": 43770210,
+      "end": 43786486,
+      "strand": "+",
+      "is_canonical": false,
+      "source": "RefSeq"
+    },
+    {
+      "transcript_id": "NM_001287044.2",
+      "gene": "VEGFA",
+      "chrom": "chr6",
+      "start": 43770210,
+      "end": 43786486,
+      "strand": "+",
+      "is_canonical": false,
+      "source": "RefSeq"
+    },
+    {
+      "transcript_id": "NM_001025370.3",
+      "gene": "VEGFA",
+      "chrom": "chr6",
+      "start": 43770210,
+      "end": 43786486,
+      "strand": "+",
+      "is_canonical": false,
+      "source": "RefSeq"
+    },
+    {
+      "transcript_id": "NM_001171622.2",
+      "gene": "VEGFA",
+      "chrom": "chr6",
+      "start": 43770210,
+      "end": 43786486,
+      "strand": "+",
+      "is_canonical": false,
+      "source": "RefSeq"
+    },
+    {
+      "transcript_id": "NM_003376.6",
+      "gene": "VEGFA",
+      "chrom": "chr6",
+      "start": 43770210,
+      "end": 43786486,
+      "strand": "+",
+      "is_canonical": false,
+      "source": "RefSeq"
+    },
+    {
+      "transcript_id": "NM_001033756.3",
+      "gene": "VEGFA",
+      "chrom": "chr6",
+      "start": 43770210,
+      "end": 43786486,
+      "strand": "+",
+      "is_canonical": false,
+      "source": "RefSeq"
+    },
+    {
+      "transcript_id": "NM_001025369.3",
+      "gene": "VEGFA",
+      "chrom": "chr6",
+      "start": 43770210,
+      "end": 43786486,
+      "strand": "+",
+      "is_canonical": false,
+      "source": "RefSeq"
+    },
+    {
+      "transcript_id": "NM_001025367.3",
+      "gene": "VEGFA",
+      "chrom": "chr6",
+      "start": 43770210,
+      "end": 43786486,
+      "strand": "+",
+      "is_canonical": false,
+      "source": "RefSeq"
+    }
+  ]
+}

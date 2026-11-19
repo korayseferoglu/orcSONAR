@@ -1,0 +1,233 @@
+2026-11-19 16:17:33.377 | DEBUG    | src.core.cache:__init__:126 - Cache initialised at data/cache/orcsonar_cache.db
+2026-11-19 16:17:34.305 | DEBUG    | src.core.cache:set:211 - Cache SET: seq:NM_001317010.2 (TTL 168h, schema v1)
+2026-11-19 16:17:34.308 | DEBUG    | src.core.cache:__init__:126 - Cache initialised at data/cache/orcsonar_cache.db
+2026-11-19 16:17:35.241 | DEBUG    | src.core.cache:set:211 - Cache SET: seq:NM_001171623.2 (TTL 168h, schema v1)
+2026-11-19 16:17:35.245 | DEBUG    | src.core.cache:__init__:126 - Cache initialised at data/cache/orcsonar_cache.db
+2026-11-19 16:17:36.756 | DEBUG    | src.core.cache:set:211 - Cache SET: seq:NM_001171629.2 (TTL 168h, schema v1)
+2026-11-19 16:17:36.759 | DEBUG    | src.core.cache:__init__:126 - Cache initialised at data/cache/orcsonar_cache.db
+2026-11-19 16:17:37.772 | DEBUG    | src.core.cache:set:211 - Cache SET: seq:NM_001171627.2 (TTL 168h, schema v1)
+2026-11-19 16:17:37.775 | DEBUG    | src.core.cache:__init__:126 - Cache initialised at data/cache/orcsonar_cache.db
+2026-11-19 16:17:38.708 | DEBUG    | src.core.cache:set:211 - Cache SET: seq:NM_001171624.2 (TTL 168h, schema v1)
+2026-11-19 16:17:38.712 | DEBUG    | src.core.cache:__init__:126 - Cache initialised at data/cache/orcsonar_cache.db
+2026-11-19 16:17:39.833 | DEBUG    | src.core.cache:set:211 - Cache SET: seq:NM_001171630.2 (TTL 168h, schema v1)
+2026-11-19 16:17:39.836 | DEBUG    | src.core.cache:__init__:126 - Cache initialised at data/cache/orcsonar_cache.db
+2026-11-19 16:17:40.814 | DEBUG    | src.core.cache:set:211 - Cache SET: seq:NM_001171628.2 (TTL 168h, schema v1)
+2026-11-19 16:17:40.817 | DEBUG    | src.core.cache:__init__:126 - Cache initialised at data/cache/orcsonar_cache.db
+2026-11-19 16:17:41.837 | DEBUG    | src.core.cache:set:211 - Cache SET: seq:NM_001171626.2 (TTL 168h, schema v1)
+2026-11-19 16:17:41.842 | DEBUG    | src.core.cache:__init__:126 - Cache initialised at data/cache/orcsonar_cache.db
+2026-11-19 16:17:42.946 | DEBUG    | src.core.cache:set:211 - Cache SET: seq:NM_001204384.2 (TTL 168h, schema v1)
+2026-11-19 16:17:42.948 | DEBUG    | src.core.cache:__init__:126 - Cache initialised at data/cache/orcsonar_cache.db
+2026-11-19 16:17:43.946 | DEBUG    | src.core.cache:set:211 - Cache SET: seq:NM_001171625.2 (TTL 168h, schema v1)
+2026-11-19 16:17:43.998 | DEBUG    | src.core.cache:__init__:126 - Cache initialised at data/cache/orcsonar_cache.db
+2026-11-19 16:17:45.264 | DEBUG    | src.core.cache:set:211 - Cache SET: seq:NM_001025366.3 (TTL 168h, schema v1)
+2026-11-19 16:17:45.268 | DEBUG    | src.core.cache:__init__:126 - Cache initialised at data/cache/orcsonar_cache.db
+2026-11-19 16:17:46.207 | DEBUG    | src.core.cache:set:211 - Cache SET: seq:NM_001025368.3 (TTL 168h, schema v1)
+2026-11-19 16:17:46.211 | DEBUG    | src.core.cache:__init__:126 - Cache initialised at data/cache/orcsonar_cache.db
+2026-11-19 16:17:47.472 | DEBUG    | src.core.cache:set:211 - Cache SET: seq:NM_001204385.2 (TTL 168h, schema v1)
+2026-11-19 16:17:47.476 | DEBUG    | src.core.cache:__init__:126 - Cache initialised at data/cache/orcsonar_cache.db
+2026-11-19 16:17:49.311 | DEBUG    | src.core.cache:set:211 - Cache SET: seq:NM_001287044.2 (TTL 168h, schema v1)
+2026-11-19 16:17:49.313 | DEBUG    | src.core.cache:__init__:126 - Cache initialised at data/cache/orcsonar_cache.db
+2026-11-19 16:17:50.432 | DEBUG    | src.core.cache:set:211 - Cache SET: seq:NM_001025370.3 (TTL 168h, schema v1)
+2026-11-19 16:17:50.436 | DEBUG    | src.core.cache:__init__:126 - Cache initialised at data/cache/orcsonar_cache.db
+2026-11-19 16:17:51.774 | DEBUG    | src.core.cache:set:211 - Cache SET: seq:NM_001171622.2 (TTL 168h, schema v1)
+2026-11-19 16:17:51.777 | DEBUG    | src.core.cache:__init__:126 - Cache initialised at data/cache/orcsonar_cache.db
+2026-11-19 16:17:52.895 | DEBUG    | src.core.cache:set:211 - Cache SET: seq:NM_003376.6 (TTL 168h, schema v1)
+2026-11-19 16:17:52.899 | DEBUG    | src.core.cache:__init__:126 - Cache initialised at data/cache/orcsonar_cache.db
+2026-11-19 16:17:53.831 | DEBUG    | src.core.cache:set:211 - Cache SET: seq:NM_001033756.3 (TTL 168h, schema v1)
+2026-11-19 16:17:53.833 | DEBUG    | src.core.cache:__init__:126 - Cache initialised at data/cache/orcsonar_cache.db
+2026-11-19 16:17:54.944 | DEBUG    | src.core.cache:set:211 - Cache SET: seq:NM_001025369.3 (TTL 168h, schema v1)
+2026-11-19 16:17:54.948 | DEBUG    | src.core.cache:__init__:126 - Cache initialised at data/cache/orcsonar_cache.db
+2026-11-19 16:17:55.881 | DEBUG    | src.core.cache:set:211 - Cache SET: seq:NM_001025367.3 (TTL 168h, schema v1)
+2026-11-19 16:17:55.884 | DEBUG    | src.core.cache:__init__:126 - Cache initialised at data/cache/orcsonar_cache.db
+2026-11-19 16:17:55.887 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:ACTB written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.889 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:GAPDH written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.890 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:HSPA8 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.892 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:HSP90AA1 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.893 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:HSP90AB1 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.894 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:RPL5 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.895 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:RPL6 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.895 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:RPL7 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.896 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:RPL10 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.897 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:RPL11 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.898 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:RPL13 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.899 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:RPL14 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.900 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:RPL18 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.901 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:RPS3 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.902 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:RPS5 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.903 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:RPS6 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.904 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:RPS8 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.904 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:RPS11 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.905 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:RPS13 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.906 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:RPS14 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.907 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:EEF1A1 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.908 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:EEF2 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.909 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:EIF4A1 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.909 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:EIF4B written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.910 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:EIF4E written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.911 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:UBB written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.912 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:UBC written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.913 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:UBA52 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.914 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:TUBB written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.914 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:TUBA1A written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.915 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:TUBA1B written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.916 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:VIM written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.917 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:LMNA written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.918 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:HNRNPA1 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.919 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:HNRNPA2B1 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.919 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:HNRNPC written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.920 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:HNRNPD written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.921 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:HNRNPK written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.922 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:HNRNPL written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.923 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:HNRNPM written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.924 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:PTBP1 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.925 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:PTBP2 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.926 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:AGO1 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.927 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:AGO2 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.928 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:AGO3 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.928 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:AGO4 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.929 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:DICER1 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.930 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:DROSHA written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.931 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:DGCR8 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.932 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:TARBP2 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.933 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:TNRC6A written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.933 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:TNRC6B written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.934 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:TNRC6C written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.935 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:MOV10 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.936 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:DDX5 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.937 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:DDX17 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.938 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:PCNA written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.938 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:MCM2 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.939 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:MCM3 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.940 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:MCM4 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.941 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:MCM5 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.942 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:MCM6 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.943 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:CDK4 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.943 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:CDK6 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.944 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:CCND1 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.945 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:CCND2 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.946 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:CCNE1 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.947 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:CCNA2 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.948 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:CCNB1 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.949 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:CDC20 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.950 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:PLK1 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.950 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:AURKA written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.951 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:AURKB written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.952 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:TP53 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.953 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:MDM2 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.954 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:MYC written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.955 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:MYCN written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.955 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:MAX written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.956 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:KRAS written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.957 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:NRAS written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.958 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:HRAS written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.959 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:BRAF written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.959 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:EGFR written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.960 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:ERBB2 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.961 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:ERBB3 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.962 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:PIK3CA written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.963 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:PIK3CB written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.964 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:AKT1 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.964 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:AKT2 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.965 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:PTEN written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.966 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:RB1 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.967 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:CDKN2A written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.968 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:VEGFB written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.969 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:VEGFC written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.969 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:MET written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.970 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:HGF written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.971 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:JAK1 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.972 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:JAK2 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.973 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:STAT3 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.973 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:BCL2 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.974 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:BCL2L1 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.975 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:MCL1 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.976 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:BAX written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.977 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:BRCA1 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.977 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:BRCA2 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.978 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:ATM written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.979 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:ATR written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.980 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:CHEK1 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.981 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:CHEK2 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.982 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:EZH2 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.982 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:HDAC1 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.983 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:HDAC2 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.984 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:DNMT1 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.985 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:MAPK1 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.986 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:MAPK3 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.987 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:MAP2K1 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.988 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:MTOR written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.988 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:TSC1 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.989 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:CTNNB1 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.990 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:APC written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.991 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:NOTCH1 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.992 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:HES1 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.993 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:TGFB1 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.993 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:SMAD2 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.994 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:SMAD3 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.995 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:SMAD4 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.996 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:HIF1A written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.997 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:NFKB1 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.998 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:RELA written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.998 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:YAP1 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:55.999 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:LDHA written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:56.000 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:PKM written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:56.001 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:HK2 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:56.002 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:G6PD written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:56.003 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:IDH1 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:56.004 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:IL6 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:56.004 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:TNF written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:56.005 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:IFNG written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:56.006 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:SP1 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:56.007 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:JUNB written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:56.008 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:FOS written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:56.009 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:ETS1 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:56.010 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:SOX2 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:56.011 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:CASP3 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:56.012 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:CASP8 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:56.012 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:CASP9 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:56.013 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:CDH1 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:56.014 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:CDH2 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:56.015 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:FN1 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:56.016 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:ITGB1 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:56.017 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:RAC1 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:56.018 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:CDC42 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:56.019 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:RHOA written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:56.069 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:HSPA4 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:56.070 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:HSPA5 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:56.072 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:HSPA9 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:56.074 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:HSPB1 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:56.075 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:SKP1 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:56.077 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:SKP2 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:56.078 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:CUL1 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:56.079 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:YBX1 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:56.080 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:ELAVL1 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:56.081 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:KHSRP written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:56.082 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:STAU1 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:56.082 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:FMR1 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:56.083 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:NPM1 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:56.084 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:XPO1 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:56.085 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:CALM1 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:56.086 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:CALM2 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:56.087 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:S100A4 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:56.088 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:S100A6 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:56.089 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:KRT18 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:56.090 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:KRT8 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:56.091 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:CFL1 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:56.092 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:LIN28A written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:56.093 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:SNAI1 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:56.094 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:SNAI2 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:56.095 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:TWIST1 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:56.096 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:ZEB1 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:56.097 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:MLH1 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:56.098 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:MSH2 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:56.099 | WARNING  | src.core.cache:get:178 - Cache STALE: bg:canonical:ERCC1 written at schema v0, now v1 — dropped, will be re-fetched
+2026-11-19 16:17:56.100 | INFO     | src.stage2_offtarget_scan.transcriptome_fetcher:_load_canonical_transcripts:199 - transcriptome_fetcher: 0 genes from cache, 182 to fetch from Ensembl
+2026-11-19 16:18:30.237 | WARNING  | src.stage2_offtarget_scan.transcriptome_fetcher:_batch_lookup_symbols:239 - transcriptome_fetcher: symbol lookup failed for batch of 80: 504 Server Error: Gateway Time-out for url: https://rest.ensembl.org/lookup/symbol/homo_sapiens
+2026-11-19 16:19:04.082 | WARNING  | src.stage2_offtarget_scan.transcriptome_fetcher:_batch_lookup_symbols:239 - transcriptome_fetcher: symbol lookup failed for batch of 80: 504 Server Error: Gateway Time-out for url: https://rest.ensembl.org/lookup/symbol/homo_sapiens
+2026-11-19 16:19:38.128 | WARNING  | src.stage2_offtarget_scan.transcriptome_fetcher:_batch_lookup_symbols:239 - transcriptome_fetcher: symbol lookup failed for batch of 22: 504 Server Error: Gateway Time-out for url: https://rest.ensembl.org/lookup/symbol/homo_sapiens
+2026-11-19 16:19:38.129 | DEBUG    | src.core.cache:__init__:126 - Cache initialised at data/cache/orcsonar_cache.db
+2026-11-19 16:19:38.130 | WARNING  | src.stage2_offtarget_scan.transcriptome_fetcher:get_background_transcriptome:149 - transcriptome_fetcher: no canonical transcripts resolved — returning empty
+2026-11-19 16:19:38.130 | INFO     | src.stage2_offtarget_scan.seed_aligner:run:395 - seed_aligner: VEGFA — scanning 20 transcripts total (0 background + target gene)
+2026-11-19 16:19:38.131 | INFO     | src.stage2_offtarget_scan.seed_aligner:find_offtargets:58 - Seed 'CAACCAU' hit 0/20 transcripts; running full alignment on candidates
+2026-11-19 16:19:38.131 | INFO     | src.stage2_offtarget_scan.seed_aligner:find_offtargets:149 - Found 0 off-target sites after filtering
+2026-11-19 16:19:38.131 | INFO     | src.stage2_offtarget_scan.seed_aligner:run:429 - seed_aligner: VEGFA → 0 off-target site(s)

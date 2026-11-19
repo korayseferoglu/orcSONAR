@@ -1,0 +1,4 @@
+2026-11-19 16:19:44.828 | DEBUG    | src.stage5_biophysics.thermodynamics:_load:162 - Loaded 6 stacking tables from data/4_Biyofizik_Yapısal/Turner_Rules/rna.stack.dg
+2026-11-19 16:19:44.828 | DEBUG    | src.stage5_biophysics.thermodynamics:_load:168 - Loaded 6 helix-end tables from data/4_Biyofizik_Yapısal/Turner_Rules/rna.helix_ends.dg
+2026-11-19 16:19:44.828 | DEBUG    | src.stage5_biophysics.thermodynamics:_load:173 - Initiation ΔG = 4.1 kcal/mol
+2026-11-19 16:19:44.829 | INFO     | src.stage5_biophysics.delta_g_calculator:run:104 - delta_g_calculator: 0 sites → results/VEGFA_HeLa/stage5_deltag.json

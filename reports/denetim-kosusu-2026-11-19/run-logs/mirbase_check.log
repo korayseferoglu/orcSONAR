@@ -1,0 +1,3 @@
+2026-11-19 16:16:53.107 | DEBUG    | src.stage2_offtarget_scan.mirbase_checker:_parse_mirbase:129 - Parsed 2656 human miRNA entries from data/1_Temel_Harita/miRBase/mature.fa
+2026-11-19 16:16:53.110 | INFO     | src.stage2_offtarget_scan.mirbase_checker:check_mirbase_overlap:69 - miRBase check: seed='CAACCAT', 6 overlaps found, max_score=0.3, risk=LOW
+2026-11-19 16:16:53.110 | INFO     | src.stage2_offtarget_scan.mirbase_checker:run:197 - mirbase_checker: seed=CAACCAT overlaps=6 risk=LOW

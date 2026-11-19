@@ -1,0 +1,68 @@
+{
+  "sarna_input": {
+    "sequence": "GCAACCAUAGCCUCGGCCGC",
+    "target_gene": "VEGFA",
+    "cell_line": "HeLa"
+  },
+  "offtarget_sites": [],
+  "domain_scores_per_site": {},
+  "final_risk_score": 0.0,
+  "risk_class": "SAFE",
+  "cell_line_context": "No off-target sites detected.",
+  "_metadata": {
+    "orcsonar_version": "0.1.0",
+    "generated_at": "2026-11-19T16:19:58.131296",
+    "genome_assembly": "hg38 / GRCh38",
+    "data_sources": [
+      "EPDnew hg38 (TSS database)",
+      "FANTOM5 CAGE peaks hg38",
+      "GENCODE v44 via Ensembl REST",
+      "NCBI RefSeq via E-utilities",
+      "miRBase v22 (mature.fa)",
+      "RepeatMasker via UCSC rmsk API",
+      "COSMIC v103 GRCh38",
+      "gnomAD v4 via GraphQL API",
+      "NCBI ClinVar via E-utilities",
+      "UCSC phyloP 100-way BigWig",
+      "ENCODE ATAC-seq BigWig",
+      "ENCODE ChIP-seq (H3K4me3/H3K27ac/H3K27me3)",
+      "GRO-seq / PRO-seq BigWig",
+      "Hi-C / 4DN portal",
+      "CCLE / DepMap expression matrix",
+      "Turner nearest-neighbour thermodynamics",
+      "SHAPE-Seq accessibility profiles",
+      "m6A-Atlas / RMBase hg38 (Tabix)",
+      "ADAR A→I risk via Alu proxy (RepeatMasker)",
+      "G4 RNA quadruplex (regex scan)",
+      "Ago2 eCLIP BigWig (ENCODE)",
+      "POSTAR3 RBP eCLIP (ENCODE)",
+      "circAtlas 3.0 circRNA FASTA/BED",
+      "TLR7/TLR8 immune danger motifs"
+    ],
+    "risk_thresholds": {
+      "SAFE": {
+        "min": 0.0,
+        "max": 0.3
+      },
+      "WARNING": {
+        "min": 0.3,
+        "max": 0.6
+      },
+      "HIGH_RISK": {
+        "min": 0.6,
+        "max": 0.8
+      },
+      "DANGEROUS": {
+        "min": 0.8,
+        "max": 1.0
+      }
+    },
+    "domain_weights": {
+      "sequence_specificity": 0.2,
+      "variant_toxicity": 0.15,
+      "epigenetic_context": 0.2,
+      "biophysics_structure": 0.25,
+      "execution_safety": 0.2
+    }
+  }
+}

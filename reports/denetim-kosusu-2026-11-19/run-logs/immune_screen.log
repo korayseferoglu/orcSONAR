@@ -1,0 +1,4 @@
+2026-11-19 16:19:46.821 | DEBUG    | src.stage6_execution.immune_screen:_load_motifs:94 - immune_screen: loaded 6 motifs from data/5_Icra_Güvenlik/Immun_Motifler/immune_motifs.txt
+2026-11-19 16:19:46.821 | DEBUG    | src.stage6_execution.immune_screen:screen_immune_motifs:170 - immune_screen: seq=GCAACCAUAGCCUCGGCCGC... total_hits=0 risk=SAFE score=0.00
+2026-11-19 16:19:46.821 | INFO     | src.stage6_execution.immune_screener:run:55 - immune_screener: saRNA hits=0 risk=SAFE
+2026-11-19 16:19:46.822 | INFO     | src.stage6_execution.immune_screener:run:76 - immune_screener: saRNA + 0 off-target sites → results/VEGFA_HeLa/stage6_immune.json

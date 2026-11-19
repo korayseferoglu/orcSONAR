@@ -1,0 +1,2 @@
+2026-11-19 16:19:48.757 | INFO     | src.stage6_execution.circrna_checker:run:53 - circrna_checker: using BED file data/5_Icra_Güvenlik/circAtlas/hg38_circRNAs.bed
+2026-11-19 16:19:48.758 | INFO     | src.stage6_execution.circrna_checker:run:78 - circrna_checker: 0 regions → results/VEGFA_HeLa/stage6_circrna.json

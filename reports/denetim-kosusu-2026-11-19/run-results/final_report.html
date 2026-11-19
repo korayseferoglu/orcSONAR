@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>orcSONAR — Off-Target Risk Report | VEGFA / HeLa</title>
+  <style>/* orcSONAR Report — Dark Glassmorphism Theme */
+
+/* ── Reset &amp; base ─────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:           #080c18;
+  --bg2:          #0d1225;
+  --surface:      rgba(255,255,255,0.04);
+  --surface-hi:   rgba(255,255,255,0.08);
+  --border:       rgba(255,255,255,0.09);
+  --border-hi:    rgba(255,255,255,0.18);
+  --text:         #e2e8f0;
+  --text-muted:   #64748b;
+  --text-dim:     #94a3b8;
+  --accent:       #818cf8;
+  --accent-dark:  #6366f1;
+  --safe:         #22c55e;
+  --warning:      #eab308;
+  --high-risk:    #f97316;
+  --dangerous:    #ef4444;
+  --radius:       12px;
+  --radius-sm:    8px;
+  --blur:         blur(14px);
+  --font:         &#39;Inter&#39;, system-ui, -apple-system, sans-serif;
+  --mono:         &#39;JetBrains Mono&#39;, &#39;Fira Code&#39;, &#39;Courier New&#39;, monospace;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+  padding: 0 0 60px;
+}
+
+/* ── Background mesh ─────────────────────────────────────────────────── */
+body::before {
+  content: &#39;&#39;;
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 50% at 20% 10%, rgba(99,102,241,0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 80%, rgba(168,85,247,0.08) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Layout ──────────────────────────────────────────────────────────── */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+
+/* ── Glass card ──────────────────────────────────────────────────────── */
+.card {
+  background: var(--surface);
+  backdrop-filter: var(--blur);
+  -webkit-backdrop-filter: var(--blur);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px 32px;
+  margin-bottom: 24px;
+  transition: border-color 0.2s, background 0.2s;
+}
+.card:hover {
+  border-color: var(--border-hi);
+  background: var(--surface-hi);
+}
+.card-sm { padding: 20px 24px; }
+
+/* ── Header ──────────────────────────────────────────────────────────── */
+.header {
+  padding: 40px 0 32px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 36px;
+}
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.logo {
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  background: linear-gradient(135deg, var(--accent) 0%, #a78bfa 50%, #ec4899 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.logo-sub {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+.header-meta {
+  text-align: right;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.8;
+}
+.header-meta strong { color: var(--text-dim); }
+
+/* ── Section title ───────────────────────────────────────────────────── */
+.section-title {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.section-title::after {
+  content: &#39;&#39;;
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ── Overall risk gauge ──────────────────────────────────────────────── */
+.risk-overview {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 32px;
+  align-items: center;
+}
+.risk-gauge {
+  text-align: center;
+  min-width: 200px;
+}
+.risk-gauge-emoji { font-size: 4rem; line-height: 1; }
+.risk-score-value {
+  font-size: 3.2rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  margin-top: 8px;
+}
+.risk-badge {
+  display: inline-block;
+  padding: 4px 14px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-top: 10px;
+  border: 1px solid currentColor;
+}
+.risk-meta { font-size: 0.88rem; color: var(--text-dim); line-height: 2.0; }
+.risk-meta strong { color: var(--text); }
+
+/* Risk colour utilities */
+.c-safe      { color: var(--safe);      border-color: var(--safe);      }
+.c-warning   { color: var(--warning);   border-color: var(--warning);   }
+.c-high-risk { color: var(--high-risk); border-color: var(--high-risk); }
+.c-dangerous { color: var(--dangerous); border-color: var(--dangerous); }
+.bg-safe      { background: rgba(34,197,94, 0.12);  }
+.bg-warning   { background: rgba(234,179,8, 0.12);  }
+.bg-high-risk { background: rgba(249,115,22,0.12);  }
+.bg-dangerous { background: rgba(239,68,68, 0.12);  }
+
+/* ── Input summary ───────────────────────────────────────────────────── */
+.input-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+.input-item label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.10em;
+  color: var(--text-muted);
+  display: block;
+  margin-bottom: 4px;
+}
+.input-item .val {
+  font-family: var(--mono);
+  font-size: 0.97rem;
+  color: var(--text);
+  word-break: break-all;
+}
+
+/* ── Score bar ───────────────────────────────────────────────────────── */
+.score-bar-wrap { display: flex; align-items: center; gap: 10px; }
+.score-bar-bg {
+  flex: 1;
+  height: 6px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.score-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.4s ease;
+}
+.score-bar-label { font-size: 0.80rem; color: var(--text-dim); width: 38px; text-align: right; flex-shrink: 0; }
+.domain-row { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+.domain-name { font-size: 0.82rem; color: var(--text-dim); width: 130px; flex-shrink: 0; }
+
+/* ── Off-target table ────────────────────────────────────────────────── */
+.table-wrap { overflow-x: auto; border-radius: var(--radius-sm); }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+thead tr {
+  background: rgba(255,255,255,0.04);
+}
+th {
+  padding: 12px 16px;
+  text-align: left;
+  font-size: 0.70rem;
+  font-weight: 600;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+td {
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  vertical-align: middle;
+}
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: rgba(255,255,255,0.03); }
+.mono { font-family: var(--mono); font-size: 0.82rem; }
+
+/* ── Site detail cards ───────────────────────────────────────────────── */
+.site-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(480px, 1fr));
+  gap: 20px;
+}
+.site-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  backdrop-filter: var(--blur);
+  -webkit-backdrop-filter: var(--blur);
+}
+.site-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.site-card-title { font-weight: 700; font-size: 1rem; }
+.site-card-sub { font-size: 0.78rem; color: var(--text-muted); margin-top: 2px; font-family: var(--mono); }
+.site-score-pill {
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.radar-wrap { height: 290px; margin: 8px -8px; }
+
+/* ── Cell line context box ───────────────────────────────────────────── */
+.context-box {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  background: rgba(99,102,241,0.07);
+  border: 1px solid rgba(99,102,241,0.22);
+  border-radius: var(--radius-sm);
+  font-size: 0.88rem;
+  color: var(--text-dim);
+}
+.context-icon { font-size: 1.4rem; flex-shrink: 0; }
+
+/* ── Empty state ─────────────────────────────────────────────────────── */
+.empty-state {
+  text-align: center;
+  padding: 48px 0;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+.empty-state .icon { font-size: 2.5rem; margin-bottom: 12px; }
+
+/* ── Footer ──────────────────────────────────────────────────────────── */
+.footer {
+  border-top: 1px solid var(--border);
+  margin-top: 48px;
+  padding-top: 32px;
+  color: var(--text-muted);
+  font-size: 0.80rem;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+.footer h4 {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-dim);
+  margin-bottom: 10px;
+}
+.footer ul { list-style: none; }
+.footer li { padding: 2px 0; }
+.footer li::before { content: &#39;· &#39;; color: var(--accent); }
+
+/* ── Utility ─────────────────────────────────────────────────────────── */
+.flex { display: flex; }
+.gap-8 { gap: 8px; }
+.gap-16 { gap: 16px; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.mt-8  { margin-top: 8px; }
+.mt-16 { margin-top: 16px; }
+.mb-4  { margin-bottom: 4px; }
+.mb-8  { margin-bottom: 8px; }
+.text-sm { font-size: 0.85rem; }
+.text-xs { font-size: 0.78rem; }
+.text-muted { color: var(--text-muted); }
+.font-mono  { font-family: var(--mono); }
+.font-bold  { font-weight: 700; }
+.truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* ── Print / PDF overrides ───────────────────────────────────────────── */
+@media print {
+  body { background: #fff; color: #111; }
+  body::before { display: none; }
+
+  .card, .site-card {
+    background: #f8f9fa;
+    border-color: #dee2e6;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    break-inside: avoid;
+  }
+
+  .radar-wrap { display: none; }        /* JS charts won&#39;t render in PDF */
+  .print-domain-table { display: block !important; }
+
+  .logo { -webkit-text-fill-color: #4f46e5; background: none; color: #4f46e5; }
+  .text-muted, .text-dim, .risk-meta { color: #555; }
+  .context-box { background: #f0eeff; border-color: #a5b4fc; }
+  a { color: inherit; }
+}
+
+.print-domain-table { display: none; }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════════ HEADER -->
+<div class="container">
+  <header class="header">
+    <div class="header-inner">
+      <div>
+        <div class="logo">🔬 orcSONAR</div>
+        <div class="logo-sub">Off-Target Risk Assessment Report</div>
+      </div>
+      <div class="header-meta">
+        <strong>Generated</strong> 2026-11-19 16:19 UTC<br>
+        <strong>Version</strong> 0.1.0<br>
+        <strong>Assembly</strong> hg38 / GRCh38
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════════════ OVERALL RISK SCORE -->
+  <div class="card">
+    <div class="section-title">Overall Risk Assessment</div>
+    <div class="risk-overview">
+
+      <div class="risk-gauge">
+        <div class="risk-gauge-emoji">🟢</div>
+        <div class="risk-score-value" style="color: #22c55e">
+          0.000
+        </div>
+        <div class="risk-badge c-safe">
+          SAFE
+        </div>
+      </div>
+
+      <div class="risk-meta">
+        <div><strong>Target gene</strong> VEGFA</div>
+        <div><strong>saRNA sequence</strong>
+          <span class="font-mono">GCAACCAUAGCCUCGGCCGC</span>
+        </div>
+        <div><strong>Cell line</strong> HeLa</div>
+        <div><strong>Off-target sites analysed</strong>
+          0
+        </div>
+        <div class="mt-8">
+          <div class="context-box">
+            <span class="context-icon">🧬</span>
+            <span>
+              This score is <strong>HeLa-specific</strong>.
+              No off-target sites detected.
+            </span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ INPUT SUMMARY -->
+  <div class="card card-sm">
+    <div class="section-title">saRNA Input</div>
+    <div class="input-grid">
+      <div class="input-item">
+        <label>Sequence (5′→3′)</label>
+        <div class="val">GCAACCAUAGCCUCGGCCGC</div>
+      </div>
+      <div class="input-item">
+        <label>Length</label>
+        <div class="val">20 nt</div>
+      </div>
+      <div class="input-item">
+        <label>Target gene</label>
+        <div class="val">VEGFA</div>
+      </div>
+      <div class="input-item">
+        <label>Cell line</label>
+        <div class="val">HeLa</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ OFF-TARGET SITE TABLE -->
+  <div class="card">
+    <div class="section-title">Off-Target Site Summary</div>
+
+    
+    <div class="empty-state">
+      <div class="icon">✅</div>
+      No off-target sites were identified for this saRNA in HeLa.
+    </div>
+    
+  </div>
+
+  <!-- ════════════════════════════════════════ PER-SITE DETAIL + RADAR CHARTS -->
+  
+
+  <!-- ═════════════════════════════════════════════════════════════ FOOTER -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div>
+        <h4>About orcSONAR</h4>
+        <p style="margin-bottom:8px">
+          Cell-specific, biophysics-driven saRNA off-target predictor.<br>
+          Integrates epigenetic, variant, thermodynamic and structural data
+          across 24 curated data sources.
+        </p>
+        <p>v0.1.0 &nbsp;·&nbsp; hg38/GRCh38 &nbsp;·&nbsp; 2026-11-19 16:19 UTC</p>
+      </div>
+      <div>
+        <h4>Data Sources</h4>
+        <ul>
+          <li>EPDnew hg38 · FANTOM5 CAGE · GENCODE v44 · RefSeq</li>
+          <li>miRBase v22 · RepeatMasker · COSMIC v103 · gnomAD v4</li>
+          <li>ClinVar · phyloP 100-way · ENCODE ATAC/ChIP/eCLIP</li>
+          <li>GRO-seq · Hi-C 4DN · CCLE/DepMap · Turner ΔG rules</li>
+          <li>SHAPE-Seq · m6A-Atlas (RMBase) · ADAR/Alu proxy</li>
+          <li>G4 RNA regex · circAtlas 3.0 · TLR7/TLR8 motifs</li>
+        </ul>
+      </div>
+    </div>
+    <div style="margin-top:24px; padding-top:16px; border-top:1px solid var(--border); color:var(--text-muted); font-size:0.78rem;">
+      orcSONAR is a research tool. Results should be experimentally validated before clinical application.
+    </div>
+  </footer>
+</div><!-- /container -->
+
+<!-- ════════════════════════════════════════════ PLOTLY.JS RADAR CHARTS -->
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js" crossorigin="anonymous"></script>
+<script>
+(function () {
+  var charts = {
+    
+  };
+
+  Object.keys(charts).forEach(function (idx) {
+    var el = document.getElementById('radar-' + idx);
+    if (!el) return;
+    var d = charts[idx];
+    Plotly.newPlot(el, [d.trace], d.layout, d.config);
+  });
+})();
+</script>
+
+</body>
+</html>

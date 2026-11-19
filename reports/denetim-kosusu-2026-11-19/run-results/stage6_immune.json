@@ -1,0 +1,9 @@
+{
+  "sarna_immune": {
+    "motifs_found": [],
+    "total_hits": 0,
+    "risk_score": 0.0,
+    "risk_level": "SAFE"
+  },
+  "offtarget_immune": {}
+}

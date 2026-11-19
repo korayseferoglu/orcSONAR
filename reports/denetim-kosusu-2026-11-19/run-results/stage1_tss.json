@@ -1,0 +1,11 @@
+{
+  "gene": "VEGFA",
+  "tss": {
+    "gene": "VEGFA",
+    "chrom": "chr6",
+    "position": 43770210,
+    "strand": "+",
+    "source": "EPDnew",
+    "score": 900.0
+  }
+}

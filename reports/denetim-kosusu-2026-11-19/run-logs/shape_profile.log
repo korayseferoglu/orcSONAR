@@ -1,0 +1,1 @@
+2026-11-19 16:19:46.814 | INFO     | src.stage5_biophysics.shape_reader:run:85 - shape_reader: 0 regions in HeLa (0 consulted icSHAPE, 0 with measured signal) → results/VEGFA_HeLa/stage5_shape.json
