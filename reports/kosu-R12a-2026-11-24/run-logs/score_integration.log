@@ -1,0 +1,84 @@
+2026-11-24 15:46:57.158 | INFO     | src.scoring.score_integrator:run:135 - score_integrator: loading stage outputs
+2026-11-24 15:46:57.160 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.064 epi=0.259 bio=0.083 exec=0.222 → 0.3265
+2026-11-24 15:46:57.160 | DEBUG    | src.scoring.score_integrator:run:209 - site MTOR:ENST00000361445:chr1:11255438: base_score=0.3265
+2026-11-24 15:46:57.161 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.199 epi=0.174 bio=0.133 exec=0.222 → 0.3424
+2026-11-24 15:46:57.161 | DEBUG    | src.scoring.score_integrator:run:209 - site VEGFA:ENST00000480614:chr6:43777011: base_score=0.3424
+2026-11-24 15:46:57.161 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.489 epi=0.258 bio=0.000 exec=0.222 → 0.3695
+2026-11-24 15:46:57.161 | DEBUG    | src.scoring.score_integrator:run:209 - site HNRNPA2B1:ENST00000618183:chr7:26198044: base_score=0.3695
+2026-11-24 15:46:57.161 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.644 epi=0.132 bio=0.000 exec=0.222 → 0.3674
+2026-11-24 15:46:57.161 | DEBUG    | src.scoring.score_integrator:run:209 - site DICER1:ENST00000343455:chr14:95152261: base_score=0.3674
+2026-11-24 15:46:57.161 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.209 epi=0.152 bio=0.113 exec=0.222 → 0.3344
+2026-11-24 15:46:57.161 | DEBUG    | src.scoring.score_integrator:run:209 - site TNRC6B:ENST00000454349:chr22:40182273: base_score=0.3344
+2026-11-24 15:46:57.161 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.198 epi=0.324 bio=0.037 exec=0.222 → 0.3482
+2026-11-24 15:46:57.161 | DEBUG    | src.scoring.score_integrator:run:209 - site CTNNB1:ENST00000349496:chr3:41200550: base_score=0.3482
+2026-11-24 15:46:57.161 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.008 epi=0.120 bio=0.160 exec=0.222 → 0.3097
+2026-11-24 15:46:57.161 | DEBUG    | src.scoring.score_integrator:run:209 - site ATR:ENST00000350721:chr3:142571301: base_score=0.3097
+2026-11-24 15:46:57.161 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.415 epi=0.610 bio=0.000 exec=0.222 → 0.4286
+2026-11-24 15:46:57.161 | DEBUG    | src.scoring.score_integrator:run:209 - site RPL11:ENST00000643754:chr1:23692780: base_score=0.4286
+2026-11-24 15:46:57.161 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.191 epi=0.120 bio=0.160 exec=0.222 → 0.3372
+2026-11-24 15:46:57.161 | DEBUG    | src.scoring.score_integrator:run:209 - site PTBP2:ENST00000674951:chr1:96724335: base_score=0.3372
+2026-11-24 15:46:57.161 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.319 epi=0.104 bio=0.000 exec=0.222 → 0.3131
+2026-11-24 15:46:57.161 | DEBUG    | src.scoring.score_integrator:run:209 - site PTBP2:ENST00000674951:chr1:96724850: base_score=0.3131
+2026-11-24 15:46:57.161 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.200 epi=0.141 bio=0.160 exec=0.222 → 0.3425
+2026-11-24 15:46:57.161 | DEBUG    | src.scoring.score_integrator:run:209 - site BRCA1:ENST00000357654:chr17:43122797: base_score=0.3425
+2026-11-24 15:46:57.161 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.000 epi=0.503 bio=0.042 exec=0.000 → 0.3112
+2026-11-24 15:46:57.161 | DEBUG    | src.scoring.score_integrator:run:209 - site CALM2:ENST00000272298:chr2:47175374: base_score=0.3112
+2026-11-24 15:46:57.162 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.169 epi=0.502 bio=0.015 exec=0.222 → 0.3740
+2026-11-24 15:46:57.162 | DEBUG    | src.scoring.score_integrator:run:209 - site HNRNPK:ENST00000376263:chr9:83979914: base_score=0.3740
+2026-11-24 15:46:57.162 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.183 epi=0.158 bio=0.179 exec=0.222 → 0.3484
+2026-11-24 15:46:57.162 | DEBUG    | src.scoring.score_integrator:run:209 - site AGO4:ENST00000373210:chr1:35815110: base_score=0.3484
+2026-11-24 15:46:57.162 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.670 epi=0.191 bio=0.016 exec=0.222 → 0.3871
+2026-11-24 15:46:57.162 | DEBUG    | src.scoring.score_integrator:run:209 - site MDM2:ENST00000258149:chr12:68809823: base_score=0.3871
+2026-11-24 15:46:57.162 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.038 epi=0.159 bio=0.000 exec=0.000 → 0.2376
+2026-11-24 15:46:57.162 | DEBUG    | src.scoring.score_integrator:run:209 - site EGFR:ENST00000275493:chr7:55027996: base_score=0.2376
+2026-11-24 15:46:57.162 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.211 epi=0.146 bio=0.079 exec=0.222 → 0.3253
+2026-11-24 15:46:57.162 | DEBUG    | src.scoring.score_integrator:run:209 - site PIK3CA:ENST00000263967:chr3:179151174: base_score=0.3253
+2026-11-24 15:46:57.162 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.200 epi=0.181 bio=0.078 exec=0.222 → 0.3302
+2026-11-24 15:46:57.162 | DEBUG    | src.scoring.score_integrator:run:209 - site VEGFA:ENST00000497139:chr6:43777871: base_score=0.3302
+2026-11-24 15:46:57.162 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.187 epi=0.471 bio=0.056 exec=0.222 → 0.3804
+2026-11-24 15:46:57.162 | DEBUG    | src.scoring.score_integrator:run:209 - site HNRNPK:ENST00000376263:chr9:83979032: base_score=0.3804
+2026-11-24 15:46:57.162 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.000 epi=0.410 bio=0.224 exec=0.222 → 0.3824
+2026-11-24 15:46:57.162 | DEBUG    | src.scoring.score_integrator:run:209 - site DDX17:ENST00000403230:chr22:38504908: base_score=0.3824
+2026-11-24 15:46:57.162 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.191 epi=0.216 bio=0.064 exec=0.222 → 0.3322
+2026-11-24 15:46:57.162 | DEBUG    | src.scoring.score_integrator:run:209 - site DDX17:ENST00000403230:chr22:38501867: base_score=0.3322
+2026-11-24 15:46:57.162 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.165 epi=0.500 bio=0.000 exec=0.222 → 0.3692
+2026-11-24 15:46:57.162 | DEBUG    | src.scoring.score_integrator:run:209 - site DDX5:ENST00000225792:chr17:64505712: base_score=0.3692
+2026-11-24 15:46:57.162 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.180 epi=0.012 bio=0.015 exec=0.222 → 0.2777
+2026-11-24 15:46:57.163 | DEBUG    | src.scoring.score_integrator:run:209 - site CCND2:ENST00000261254:chr12:4276729: base_score=0.2777
+2026-11-24 15:46:57.163 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.200 epi=0.171 bio=0.000 exec=0.222 → 0.3086
+2026-11-24 15:46:57.163 | DEBUG    | src.scoring.score_integrator:run:209 - site PTEN:ENST00000371953:chr10:87869740: base_score=0.3086
+2026-11-24 15:46:57.163 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.221 epi=0.129 bio=0.000 exec=0.000 → 0.2589
+2026-11-24 15:46:57.163 | DEBUG    | src.scoring.score_integrator:run:209 - site ATR:ENST00000350721:chr3:142572942: base_score=0.2589
+2026-11-24 15:46:57.163 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.199 epi=0.284 bio=0.000 exec=0.000 → 0.2867
+2026-11-24 15:46:57.163 | DEBUG    | src.scoring.score_integrator:run:209 - site CASP3:ENST00000308394:chr4:184648366: base_score=0.2867
+2026-11-24 15:46:57.163 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.198 epi=0.273 bio=0.000 exec=0.000 → 0.2842
+2026-11-24 15:46:57.163 | DEBUG    | src.scoring.score_integrator:run:209 - site CUL1:ENST00000325222:chr7:148700526: base_score=0.2842
+2026-11-24 15:46:57.163 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.198 epi=0.160 bio=0.133 exec=0.222 → 0.3395
+2026-11-24 15:46:57.163 | DEBUG    | src.scoring.score_integrator:run:209 - site AKT2:ENST00000392038:chr19:40280283: base_score=0.3395
+2026-11-24 15:46:57.163 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.194 epi=0.113 bio=0.133 exec=0.000 → 0.2850
+2026-11-24 15:46:57.163 | DEBUG    | src.scoring.score_integrator:run:209 - site TSC1:ENST00000298552:chr9:132940598: base_score=0.2850
+2026-11-24 15:46:57.163 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.209 epi=0.155 bio=0.127 exec=0.222 → 0.3385
+2026-11-24 15:46:57.163 | DEBUG    | src.scoring.score_integrator:run:209 - site YAP1:ENST00000282441:chr11:102115206: base_score=0.3385
+2026-11-24 15:46:57.163 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.200 epi=0.002 bio=0.000 exec=0.000 → 0.2303
+2026-11-24 15:46:57.163 | DEBUG    | src.scoring.score_integrator:run:209 - site IFNG:ENST00000229135:chr12:68159107: base_score=0.2303
+2026-11-24 15:46:57.163 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.200 epi=0.160 bio=0.000 exec=0.000 → 0.2620
+2026-11-24 15:46:57.163 | DEBUG    | src.scoring.score_integrator:run:209 - site LIN28A:ENST00000326279:chr1:26414640: base_score=0.2620
+2026-11-24 15:46:57.163 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.198 epi=0.142 bio=0.000 exec=0.222 → 0.3025
+2026-11-24 15:46:57.163 | DEBUG    | src.scoring.score_integrator:run:209 - site DICER1:ENST00000343455:chr14:95147794: base_score=0.3025
+2026-11-24 15:46:57.163 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.276 epi=0.172 bio=0.113 exec=0.222 → 0.3485
+2026-11-24 15:46:57.164 | DEBUG    | src.scoring.score_integrator:run:209 - site TNRC6B:ENST00000454349:chr22:40180363: base_score=0.3485
+2026-11-24 15:46:57.164 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.204 epi=0.006 bio=0.015 exec=0.222 → 0.2802
+2026-11-24 15:46:57.164 | DEBUG    | src.scoring.score_integrator:run:209 - site CCND2:ENST00000261254:chr12:4276799: base_score=0.2802
+2026-11-24 15:46:57.164 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.450 epi=0.270 bio=0.032 exec=0.000 → 0.3295
+2026-11-24 15:46:57.164 | DEBUG    | src.scoring.score_integrator:run:209 - site MTOR:ENST00000361445:chr1:11259515: base_score=0.3295
+2026-11-24 15:46:57.164 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.193 epi=0.407 bio=0.160 exec=0.222 → 0.3948
+2026-11-24 15:46:57.164 | DEBUG    | src.scoring.score_integrator:run:209 - site RPS3:ENST00000531188:chr11:75401416: base_score=0.3948
+2026-11-24 15:46:57.164 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.492 epi=0.248 bio=0.000 exec=0.222 → 0.3679
+2026-11-24 15:46:57.164 | DEBUG    | src.scoring.score_integrator:run:209 - site HNRNPA2B1:ENST00000618183:chr7:26197989: base_score=0.3679
+2026-11-24 15:46:57.164 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.200 epi=0.270 bio=0.293 exec=0.000 → 0.3574
+2026-11-24 15:46:57.164 | DEBUG    | src.scoring.score_integrator:run:209 - site TSC1:ENST00000298552:chr9:132937751: base_score=0.3574
+2026-11-24 15:46:57.164 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.197 epi=0.160 bio=0.133 exec=0.222 → 0.3394
+2026-11-24 15:46:57.164 | DEBUG    | src.scoring.score_integrator:run:209 - site SMAD2:ENST00000262160:chr18:47898662: base_score=0.3394
+2026-11-24 15:46:57.164 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.197 epi=0.186 bio=0.133 exec=0.222 → 0.3445
+2026-11-24 15:46:57.164 | DEBUG    | src.scoring.score_integrator:run:209 - site SMAD2:ENST00000262160:chr18:47916332: base_score=0.3445
+2026-11-24 15:46:57.165 | INFO     | src.scoring.score_integrator:run:222 - score_integrator: wrote 41 sites → /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/results/VEGFA_HeLa/stage7_scores.json

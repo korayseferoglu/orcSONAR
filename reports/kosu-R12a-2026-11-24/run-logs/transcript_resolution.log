@@ -1,0 +1,3 @@
+2026-11-24 15:22:17.848 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:22:19.479 | DEBUG    | src.core.cache:set:216 - Cache SET: ensembl:transcripts:VEGFA (TTL 168h, schema v1)
+2026-11-24 15:22:19.480 | INFO     | src.stage1_genomic_map.transcript_resolver:run:534 - transcript_resolver: VEGFA → 26 transcript(s)

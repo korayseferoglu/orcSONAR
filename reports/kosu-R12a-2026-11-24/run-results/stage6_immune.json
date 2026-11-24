@@ -1,0 +1,256 @@
+{
+  "sarna_immune": {
+    "motifs_found": [],
+    "total_hits": 0,
+    "risk_score": 0.0,
+    "risk_level": "SAFE"
+  },
+  "offtarget_immune": {
+    "MTOR:ENST00000361445:chr1:11255438": {
+      "motifs_found": [],
+      "total_hits": 0,
+      "risk_score": 0.0,
+      "risk_level": "SAFE"
+    },
+    "VEGFA:ENST00000480614:chr6:43777011": {
+      "motifs_found": [],
+      "total_hits": 0,
+      "risk_score": 0.0,
+      "risk_level": "SAFE"
+    },
+    "HNRNPA2B1:ENST00000618183:chr7:26198044": {
+      "motifs_found": [],
+      "total_hits": 0,
+      "risk_score": 0.0,
+      "risk_level": "SAFE"
+    },
+    "DICER1:ENST00000343455:chr14:95152261": {
+      "motifs_found": [],
+      "total_hits": 0,
+      "risk_score": 0.0,
+      "risk_level": "SAFE"
+    },
+    "TNRC6B:ENST00000454349:chr22:40182273": {
+      "motifs_found": [],
+      "total_hits": 0,
+      "risk_score": 0.0,
+      "risk_level": "SAFE"
+    },
+    "CTNNB1:ENST00000349496:chr3:41200550": {
+      "motifs_found": [],
+      "total_hits": 0,
+      "risk_score": 0.0,
+      "risk_level": "SAFE"
+    },
+    "ATR:ENST00000350721:chr3:142571301": {
+      "motifs_found": [],
+      "total_hits": 0,
+      "risk_score": 0.0,
+      "risk_level": "SAFE"
+    },
+    "RPL11:ENST00000643754:chr1:23692780": {
+      "motifs_found": [],
+      "total_hits": 0,
+      "risk_score": 0.0,
+      "risk_level": "SAFE"
+    },
+    "PTBP2:ENST00000674951:chr1:96724335": {
+      "motifs_found": [],
+      "total_hits": 0,
+      "risk_score": 0.0,
+      "risk_level": "SAFE"
+    },
+    "PTBP2:ENST00000674951:chr1:96724850": {
+      "motifs_found": [],
+      "total_hits": 0,
+      "risk_score": 0.0,
+      "risk_level": "SAFE"
+    },
+    "BRCA1:ENST00000357654:chr17:43122797": {
+      "motifs_found": [],
+      "total_hits": 0,
+      "risk_score": 0.0,
+      "risk_level": "SAFE"
+    },
+    "CALM2:ENST00000272298:chr2:47175374": {
+      "motifs_found": [],
+      "total_hits": 0,
+      "risk_score": 0.0,
+      "risk_level": "SAFE"
+    },
+    "HNRNPK:ENST00000376263:chr9:83979914": {
+      "motifs_found": [],
+      "total_hits": 0,
+      "risk_score": 0.0,
+      "risk_level": "SAFE"
+    },
+    "AGO4:ENST00000373210:chr1:35815110": {
+      "motifs_found": [],
+      "total_hits": 0,
+      "risk_score": 0.0,
+      "risk_level": "SAFE"
+    },
+    "MDM2:ENST00000258149:chr12:68809823": {
+      "motifs_found": [],
+      "total_hits": 0,
+      "risk_score": 0.0,
+      "risk_level": "SAFE"
+    },
+    "EGFR:ENST00000275493:chr7:55027996": {
+      "motifs_found": [],
+      "total_hits": 0,
+      "risk_score": 0.0,
+      "risk_level": "SAFE"
+    },
+    "PIK3CA:ENST00000263967:chr3:179151174": {
+      "motifs_found": [],
+      "total_hits": 0,
+      "risk_score": 0.0,
+      "risk_level": "SAFE"
+    },
+    "VEGFA:ENST00000497139:chr6:43777871": {
+      "motifs_found": [],
+      "total_hits": 0,
+      "risk_score": 0.0,
+      "risk_level": "SAFE"
+    },
+    "HNRNPK:ENST00000376263:chr9:83979032": {
+      "motifs_found": [],
+      "total_hits": 0,
+      "risk_score": 0.0,
+      "risk_level": "SAFE"
+    },
+    "DDX17:ENST00000403230:chr22:38504908": {
+      "motifs_found": [],
+      "total_hits": 0,
+      "risk_score": 0.0,
+      "risk_level": "SAFE"
+    },
+    "DDX17:ENST00000403230:chr22:38501867": {
+      "motifs_found": [],
+      "total_hits": 0,
+      "risk_score": 0.0,
+      "risk_level": "SAFE"
+    },
+    "DDX5:ENST00000225792:chr17:64505712": {
+      "motifs_found": [],
+      "total_hits": 0,
+      "risk_score": 0.0,
+      "risk_level": "SAFE"
+    },
+    "CCND2:ENST00000261254:chr12:4276729": {
+      "motifs_found": [],
+      "total_hits": 0,
+      "risk_score": 0.0,
+      "risk_level": "SAFE"
+    },
+    "PTEN:ENST00000371953:chr10:87869740": {
+      "motifs_found": [],
+      "total_hits": 0,
+      "risk_score": 0.0,
+      "risk_level": "SAFE"
+    },
+    "ATR:ENST00000350721:chr3:142572942": {
+      "motifs_found": [],
+      "total_hits": 0,
+      "risk_score": 0.0,
+      "risk_level": "SAFE"
+    },
+    "CASP3:ENST00000308394:chr4:184648366": {
+      "motifs_found": [],
+      "total_hits": 0,
+      "risk_score": 0.0,
+      "risk_level": "SAFE"
+    },
+    "CUL1:ENST00000325222:chr7:148700526": {
+      "motifs_found": [],
+      "total_hits": 0,
+      "risk_score": 0.0,
+      "risk_level": "SAFE"
+    },
+    "AKT2:ENST00000392038:chr19:40280283": {
+      "motifs_found": [],
+      "total_hits": 0,
+      "risk_score": 0.0,
+      "risk_level": "SAFE"
+    },
+    "TSC1:ENST00000298552:chr9:132940598": {
+      "motifs_found": [],
+      "total_hits": 0,
+      "risk_score": 0.0,
+      "risk_level": "SAFE"
+    },
+    "YAP1:ENST00000282441:chr11:102115206": {
+      "motifs_found": [],
+      "total_hits": 0,
+      "risk_score": 0.0,
+      "risk_level": "SAFE"
+    },
+    "IFNG:ENST00000229135:chr12:68159107": {
+      "motifs_found": [],
+      "total_hits": 0,
+      "risk_score": 0.0,
+      "risk_level": "SAFE"
+    },
+    "LIN28A:ENST00000326279:chr1:26414640": {
+      "motifs_found": [],
+      "total_hits": 0,
+      "risk_score": 0.0,
+      "risk_level": "SAFE"
+    },
+    "DICER1:ENST00000343455:chr14:95147794": {
+      "motifs_found": [],
+      "total_hits": 0,
+      "risk_score": 0.0,
+      "risk_level": "SAFE"
+    },
+    "TNRC6B:ENST00000454349:chr22:40180363": {
+      "motifs_found": [],
+      "total_hits": 0,
+      "risk_score": 0.0,
+      "risk_level": "SAFE"
+    },
+    "CCND2:ENST00000261254:chr12:4276799": {
+      "motifs_found": [],
+      "total_hits": 0,
+      "risk_score": 0.0,
+      "risk_level": "SAFE"
+    },
+    "MTOR:ENST00000361445:chr1:11259515": {
+      "motifs_found": [],
+      "total_hits": 0,
+      "risk_score": 0.0,
+      "risk_level": "SAFE"
+    },
+    "RPS3:ENST00000531188:chr11:75401416": {
+      "motifs_found": [],
+      "total_hits": 0,
+      "risk_score": 0.0,
+      "risk_level": "SAFE"
+    },
+    "HNRNPA2B1:ENST00000618183:chr7:26197989": {
+      "motifs_found": [],
+      "total_hits": 0,
+      "risk_score": 0.0,
+      "risk_level": "SAFE"
+    },
+    "TSC1:ENST00000298552:chr9:132937751": {
+      "motifs_found": [],
+      "total_hits": 0,
+      "risk_score": 0.0,
+      "risk_level": "SAFE"
+    },
+    "SMAD2:ENST00000262160:chr18:47898662": {
+      "motifs_found": [],
+      "total_hits": 0,
+      "risk_score": 0.0,
+      "risk_level": "SAFE"
+    },
+    "SMAD2:ENST00000262160:chr18:47916332": {
+      "motifs_found": [],
+      "total_hits": 0,
+      "risk_score": 0.0,
+      "risk_level": "SAFE"
+    }
+  }
+}

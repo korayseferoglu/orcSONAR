@@ -1,0 +1,378 @@
+{
+  "epigenetic_scores": {
+    "AGO4:ENST00000373210:chr1:35815110": {
+      "atac_signal": 0.0298,
+      "h3k4me3_signal": 0.1319,
+      "h3k27ac_signal": 0.7708,
+      "groseq_signal": 0.0,
+      "hic_contact": 0.50939,
+      "ccle_expression": 2.9858775,
+      "normalized_score": 0.158
+    },
+    "AKT2:ENST00000392038:chr19:40280283": {
+      "atac_signal": 0.0298,
+      "h3k4me3_signal": 0.3035,
+      "h3k27ac_signal": 0.6888,
+      "groseq_signal": 0.0,
+      "hic_contact": 0.0,
+      "ccle_expression": 6.10851,
+      "normalized_score": 0.1603
+    },
+    "ATR:ENST00000350721:chr3:142571301": {
+      "atac_signal": 0.0,
+      "h3k4me3_signal": 0.1319,
+      "h3k27ac_signal": 0.1349,
+      "groseq_signal": 0.0,
+      "hic_contact": 0.0,
+      "ccle_expression": 4.735219,
+      "normalized_score": 0.1204
+    },
+    "ATR:ENST00000350721:chr3:142572942": {
+      "atac_signal": 0.0952,
+      "h3k4me3_signal": 0.9714,
+      "h3k27ac_signal": 0.3231,
+      "groseq_signal": 0.0,
+      "hic_contact": 0.0,
+      "ccle_expression": 4.735219,
+      "normalized_score": 0.1286
+    },
+    "BRCA1:ENST00000357654:chr17:43122797": {
+      "atac_signal": 0.0298,
+      "h3k4me3_signal": 0.3958,
+      "h3k27ac_signal": 0.1542,
+      "groseq_signal": 0.0,
+      "hic_contact": 0.0,
+      "ccle_expression": 5.4544063,
+      "normalized_score": 0.1406
+    },
+    "CALM2:ENST00000272298:chr2:47175374": {
+      "atac_signal": 0.4286,
+      "h3k4me3_signal": 24.3015,
+      "h3k27ac_signal": 42.9472,
+      "groseq_signal": 0.1396,
+      "hic_contact": 0.0,
+      "ccle_expression": 10.269536,
+      "normalized_score": 0.5035
+    },
+    "CASP3:ENST00000308394:chr4:184648366": {
+      "atac_signal": 0.1488,
+      "h3k4me3_signal": 11.5035,
+      "h3k27ac_signal": 8.3632,
+      "groseq_signal": 0.0,
+      "hic_contact": 0.0,
+      "ccle_expression": 5.383041,
+      "normalized_score": 0.2843
+    },
+    "CCND2:ENST00000261254:chr12:4276729": {
+      "atac_signal": 0.0,
+      "h3k4me3_signal": 0.5733,
+      "h3k27ac_signal": 1.0251,
+      "groseq_signal": 0.0,
+      "hic_contact": 0.0,
+      "ccle_expression": 0.0,
+      "normalized_score": 0.012
+    },
+    "CCND2:ENST00000261254:chr12:4276799": {
+      "atac_signal": 0.0595,
+      "h3k4me3_signal": 0.466,
+      "h3k27ac_signal": 0.3382,
+      "groseq_signal": 0.0,
+      "hic_contact": 0.0,
+      "ccle_expression": 0.0,
+      "normalized_score": 0.0063
+    },
+    "CTNNB1:ENST00000349496:chr3:41200550": {
+      "atac_signal": 0.0595,
+      "h3k4me3_signal": 12.0151,
+      "h3k27ac_signal": 4.2516,
+      "groseq_signal": 0.1303,
+      "hic_contact": 0.0,
+      "ccle_expression": 8.002162,
+      "normalized_score": 0.3236
+    },
+    "CUL1:ENST00000325222:chr7:148700526": {
+      "atac_signal": 0.0893,
+      "h3k4me3_signal": 14.7422,
+      "h3k27ac_signal": 2.3768,
+      "groseq_signal": 0.0,
+      "hic_contact": 0.0,
+      "ccle_expression": 5.745423,
+      "normalized_score": 0.2725
+    },
+    "DDX17:ENST00000403230:chr22:38501867": {
+      "atac_signal": 0.0893,
+      "h3k4me3_signal": 1.7283,
+      "h3k27ac_signal": 1.0756,
+      "groseq_signal": 0.0652,
+      "hic_contact": 0.0,
+      "ccle_expression": 7.751986,
+      "normalized_score": 0.2159
+    },
+    "DDX17:ENST00000403230:chr22:38504908": {
+      "atac_signal": 0.25,
+      "h3k4me3_signal": 16.0943,
+      "h3k27ac_signal": 12.41,
+      "groseq_signal": 0.1173,
+      "hic_contact": 0.0,
+      "ccle_expression": 7.751986,
+      "normalized_score": 0.41
+    },
+    "DDX5:ENST00000225792:chr17:64505712": {
+      "atac_signal": 0.1012,
+      "h3k4me3_signal": 33.8072,
+      "h3k27ac_signal": 112.504,
+      "groseq_signal": 0.0,
+      "hic_contact": 0.0,
+      "ccle_expression": 10.335859,
+      "normalized_score": 0.5005
+    },
+    "DICER1:ENST00000343455:chr14:95147794": {
+      "atac_signal": 0.0,
+      "h3k4me3_signal": 0.6484,
+      "h3k27ac_signal": 1.446,
+      "groseq_signal": 0.0,
+      "hic_contact": 0.0,
+      "ccle_expression": 5.0479355,
+      "normalized_score": 0.1419
+    },
+    "DICER1:ENST00000343455:chr14:95152261": {
+      "atac_signal": 0.0298,
+      "h3k4me3_signal": 0.5651,
+      "h3k27ac_signal": 0.169,
+      "groseq_signal": 0.0,
+      "hic_contact": 0.0,
+      "ccle_expression": 5.0479355,
+      "normalized_score": 0.1319
+    },
+    "EGFR:ENST00000275493:chr7:55027996": {
+      "atac_signal": 0.0,
+      "h3k4me3_signal": 0.1662,
+      "h3k27ac_signal": 0.2428,
+      "groseq_signal": 0.0,
+      "hic_contact": 0.0,
+      "ccle_expression": 6.237099,
+      "normalized_score": 0.159
+    },
+    "HNRNPA2B1:ENST00000618183:chr7:26197989": {
+      "atac_signal": 0.0595,
+      "h3k4me3_signal": 5.923,
+      "h3k27ac_signal": 0.2965,
+      "groseq_signal": 0.1303,
+      "hic_contact": 0.0,
+      "ccle_expression": 9.78048,
+      "normalized_score": 0.2482
+    },
+    "HNRNPA2B1:ENST00000618183:chr7:26198044": {
+      "atac_signal": 0.0,
+      "h3k4me3_signal": 7.1659,
+      "h3k27ac_signal": 0.6225,
+      "groseq_signal": 0.0,
+      "hic_contact": 0.0,
+      "ccle_expression": 9.78048,
+      "normalized_score": 0.2584
+    },
+    "HNRNPK:ENST00000376263:chr9:83979032": {
+      "atac_signal": 0.1488,
+      "h3k4me3_signal": 20.3881,
+      "h3k27ac_signal": 15.9747,
+      "groseq_signal": 0.0,
+      "hic_contact": 0.0,
+      "ccle_expression": 9.762885,
+      "normalized_score": 0.4706
+    },
+    "HNRNPK:ENST00000376263:chr9:83979914": {
+      "atac_signal": 0.2619,
+      "h3k4me3_signal": 35.2843,
+      "h3k27ac_signal": 138.9054,
+      "groseq_signal": 0.0652,
+      "hic_contact": 0.0,
+      "ccle_expression": 9.762885,
+      "normalized_score": 0.502
+    },
+    "IFNG:ENST00000229135:chr12:68159107": {
+      "atac_signal": 0.0,
+      "h3k4me3_signal": 0.2194,
+      "h3k27ac_signal": 0.0,
+      "groseq_signal": 0.0,
+      "hic_contact": 0.0,
+      "ccle_expression": 0.0,
+      "normalized_score": 0.0016
+    },
+    "LIN28A:ENST00000326279:chr1:26414640": {
+      "atac_signal": 0.0,
+      "h3k4me3_signal": 0.9815,
+      "h3k27ac_signal": 0.3569,
+      "groseq_signal": 0.0,
+      "hic_contact": 5.927368,
+      "ccle_expression": 0.0,
+      "normalized_score": 0.16
+    },
+    "MDM2:ENST00000258149:chr12:68809823": {
+      "atac_signal": 0.0,
+      "h3k4me3_signal": 6.5693,
+      "h3k27ac_signal": 1.1094,
+      "groseq_signal": 0.0,
+      "hic_contact": 0.0,
+      "ccle_expression": 5.334618,
+      "normalized_score": 0.191
+    },
+    "MTOR:ENST00000361445:chr1:11255438": {
+      "atac_signal": 0.0,
+      "h3k4me3_signal": 0.3704,
+      "h3k27ac_signal": 0.3447,
+      "groseq_signal": 0.0,
+      "hic_contact": 3.644359,
+      "ccle_expression": 4.126923,
+      "normalized_score": 0.2585
+    },
+    "MTOR:ENST00000361445:chr1:11259515": {
+      "atac_signal": 0.0,
+      "h3k4me3_signal": 1.1352,
+      "h3k27ac_signal": 1.0991,
+      "groseq_signal": 0.0,
+      "hic_contact": 3.644359,
+      "ccle_expression": 4.126923,
+      "normalized_score": 0.2699
+    },
+    "PIK3CA:ENST00000263967:chr3:179151174": {
+      "atac_signal": 0.0,
+      "h3k4me3_signal": 1.0963,
+      "h3k27ac_signal": 0.5362,
+      "groseq_signal": 0.0,
+      "hic_contact": 0.0,
+      "ccle_expression": 5.3713984,
+      "normalized_score": 0.1465
+    },
+    "PTBP2:ENST00000674951:chr1:96724335": {
+      "atac_signal": 0.0,
+      "h3k4me3_signal": 1.4577,
+      "h3k27ac_signal": 1.1562,
+      "groseq_signal": 0.0,
+      "hic_contact": 0.0,
+      "ccle_expression": 4.0335727,
+      "normalized_score": 0.1204
+    },
+    "PTBP2:ENST00000674951:chr1:96724850": {
+      "atac_signal": 0.0298,
+      "h3k4me3_signal": 0.4688,
+      "h3k27ac_signal": 0.0,
+      "groseq_signal": 0.0,
+      "hic_contact": 0.0,
+      "ccle_expression": 4.0335727,
+      "normalized_score": 0.1045
+    },
+    "PTEN:ENST00000371953:chr10:87869740": {
+      "atac_signal": 0.0893,
+      "h3k4me3_signal": 4.0537,
+      "h3k27ac_signal": 0.0329,
+      "groseq_signal": 0.0,
+      "hic_contact": 0.0,
+      "ccle_expression": 5.5959063,
+      "normalized_score": 0.171
+    },
+    "RPL11:ENST00000643754:chr1:23692780": {
+      "atac_signal": 0.1191,
+      "h3k4me3_signal": 25.2004,
+      "h3k27ac_signal": 20.7322,
+      "groseq_signal": 0.0652,
+      "hic_contact": 0.721829,
+      "ccle_expression": 9.817547,
+      "normalized_score": 0.6095
+    },
+    "RPS3:ENST00000531188:chr11:75401416": {
+      "atac_signal": 0.0774,
+      "h3k4me3_signal": 20.138,
+      "h3k27ac_signal": 7.5357,
+      "groseq_signal": 0.0,
+      "hic_contact": 0.0,
+      "ccle_expression": 11.058905,
+      "normalized_score": 0.4069
+    },
+    "SMAD2:ENST00000262160:chr18:47898662": {
+      "atac_signal": 0.2083,
+      "h3k4me3_signal": 1.318,
+      "h3k27ac_signal": 1.1359,
+      "groseq_signal": 0.0,
+      "hic_contact": 0.0,
+      "ccle_expression": 5.62667,
+      "normalized_score": 0.1601
+    },
+    "SMAD2:ENST00000262160:chr18:47916332": {
+      "atac_signal": 0.4881,
+      "h3k4me3_signal": 2.5442,
+      "h3k27ac_signal": 3.1755,
+      "groseq_signal": 0.0,
+      "hic_contact": 0.0,
+      "ccle_expression": 5.62667,
+      "normalized_score": 0.186
+    },
+    "TNRC6B:ENST00000454349:chr22:40180363": {
+      "atac_signal": 0.0298,
+      "h3k4me3_signal": 2.9035,
+      "h3k27ac_signal": 1.0293,
+      "groseq_signal": 0.0652,
+      "hic_contact": 0.34122,
+      "ccle_expression": 3.6356964,
+      "normalized_score": 0.1724
+    },
+    "TNRC6B:ENST00000454349:chr22:40182273": {
+      "atac_signal": 0.0298,
+      "h3k4me3_signal": 0.5277,
+      "h3k27ac_signal": 0.8094,
+      "groseq_signal": 0.0,
+      "hic_contact": 0.34122,
+      "ccle_expression": 3.6356964,
+      "normalized_score": 0.1523
+    },
+    "TSC1:ENST00000298552:chr9:132937751": {
+      "atac_signal": 1.5477,
+      "h3k4me3_signal": 2.1093,
+      "h3k27ac_signal": 24.2158,
+      "groseq_signal": 0.0,
+      "hic_contact": 0.0,
+      "ccle_expression": 3.8737345,
+      "normalized_score": 0.2704
+    },
+    "TSC1:ENST00000298552:chr9:132940598": {
+      "atac_signal": 0.0327,
+      "h3k4me3_signal": 1.2752,
+      "h3k27ac_signal": 0.8206,
+      "groseq_signal": 0.0,
+      "hic_contact": 0.0,
+      "ccle_expression": 3.8737345,
+      "normalized_score": 0.1127
+    },
+    "VEGFA:ENST00000480614:chr6:43777011": {
+      "atac_signal": 0.1027,
+      "h3k4me3_signal": 0.6924,
+      "h3k27ac_signal": 1.6695,
+      "groseq_signal": 0.0,
+      "hic_contact": 0.0,
+      "ccle_expression": 6.230987,
+      "normalized_score": 0.174
+    },
+    "VEGFA:ENST00000497139:chr6:43777871": {
+      "atac_signal": 0.0298,
+      "h3k4me3_signal": 1.1873,
+      "h3k27ac_signal": 2.1583,
+      "groseq_signal": 0.0,
+      "hic_contact": 0.0,
+      "ccle_expression": 6.230987,
+      "normalized_score": 0.181
+    },
+    "YAP1:ENST00000282441:chr11:102115206": {
+      "atac_signal": 0.0,
+      "h3k4me3_signal": 1.9019,
+      "h3k27ac_signal": 0.163,
+      "groseq_signal": 0.2607,
+      "hic_contact": 0.0,
+      "ccle_expression": 5.486711,
+      "normalized_score": 0.1553
+    }
+  },
+  "cell_context": {
+    "atac_score": 0.0023,
+    "expression_score": 0.7085,
+    "execution_score": 0.2232
+  }
+}

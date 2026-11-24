@@ -1,0 +1,332 @@
+{
+  "biophysics_scores": {
+    "AGO4:ENST00000373210:chr1:35815110": {
+      "delta_g": 31.1,
+      "shape_accessibility": null,
+      "m6a_sites": 0,
+      "adar_risk": 0.8,
+      "g4_risk": 0.1458,
+      "normalized_score": 0.1794
+    },
+    "AKT2:ENST00000392038:chr19:40280283": {
+      "delta_g": 31.1,
+      "shape_accessibility": null,
+      "m6a_sites": 0,
+      "adar_risk": 0.0,
+      "g4_risk": 1.0,
+      "normalized_score": 0.1333
+    },
+    "ATR:ENST00000350721:chr3:142571301": {
+      "delta_g": 31.1,
+      "shape_accessibility": null,
+      "m6a_sites": 0,
+      "adar_risk": 0.8,
+      "g4_risk": 0.0,
+      "normalized_score": 0.16
+    },
+    "ATR:ENST00000350721:chr3:142572942": {
+      "delta_g": 31.1,
+      "shape_accessibility": null,
+      "m6a_sites": 0,
+      "adar_risk": 0.0,
+      "g4_risk": 0.0,
+      "normalized_score": 0.0
+    },
+    "BRCA1:ENST00000357654:chr17:43122797": {
+      "delta_g": 31.1,
+      "shape_accessibility": null,
+      "m6a_sites": 0,
+      "adar_risk": 0.8,
+      "g4_risk": 0.0,
+      "normalized_score": 0.16
+    },
+    "CALM2:ENST00000272298:chr2:47175374": {
+      "delta_g": 31.1,
+      "shape_accessibility": 0.167,
+      "m6a_sites": 0,
+      "adar_risk": 0.0,
+      "g4_risk": 0.0,
+      "normalized_score": 0.0418
+    },
+    "CASP3:ENST00000308394:chr4:184648366": {
+      "delta_g": 31.1,
+      "shape_accessibility": null,
+      "m6a_sites": 0,
+      "adar_risk": 0.0,
+      "g4_risk": 0.0,
+      "normalized_score": 0.0
+    },
+    "CCND2:ENST00000261254:chr12:4276729": {
+      "delta_g": 31.1,
+      "shape_accessibility": null,
+      "m6a_sites": 0,
+      "adar_risk": 0.0,
+      "g4_risk": 0.1153,
+      "normalized_score": 0.0154
+    },
+    "CCND2:ENST00000261254:chr12:4276799": {
+      "delta_g": 31.1,
+      "shape_accessibility": null,
+      "m6a_sites": 0,
+      "adar_risk": 0.0,
+      "g4_risk": 0.1153,
+      "normalized_score": 0.0154
+    },
+    "CTNNB1:ENST00000349496:chr3:41200550": {
+      "delta_g": 31.1,
+      "shape_accessibility": 0.149,
+      "m6a_sites": 0,
+      "adar_risk": 0.0,
+      "g4_risk": 0.0,
+      "normalized_score": 0.0372
+    },
+    "CUL1:ENST00000325222:chr7:148700526": {
+      "delta_g": 31.1,
+      "shape_accessibility": null,
+      "m6a_sites": 0,
+      "adar_risk": 0.0,
+      "g4_risk": 0.0,
+      "normalized_score": 0.0
+    },
+    "DDX17:ENST00000403230:chr22:38501867": {
+      "delta_g": 31.1,
+      "shape_accessibility": null,
+      "m6a_sites": 0,
+      "adar_risk": 0.0,
+      "g4_risk": 0.4792,
+      "normalized_score": 0.0639
+    },
+    "DDX17:ENST00000403230:chr22:38504908": {
+      "delta_g": 31.1,
+      "shape_accessibility": null,
+      "m6a_sites": 0,
+      "adar_risk": 0.8,
+      "g4_risk": 0.4792,
+      "normalized_score": 0.2239
+    },
+    "DDX5:ENST00000225792:chr17:64505712": {
+      "delta_g": 31.1,
+      "shape_accessibility": null,
+      "m6a_sites": 0,
+      "adar_risk": 0.0,
+      "g4_risk": 0.0,
+      "normalized_score": 0.0
+    },
+    "DICER1:ENST00000343455:chr14:95147794": {
+      "delta_g": 31.1,
+      "shape_accessibility": null,
+      "m6a_sites": 0,
+      "adar_risk": 0.0,
+      "g4_risk": 0.0,
+      "normalized_score": 0.0
+    },
+    "DICER1:ENST00000343455:chr14:95152261": {
+      "delta_g": 31.1,
+      "shape_accessibility": null,
+      "m6a_sites": 0,
+      "adar_risk": 0.0,
+      "g4_risk": 0.0,
+      "normalized_score": 0.0
+    },
+    "EGFR:ENST00000275493:chr7:55027996": {
+      "delta_g": 31.1,
+      "shape_accessibility": null,
+      "m6a_sites": 0,
+      "adar_risk": 0.0,
+      "g4_risk": 0.0,
+      "normalized_score": 0.0
+    },
+    "HNRNPA2B1:ENST00000618183:chr7:26197989": {
+      "delta_g": 31.1,
+      "shape_accessibility": null,
+      "m6a_sites": 0,
+      "adar_risk": 0.0,
+      "g4_risk": 0.0,
+      "normalized_score": 0.0
+    },
+    "HNRNPA2B1:ENST00000618183:chr7:26198044": {
+      "delta_g": 31.1,
+      "shape_accessibility": null,
+      "m6a_sites": 0,
+      "adar_risk": 0.0,
+      "g4_risk": 0.0,
+      "normalized_score": 0.0
+    },
+    "HNRNPK:ENST00000376263:chr9:83979032": {
+      "delta_g": 31.1,
+      "shape_accessibility": 0.163,
+      "m6a_sites": 0,
+      "adar_risk": 0.0,
+      "g4_risk": 0.1472,
+      "normalized_score": 0.0555
+    },
+    "HNRNPK:ENST00000376263:chr9:83979914": {
+      "delta_g": 31.1,
+      "shape_accessibility": 0.0012,
+      "m6a_sites": 0,
+      "adar_risk": 0.0,
+      "g4_risk": 0.1472,
+      "normalized_score": 0.015
+    },
+    "IFNG:ENST00000229135:chr12:68159107": {
+      "delta_g": 31.1,
+      "shape_accessibility": null,
+      "m6a_sites": 0,
+      "adar_risk": 0.0,
+      "g4_risk": 0.0,
+      "normalized_score": 0.0
+    },
+    "LIN28A:ENST00000326279:chr1:26414640": {
+      "delta_g": 31.1,
+      "shape_accessibility": null,
+      "m6a_sites": 0,
+      "adar_risk": 0.0,
+      "g4_risk": 0.0,
+      "normalized_score": 0.0
+    },
+    "MDM2:ENST00000258149:chr12:68809823": {
+      "delta_g": 31.1,
+      "shape_accessibility": null,
+      "m6a_sites": 0,
+      "adar_risk": 0.0,
+      "g4_risk": 0.1208,
+      "normalized_score": 0.0161
+    },
+    "MTOR:ENST00000361445:chr1:11255438": {
+      "delta_g": 31.1,
+      "shape_accessibility": 0.2346,
+      "m6a_sites": 0,
+      "adar_risk": 0.0,
+      "g4_risk": 0.2403,
+      "normalized_score": 0.0827
+    },
+    "MTOR:ENST00000361445:chr1:11259515": {
+      "delta_g": 31.1,
+      "shape_accessibility": null,
+      "m6a_sites": 0,
+      "adar_risk": 0.0,
+      "g4_risk": 0.2403,
+      "normalized_score": 0.032
+    },
+    "PIK3CA:ENST00000263967:chr3:179151174": {
+      "delta_g": 31.1,
+      "shape_accessibility": null,
+      "m6a_sites": 0,
+      "adar_risk": 0.0,
+      "g4_risk": 0.5958,
+      "normalized_score": 0.0794
+    },
+    "PTBP2:ENST00000674951:chr1:96724335": {
+      "delta_g": 31.1,
+      "shape_accessibility": null,
+      "m6a_sites": 0,
+      "adar_risk": 0.8,
+      "g4_risk": 0.0,
+      "normalized_score": 0.16
+    },
+    "PTBP2:ENST00000674951:chr1:96724850": {
+      "delta_g": 31.1,
+      "shape_accessibility": null,
+      "m6a_sites": 0,
+      "adar_risk": 0.0,
+      "g4_risk": 0.0,
+      "normalized_score": 0.0
+    },
+    "PTEN:ENST00000371953:chr10:87869740": {
+      "delta_g": 31.1,
+      "shape_accessibility": null,
+      "m6a_sites": 0,
+      "adar_risk": 0.0,
+      "g4_risk": 0.0,
+      "normalized_score": 0.0
+    },
+    "RPL11:ENST00000643754:chr1:23692780": {
+      "delta_g": 31.1,
+      "shape_accessibility": null,
+      "m6a_sites": 0,
+      "adar_risk": 0.0,
+      "g4_risk": 0.0,
+      "normalized_score": 0.0
+    },
+    "RPS3:ENST00000531188:chr11:75401416": {
+      "delta_g": 31.1,
+      "shape_accessibility": null,
+      "m6a_sites": 0,
+      "adar_risk": 0.8,
+      "g4_risk": 0.0,
+      "normalized_score": 0.16
+    },
+    "SMAD2:ENST00000262160:chr18:47898662": {
+      "delta_g": 31.1,
+      "shape_accessibility": null,
+      "m6a_sites": 0,
+      "adar_risk": 0.0,
+      "g4_risk": 1.0,
+      "normalized_score": 0.1333
+    },
+    "SMAD2:ENST00000262160:chr18:47916332": {
+      "delta_g": 31.1,
+      "shape_accessibility": null,
+      "m6a_sites": 0,
+      "adar_risk": 0.0,
+      "g4_risk": 1.0,
+      "normalized_score": 0.1333
+    },
+    "TNRC6B:ENST00000454349:chr22:40180363": {
+      "delta_g": 31.1,
+      "shape_accessibility": null,
+      "m6a_sites": 0,
+      "adar_risk": 0.0,
+      "g4_risk": 0.8445,
+      "normalized_score": 0.1126
+    },
+    "TNRC6B:ENST00000454349:chr22:40182273": {
+      "delta_g": 31.1,
+      "shape_accessibility": null,
+      "m6a_sites": 0,
+      "adar_risk": 0.0,
+      "g4_risk": 0.8445,
+      "normalized_score": 0.1126
+    },
+    "TSC1:ENST00000298552:chr9:132937751": {
+      "delta_g": 31.1,
+      "shape_accessibility": null,
+      "m6a_sites": 0,
+      "adar_risk": 0.8,
+      "g4_risk": 1.0,
+      "normalized_score": 0.2933
+    },
+    "TSC1:ENST00000298552:chr9:132940598": {
+      "delta_g": 31.1,
+      "shape_accessibility": null,
+      "m6a_sites": 0,
+      "adar_risk": 0.0,
+      "g4_risk": 1.0,
+      "normalized_score": 0.1333
+    },
+    "VEGFA:ENST00000480614:chr6:43777011": {
+      "delta_g": 31.1,
+      "shape_accessibility": null,
+      "m6a_sites": 0,
+      "adar_risk": 0.0,
+      "g4_risk": 1.0,
+      "normalized_score": 0.1333
+    },
+    "VEGFA:ENST00000497139:chr6:43777871": {
+      "delta_g": 31.1,
+      "shape_accessibility": null,
+      "m6a_sites": 0,
+      "adar_risk": 0.0,
+      "g4_risk": 0.5875,
+      "normalized_score": 0.0783
+    },
+    "YAP1:ENST00000282441:chr11:102115206": {
+      "delta_g": 31.1,
+      "shape_accessibility": 0.275,
+      "m6a_sites": 0,
+      "adar_risk": 0.0,
+      "g4_risk": 0.5792,
+      "normalized_score": 0.1267
+    }
+  }
+}

@@ -1,0 +1,125 @@
+2026-11-24 15:32:10.323 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:32:11.621 | DEBUG    | src.stage3_variant_tox.clinvar_client:_esearch:205 - clinvar esearch: chr1:11255438-11255458(-) → 0 UID(s)
+2026-11-24 15:32:11.628 | DEBUG    | src.core.cache:set:216 - Cache SET: clinvar:chr1:11255438:11255458 (TTL 720h, schema v2)
+2026-11-24 15:32:11.629 | INFO     | src.stage3_variant_tox.clinvar_client:check_clinvar:68 - clinvar_client: chr1:11255438-11255458(-) → 0 variant(s), pathogenic=0, likely_pathogenic=0
+2026-11-24 15:32:12.204 | DEBUG    | src.stage3_variant_tox.clinvar_client:_esearch:205 - clinvar esearch: chr6:43777011-43777031(+) → 0 UID(s)
+2026-11-24 15:32:12.207 | DEBUG    | src.core.cache:set:216 - Cache SET: clinvar:chr6:43777011:43777031 (TTL 720h, schema v2)
+2026-11-24 15:32:12.207 | INFO     | src.stage3_variant_tox.clinvar_client:check_clinvar:68 - clinvar_client: chr6:43777011-43777031(+) → 0 variant(s), pathogenic=0, likely_pathogenic=0
+2026-11-24 15:32:12.560 | DEBUG    | src.stage3_variant_tox.clinvar_client:_esearch:205 - clinvar esearch: chr7:26198044-26198064(-) → 0 UID(s)
+2026-11-24 15:32:12.563 | DEBUG    | src.core.cache:set:216 - Cache SET: clinvar:chr7:26198044:26198064 (TTL 720h, schema v2)
+2026-11-24 15:32:12.563 | INFO     | src.stage3_variant_tox.clinvar_client:check_clinvar:68 - clinvar_client: chr7:26198044-26198064(-) → 0 variant(s), pathogenic=0, likely_pathogenic=0
+2026-11-24 15:32:12.968 | DEBUG    | src.stage3_variant_tox.clinvar_client:_esearch:205 - clinvar esearch: chr14:95152261-95152281(-) → 0 UID(s)
+2026-11-24 15:32:12.971 | DEBUG    | src.core.cache:set:216 - Cache SET: clinvar:chr14:95152261:95152281 (TTL 720h, schema v2)
+2026-11-24 15:32:12.971 | INFO     | src.stage3_variant_tox.clinvar_client:check_clinvar:68 - clinvar_client: chr14:95152261-95152281(-) → 0 variant(s), pathogenic=0, likely_pathogenic=0
+2026-11-24 15:32:13.517 | DEBUG    | src.stage3_variant_tox.clinvar_client:_esearch:205 - clinvar esearch: chr22:40182273-40182293(+) → 0 UID(s)
+2026-11-24 15:32:13.519 | DEBUG    | src.core.cache:set:216 - Cache SET: clinvar:chr22:40182273:40182293 (TTL 720h, schema v2)
+2026-11-24 15:32:13.519 | INFO     | src.stage3_variant_tox.clinvar_client:check_clinvar:68 - clinvar_client: chr22:40182273-40182293(+) → 0 variant(s), pathogenic=0, likely_pathogenic=0
+2026-11-24 15:32:13.943 | DEBUG    | src.stage3_variant_tox.clinvar_client:_esearch:205 - clinvar esearch: chr3:41200550-41200570(+) → 0 UID(s)
+2026-11-24 15:32:13.946 | DEBUG    | src.core.cache:set:216 - Cache SET: clinvar:chr3:41200550:41200570 (TTL 720h, schema v2)
+2026-11-24 15:32:13.946 | INFO     | src.stage3_variant_tox.clinvar_client:check_clinvar:68 - clinvar_client: chr3:41200550-41200570(+) → 0 variant(s), pathogenic=0, likely_pathogenic=0
+2026-11-24 15:32:14.520 | DEBUG    | src.stage3_variant_tox.clinvar_client:_esearch:205 - clinvar esearch: chr3:142571301-142571321(-) → 0 UID(s)
+2026-11-24 15:32:14.522 | DEBUG    | src.core.cache:set:216 - Cache SET: clinvar:chr3:142571301:142571321 (TTL 720h, schema v2)
+2026-11-24 15:32:14.522 | INFO     | src.stage3_variant_tox.clinvar_client:check_clinvar:68 - clinvar_client: chr3:142571301-142571321(-) → 0 variant(s), pathogenic=0, likely_pathogenic=0
+2026-11-24 15:32:14.892 | DEBUG    | src.stage3_variant_tox.clinvar_client:_esearch:205 - clinvar esearch: chr1:23692780-23692800(+) → 0 UID(s)
+2026-11-24 15:32:14.894 | DEBUG    | src.core.cache:set:216 - Cache SET: clinvar:chr1:23692780:23692800 (TTL 720h, schema v2)
+2026-11-24 15:32:14.894 | INFO     | src.stage3_variant_tox.clinvar_client:check_clinvar:68 - clinvar_client: chr1:23692780-23692800(+) → 0 variant(s), pathogenic=0, likely_pathogenic=0
+2026-11-24 15:32:15.241 | DEBUG    | src.stage3_variant_tox.clinvar_client:_esearch:205 - clinvar esearch: chr1:96724335-96724355(+) → 0 UID(s)
+2026-11-24 15:32:15.243 | DEBUG    | src.core.cache:set:216 - Cache SET: clinvar:chr1:96724335:96724355 (TTL 720h, schema v2)
+2026-11-24 15:32:15.243 | INFO     | src.stage3_variant_tox.clinvar_client:check_clinvar:68 - clinvar_client: chr1:96724335-96724355(+) → 0 variant(s), pathogenic=0, likely_pathogenic=0
+2026-11-24 15:32:15.602 | DEBUG    | src.stage3_variant_tox.clinvar_client:_esearch:205 - clinvar esearch: chr1:96724850-96724870(+) → 0 UID(s)
+2026-11-24 15:32:15.604 | DEBUG    | src.core.cache:set:216 - Cache SET: clinvar:chr1:96724850:96724870 (TTL 720h, schema v2)
+2026-11-24 15:32:15.604 | INFO     | src.stage3_variant_tox.clinvar_client:check_clinvar:68 - clinvar_client: chr1:96724850-96724870(+) → 0 variant(s), pathogenic=0, likely_pathogenic=0
+2026-11-24 15:32:16.010 | DEBUG    | src.stage3_variant_tox.clinvar_client:_esearch:205 - clinvar esearch: chr17:43122797-43122817(-) → 0 UID(s)
+2026-11-24 15:32:16.012 | DEBUG    | src.core.cache:set:216 - Cache SET: clinvar:chr17:43122797:43122817 (TTL 720h, schema v2)
+2026-11-24 15:32:16.013 | INFO     | src.stage3_variant_tox.clinvar_client:check_clinvar:68 - clinvar_client: chr17:43122797-43122817(-) → 0 variant(s), pathogenic=0, likely_pathogenic=0
+2026-11-24 15:32:16.581 | DEBUG    | src.stage3_variant_tox.clinvar_client:_esearch:205 - clinvar esearch: chr2:47175374-47175394(-) → 0 UID(s)
+2026-11-24 15:32:16.586 | DEBUG    | src.core.cache:set:216 - Cache SET: clinvar:chr2:47175374:47175394 (TTL 720h, schema v2)
+2026-11-24 15:32:16.586 | INFO     | src.stage3_variant_tox.clinvar_client:check_clinvar:68 - clinvar_client: chr2:47175374-47175394(-) → 0 variant(s), pathogenic=0, likely_pathogenic=0
+2026-11-24 15:32:16.967 | DEBUG    | src.stage3_variant_tox.clinvar_client:_esearch:205 - clinvar esearch: chr9:83979914-83979934(-) → 0 UID(s)
+2026-11-24 15:32:16.970 | DEBUG    | src.core.cache:set:216 - Cache SET: clinvar:chr9:83979914:83979934 (TTL 720h, schema v2)
+2026-11-24 15:32:16.970 | INFO     | src.stage3_variant_tox.clinvar_client:check_clinvar:68 - clinvar_client: chr9:83979914-83979934(-) → 0 variant(s), pathogenic=0, likely_pathogenic=0
+2026-11-24 15:32:17.351 | DEBUG    | src.stage3_variant_tox.clinvar_client:_esearch:205 - clinvar esearch: chr1:35815110-35815130(+) → 0 UID(s)
+2026-11-24 15:32:17.357 | DEBUG    | src.core.cache:set:216 - Cache SET: clinvar:chr1:35815110:35815130 (TTL 720h, schema v2)
+2026-11-24 15:32:17.357 | INFO     | src.stage3_variant_tox.clinvar_client:check_clinvar:68 - clinvar_client: chr1:35815110-35815130(+) → 0 variant(s), pathogenic=0, likely_pathogenic=0
+2026-11-24 15:32:17.854 | DEBUG    | src.stage3_variant_tox.clinvar_client:_esearch:205 - clinvar esearch: chr12:68809823-68809843(+) → 0 UID(s)
+2026-11-24 15:32:17.857 | DEBUG    | src.core.cache:set:216 - Cache SET: clinvar:chr12:68809823:68809843 (TTL 720h, schema v2)
+2026-11-24 15:32:17.857 | INFO     | src.stage3_variant_tox.clinvar_client:check_clinvar:68 - clinvar_client: chr12:68809823-68809843(+) → 0 variant(s), pathogenic=0, likely_pathogenic=0
+2026-11-24 15:32:18.216 | DEBUG    | src.stage3_variant_tox.clinvar_client:_esearch:205 - clinvar esearch: chr7:55027996-55028016(+) → 0 UID(s)
+2026-11-24 15:32:18.220 | DEBUG    | src.core.cache:set:216 - Cache SET: clinvar:chr7:55027996:55028016 (TTL 720h, schema v2)
+2026-11-24 15:32:18.220 | INFO     | src.stage3_variant_tox.clinvar_client:check_clinvar:68 - clinvar_client: chr7:55027996-55028016(+) → 0 variant(s), pathogenic=0, likely_pathogenic=0
+2026-11-24 15:32:18.879 | DEBUG    | src.stage3_variant_tox.clinvar_client:_esearch:205 - clinvar esearch: chr3:179151174-179151194(+) → 0 UID(s)
+2026-11-24 15:32:18.886 | DEBUG    | src.core.cache:set:216 - Cache SET: clinvar:chr3:179151174:179151194 (TTL 720h, schema v2)
+2026-11-24 15:32:18.886 | INFO     | src.stage3_variant_tox.clinvar_client:check_clinvar:68 - clinvar_client: chr3:179151174-179151194(+) → 0 variant(s), pathogenic=0, likely_pathogenic=0
+2026-11-24 15:32:19.903 | DEBUG    | src.stage3_variant_tox.clinvar_client:_esearch:205 - clinvar esearch: chr6:43777871-43777891(+) → 0 UID(s)
+2026-11-24 15:32:19.907 | DEBUG    | src.core.cache:set:216 - Cache SET: clinvar:chr6:43777871:43777891 (TTL 720h, schema v2)
+2026-11-24 15:32:19.907 | INFO     | src.stage3_variant_tox.clinvar_client:check_clinvar:68 - clinvar_client: chr6:43777871-43777891(+) → 0 variant(s), pathogenic=0, likely_pathogenic=0
+2026-11-24 15:32:20.405 | DEBUG    | src.stage3_variant_tox.clinvar_client:_esearch:205 - clinvar esearch: chr9:83979032-83979052(-) → 0 UID(s)
+2026-11-24 15:32:20.408 | DEBUG    | src.core.cache:set:216 - Cache SET: clinvar:chr9:83979032:83979052 (TTL 720h, schema v2)
+2026-11-24 15:32:20.409 | INFO     | src.stage3_variant_tox.clinvar_client:check_clinvar:68 - clinvar_client: chr9:83979032-83979052(-) → 0 variant(s), pathogenic=0, likely_pathogenic=0
+2026-11-24 15:32:20.778 | DEBUG    | src.stage3_variant_tox.clinvar_client:_esearch:205 - clinvar esearch: chr22:38504908-38504928(-) → 0 UID(s)
+2026-11-24 15:32:20.785 | DEBUG    | src.core.cache:set:216 - Cache SET: clinvar:chr22:38504908:38504928 (TTL 720h, schema v2)
+2026-11-24 15:32:20.785 | INFO     | src.stage3_variant_tox.clinvar_client:check_clinvar:68 - clinvar_client: chr22:38504908-38504928(-) → 0 variant(s), pathogenic=0, likely_pathogenic=0
+2026-11-24 15:32:21.201 | DEBUG    | src.stage3_variant_tox.clinvar_client:_esearch:205 - clinvar esearch: chr22:38501867-38501887(-) → 0 UID(s)
+2026-11-24 15:32:21.207 | DEBUG    | src.core.cache:set:216 - Cache SET: clinvar:chr22:38501867:38501887 (TTL 720h, schema v2)
+2026-11-24 15:32:21.208 | INFO     | src.stage3_variant_tox.clinvar_client:check_clinvar:68 - clinvar_client: chr22:38501867-38501887(-) → 0 variant(s), pathogenic=0, likely_pathogenic=0
+2026-11-24 15:32:21.619 | DEBUG    | src.stage3_variant_tox.clinvar_client:_esearch:205 - clinvar esearch: chr17:64505712-64505732(-) → 0 UID(s)
+2026-11-24 15:32:21.625 | DEBUG    | src.core.cache:set:216 - Cache SET: clinvar:chr17:64505712:64505732 (TTL 720h, schema v2)
+2026-11-24 15:32:21.626 | INFO     | src.stage3_variant_tox.clinvar_client:check_clinvar:68 - clinvar_client: chr17:64505712-64505732(-) → 0 variant(s), pathogenic=0, likely_pathogenic=0
+2026-11-24 15:32:22.049 | DEBUG    | src.stage3_variant_tox.clinvar_client:_esearch:205 - clinvar esearch: chr12:4276729-4276749(+) → 0 UID(s)
+2026-11-24 15:32:22.055 | DEBUG    | src.core.cache:set:216 - Cache SET: clinvar:chr12:4276729:4276749 (TTL 720h, schema v2)
+2026-11-24 15:32:22.055 | INFO     | src.stage3_variant_tox.clinvar_client:check_clinvar:68 - clinvar_client: chr12:4276729-4276749(+) → 0 variant(s), pathogenic=0, likely_pathogenic=0
+2026-11-24 15:32:22.680 | DEBUG    | src.stage3_variant_tox.clinvar_client:_esearch:205 - clinvar esearch: chr10:87869740-87869760(+) → 0 UID(s)
+2026-11-24 15:32:22.686 | DEBUG    | src.core.cache:set:216 - Cache SET: clinvar:chr10:87869740:87869760 (TTL 720h, schema v2)
+2026-11-24 15:32:22.686 | INFO     | src.stage3_variant_tox.clinvar_client:check_clinvar:68 - clinvar_client: chr10:87869740-87869760(+) → 0 variant(s), pathogenic=0, likely_pathogenic=0
+2026-11-24 15:32:23.087 | DEBUG    | src.stage3_variant_tox.clinvar_client:_esearch:205 - clinvar esearch: chr3:142572942-142572962(-) → 0 UID(s)
+2026-11-24 15:32:23.093 | DEBUG    | src.core.cache:set:216 - Cache SET: clinvar:chr3:142572942:142572962 (TTL 720h, schema v2)
+2026-11-24 15:32:23.093 | INFO     | src.stage3_variant_tox.clinvar_client:check_clinvar:68 - clinvar_client: chr3:142572942-142572962(-) → 0 variant(s), pathogenic=0, likely_pathogenic=0
+2026-11-24 15:32:23.492 | DEBUG    | src.stage3_variant_tox.clinvar_client:_esearch:205 - clinvar esearch: chr4:184648366-184648386(-) → 0 UID(s)
+2026-11-24 15:32:23.503 | DEBUG    | src.core.cache:set:216 - Cache SET: clinvar:chr4:184648366:184648386 (TTL 720h, schema v2)
+2026-11-24 15:32:23.503 | INFO     | src.stage3_variant_tox.clinvar_client:check_clinvar:68 - clinvar_client: chr4:184648366-184648386(-) → 0 variant(s), pathogenic=0, likely_pathogenic=0
+2026-11-24 15:32:24.102 | DEBUG    | src.stage3_variant_tox.clinvar_client:_esearch:205 - clinvar esearch: chr7:148700526-148700546(+) → 0 UID(s)
+2026-11-24 15:32:24.107 | DEBUG    | src.core.cache:set:216 - Cache SET: clinvar:chr7:148700526:148700546 (TTL 720h, schema v2)
+2026-11-24 15:32:24.107 | INFO     | src.stage3_variant_tox.clinvar_client:check_clinvar:68 - clinvar_client: chr7:148700526-148700546(+) → 0 variant(s), pathogenic=0, likely_pathogenic=0
+2026-11-24 15:32:24.500 | DEBUG    | src.stage3_variant_tox.clinvar_client:_esearch:205 - clinvar esearch: chr19:40280283-40280303(-) → 0 UID(s)
+2026-11-24 15:32:24.506 | DEBUG    | src.core.cache:set:216 - Cache SET: clinvar:chr19:40280283:40280303 (TTL 720h, schema v2)
+2026-11-24 15:32:24.507 | INFO     | src.stage3_variant_tox.clinvar_client:check_clinvar:68 - clinvar_client: chr19:40280283-40280303(-) → 0 variant(s), pathogenic=0, likely_pathogenic=0
+2026-11-24 15:32:25.130 | DEBUG    | src.stage3_variant_tox.clinvar_client:_esearch:205 - clinvar esearch: chr9:132940598-132940618(-) → 0 UID(s)
+2026-11-24 15:32:25.134 | DEBUG    | src.core.cache:set:216 - Cache SET: clinvar:chr9:132940598:132940618 (TTL 720h, schema v2)
+2026-11-24 15:32:25.134 | INFO     | src.stage3_variant_tox.clinvar_client:check_clinvar:68 - clinvar_client: chr9:132940598-132940618(-) → 0 variant(s), pathogenic=0, likely_pathogenic=0
+2026-11-24 15:32:25.529 | DEBUG    | src.stage3_variant_tox.clinvar_client:_esearch:205 - clinvar esearch: chr11:102115206-102115226(+) → 0 UID(s)
+2026-11-24 15:32:25.532 | DEBUG    | src.core.cache:set:216 - Cache SET: clinvar:chr11:102115206:102115226 (TTL 720h, schema v2)
+2026-11-24 15:32:25.532 | INFO     | src.stage3_variant_tox.clinvar_client:check_clinvar:68 - clinvar_client: chr11:102115206-102115226(+) → 0 variant(s), pathogenic=0, likely_pathogenic=0
+2026-11-24 15:32:26.100 | DEBUG    | src.stage3_variant_tox.clinvar_client:_esearch:205 - clinvar esearch: chr12:68159107-68159127(-) → 0 UID(s)
+2026-11-24 15:32:26.103 | DEBUG    | src.core.cache:set:216 - Cache SET: clinvar:chr12:68159107:68159127 (TTL 720h, schema v2)
+2026-11-24 15:32:26.103 | INFO     | src.stage3_variant_tox.clinvar_client:check_clinvar:68 - clinvar_client: chr12:68159107-68159127(-) → 0 variant(s), pathogenic=0, likely_pathogenic=0
+2026-11-24 15:32:26.468 | DEBUG    | src.stage3_variant_tox.clinvar_client:_esearch:205 - clinvar esearch: chr1:26414640-26414660(+) → 0 UID(s)
+2026-11-24 15:32:26.471 | DEBUG    | src.core.cache:set:216 - Cache SET: clinvar:chr1:26414640:26414660 (TTL 720h, schema v2)
+2026-11-24 15:32:26.471 | INFO     | src.stage3_variant_tox.clinvar_client:check_clinvar:68 - clinvar_client: chr1:26414640-26414660(+) → 0 variant(s), pathogenic=0, likely_pathogenic=0
+2026-11-24 15:32:26.848 | DEBUG    | src.stage3_variant_tox.clinvar_client:_esearch:205 - clinvar esearch: chr14:95147794-95147814(-) → 0 UID(s)
+2026-11-24 15:32:26.854 | DEBUG    | src.core.cache:set:216 - Cache SET: clinvar:chr14:95147794:95147814 (TTL 720h, schema v2)
+2026-11-24 15:32:26.854 | INFO     | src.stage3_variant_tox.clinvar_client:check_clinvar:68 - clinvar_client: chr14:95147794-95147814(-) → 0 variant(s), pathogenic=0, likely_pathogenic=0
+2026-11-24 15:32:27.233 | DEBUG    | src.stage3_variant_tox.clinvar_client:_esearch:205 - clinvar esearch: chr22:40180363-40180383(+) → 0 UID(s)
+2026-11-24 15:32:27.236 | DEBUG    | src.core.cache:set:216 - Cache SET: clinvar:chr22:40180363:40180383 (TTL 720h, schema v2)
+2026-11-24 15:32:27.237 | INFO     | src.stage3_variant_tox.clinvar_client:check_clinvar:68 - clinvar_client: chr22:40180363-40180383(+) → 0 variant(s), pathogenic=0, likely_pathogenic=0
+2026-11-24 15:32:27.594 | DEBUG    | src.stage3_variant_tox.clinvar_client:_esearch:205 - clinvar esearch: chr12:4276799-4276819(+) → 0 UID(s)
+2026-11-24 15:32:27.596 | DEBUG    | src.core.cache:set:216 - Cache SET: clinvar:chr12:4276799:4276819 (TTL 720h, schema v2)
+2026-11-24 15:32:27.596 | INFO     | src.stage3_variant_tox.clinvar_client:check_clinvar:68 - clinvar_client: chr12:4276799-4276819(+) → 0 variant(s), pathogenic=0, likely_pathogenic=0
+2026-11-24 15:32:27.946 | DEBUG    | src.stage3_variant_tox.clinvar_client:_esearch:205 - clinvar esearch: chr1:11259515-11259535(-) → 0 UID(s)
+2026-11-24 15:32:27.950 | DEBUG    | src.core.cache:set:216 - Cache SET: clinvar:chr1:11259515:11259535 (TTL 720h, schema v2)
+2026-11-24 15:32:27.950 | INFO     | src.stage3_variant_tox.clinvar_client:check_clinvar:68 - clinvar_client: chr1:11259515-11259535(-) → 0 variant(s), pathogenic=0, likely_pathogenic=0
+2026-11-24 15:32:28.506 | DEBUG    | src.stage3_variant_tox.clinvar_client:_esearch:205 - clinvar esearch: chr11:75401416-75401436(+) → 0 UID(s)
+2026-11-24 15:32:28.510 | DEBUG    | src.core.cache:set:216 - Cache SET: clinvar:chr11:75401416:75401436 (TTL 720h, schema v2)
+2026-11-24 15:32:28.511 | INFO     | src.stage3_variant_tox.clinvar_client:check_clinvar:68 - clinvar_client: chr11:75401416-75401436(+) → 0 variant(s), pathogenic=0, likely_pathogenic=0
+2026-11-24 15:32:28.870 | DEBUG    | src.stage3_variant_tox.clinvar_client:_esearch:205 - clinvar esearch: chr7:26197989-26198009(-) → 0 UID(s)
+2026-11-24 15:32:28.873 | DEBUG    | src.core.cache:set:216 - Cache SET: clinvar:chr7:26197989:26198009 (TTL 720h, schema v2)
+2026-11-24 15:32:28.873 | INFO     | src.stage3_variant_tox.clinvar_client:check_clinvar:68 - clinvar_client: chr7:26197989-26198009(-) → 0 variant(s), pathogenic=0, likely_pathogenic=0
+2026-11-24 15:32:29.237 | DEBUG    | src.stage3_variant_tox.clinvar_client:_esearch:205 - clinvar esearch: chr9:132937751-132937771(-) → 0 UID(s)
+2026-11-24 15:32:29.239 | DEBUG    | src.core.cache:set:216 - Cache SET: clinvar:chr9:132937751:132937771 (TTL 720h, schema v2)
+2026-11-24 15:32:29.240 | INFO     | src.stage3_variant_tox.clinvar_client:check_clinvar:68 - clinvar_client: chr9:132937751-132937771(-) → 0 variant(s), pathogenic=0, likely_pathogenic=0
+2026-11-24 15:32:29.636 | DEBUG    | src.stage3_variant_tox.clinvar_client:_esearch:205 - clinvar esearch: chr18:47898662-47898682(-) → 0 UID(s)
+2026-11-24 15:32:29.640 | DEBUG    | src.core.cache:set:216 - Cache SET: clinvar:chr18:47898662:47898682 (TTL 720h, schema v2)
+2026-11-24 15:32:29.640 | INFO     | src.stage3_variant_tox.clinvar_client:check_clinvar:68 - clinvar_client: chr18:47898662-47898682(-) → 0 variant(s), pathogenic=0, likely_pathogenic=0
+2026-11-24 15:32:30.022 | DEBUG    | src.stage3_variant_tox.clinvar_client:_esearch:205 - clinvar esearch: chr18:47916332-47916352(-) → 0 UID(s)
+2026-11-24 15:32:30.028 | DEBUG    | src.core.cache:set:216 - Cache SET: clinvar:chr18:47916332:47916352 (TTL 720h, schema v2)
+2026-11-24 15:32:30.028 | INFO     | src.stage3_variant_tox.clinvar_client:check_clinvar:68 - clinvar_client: chr18:47916332-47916352(-) → 0 variant(s), pathogenic=0, likely_pathogenic=0
+2026-11-24 15:32:30.032 | INFO     | src.stage3_variant_tox.clinvar_client:run:353 - clinvar_client: scanned 41 regions → /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/results/VEGFA_HeLa/stage3_clinvar.json

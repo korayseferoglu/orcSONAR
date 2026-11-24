@@ -1,0 +1,332 @@
+{
+  "execution_scores": {
+    "AGO4:ENST00000373210:chr1:35815110": {
+      "ago2_loading": null,
+      "rbp_competition": null,
+      "circrna_overlap": true,
+      "immune_motif_count": 0,
+      "immune_motifs_found": [],
+      "normalized_score": 0.2222
+    },
+    "AKT2:ENST00000392038:chr19:40280283": {
+      "ago2_loading": null,
+      "rbp_competition": null,
+      "circrna_overlap": true,
+      "immune_motif_count": 0,
+      "immune_motifs_found": [],
+      "normalized_score": 0.2222
+    },
+    "ATR:ENST00000350721:chr3:142571301": {
+      "ago2_loading": null,
+      "rbp_competition": null,
+      "circrna_overlap": true,
+      "immune_motif_count": 0,
+      "immune_motifs_found": [],
+      "normalized_score": 0.2222
+    },
+    "ATR:ENST00000350721:chr3:142572942": {
+      "ago2_loading": null,
+      "rbp_competition": null,
+      "circrna_overlap": false,
+      "immune_motif_count": 0,
+      "immune_motifs_found": [],
+      "normalized_score": 0.0
+    },
+    "BRCA1:ENST00000357654:chr17:43122797": {
+      "ago2_loading": null,
+      "rbp_competition": null,
+      "circrna_overlap": true,
+      "immune_motif_count": 0,
+      "immune_motifs_found": [],
+      "normalized_score": 0.2222
+    },
+    "CALM2:ENST00000272298:chr2:47175374": {
+      "ago2_loading": null,
+      "rbp_competition": null,
+      "circrna_overlap": false,
+      "immune_motif_count": 0,
+      "immune_motifs_found": [],
+      "normalized_score": 0.0
+    },
+    "CASP3:ENST00000308394:chr4:184648366": {
+      "ago2_loading": null,
+      "rbp_competition": null,
+      "circrna_overlap": false,
+      "immune_motif_count": 0,
+      "immune_motifs_found": [],
+      "normalized_score": 0.0
+    },
+    "CCND2:ENST00000261254:chr12:4276729": {
+      "ago2_loading": null,
+      "rbp_competition": null,
+      "circrna_overlap": true,
+      "immune_motif_count": 0,
+      "immune_motifs_found": [],
+      "normalized_score": 0.2222
+    },
+    "CCND2:ENST00000261254:chr12:4276799": {
+      "ago2_loading": null,
+      "rbp_competition": null,
+      "circrna_overlap": true,
+      "immune_motif_count": 0,
+      "immune_motifs_found": [],
+      "normalized_score": 0.2222
+    },
+    "CTNNB1:ENST00000349496:chr3:41200550": {
+      "ago2_loading": null,
+      "rbp_competition": null,
+      "circrna_overlap": true,
+      "immune_motif_count": 0,
+      "immune_motifs_found": [],
+      "normalized_score": 0.2222
+    },
+    "CUL1:ENST00000325222:chr7:148700526": {
+      "ago2_loading": null,
+      "rbp_competition": null,
+      "circrna_overlap": false,
+      "immune_motif_count": 0,
+      "immune_motifs_found": [],
+      "normalized_score": 0.0
+    },
+    "DDX17:ENST00000403230:chr22:38501867": {
+      "ago2_loading": null,
+      "rbp_competition": null,
+      "circrna_overlap": true,
+      "immune_motif_count": 0,
+      "immune_motifs_found": [],
+      "normalized_score": 0.2222
+    },
+    "DDX17:ENST00000403230:chr22:38504908": {
+      "ago2_loading": null,
+      "rbp_competition": null,
+      "circrna_overlap": true,
+      "immune_motif_count": 0,
+      "immune_motifs_found": [],
+      "normalized_score": 0.2222
+    },
+    "DDX5:ENST00000225792:chr17:64505712": {
+      "ago2_loading": null,
+      "rbp_competition": null,
+      "circrna_overlap": true,
+      "immune_motif_count": 0,
+      "immune_motifs_found": [],
+      "normalized_score": 0.2222
+    },
+    "DICER1:ENST00000343455:chr14:95147794": {
+      "ago2_loading": null,
+      "rbp_competition": null,
+      "circrna_overlap": true,
+      "immune_motif_count": 0,
+      "immune_motifs_found": [],
+      "normalized_score": 0.2222
+    },
+    "DICER1:ENST00000343455:chr14:95152261": {
+      "ago2_loading": null,
+      "rbp_competition": null,
+      "circrna_overlap": true,
+      "immune_motif_count": 0,
+      "immune_motifs_found": [],
+      "normalized_score": 0.2222
+    },
+    "EGFR:ENST00000275493:chr7:55027996": {
+      "ago2_loading": null,
+      "rbp_competition": null,
+      "circrna_overlap": false,
+      "immune_motif_count": 0,
+      "immune_motifs_found": [],
+      "normalized_score": 0.0
+    },
+    "HNRNPA2B1:ENST00000618183:chr7:26197989": {
+      "ago2_loading": null,
+      "rbp_competition": null,
+      "circrna_overlap": true,
+      "immune_motif_count": 0,
+      "immune_motifs_found": [],
+      "normalized_score": 0.2222
+    },
+    "HNRNPA2B1:ENST00000618183:chr7:26198044": {
+      "ago2_loading": null,
+      "rbp_competition": null,
+      "circrna_overlap": true,
+      "immune_motif_count": 0,
+      "immune_motifs_found": [],
+      "normalized_score": 0.2222
+    },
+    "HNRNPK:ENST00000376263:chr9:83979032": {
+      "ago2_loading": null,
+      "rbp_competition": null,
+      "circrna_overlap": true,
+      "immune_motif_count": 0,
+      "immune_motifs_found": [],
+      "normalized_score": 0.2222
+    },
+    "HNRNPK:ENST00000376263:chr9:83979914": {
+      "ago2_loading": null,
+      "rbp_competition": null,
+      "circrna_overlap": true,
+      "immune_motif_count": 0,
+      "immune_motifs_found": [],
+      "normalized_score": 0.2222
+    },
+    "IFNG:ENST00000229135:chr12:68159107": {
+      "ago2_loading": null,
+      "rbp_competition": null,
+      "circrna_overlap": false,
+      "immune_motif_count": 0,
+      "immune_motifs_found": [],
+      "normalized_score": 0.0
+    },
+    "LIN28A:ENST00000326279:chr1:26414640": {
+      "ago2_loading": null,
+      "rbp_competition": null,
+      "circrna_overlap": false,
+      "immune_motif_count": 0,
+      "immune_motifs_found": [],
+      "normalized_score": 0.0
+    },
+    "MDM2:ENST00000258149:chr12:68809823": {
+      "ago2_loading": null,
+      "rbp_competition": null,
+      "circrna_overlap": true,
+      "immune_motif_count": 0,
+      "immune_motifs_found": [],
+      "normalized_score": 0.2222
+    },
+    "MTOR:ENST00000361445:chr1:11255438": {
+      "ago2_loading": null,
+      "rbp_competition": null,
+      "circrna_overlap": true,
+      "immune_motif_count": 0,
+      "immune_motifs_found": [],
+      "normalized_score": 0.2222
+    },
+    "MTOR:ENST00000361445:chr1:11259515": {
+      "ago2_loading": null,
+      "rbp_competition": null,
+      "circrna_overlap": false,
+      "immune_motif_count": 0,
+      "immune_motifs_found": [],
+      "normalized_score": 0.0
+    },
+    "PIK3CA:ENST00000263967:chr3:179151174": {
+      "ago2_loading": null,
+      "rbp_competition": null,
+      "circrna_overlap": true,
+      "immune_motif_count": 0,
+      "immune_motifs_found": [],
+      "normalized_score": 0.2222
+    },
+    "PTBP2:ENST00000674951:chr1:96724335": {
+      "ago2_loading": null,
+      "rbp_competition": null,
+      "circrna_overlap": true,
+      "immune_motif_count": 0,
+      "immune_motifs_found": [],
+      "normalized_score": 0.2222
+    },
+    "PTBP2:ENST00000674951:chr1:96724850": {
+      "ago2_loading": null,
+      "rbp_competition": null,
+      "circrna_overlap": true,
+      "immune_motif_count": 0,
+      "immune_motifs_found": [],
+      "normalized_score": 0.2222
+    },
+    "PTEN:ENST00000371953:chr10:87869740": {
+      "ago2_loading": null,
+      "rbp_competition": null,
+      "circrna_overlap": true,
+      "immune_motif_count": 0,
+      "immune_motifs_found": [],
+      "normalized_score": 0.2222
+    },
+    "RPL11:ENST00000643754:chr1:23692780": {
+      "ago2_loading": null,
+      "rbp_competition": null,
+      "circrna_overlap": true,
+      "immune_motif_count": 0,
+      "immune_motifs_found": [],
+      "normalized_score": 0.2222
+    },
+    "RPS3:ENST00000531188:chr11:75401416": {
+      "ago2_loading": null,
+      "rbp_competition": null,
+      "circrna_overlap": true,
+      "immune_motif_count": 0,
+      "immune_motifs_found": [],
+      "normalized_score": 0.2222
+    },
+    "SMAD2:ENST00000262160:chr18:47898662": {
+      "ago2_loading": null,
+      "rbp_competition": null,
+      "circrna_overlap": true,
+      "immune_motif_count": 0,
+      "immune_motifs_found": [],
+      "normalized_score": 0.2222
+    },
+    "SMAD2:ENST00000262160:chr18:47916332": {
+      "ago2_loading": null,
+      "rbp_competition": null,
+      "circrna_overlap": true,
+      "immune_motif_count": 0,
+      "immune_motifs_found": [],
+      "normalized_score": 0.2222
+    },
+    "TNRC6B:ENST00000454349:chr22:40180363": {
+      "ago2_loading": null,
+      "rbp_competition": null,
+      "circrna_overlap": true,
+      "immune_motif_count": 0,
+      "immune_motifs_found": [],
+      "normalized_score": 0.2222
+    },
+    "TNRC6B:ENST00000454349:chr22:40182273": {
+      "ago2_loading": null,
+      "rbp_competition": null,
+      "circrna_overlap": true,
+      "immune_motif_count": 0,
+      "immune_motifs_found": [],
+      "normalized_score": 0.2222
+    },
+    "TSC1:ENST00000298552:chr9:132937751": {
+      "ago2_loading": null,
+      "rbp_competition": null,
+      "circrna_overlap": false,
+      "immune_motif_count": 0,
+      "immune_motifs_found": [],
+      "normalized_score": 0.0
+    },
+    "TSC1:ENST00000298552:chr9:132940598": {
+      "ago2_loading": null,
+      "rbp_competition": null,
+      "circrna_overlap": false,
+      "immune_motif_count": 0,
+      "immune_motifs_found": [],
+      "normalized_score": 0.0
+    },
+    "VEGFA:ENST00000480614:chr6:43777011": {
+      "ago2_loading": null,
+      "rbp_competition": null,
+      "circrna_overlap": true,
+      "immune_motif_count": 0,
+      "immune_motifs_found": [],
+      "normalized_score": 0.2222
+    },
+    "VEGFA:ENST00000497139:chr6:43777871": {
+      "ago2_loading": null,
+      "rbp_competition": null,
+      "circrna_overlap": true,
+      "immune_motif_count": 0,
+      "immune_motifs_found": [],
+      "normalized_score": 0.2222
+    },
+    "YAP1:ENST00000282441:chr11:102115206": {
+      "ago2_loading": null,
+      "rbp_competition": null,
+      "circrna_overlap": true,
+      "immune_motif_count": 0,
+      "immune_motifs_found": [],
+      "normalized_score": 0.2222
+    }
+  }
+}

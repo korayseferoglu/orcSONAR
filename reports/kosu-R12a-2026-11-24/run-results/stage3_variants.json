@@ -1,0 +1,370 @@
+{
+  "variant_scores": {
+    "AGO4:ENST00000373210:chr1:35815110": {
+      "cosmic_count": 0,
+      "cosmic_mutations": [],
+      "gnomad_max_af": 0.0008469346218994971,
+      "clinvar_pathogenic": false,
+      "phylop_score": 0.0,
+      "normalized_score": 0.1831
+    },
+    "AKT2:ENST00000392038:chr19:40280283": {
+      "cosmic_count": 0,
+      "cosmic_mutations": [],
+      "gnomad_max_af": 0.000124750499001996,
+      "clinvar_pathogenic": false,
+      "phylop_score": 0.0,
+      "normalized_score": 0.1975
+    },
+    "ATR:ENST00000350721:chr3:142571301": {
+      "cosmic_count": 0,
+      "cosmic_mutations": [],
+      "gnomad_max_af": 0.017908582703058205,
+      "clinvar_pathogenic": false,
+      "phylop_score": 0.030575001332908868,
+      "normalized_score": 0.0076
+    },
+    "ATR:ENST00000350721:chr3:142572942": {
+      "cosmic_count": 0,
+      "cosmic_mutations": [],
+      "gnomad_max_af": 4.5999973714300736e-05,
+      "clinvar_pathogenic": false,
+      "phylop_score": 0.08826249996200204,
+      "normalized_score": 0.2211
+    },
+    "BRCA1:ENST00000357654:chr17:43122797": {
+      "cosmic_count": 0,
+      "cosmic_mutations": [],
+      "gnomad_max_af": 1.316777056476568e-05,
+      "clinvar_pathogenic": false,
+      "phylop_score": 0.0,
+      "normalized_score": 0.1997
+    },
+    "CALM2:ENST00000272298:chr2:47175374": {
+      "cosmic_count": 0,
+      "cosmic_mutations": [],
+      "gnomad_max_af": 0.02082429786171457,
+      "clinvar_pathogenic": false,
+      "phylop_score": 0.0,
+      "normalized_score": 0.0
+    },
+    "CASP3:ENST00000308394:chr4:184648366": {
+      "cosmic_count": 0,
+      "cosmic_mutations": [],
+      "gnomad_max_af": 0.0001182996398433187,
+      "clinvar_pathogenic": false,
+      "phylop_score": 0.006275003217160702,
+      "normalized_score": 0.1992
+    },
+    "CCND2:ENST00000261254:chr12:4276729": {
+      "cosmic_count": 0,
+      "cosmic_mutations": [],
+      "gnomad_max_af": 0.00107692105643329,
+      "clinvar_pathogenic": false,
+      "phylop_score": 0.006324999313801527,
+      "normalized_score": 0.18
+    },
+    "CCND2:ENST00000261254:chr12:4276799": {
+      "cosmic_count": 0,
+      "cosmic_mutations": [],
+      "gnomad_max_af": 2.6279827604330916e-05,
+      "clinvar_pathogenic": false,
+      "phylop_score": 0.02028749855235219,
+      "normalized_score": 0.2045
+    },
+    "CTNNB1:ENST00000349496:chr3:41200550": {
+      "cosmic_count": 0,
+      "cosmic_mutations": [],
+      "gnomad_max_af": 7.883326763894364e-05,
+      "clinvar_pathogenic": false,
+      "phylop_score": 0.0,
+      "normalized_score": 0.1984
+    },
+    "CUL1:ENST00000325222:chr7:148700526": {
+      "cosmic_count": 0,
+      "cosmic_mutations": [],
+      "gnomad_max_af": 9.857396333048565e-05,
+      "clinvar_pathogenic": false,
+      "phylop_score": 0.0,
+      "normalized_score": 0.198
+    },
+    "DDX17:ENST00000403230:chr22:38501867": {
+      "cosmic_count": 0,
+      "cosmic_mutations": [],
+      "gnomad_max_af": 0.0007220216606498195,
+      "clinvar_pathogenic": false,
+      "phylop_score": 0.021199999330565333,
+      "normalized_score": 0.1909
+    },
+    "DDX17:ENST00000403230:chr22:38504908": {
+      "cosmic_count": 0,
+      "cosmic_mutations": [],
+      "gnomad_max_af": 0.04554287434655281,
+      "clinvar_pathogenic": false,
+      "phylop_score": 0.0,
+      "normalized_score": 0.0
+    },
+    "DDX5:ENST00000225792:chr17:64505712": {
+      "cosmic_count": 0,
+      "cosmic_mutations": [],
+      "gnomad_max_af": 0.0017697135564005736,
+      "clinvar_pathogenic": false,
+      "phylop_score": 0.0,
+      "normalized_score": 0.1646
+    },
+    "DICER1:ENST00000343455:chr14:95147794": {
+      "cosmic_count": 0,
+      "cosmic_mutations": [],
+      "gnomad_max_af": 0.00010514141520344864,
+      "clinvar_pathogenic": false,
+      "phylop_score": 0.0,
+      "normalized_score": 0.1979
+    },
+    "DICER1:ENST00000343455:chr14:95152261": {
+      "cosmic_count": 2,
+      "cosmic_mutations": [
+        "SNV",
+        "SNV"
+      ],
+      "gnomad_max_af": 0.00029533372711163615,
+      "clinvar_pathogenic": false,
+      "phylop_score": 0.0,
+      "normalized_score": 0.6441
+    },
+    "EGFR:ENST00000275493:chr7:55027996": {
+      "cosmic_count": 0,
+      "cosmic_mutations": [],
+      "gnomad_max_af": 0.04001794526693585,
+      "clinvar_pathogenic": false,
+      "phylop_score": 0.15411249920725822,
+      "normalized_score": 0.0385
+    },
+    "HNRNPA2B1:ENST00000618183:chr7:26197989": {
+      "cosmic_count": 3,
+      "cosmic_mutations": [
+        "SNV",
+        "SNV",
+        "SNV"
+      ],
+      "gnomad_max_af": 0.03198961472092201,
+      "clinvar_pathogenic": false,
+      "phylop_score": 0.16946249846369027,
+      "normalized_score": 0.4924
+    },
+    "HNRNPA2B1:ENST00000618183:chr7:26198044": {
+      "cosmic_count": 3,
+      "cosmic_mutations": [
+        "SNV",
+        "SNV",
+        "SNV"
+      ],
+      "gnomad_max_af": 0.008029139386913622,
+      "clinvar_pathogenic": false,
+      "phylop_score": 0.0,
+      "normalized_score": 0.4894
+    },
+    "HNRNPK:ENST00000376263:chr9:83979032": {
+      "cosmic_count": 0,
+      "cosmic_mutations": [],
+      "gnomad_max_af": 0.0006700211516481206,
+      "clinvar_pathogenic": false,
+      "phylop_score": 0.0,
+      "normalized_score": 0.1866
+    },
+    "HNRNPK:ENST00000376263:chr9:83979914": {
+      "cosmic_count": 0,
+      "cosmic_mutations": [],
+      "gnomad_max_af": 0.0015428451377399617,
+      "clinvar_pathogenic": false,
+      "phylop_score": 0.0,
+      "normalized_score": 0.1691
+    },
+    "IFNG:ENST00000229135:chr12:68159107": {
+      "cosmic_count": 0,
+      "cosmic_mutations": [],
+      "gnomad_max_af": 1.3141295206055508e-05,
+      "clinvar_pathogenic": false,
+      "phylop_score": 0.0,
+      "normalized_score": 0.1997
+    },
+    "LIN28A:ENST00000326279:chr1:26414640": {
+      "cosmic_count": 0,
+      "cosmic_mutations": [],
+      "gnomad_max_af": 1.314043179458877e-05,
+      "clinvar_pathogenic": false,
+      "phylop_score": 0.0,
+      "normalized_score": 0.1997
+    },
+    "MDM2:ENST00000258149:chr12:68809823": {
+      "cosmic_count": 15,
+      "cosmic_mutations": [
+        "SNV",
+        "SNV",
+        "SNV",
+        "SNV",
+        "SNV",
+        "SNV",
+        "SNV",
+        "SNV",
+        "SNV",
+        "SNV",
+        "SNV",
+        "SNV",
+        "SNV",
+        "SNV",
+        "SNV"
+      ],
+      "gnomad_max_af": 0.00011161740180951506,
+      "clinvar_pathogenic": false,
+      "phylop_score": 0.08832499964628368,
+      "normalized_score": 0.6698
+    },
+    "MTOR:ENST00000361445:chr1:11255438": {
+      "cosmic_count": 0,
+      "cosmic_mutations": [],
+      "gnomad_max_af": 0.006846330578075897,
+      "clinvar_pathogenic": false,
+      "phylop_score": 0.0051500002387911085,
+      "normalized_score": 0.0644
+    },
+    "MTOR:ENST00000361445:chr1:11259515": {
+      "cosmic_count": 1,
+      "cosmic_mutations": [
+        "SNV"
+      ],
+      "gnomad_max_af": 0.6936960606645772,
+      "clinvar_pathogenic": false,
+      "phylop_score": 0.0,
+      "normalized_score": 0.45
+    },
+    "PIK3CA:ENST00000263967:chr3:179151174": {
+      "cosmic_count": 0,
+      "cosmic_mutations": [],
+      "gnomad_max_af": 6.574535509066285e-06,
+      "clinvar_pathogenic": false,
+      "phylop_score": 0.04501250043977052,
+      "normalized_score": 0.2111
+    },
+    "PTBP2:ENST00000674951:chr1:96724335": {
+      "cosmic_count": 0,
+      "cosmic_mutations": [],
+      "gnomad_max_af": 0.00045339255910530535,
+      "clinvar_pathogenic": false,
+      "phylop_score": 0.0,
+      "normalized_score": 0.1909
+    },
+    "PTBP2:ENST00000674951:chr1:96724850": {
+      "cosmic_count": 4,
+      "cosmic_mutations": [
+        "SNV",
+        "SNV",
+        "SNV",
+        "SNV"
+      ],
+      "gnomad_max_af": 0.2914711310308463,
+      "clinvar_pathogenic": false,
+      "phylop_score": 0.07486249988432973,
+      "normalized_score": 0.3187
+    },
+    "PTEN:ENST00000371953:chr10:87869740": {
+      "cosmic_count": 0,
+      "cosmic_mutations": [],
+      "gnomad_max_af": 6.570647603027754e-06,
+      "clinvar_pathogenic": false,
+      "phylop_score": 0.0,
+      "normalized_score": 0.1999
+    },
+    "RPL11:ENST00000643754:chr1:23692780": {
+      "cosmic_count": 3,
+      "cosmic_mutations": [
+        "SNV",
+        "SNV",
+        "SNV"
+      ],
+      "gnomad_max_af": 0.004255934006751698,
+      "clinvar_pathogenic": false,
+      "phylop_score": 0.0,
+      "normalized_score": 0.4149
+    },
+    "RPS3:ENST00000531188:chr11:75401416": {
+      "cosmic_count": 0,
+      "cosmic_mutations": [],
+      "gnomad_max_af": 0.0003285798777682855,
+      "clinvar_pathogenic": false,
+      "phylop_score": 0.0,
+      "normalized_score": 0.1934
+    },
+    "SMAD2:ENST00000262160:chr18:47898662": {
+      "cosmic_count": 0,
+      "cosmic_mutations": [],
+      "gnomad_max_af": 0.00014558159848595138,
+      "clinvar_pathogenic": false,
+      "phylop_score": 0.0,
+      "normalized_score": 0.1971
+    },
+    "SMAD2:ENST00000262160:chr18:47916332": {
+      "cosmic_count": 0,
+      "cosmic_mutations": [],
+      "gnomad_max_af": 0.00014455234766153725,
+      "clinvar_pathogenic": false,
+      "phylop_score": 0.0,
+      "normalized_score": 0.1971
+    },
+    "TNRC6B:ENST00000454349:chr22:40180363": {
+      "cosmic_count": 0,
+      "cosmic_mutations": [],
+      "gnomad_max_af": 3.941818755173637e-05,
+      "clinvar_pathogenic": false,
+      "phylop_score": 0.3073875014670193,
+      "normalized_score": 0.2761
+    },
+    "TNRC6B:ENST00000454349:chr22:40182273": {
+      "cosmic_count": 0,
+      "cosmic_mutations": [],
+      "gnomad_max_af": 1.314837946223128e-05,
+      "clinvar_pathogenic": false,
+      "phylop_score": 0.03653749942895956,
+      "normalized_score": 0.2089
+    },
+    "TSC1:ENST00000298552:chr9:132937751": {
+      "cosmic_count": 0,
+      "cosmic_mutations": [],
+      "gnomad_max_af": 6.574708411681942e-06,
+      "clinvar_pathogenic": false,
+      "phylop_score": 0.0,
+      "normalized_score": 0.1999
+    },
+    "TSC1:ENST00000298552:chr9:132940598": {
+      "cosmic_count": 0,
+      "cosmic_mutations": [],
+      "gnomad_max_af": 0.0003218052618444039,
+      "clinvar_pathogenic": false,
+      "phylop_score": 0.0022750002332031726,
+      "normalized_score": 0.1941
+    },
+    "VEGFA:ENST00000480614:chr6:43777011": {
+      "cosmic_count": 0,
+      "cosmic_mutations": [],
+      "gnomad_max_af": 5.2513423743944546e-05,
+      "clinvar_pathogenic": false,
+      "phylop_score": 0.0,
+      "normalized_score": 0.1989
+    },
+    "VEGFA:ENST00000497139:chr6:43777871": {
+      "cosmic_count": 0,
+      "cosmic_mutations": [],
+      "gnomad_max_af": 6.59552295901542e-06,
+      "clinvar_pathogenic": false,
+      "phylop_score": 0.0,
+      "normalized_score": 0.1999
+    },
+    "YAP1:ENST00000282441:chr11:102115206": {
+      "cosmic_count": 0,
+      "cosmic_mutations": [],
+      "gnomad_max_af": 1.3128528291978469e-05,
+      "clinvar_pathogenic": false,
+      "phylop_score": 0.03568750221747905,
+      "normalized_score": 0.2087
+    }
+  }
+}

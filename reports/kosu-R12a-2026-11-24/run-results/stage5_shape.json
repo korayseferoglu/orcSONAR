@@ -1,0 +1,496 @@
+{
+  "shape_results": {
+    "MTOR:ENST00000361445:chr1:11255438": {
+      "region": {
+        "chrom": "chr1",
+        "start": 11255438,
+        "end": 11255458,
+        "strand": "-"
+      },
+      "mean_reactivity": 0.4692,
+      "accessibility_score": 0.2346,
+      "single_stranded_fraction": 0.3333,
+      "data_available": true
+    },
+    "VEGFA:ENST00000480614:chr6:43777011": {
+      "region": {
+        "chrom": "chr6",
+        "start": 43777011,
+        "end": 43777031,
+        "strand": "+"
+      },
+      "mean_reactivity": null,
+      "accessibility_score": null,
+      "single_stranded_fraction": null,
+      "data_available": true
+    },
+    "HNRNPA2B1:ENST00000618183:chr7:26198044": {
+      "region": {
+        "chrom": "chr7",
+        "start": 26198044,
+        "end": 26198064,
+        "strand": "-"
+      },
+      "mean_reactivity": null,
+      "accessibility_score": null,
+      "single_stranded_fraction": null,
+      "data_available": true
+    },
+    "DICER1:ENST00000343455:chr14:95152261": {
+      "region": {
+        "chrom": "chr14",
+        "start": 95152261,
+        "end": 95152281,
+        "strand": "-"
+      },
+      "mean_reactivity": null,
+      "accessibility_score": null,
+      "single_stranded_fraction": null,
+      "data_available": false
+    },
+    "TNRC6B:ENST00000454349:chr22:40182273": {
+      "region": {
+        "chrom": "chr22",
+        "start": 40182273,
+        "end": 40182293,
+        "strand": "+"
+      },
+      "mean_reactivity": null,
+      "accessibility_score": null,
+      "single_stranded_fraction": null,
+      "data_available": false
+    },
+    "CTNNB1:ENST00000349496:chr3:41200550": {
+      "region": {
+        "chrom": "chr3",
+        "start": 41200550,
+        "end": 41200570,
+        "strand": "+"
+      },
+      "mean_reactivity": 0.2981,
+      "accessibility_score": 0.149,
+      "single_stranded_fraction": 0.0833,
+      "data_available": true
+    },
+    "ATR:ENST00000350721:chr3:142571301": {
+      "region": {
+        "chrom": "chr3",
+        "start": 142571301,
+        "end": 142571321,
+        "strand": "-"
+      },
+      "mean_reactivity": null,
+      "accessibility_score": null,
+      "single_stranded_fraction": null,
+      "data_available": false
+    },
+    "RPL11:ENST00000643754:chr1:23692780": {
+      "region": {
+        "chrom": "chr1",
+        "start": 23692780,
+        "end": 23692800,
+        "strand": "+"
+      },
+      "mean_reactivity": null,
+      "accessibility_score": null,
+      "single_stranded_fraction": null,
+      "data_available": false
+    },
+    "PTBP2:ENST00000674951:chr1:96724335": {
+      "region": {
+        "chrom": "chr1",
+        "start": 96724335,
+        "end": 96724355,
+        "strand": "+"
+      },
+      "mean_reactivity": null,
+      "accessibility_score": null,
+      "single_stranded_fraction": null,
+      "data_available": false
+    },
+    "PTBP2:ENST00000674951:chr1:96724850": {
+      "region": {
+        "chrom": "chr1",
+        "start": 96724850,
+        "end": 96724870,
+        "strand": "+"
+      },
+      "mean_reactivity": null,
+      "accessibility_score": null,
+      "single_stranded_fraction": null,
+      "data_available": false
+    },
+    "BRCA1:ENST00000357654:chr17:43122797": {
+      "region": {
+        "chrom": "chr17",
+        "start": 43122797,
+        "end": 43122817,
+        "strand": "-"
+      },
+      "mean_reactivity": null,
+      "accessibility_score": null,
+      "single_stranded_fraction": null,
+      "data_available": true
+    },
+    "CALM2:ENST00000272298:chr2:47175374": {
+      "region": {
+        "chrom": "chr2",
+        "start": 47175374,
+        "end": 47175394,
+        "strand": "-"
+      },
+      "mean_reactivity": 0.334,
+      "accessibility_score": 0.167,
+      "single_stranded_fraction": 0.0,
+      "data_available": true
+    },
+    "HNRNPK:ENST00000376263:chr9:83979914": {
+      "region": {
+        "chrom": "chr9",
+        "start": 83979914,
+        "end": 83979934,
+        "strand": "-"
+      },
+      "mean_reactivity": 0.0023,
+      "accessibility_score": 0.0012,
+      "single_stranded_fraction": 0.0,
+      "data_available": true
+    },
+    "AGO4:ENST00000373210:chr1:35815110": {
+      "region": {
+        "chrom": "chr1",
+        "start": 35815110,
+        "end": 35815130,
+        "strand": "+"
+      },
+      "mean_reactivity": null,
+      "accessibility_score": null,
+      "single_stranded_fraction": null,
+      "data_available": false
+    },
+    "MDM2:ENST00000258149:chr12:68809823": {
+      "region": {
+        "chrom": "chr12",
+        "start": 68809823,
+        "end": 68809843,
+        "strand": "+"
+      },
+      "mean_reactivity": null,
+      "accessibility_score": null,
+      "single_stranded_fraction": null,
+      "data_available": true
+    },
+    "EGFR:ENST00000275493:chr7:55027996": {
+      "region": {
+        "chrom": "chr7",
+        "start": 55027996,
+        "end": 55028016,
+        "strand": "+"
+      },
+      "mean_reactivity": null,
+      "accessibility_score": null,
+      "single_stranded_fraction": null,
+      "data_available": true
+    },
+    "PIK3CA:ENST00000263967:chr3:179151174": {
+      "region": {
+        "chrom": "chr3",
+        "start": 179151174,
+        "end": 179151194,
+        "strand": "+"
+      },
+      "mean_reactivity": null,
+      "accessibility_score": null,
+      "single_stranded_fraction": null,
+      "data_available": false
+    },
+    "VEGFA:ENST00000497139:chr6:43777871": {
+      "region": {
+        "chrom": "chr6",
+        "start": 43777871,
+        "end": 43777891,
+        "strand": "+"
+      },
+      "mean_reactivity": null,
+      "accessibility_score": null,
+      "single_stranded_fraction": null,
+      "data_available": true
+    },
+    "HNRNPK:ENST00000376263:chr9:83979032": {
+      "region": {
+        "chrom": "chr9",
+        "start": 83979032,
+        "end": 83979052,
+        "strand": "-"
+      },
+      "mean_reactivity": 0.3259,
+      "accessibility_score": 0.163,
+      "single_stranded_fraction": 0.1,
+      "data_available": true
+    },
+    "DDX17:ENST00000403230:chr22:38504908": {
+      "region": {
+        "chrom": "chr22",
+        "start": 38504908,
+        "end": 38504928,
+        "strand": "-"
+      },
+      "mean_reactivity": null,
+      "accessibility_score": null,
+      "single_stranded_fraction": null,
+      "data_available": true
+    },
+    "DDX17:ENST00000403230:chr22:38501867": {
+      "region": {
+        "chrom": "chr22",
+        "start": 38501867,
+        "end": 38501887,
+        "strand": "-"
+      },
+      "mean_reactivity": null,
+      "accessibility_score": null,
+      "single_stranded_fraction": null,
+      "data_available": true
+    },
+    "DDX5:ENST00000225792:chr17:64505712": {
+      "region": {
+        "chrom": "chr17",
+        "start": 64505712,
+        "end": 64505732,
+        "strand": "-"
+      },
+      "mean_reactivity": null,
+      "accessibility_score": null,
+      "single_stranded_fraction": null,
+      "data_available": true
+    },
+    "CCND2:ENST00000261254:chr12:4276729": {
+      "region": {
+        "chrom": "chr12",
+        "start": 4276729,
+        "end": 4276749,
+        "strand": "+"
+      },
+      "mean_reactivity": null,
+      "accessibility_score": null,
+      "single_stranded_fraction": null,
+      "data_available": false
+    },
+    "PTEN:ENST00000371953:chr10:87869740": {
+      "region": {
+        "chrom": "chr10",
+        "start": 87869740,
+        "end": 87869760,
+        "strand": "+"
+      },
+      "mean_reactivity": null,
+      "accessibility_score": null,
+      "single_stranded_fraction": null,
+      "data_available": true
+    },
+    "ATR:ENST00000350721:chr3:142572942": {
+      "region": {
+        "chrom": "chr3",
+        "start": 142572942,
+        "end": 142572962,
+        "strand": "-"
+      },
+      "mean_reactivity": null,
+      "accessibility_score": null,
+      "single_stranded_fraction": null,
+      "data_available": false
+    },
+    "CASP3:ENST00000308394:chr4:184648366": {
+      "region": {
+        "chrom": "chr4",
+        "start": 184648366,
+        "end": 184648386,
+        "strand": "-"
+      },
+      "mean_reactivity": null,
+      "accessibility_score": null,
+      "single_stranded_fraction": null,
+      "data_available": true
+    },
+    "CUL1:ENST00000325222:chr7:148700526": {
+      "region": {
+        "chrom": "chr7",
+        "start": 148700526,
+        "end": 148700546,
+        "strand": "+"
+      },
+      "mean_reactivity": null,
+      "accessibility_score": null,
+      "single_stranded_fraction": null,
+      "data_available": true
+    },
+    "AKT2:ENST00000392038:chr19:40280283": {
+      "region": {
+        "chrom": "chr19",
+        "start": 40280283,
+        "end": 40280303,
+        "strand": "-"
+      },
+      "mean_reactivity": null,
+      "accessibility_score": null,
+      "single_stranded_fraction": null,
+      "data_available": true
+    },
+    "TSC1:ENST00000298552:chr9:132940598": {
+      "region": {
+        "chrom": "chr9",
+        "start": 132940598,
+        "end": 132940618,
+        "strand": "-"
+      },
+      "mean_reactivity": null,
+      "accessibility_score": null,
+      "single_stranded_fraction": null,
+      "data_available": false
+    },
+    "YAP1:ENST00000282441:chr11:102115206": {
+      "region": {
+        "chrom": "chr11",
+        "start": 102115206,
+        "end": 102115226,
+        "strand": "+"
+      },
+      "mean_reactivity": 0.5499,
+      "accessibility_score": 0.275,
+      "single_stranded_fraction": 0.3,
+      "data_available": true
+    },
+    "IFNG:ENST00000229135:chr12:68159107": {
+      "region": {
+        "chrom": "chr12",
+        "start": 68159107,
+        "end": 68159127,
+        "strand": "-"
+      },
+      "mean_reactivity": null,
+      "accessibility_score": null,
+      "single_stranded_fraction": null,
+      "data_available": false
+    },
+    "LIN28A:ENST00000326279:chr1:26414640": {
+      "region": {
+        "chrom": "chr1",
+        "start": 26414640,
+        "end": 26414660,
+        "strand": "+"
+      },
+      "mean_reactivity": null,
+      "accessibility_score": null,
+      "single_stranded_fraction": null,
+      "data_available": false
+    },
+    "DICER1:ENST00000343455:chr14:95147794": {
+      "region": {
+        "chrom": "chr14",
+        "start": 95147794,
+        "end": 95147814,
+        "strand": "-"
+      },
+      "mean_reactivity": null,
+      "accessibility_score": null,
+      "single_stranded_fraction": null,
+      "data_available": false
+    },
+    "TNRC6B:ENST00000454349:chr22:40180363": {
+      "region": {
+        "chrom": "chr22",
+        "start": 40180363,
+        "end": 40180383,
+        "strand": "+"
+      },
+      "mean_reactivity": null,
+      "accessibility_score": null,
+      "single_stranded_fraction": null,
+      "data_available": false
+    },
+    "CCND2:ENST00000261254:chr12:4276799": {
+      "region": {
+        "chrom": "chr12",
+        "start": 4276799,
+        "end": 4276819,
+        "strand": "+"
+      },
+      "mean_reactivity": null,
+      "accessibility_score": null,
+      "single_stranded_fraction": null,
+      "data_available": false
+    },
+    "MTOR:ENST00000361445:chr1:11259515": {
+      "region": {
+        "chrom": "chr1",
+        "start": 11259515,
+        "end": 11259535,
+        "strand": "-"
+      },
+      "mean_reactivity": null,
+      "accessibility_score": null,
+      "single_stranded_fraction": null,
+      "data_available": true
+    },
+    "RPS3:ENST00000531188:chr11:75401416": {
+      "region": {
+        "chrom": "chr11",
+        "start": 75401416,
+        "end": 75401436,
+        "strand": "+"
+      },
+      "mean_reactivity": null,
+      "accessibility_score": null,
+      "single_stranded_fraction": null,
+      "data_available": true
+    },
+    "HNRNPA2B1:ENST00000618183:chr7:26197989": {
+      "region": {
+        "chrom": "chr7",
+        "start": 26197989,
+        "end": 26198009,
+        "strand": "-"
+      },
+      "mean_reactivity": null,
+      "accessibility_score": null,
+      "single_stranded_fraction": null,
+      "data_available": true
+    },
+    "TSC1:ENST00000298552:chr9:132937751": {
+      "region": {
+        "chrom": "chr9",
+        "start": 132937751,
+        "end": 132937771,
+        "strand": "-"
+      },
+      "mean_reactivity": null,
+      "accessibility_score": null,
+      "single_stranded_fraction": null,
+      "data_available": false
+    },
+    "SMAD2:ENST00000262160:chr18:47898662": {
+      "region": {
+        "chrom": "chr18",
+        "start": 47898662,
+        "end": 47898682,
+        "strand": "-"
+      },
+      "mean_reactivity": null,
+      "accessibility_score": null,
+      "single_stranded_fraction": null,
+      "data_available": true
+    },
+    "SMAD2:ENST00000262160:chr18:47916332": {
+      "region": {
+        "chrom": "chr18",
+        "start": 47916332,
+        "end": 47916352,
+        "strand": "-"
+      },
+      "mean_reactivity": null,
+      "accessibility_score": null,
+      "single_stranded_fraction": null,
+      "data_available": true
+    }
+  }
+}

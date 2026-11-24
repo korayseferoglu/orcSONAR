@@ -309,7 +309,7 @@ class TestGetBackgroundTranscriptome:
                 status=200,
             )
 
-        transcripts, sequences = get_background_transcriptome(config)
+        transcripts, sequences, _coverage = get_background_transcriptome(config)
 
         assert len(transcripts) >= 1
         assert "ENST00000461615" in sequences
@@ -396,7 +396,7 @@ class TestGetBackgroundTranscriptome:
             "src.stage2_offtarget_scan.transcriptome_fetcher._load_sequences",
             return_value={"ENST00000000001": "ATCGATCG"},
         ):
-            transcripts, _ = get_background_transcriptome(config)
+            transcripts, _, _coverage = get_background_transcriptome(config)
 
         assert len(transcripts) == 1
 
@@ -422,7 +422,7 @@ class TestGetBackgroundTranscriptome:
             "src.stage2_offtarget_scan.transcriptome_fetcher._load_sequences",
             return_value={"ENST00000000001": "ATCGATCG"},
         ):
-            transcripts, sequences = get_background_transcriptome(config)
+            transcripts, sequences, _coverage = get_background_transcriptome(config)
 
         assert len(transcripts) == 1
         assert sequences["ENST00000000001"] == "ATCGATCG"
@@ -447,3 +447,87 @@ class TestBackgroundGeneList:
     def test_contains_key_biology_genes(self) -> None:
         must_have = {"AGO2", "DICER1", "TP53", "ACTB", "GAPDH", "MYC"}
         assert must_have.issubset(set(_BACKGROUND_GENES))
+
+
+class TestBackgroundCoverageIsReported:
+    """A run must say how much of its declared search space it actually got.
+
+    Roadmap R12a. `R1` made a *total* loss of the background set an error, but
+    a partial loss passes by design — and the 2026-11-19 run showed that is
+    not enough: Ensembl answered two of three symbol batches with 504, 22 of
+    182 genes resolved (12%), four sites were found instead of 41, and the
+    report said SAFE (0.2909) without mentioning any of it.
+
+    The background set is a *declared*, fixed list, so coverage is a known
+    denominator. If it varies silently from run to run, no two runs are
+    comparable, which is fatal for the cell-line-specificity claim.
+    """
+
+    def test_coverage_is_returned_alongside_the_transcripts(self, tmp_path: Path) -> None:
+        from src.core.models import TranscriptInfo
+
+        config = _default_config(tmp_path)
+        t_info = TranscriptInfo(
+            transcript_id="ENST00000000001", gene="TESTGENE", chrom="chr1",
+            start=0, end=100, strand="+", source="Ensembl",
+        )
+        with patch(
+            "src.stage2_offtarget_scan.transcriptome_fetcher._load_canonical_transcripts",
+            return_value={"TESTGENE": t_info},
+        ), patch(
+            "src.stage2_offtarget_scan.transcriptome_fetcher._load_sequences",
+            return_value={"ENST00000000001": "ATCGATCG"},
+        ):
+            _transcripts, _sequences, coverage = get_background_transcriptome(config)
+
+        assert coverage["requested"] == 183, "the declared set is 183 genes"
+        assert coverage["resolved"] == 1
+        assert coverage["fraction"] == pytest.approx(1 / 183, abs=1e-6)
+
+    def test_excluding_the_target_gene_shrinks_the_denominator(
+        self, tmp_path: Path
+    ) -> None:
+        """Coverage must be reported against what was actually asked for."""
+        from src.core.models import TranscriptInfo
+
+        config = _default_config(tmp_path)
+        t_info = TranscriptInfo(
+            transcript_id="ENST00000000001", gene="ACTB", chrom="chr1",
+            start=0, end=100, strand="+", source="Ensembl",
+        )
+        with patch(
+            "src.stage2_offtarget_scan.transcriptome_fetcher._load_canonical_transcripts",
+            return_value={"ACTB": t_info},
+        ), patch(
+            "src.stage2_offtarget_scan.transcriptome_fetcher._load_sequences",
+            return_value={"ENST00000000001": "ATCGATCG"},
+        ):
+            *_, coverage = get_background_transcriptome(config, exclude_gene="ACTB")
+
+        assert coverage["requested"] == 182
+
+
+class TestLookupBatchSizeIsMeasured:
+    """The batch size is a measured limit, not a guess.
+
+    Measured against the live Ensembl REST API on 2026-11-24, POSTing
+    /lookup/symbol/homo_sapiens with expand=1:
+
+        batch=80  -> TimeoutError after 120s   (what the pipeline was doing)
+        batch=40  -> OK in 70.4s               (uncomfortably close to the edge)
+        batch=20  -> OK in 31.0s
+
+    expand=1 cannot be dropped: `_batch_lookup_symbols` reads
+    `gene_data["Transcript"]` to pick the canonical transcript, and without
+    expand there is no transcript list. So the batch size is the only lever.
+    """
+
+    def test_batch_is_small_enough_to_complete(self) -> None:
+        from src.stage2_offtarget_scan.transcriptome_fetcher import _LOOKUP_BATCH
+
+        assert _LOOKUP_BATCH <= 20, (
+            f"_LOOKUP_BATCH is {_LOOKUP_BATCH}; measured on 2026-11-24, an "
+            "expand=1 lookup of 80 genes times out at 120s and 40 takes 70s. "
+            "Two of three batches failing is how the 2026-11-19 run resolved "
+            "only 12% of the background set."
+        )

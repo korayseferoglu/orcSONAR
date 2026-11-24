@@ -1,0 +1,496 @@
+{
+  "m6a_results": {
+    "MTOR:ENST00000361445:chr1:11255438": {
+      "region": {
+        "chrom": "chr1",
+        "start": 11255438,
+        "end": 11255458,
+        "strand": "-"
+      },
+      "cell_line": "HeLa",
+      "sites": [],
+      "site_count": 0,
+      "m6a_score": 0.0
+    },
+    "VEGFA:ENST00000480614:chr6:43777011": {
+      "region": {
+        "chrom": "chr6",
+        "start": 43777011,
+        "end": 43777031,
+        "strand": "+"
+      },
+      "cell_line": "HeLa",
+      "sites": [],
+      "site_count": 0,
+      "m6a_score": 0.0
+    },
+    "HNRNPA2B1:ENST00000618183:chr7:26198044": {
+      "region": {
+        "chrom": "chr7",
+        "start": 26198044,
+        "end": 26198064,
+        "strand": "-"
+      },
+      "cell_line": "HeLa",
+      "sites": [],
+      "site_count": 0,
+      "m6a_score": 0.0
+    },
+    "DICER1:ENST00000343455:chr14:95152261": {
+      "region": {
+        "chrom": "chr14",
+        "start": 95152261,
+        "end": 95152281,
+        "strand": "-"
+      },
+      "cell_line": "HeLa",
+      "sites": [],
+      "site_count": 0,
+      "m6a_score": 0.0
+    },
+    "TNRC6B:ENST00000454349:chr22:40182273": {
+      "region": {
+        "chrom": "chr22",
+        "start": 40182273,
+        "end": 40182293,
+        "strand": "+"
+      },
+      "cell_line": "HeLa",
+      "sites": [],
+      "site_count": 0,
+      "m6a_score": 0.0
+    },
+    "CTNNB1:ENST00000349496:chr3:41200550": {
+      "region": {
+        "chrom": "chr3",
+        "start": 41200550,
+        "end": 41200570,
+        "strand": "+"
+      },
+      "cell_line": "HeLa",
+      "sites": [],
+      "site_count": 0,
+      "m6a_score": 0.0
+    },
+    "ATR:ENST00000350721:chr3:142571301": {
+      "region": {
+        "chrom": "chr3",
+        "start": 142571301,
+        "end": 142571321,
+        "strand": "-"
+      },
+      "cell_line": "HeLa",
+      "sites": [],
+      "site_count": 0,
+      "m6a_score": 0.0
+    },
+    "RPL11:ENST00000643754:chr1:23692780": {
+      "region": {
+        "chrom": "chr1",
+        "start": 23692780,
+        "end": 23692800,
+        "strand": "+"
+      },
+      "cell_line": "HeLa",
+      "sites": [],
+      "site_count": 0,
+      "m6a_score": 0.0
+    },
+    "PTBP2:ENST00000674951:chr1:96724335": {
+      "region": {
+        "chrom": "chr1",
+        "start": 96724335,
+        "end": 96724355,
+        "strand": "+"
+      },
+      "cell_line": "HeLa",
+      "sites": [],
+      "site_count": 0,
+      "m6a_score": 0.0
+    },
+    "PTBP2:ENST00000674951:chr1:96724850": {
+      "region": {
+        "chrom": "chr1",
+        "start": 96724850,
+        "end": 96724870,
+        "strand": "+"
+      },
+      "cell_line": "HeLa",
+      "sites": [],
+      "site_count": 0,
+      "m6a_score": 0.0
+    },
+    "BRCA1:ENST00000357654:chr17:43122797": {
+      "region": {
+        "chrom": "chr17",
+        "start": 43122797,
+        "end": 43122817,
+        "strand": "-"
+      },
+      "cell_line": "HeLa",
+      "sites": [],
+      "site_count": 0,
+      "m6a_score": 0.0
+    },
+    "CALM2:ENST00000272298:chr2:47175374": {
+      "region": {
+        "chrom": "chr2",
+        "start": 47175374,
+        "end": 47175394,
+        "strand": "-"
+      },
+      "cell_line": "HeLa",
+      "sites": [],
+      "site_count": 0,
+      "m6a_score": 0.0
+    },
+    "HNRNPK:ENST00000376263:chr9:83979914": {
+      "region": {
+        "chrom": "chr9",
+        "start": 83979914,
+        "end": 83979934,
+        "strand": "-"
+      },
+      "cell_line": "HeLa",
+      "sites": [],
+      "site_count": 0,
+      "m6a_score": 0.0
+    },
+    "AGO4:ENST00000373210:chr1:35815110": {
+      "region": {
+        "chrom": "chr1",
+        "start": 35815110,
+        "end": 35815130,
+        "strand": "+"
+      },
+      "cell_line": "HeLa",
+      "sites": [],
+      "site_count": 0,
+      "m6a_score": 0.0
+    },
+    "MDM2:ENST00000258149:chr12:68809823": {
+      "region": {
+        "chrom": "chr12",
+        "start": 68809823,
+        "end": 68809843,
+        "strand": "+"
+      },
+      "cell_line": "HeLa",
+      "sites": [],
+      "site_count": 0,
+      "m6a_score": 0.0
+    },
+    "EGFR:ENST00000275493:chr7:55027996": {
+      "region": {
+        "chrom": "chr7",
+        "start": 55027996,
+        "end": 55028016,
+        "strand": "+"
+      },
+      "cell_line": "HeLa",
+      "sites": [],
+      "site_count": 0,
+      "m6a_score": 0.0
+    },
+    "PIK3CA:ENST00000263967:chr3:179151174": {
+      "region": {
+        "chrom": "chr3",
+        "start": 179151174,
+        "end": 179151194,
+        "strand": "+"
+      },
+      "cell_line": "HeLa",
+      "sites": [],
+      "site_count": 0,
+      "m6a_score": 0.0
+    },
+    "VEGFA:ENST00000497139:chr6:43777871": {
+      "region": {
+        "chrom": "chr6",
+        "start": 43777871,
+        "end": 43777891,
+        "strand": "+"
+      },
+      "cell_line": "HeLa",
+      "sites": [],
+      "site_count": 0,
+      "m6a_score": 0.0
+    },
+    "HNRNPK:ENST00000376263:chr9:83979032": {
+      "region": {
+        "chrom": "chr9",
+        "start": 83979032,
+        "end": 83979052,
+        "strand": "-"
+      },
+      "cell_line": "HeLa",
+      "sites": [],
+      "site_count": 0,
+      "m6a_score": 0.0
+    },
+    "DDX17:ENST00000403230:chr22:38504908": {
+      "region": {
+        "chrom": "chr22",
+        "start": 38504908,
+        "end": 38504928,
+        "strand": "-"
+      },
+      "cell_line": "HeLa",
+      "sites": [],
+      "site_count": 0,
+      "m6a_score": 0.0
+    },
+    "DDX17:ENST00000403230:chr22:38501867": {
+      "region": {
+        "chrom": "chr22",
+        "start": 38501867,
+        "end": 38501887,
+        "strand": "-"
+      },
+      "cell_line": "HeLa",
+      "sites": [],
+      "site_count": 0,
+      "m6a_score": 0.0
+    },
+    "DDX5:ENST00000225792:chr17:64505712": {
+      "region": {
+        "chrom": "chr17",
+        "start": 64505712,
+        "end": 64505732,
+        "strand": "-"
+      },
+      "cell_line": "HeLa",
+      "sites": [],
+      "site_count": 0,
+      "m6a_score": 0.0
+    },
+    "CCND2:ENST00000261254:chr12:4276729": {
+      "region": {
+        "chrom": "chr12",
+        "start": 4276729,
+        "end": 4276749,
+        "strand": "+"
+      },
+      "cell_line": "HeLa",
+      "sites": [],
+      "site_count": 0,
+      "m6a_score": 0.0
+    },
+    "PTEN:ENST00000371953:chr10:87869740": {
+      "region": {
+        "chrom": "chr10",
+        "start": 87869740,
+        "end": 87869760,
+        "strand": "+"
+      },
+      "cell_line": "HeLa",
+      "sites": [],
+      "site_count": 0,
+      "m6a_score": 0.0
+    },
+    "ATR:ENST00000350721:chr3:142572942": {
+      "region": {
+        "chrom": "chr3",
+        "start": 142572942,
+        "end": 142572962,
+        "strand": "-"
+      },
+      "cell_line": "HeLa",
+      "sites": [],
+      "site_count": 0,
+      "m6a_score": 0.0
+    },
+    "CASP3:ENST00000308394:chr4:184648366": {
+      "region": {
+        "chrom": "chr4",
+        "start": 184648366,
+        "end": 184648386,
+        "strand": "-"
+      },
+      "cell_line": "HeLa",
+      "sites": [],
+      "site_count": 0,
+      "m6a_score": 0.0
+    },
+    "CUL1:ENST00000325222:chr7:148700526": {
+      "region": {
+        "chrom": "chr7",
+        "start": 148700526,
+        "end": 148700546,
+        "strand": "+"
+      },
+      "cell_line": "HeLa",
+      "sites": [],
+      "site_count": 0,
+      "m6a_score": 0.0
+    },
+    "AKT2:ENST00000392038:chr19:40280283": {
+      "region": {
+        "chrom": "chr19",
+        "start": 40280283,
+        "end": 40280303,
+        "strand": "-"
+      },
+      "cell_line": "HeLa",
+      "sites": [],
+      "site_count": 0,
+      "m6a_score": 0.0
+    },
+    "TSC1:ENST00000298552:chr9:132940598": {
+      "region": {
+        "chrom": "chr9",
+        "start": 132940598,
+        "end": 132940618,
+        "strand": "-"
+      },
+      "cell_line": "HeLa",
+      "sites": [],
+      "site_count": 0,
+      "m6a_score": 0.0
+    },
+    "YAP1:ENST00000282441:chr11:102115206": {
+      "region": {
+        "chrom": "chr11",
+        "start": 102115206,
+        "end": 102115226,
+        "strand": "+"
+      },
+      "cell_line": "HeLa",
+      "sites": [],
+      "site_count": 0,
+      "m6a_score": 0.0
+    },
+    "IFNG:ENST00000229135:chr12:68159107": {
+      "region": {
+        "chrom": "chr12",
+        "start": 68159107,
+        "end": 68159127,
+        "strand": "-"
+      },
+      "cell_line": "HeLa",
+      "sites": [],
+      "site_count": 0,
+      "m6a_score": 0.0
+    },
+    "LIN28A:ENST00000326279:chr1:26414640": {
+      "region": {
+        "chrom": "chr1",
+        "start": 26414640,
+        "end": 26414660,
+        "strand": "+"
+      },
+      "cell_line": "HeLa",
+      "sites": [],
+      "site_count": 0,
+      "m6a_score": 0.0
+    },
+    "DICER1:ENST00000343455:chr14:95147794": {
+      "region": {
+        "chrom": "chr14",
+        "start": 95147794,
+        "end": 95147814,
+        "strand": "-"
+      },
+      "cell_line": "HeLa",
+      "sites": [],
+      "site_count": 0,
+      "m6a_score": 0.0
+    },
+    "TNRC6B:ENST00000454349:chr22:40180363": {
+      "region": {
+        "chrom": "chr22",
+        "start": 40180363,
+        "end": 40180383,
+        "strand": "+"
+      },
+      "cell_line": "HeLa",
+      "sites": [],
+      "site_count": 0,
+      "m6a_score": 0.0
+    },
+    "CCND2:ENST00000261254:chr12:4276799": {
+      "region": {
+        "chrom": "chr12",
+        "start": 4276799,
+        "end": 4276819,
+        "strand": "+"
+      },
+      "cell_line": "HeLa",
+      "sites": [],
+      "site_count": 0,
+      "m6a_score": 0.0
+    },
+    "MTOR:ENST00000361445:chr1:11259515": {
+      "region": {
+        "chrom": "chr1",
+        "start": 11259515,
+        "end": 11259535,
+        "strand": "-"
+      },
+      "cell_line": "HeLa",
+      "sites": [],
+      "site_count": 0,
+      "m6a_score": 0.0
+    },
+    "RPS3:ENST00000531188:chr11:75401416": {
+      "region": {
+        "chrom": "chr11",
+        "start": 75401416,
+        "end": 75401436,
+        "strand": "+"
+      },
+      "cell_line": "HeLa",
+      "sites": [],
+      "site_count": 0,
+      "m6a_score": 0.0
+    },
+    "HNRNPA2B1:ENST00000618183:chr7:26197989": {
+      "region": {
+        "chrom": "chr7",
+        "start": 26197989,
+        "end": 26198009,
+        "strand": "-"
+      },
+      "cell_line": "HeLa",
+      "sites": [],
+      "site_count": 0,
+      "m6a_score": 0.0
+    },
+    "TSC1:ENST00000298552:chr9:132937751": {
+      "region": {
+        "chrom": "chr9",
+        "start": 132937751,
+        "end": 132937771,
+        "strand": "-"
+      },
+      "cell_line": "HeLa",
+      "sites": [],
+      "site_count": 0,
+      "m6a_score": 0.0
+    },
+    "SMAD2:ENST00000262160:chr18:47898662": {
+      "region": {
+        "chrom": "chr18",
+        "start": 47898662,
+        "end": 47898682,
+        "strand": "-"
+      },
+      "cell_line": "HeLa",
+      "sites": [],
+      "site_count": 0,
+      "m6a_score": 0.0
+    },
+    "SMAD2:ENST00000262160:chr18:47916332": {
+      "region": {
+        "chrom": "chr18",
+        "start": 47916332,
+        "end": 47916352,
+        "strand": "-"
+      },
+      "cell_line": "HeLa",
+      "sites": [],
+      "site_count": 0,
+      "m6a_score": 0.0
+    }
+  }
+}

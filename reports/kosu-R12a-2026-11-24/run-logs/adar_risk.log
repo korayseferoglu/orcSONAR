@@ -1,0 +1,83 @@
+2026-11-24 15:32:14.994 | DEBUG    | src.stage5_biophysics.adar_risk:calculate_adar_risk:91 - ADAR risk for chr1:11255438-11255458(-): alu=0.000, shape_ds=ÖLÇÜLMEDİ, combined=0.000
+2026-11-24 15:32:14.994 | DEBUG    | src.stage5_biophysics.adar_estimator:run:73 - adar_estimator: MTOR:ENST00000361445:chr1:11255438 → adar_score=0.000
+2026-11-24 15:32:14.994 | DEBUG    | src.stage5_biophysics.adar_risk:calculate_adar_risk:91 - ADAR risk for chr6:43777011-43777031(+): alu=0.000, shape_ds=ÖLÇÜLMEDİ, combined=0.000
+2026-11-24 15:32:14.994 | DEBUG    | src.stage5_biophysics.adar_estimator:run:73 - adar_estimator: VEGFA:ENST00000480614:chr6:43777011 → adar_score=0.000
+2026-11-24 15:32:14.995 | DEBUG    | src.stage5_biophysics.adar_risk:calculate_adar_risk:91 - ADAR risk for chr7:26198044-26198064(-): alu=0.000, shape_ds=ÖLÇÜLMEDİ, combined=0.000
+2026-11-24 15:32:14.995 | DEBUG    | src.stage5_biophysics.adar_estimator:run:73 - adar_estimator: HNRNPA2B1:ENST00000618183:chr7:26198044 → adar_score=0.000
+2026-11-24 15:32:14.995 | DEBUG    | src.stage5_biophysics.adar_risk:calculate_adar_risk:91 - ADAR risk for chr14:95152261-95152281(-): alu=0.000, shape_ds=ÖLÇÜLMEDİ, combined=0.000
+2026-11-24 15:32:14.995 | DEBUG    | src.stage5_biophysics.adar_estimator:run:73 - adar_estimator: DICER1:ENST00000343455:chr14:95152261 → adar_score=0.000
+2026-11-24 15:32:14.995 | DEBUG    | src.stage5_biophysics.adar_risk:calculate_adar_risk:91 - ADAR risk for chr22:40182273-40182293(+): alu=0.000, shape_ds=ÖLÇÜLMEDİ, combined=0.000
+2026-11-24 15:32:14.995 | DEBUG    | src.stage5_biophysics.adar_estimator:run:73 - adar_estimator: TNRC6B:ENST00000454349:chr22:40182273 → adar_score=0.000
+2026-11-24 15:32:14.995 | DEBUG    | src.stage5_biophysics.adar_risk:calculate_adar_risk:91 - ADAR risk for chr3:41200550-41200570(+): alu=0.000, shape_ds=ÖLÇÜLMEDİ, combined=0.000
+2026-11-24 15:32:14.995 | DEBUG    | src.stage5_biophysics.adar_estimator:run:73 - adar_estimator: CTNNB1:ENST00000349496:chr3:41200550 → adar_score=0.000
+2026-11-24 15:32:14.995 | DEBUG    | src.stage5_biophysics.adar_risk:calculate_adar_risk:91 - ADAR risk for chr3:142571301-142571321(-): alu=0.800, shape_ds=ÖLÇÜLMEDİ, combined=0.800
+2026-11-24 15:32:14.995 | DEBUG    | src.stage5_biophysics.adar_estimator:run:73 - adar_estimator: ATR:ENST00000350721:chr3:142571301 → adar_score=0.800
+2026-11-24 15:32:14.995 | DEBUG    | src.stage5_biophysics.adar_risk:calculate_adar_risk:91 - ADAR risk for chr1:23692780-23692800(+): alu=0.000, shape_ds=ÖLÇÜLMEDİ, combined=0.000
+2026-11-24 15:32:14.995 | DEBUG    | src.stage5_biophysics.adar_estimator:run:73 - adar_estimator: RPL11:ENST00000643754:chr1:23692780 → adar_score=0.000
+2026-11-24 15:32:14.995 | DEBUG    | src.stage5_biophysics.adar_risk:calculate_adar_risk:91 - ADAR risk for chr1:96724335-96724355(+): alu=0.800, shape_ds=ÖLÇÜLMEDİ, combined=0.800
+2026-11-24 15:32:14.995 | DEBUG    | src.stage5_biophysics.adar_estimator:run:73 - adar_estimator: PTBP2:ENST00000674951:chr1:96724335 → adar_score=0.800
+2026-11-24 15:32:14.995 | DEBUG    | src.stage5_biophysics.adar_risk:calculate_adar_risk:91 - ADAR risk for chr1:96724850-96724870(+): alu=0.000, shape_ds=ÖLÇÜLMEDİ, combined=0.000
+2026-11-24 15:32:14.995 | DEBUG    | src.stage5_biophysics.adar_estimator:run:73 - adar_estimator: PTBP2:ENST00000674951:chr1:96724850 → adar_score=0.000
+2026-11-24 15:32:14.995 | DEBUG    | src.stage5_biophysics.adar_risk:calculate_adar_risk:91 - ADAR risk for chr17:43122797-43122817(-): alu=0.800, shape_ds=ÖLÇÜLMEDİ, combined=0.800
+2026-11-24 15:32:14.995 | DEBUG    | src.stage5_biophysics.adar_estimator:run:73 - adar_estimator: BRCA1:ENST00000357654:chr17:43122797 → adar_score=0.800
+2026-11-24 15:32:14.995 | DEBUG    | src.stage5_biophysics.adar_risk:calculate_adar_risk:91 - ADAR risk for chr2:47175374-47175394(-): alu=0.000, shape_ds=ÖLÇÜLMEDİ, combined=0.000
+2026-11-24 15:32:14.995 | DEBUG    | src.stage5_biophysics.adar_estimator:run:73 - adar_estimator: CALM2:ENST00000272298:chr2:47175374 → adar_score=0.000
+2026-11-24 15:32:14.995 | DEBUG    | src.stage5_biophysics.adar_risk:calculate_adar_risk:91 - ADAR risk for chr9:83979914-83979934(-): alu=0.000, shape_ds=ÖLÇÜLMEDİ, combined=0.000
+2026-11-24 15:32:14.995 | DEBUG    | src.stage5_biophysics.adar_estimator:run:73 - adar_estimator: HNRNPK:ENST00000376263:chr9:83979914 → adar_score=0.000
+2026-11-24 15:32:14.996 | DEBUG    | src.stage5_biophysics.adar_risk:calculate_adar_risk:91 - ADAR risk for chr1:35815110-35815130(+): alu=0.800, shape_ds=ÖLÇÜLMEDİ, combined=0.800
+2026-11-24 15:32:14.996 | DEBUG    | src.stage5_biophysics.adar_estimator:run:73 - adar_estimator: AGO4:ENST00000373210:chr1:35815110 → adar_score=0.800
+2026-11-24 15:32:14.996 | DEBUG    | src.stage5_biophysics.adar_risk:calculate_adar_risk:91 - ADAR risk for chr12:68809823-68809843(+): alu=0.000, shape_ds=ÖLÇÜLMEDİ, combined=0.000
+2026-11-24 15:32:14.996 | DEBUG    | src.stage5_biophysics.adar_estimator:run:73 - adar_estimator: MDM2:ENST00000258149:chr12:68809823 → adar_score=0.000
+2026-11-24 15:32:14.996 | DEBUG    | src.stage5_biophysics.adar_risk:calculate_adar_risk:91 - ADAR risk for chr7:55027996-55028016(+): alu=0.000, shape_ds=ÖLÇÜLMEDİ, combined=0.000
+2026-11-24 15:32:14.996 | DEBUG    | src.stage5_biophysics.adar_estimator:run:73 - adar_estimator: EGFR:ENST00000275493:chr7:55027996 → adar_score=0.000
+2026-11-24 15:32:14.996 | DEBUG    | src.stage5_biophysics.adar_risk:calculate_adar_risk:91 - ADAR risk for chr3:179151174-179151194(+): alu=0.000, shape_ds=ÖLÇÜLMEDİ, combined=0.000
+2026-11-24 15:32:14.996 | DEBUG    | src.stage5_biophysics.adar_estimator:run:73 - adar_estimator: PIK3CA:ENST00000263967:chr3:179151174 → adar_score=0.000
+2026-11-24 15:32:14.996 | DEBUG    | src.stage5_biophysics.adar_risk:calculate_adar_risk:91 - ADAR risk for chr6:43777871-43777891(+): alu=0.000, shape_ds=ÖLÇÜLMEDİ, combined=0.000
+2026-11-24 15:32:14.996 | DEBUG    | src.stage5_biophysics.adar_estimator:run:73 - adar_estimator: VEGFA:ENST00000497139:chr6:43777871 → adar_score=0.000
+2026-11-24 15:32:14.996 | DEBUG    | src.stage5_biophysics.adar_risk:calculate_adar_risk:91 - ADAR risk for chr9:83979032-83979052(-): alu=0.000, shape_ds=ÖLÇÜLMEDİ, combined=0.000
+2026-11-24 15:32:14.996 | DEBUG    | src.stage5_biophysics.adar_estimator:run:73 - adar_estimator: HNRNPK:ENST00000376263:chr9:83979032 → adar_score=0.000
+2026-11-24 15:32:14.996 | DEBUG    | src.stage5_biophysics.adar_risk:calculate_adar_risk:91 - ADAR risk for chr22:38504908-38504928(-): alu=0.800, shape_ds=ÖLÇÜLMEDİ, combined=0.800
+2026-11-24 15:32:14.996 | DEBUG    | src.stage5_biophysics.adar_estimator:run:73 - adar_estimator: DDX17:ENST00000403230:chr22:38504908 → adar_score=0.800
+2026-11-24 15:32:14.996 | DEBUG    | src.stage5_biophysics.adar_risk:calculate_adar_risk:91 - ADAR risk for chr22:38501867-38501887(-): alu=0.000, shape_ds=ÖLÇÜLMEDİ, combined=0.000
+2026-11-24 15:32:14.996 | DEBUG    | src.stage5_biophysics.adar_estimator:run:73 - adar_estimator: DDX17:ENST00000403230:chr22:38501867 → adar_score=0.000
+2026-11-24 15:32:14.996 | DEBUG    | src.stage5_biophysics.adar_risk:calculate_adar_risk:91 - ADAR risk for chr17:64505712-64505732(-): alu=0.000, shape_ds=ÖLÇÜLMEDİ, combined=0.000
+2026-11-24 15:32:14.996 | DEBUG    | src.stage5_biophysics.adar_estimator:run:73 - adar_estimator: DDX5:ENST00000225792:chr17:64505712 → adar_score=0.000
+2026-11-24 15:32:14.996 | DEBUG    | src.stage5_biophysics.adar_risk:calculate_adar_risk:91 - ADAR risk for chr12:4276729-4276749(+): alu=0.000, shape_ds=ÖLÇÜLMEDİ, combined=0.000
+2026-11-24 15:32:14.996 | DEBUG    | src.stage5_biophysics.adar_estimator:run:73 - adar_estimator: CCND2:ENST00000261254:chr12:4276729 → adar_score=0.000
+2026-11-24 15:32:14.996 | DEBUG    | src.stage5_biophysics.adar_risk:calculate_adar_risk:91 - ADAR risk for chr10:87869740-87869760(+): alu=0.000, shape_ds=ÖLÇÜLMEDİ, combined=0.000
+2026-11-24 15:32:14.996 | DEBUG    | src.stage5_biophysics.adar_estimator:run:73 - adar_estimator: PTEN:ENST00000371953:chr10:87869740 → adar_score=0.000
+2026-11-24 15:32:14.996 | DEBUG    | src.stage5_biophysics.adar_risk:calculate_adar_risk:91 - ADAR risk for chr3:142572942-142572962(-): alu=0.000, shape_ds=ÖLÇÜLMEDİ, combined=0.000
+2026-11-24 15:32:14.996 | DEBUG    | src.stage5_biophysics.adar_estimator:run:73 - adar_estimator: ATR:ENST00000350721:chr3:142572942 → adar_score=0.000
+2026-11-24 15:32:14.997 | DEBUG    | src.stage5_biophysics.adar_risk:calculate_adar_risk:91 - ADAR risk for chr4:184648366-184648386(-): alu=0.000, shape_ds=ÖLÇÜLMEDİ, combined=0.000
+2026-11-24 15:32:14.997 | DEBUG    | src.stage5_biophysics.adar_estimator:run:73 - adar_estimator: CASP3:ENST00000308394:chr4:184648366 → adar_score=0.000
+2026-11-24 15:32:14.997 | DEBUG    | src.stage5_biophysics.adar_risk:calculate_adar_risk:91 - ADAR risk for chr7:148700526-148700546(+): alu=0.000, shape_ds=ÖLÇÜLMEDİ, combined=0.000
+2026-11-24 15:32:14.997 | DEBUG    | src.stage5_biophysics.adar_estimator:run:73 - adar_estimator: CUL1:ENST00000325222:chr7:148700526 → adar_score=0.000
+2026-11-24 15:32:14.997 | DEBUG    | src.stage5_biophysics.adar_risk:calculate_adar_risk:91 - ADAR risk for chr19:40280283-40280303(-): alu=0.000, shape_ds=ÖLÇÜLMEDİ, combined=0.000
+2026-11-24 15:32:14.997 | DEBUG    | src.stage5_biophysics.adar_estimator:run:73 - adar_estimator: AKT2:ENST00000392038:chr19:40280283 → adar_score=0.000
+2026-11-24 15:32:14.997 | DEBUG    | src.stage5_biophysics.adar_risk:calculate_adar_risk:91 - ADAR risk for chr9:132940598-132940618(-): alu=0.000, shape_ds=ÖLÇÜLMEDİ, combined=0.000
+2026-11-24 15:32:14.997 | DEBUG    | src.stage5_biophysics.adar_estimator:run:73 - adar_estimator: TSC1:ENST00000298552:chr9:132940598 → adar_score=0.000
+2026-11-24 15:32:14.997 | DEBUG    | src.stage5_biophysics.adar_risk:calculate_adar_risk:91 - ADAR risk for chr11:102115206-102115226(+): alu=0.000, shape_ds=ÖLÇÜLMEDİ, combined=0.000
+2026-11-24 15:32:14.997 | DEBUG    | src.stage5_biophysics.adar_estimator:run:73 - adar_estimator: YAP1:ENST00000282441:chr11:102115206 → adar_score=0.000
+2026-11-24 15:32:14.997 | DEBUG    | src.stage5_biophysics.adar_risk:calculate_adar_risk:91 - ADAR risk for chr12:68159107-68159127(-): alu=0.000, shape_ds=ÖLÇÜLMEDİ, combined=0.000
+2026-11-24 15:32:14.997 | DEBUG    | src.stage5_biophysics.adar_estimator:run:73 - adar_estimator: IFNG:ENST00000229135:chr12:68159107 → adar_score=0.000
+2026-11-24 15:32:14.997 | DEBUG    | src.stage5_biophysics.adar_risk:calculate_adar_risk:91 - ADAR risk for chr1:26414640-26414660(+): alu=0.000, shape_ds=ÖLÇÜLMEDİ, combined=0.000
+2026-11-24 15:32:14.997 | DEBUG    | src.stage5_biophysics.adar_estimator:run:73 - adar_estimator: LIN28A:ENST00000326279:chr1:26414640 → adar_score=0.000
+2026-11-24 15:32:14.997 | DEBUG    | src.stage5_biophysics.adar_risk:calculate_adar_risk:91 - ADAR risk for chr14:95147794-95147814(-): alu=0.000, shape_ds=ÖLÇÜLMEDİ, combined=0.000
+2026-11-24 15:32:14.997 | DEBUG    | src.stage5_biophysics.adar_estimator:run:73 - adar_estimator: DICER1:ENST00000343455:chr14:95147794 → adar_score=0.000
+2026-11-24 15:32:14.997 | DEBUG    | src.stage5_biophysics.adar_risk:calculate_adar_risk:91 - ADAR risk for chr22:40180363-40180383(+): alu=0.000, shape_ds=ÖLÇÜLMEDİ, combined=0.000
+2026-11-24 15:32:14.997 | DEBUG    | src.stage5_biophysics.adar_estimator:run:73 - adar_estimator: TNRC6B:ENST00000454349:chr22:40180363 → adar_score=0.000
+2026-11-24 15:32:14.997 | DEBUG    | src.stage5_biophysics.adar_risk:calculate_adar_risk:91 - ADAR risk for chr12:4276799-4276819(+): alu=0.000, shape_ds=ÖLÇÜLMEDİ, combined=0.000
+2026-11-24 15:32:14.997 | DEBUG    | src.stage5_biophysics.adar_estimator:run:73 - adar_estimator: CCND2:ENST00000261254:chr12:4276799 → adar_score=0.000
+2026-11-24 15:32:14.997 | DEBUG    | src.stage5_biophysics.adar_risk:calculate_adar_risk:91 - ADAR risk for chr1:11259515-11259535(-): alu=0.000, shape_ds=ÖLÇÜLMEDİ, combined=0.000
+2026-11-24 15:32:14.997 | DEBUG    | src.stage5_biophysics.adar_estimator:run:73 - adar_estimator: MTOR:ENST00000361445:chr1:11259515 → adar_score=0.000
+2026-11-24 15:32:14.997 | DEBUG    | src.stage5_biophysics.adar_risk:calculate_adar_risk:91 - ADAR risk for chr11:75401416-75401436(+): alu=0.800, shape_ds=ÖLÇÜLMEDİ, combined=0.800
+2026-11-24 15:32:14.997 | DEBUG    | src.stage5_biophysics.adar_estimator:run:73 - adar_estimator: RPS3:ENST00000531188:chr11:75401416 → adar_score=0.800
+2026-11-24 15:32:14.997 | DEBUG    | src.stage5_biophysics.adar_risk:calculate_adar_risk:91 - ADAR risk for chr7:26197989-26198009(-): alu=0.000, shape_ds=ÖLÇÜLMEDİ, combined=0.000
+2026-11-24 15:32:14.997 | DEBUG    | src.stage5_biophysics.adar_estimator:run:73 - adar_estimator: HNRNPA2B1:ENST00000618183:chr7:26197989 → adar_score=0.000
+2026-11-24 15:32:14.998 | DEBUG    | src.stage5_biophysics.adar_risk:calculate_adar_risk:91 - ADAR risk for chr9:132937751-132937771(-): alu=0.800, shape_ds=ÖLÇÜLMEDİ, combined=0.800
+2026-11-24 15:32:14.998 | DEBUG    | src.stage5_biophysics.adar_estimator:run:73 - adar_estimator: TSC1:ENST00000298552:chr9:132937751 → adar_score=0.800
+2026-11-24 15:32:14.998 | DEBUG    | src.stage5_biophysics.adar_risk:calculate_adar_risk:91 - ADAR risk for chr18:47898662-47898682(-): alu=0.000, shape_ds=ÖLÇÜLMEDİ, combined=0.000
+2026-11-24 15:32:14.998 | DEBUG    | src.stage5_biophysics.adar_estimator:run:73 - adar_estimator: SMAD2:ENST00000262160:chr18:47898662 → adar_score=0.000
+2026-11-24 15:32:14.998 | DEBUG    | src.stage5_biophysics.adar_risk:calculate_adar_risk:91 - ADAR risk for chr18:47916332-47916352(-): alu=0.000, shape_ds=ÖLÇÜLMEDİ, combined=0.000
+2026-11-24 15:32:14.998 | DEBUG    | src.stage5_biophysics.adar_estimator:run:73 - adar_estimator: SMAD2:ENST00000262160:chr18:47916332 → adar_score=0.000
+2026-11-24 15:32:14.998 | INFO     | src.stage5_biophysics.adar_estimator:run:82 - adar_estimator: 41 sites → /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/results/VEGFA_HeLa/stage5_adar.json

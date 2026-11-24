@@ -1,0 +1,53 @@
+2026-11-24 15:32:09.413 | INFO     | src.stage5_biophysics.shape_profile:_load_icshape_data:210 - icSHAPE: loaded 64592 transcripts from GSM4333258_HeLa_icSHAPE.txt.gz (cell_line=HeLa)
+2026-11-24 15:32:09.413 | DEBUG    | src.stage5_biophysics.shape_profile:get_shape_accessibility:324 - icSHAPE: transcript ENST00000343455 not in HeLa table — trying legacy fallback
+2026-11-24 15:32:09.413 | DEBUG    | src.stage5_biophysics.shape_profile:_load_shape_data:85 - No .shape/.map files found in data/4_Biyofizik_Yapısal/SHAPE_Seq/HeLa
+2026-11-24 15:32:09.413 | DEBUG    | src.stage5_biophysics.shape_profile:get_shape_accessibility:332 - SHAPE data unavailable for HeLa in chr14:95152261-95152281(-); reactivity is unknown
+2026-11-24 15:32:09.413 | DEBUG    | src.stage5_biophysics.shape_profile:get_shape_accessibility:324 - icSHAPE: transcript ENST00000454349 not in HeLa table — trying legacy fallback
+2026-11-24 15:32:09.413 | DEBUG    | src.stage5_biophysics.shape_profile:_load_shape_data:85 - No .shape/.map files found in data/4_Biyofizik_Yapısal/SHAPE_Seq/HeLa
+2026-11-24 15:32:09.413 | DEBUG    | src.stage5_biophysics.shape_profile:get_shape_accessibility:332 - SHAPE data unavailable for HeLa in chr22:40182273-40182293(+); reactivity is unknown
+2026-11-24 15:32:09.413 | DEBUG    | src.stage5_biophysics.shape_profile:get_shape_accessibility:324 - icSHAPE: transcript ENST00000350721 not in HeLa table — trying legacy fallback
+2026-11-24 15:32:09.413 | DEBUG    | src.stage5_biophysics.shape_profile:_load_shape_data:85 - No .shape/.map files found in data/4_Biyofizik_Yapısal/SHAPE_Seq/HeLa
+2026-11-24 15:32:09.413 | DEBUG    | src.stage5_biophysics.shape_profile:get_shape_accessibility:332 - SHAPE data unavailable for HeLa in chr3:142571301-142571321(-); reactivity is unknown
+2026-11-24 15:32:09.413 | DEBUG    | src.stage5_biophysics.shape_profile:get_shape_accessibility:324 - icSHAPE: transcript ENST00000643754 not in HeLa table — trying legacy fallback
+2026-11-24 15:32:09.414 | DEBUG    | src.stage5_biophysics.shape_profile:_load_shape_data:85 - No .shape/.map files found in data/4_Biyofizik_Yapısal/SHAPE_Seq/HeLa
+2026-11-24 15:32:09.414 | DEBUG    | src.stage5_biophysics.shape_profile:get_shape_accessibility:332 - SHAPE data unavailable for HeLa in chr1:23692780-23692800(+); reactivity is unknown
+2026-11-24 15:32:09.414 | DEBUG    | src.stage5_biophysics.shape_profile:get_shape_accessibility:324 - icSHAPE: transcript ENST00000674951 not in HeLa table — trying legacy fallback
+2026-11-24 15:32:09.414 | DEBUG    | src.stage5_biophysics.shape_profile:_load_shape_data:85 - No .shape/.map files found in data/4_Biyofizik_Yapısal/SHAPE_Seq/HeLa
+2026-11-24 15:32:09.414 | DEBUG    | src.stage5_biophysics.shape_profile:get_shape_accessibility:332 - SHAPE data unavailable for HeLa in chr1:96724335-96724355(+); reactivity is unknown
+2026-11-24 15:32:09.414 | DEBUG    | src.stage5_biophysics.shape_profile:get_shape_accessibility:324 - icSHAPE: transcript ENST00000674951 not in HeLa table — trying legacy fallback
+2026-11-24 15:32:09.414 | DEBUG    | src.stage5_biophysics.shape_profile:_load_shape_data:85 - No .shape/.map files found in data/4_Biyofizik_Yapısal/SHAPE_Seq/HeLa
+2026-11-24 15:32:09.414 | DEBUG    | src.stage5_biophysics.shape_profile:get_shape_accessibility:332 - SHAPE data unavailable for HeLa in chr1:96724850-96724870(+); reactivity is unknown
+2026-11-24 15:32:09.414 | DEBUG    | src.stage5_biophysics.shape_profile:get_shape_accessibility:324 - icSHAPE: transcript ENST00000373210 not in HeLa table — trying legacy fallback
+2026-11-24 15:32:09.414 | DEBUG    | src.stage5_biophysics.shape_profile:_load_shape_data:85 - No .shape/.map files found in data/4_Biyofizik_Yapısal/SHAPE_Seq/HeLa
+2026-11-24 15:32:09.414 | DEBUG    | src.stage5_biophysics.shape_profile:get_shape_accessibility:332 - SHAPE data unavailable for HeLa in chr1:35815110-35815130(+); reactivity is unknown
+2026-11-24 15:32:09.414 | DEBUG    | src.stage5_biophysics.shape_profile:get_shape_accessibility:324 - icSHAPE: transcript ENST00000263967 not in HeLa table — trying legacy fallback
+2026-11-24 15:32:09.414 | DEBUG    | src.stage5_biophysics.shape_profile:_load_shape_data:85 - No .shape/.map files found in data/4_Biyofizik_Yapısal/SHAPE_Seq/HeLa
+2026-11-24 15:32:09.414 | DEBUG    | src.stage5_biophysics.shape_profile:get_shape_accessibility:332 - SHAPE data unavailable for HeLa in chr3:179151174-179151194(+); reactivity is unknown
+2026-11-24 15:32:09.414 | DEBUG    | src.stage5_biophysics.shape_profile:get_shape_accessibility:324 - icSHAPE: transcript ENST00000261254 not in HeLa table — trying legacy fallback
+2026-11-24 15:32:09.414 | DEBUG    | src.stage5_biophysics.shape_profile:_load_shape_data:85 - No .shape/.map files found in data/4_Biyofizik_Yapısal/SHAPE_Seq/HeLa
+2026-11-24 15:32:09.414 | DEBUG    | src.stage5_biophysics.shape_profile:get_shape_accessibility:332 - SHAPE data unavailable for HeLa in chr12:4276729-4276749(+); reactivity is unknown
+2026-11-24 15:32:09.414 | DEBUG    | src.stage5_biophysics.shape_profile:get_shape_accessibility:324 - icSHAPE: transcript ENST00000350721 not in HeLa table — trying legacy fallback
+2026-11-24 15:32:09.414 | DEBUG    | src.stage5_biophysics.shape_profile:_load_shape_data:85 - No .shape/.map files found in data/4_Biyofizik_Yapısal/SHAPE_Seq/HeLa
+2026-11-24 15:32:09.414 | DEBUG    | src.stage5_biophysics.shape_profile:get_shape_accessibility:332 - SHAPE data unavailable for HeLa in chr3:142572942-142572962(-); reactivity is unknown
+2026-11-24 15:32:09.415 | DEBUG    | src.stage5_biophysics.shape_profile:get_shape_accessibility:324 - icSHAPE: transcript ENST00000298552 not in HeLa table — trying legacy fallback
+2026-11-24 15:32:09.415 | DEBUG    | src.stage5_biophysics.shape_profile:_load_shape_data:85 - No .shape/.map files found in data/4_Biyofizik_Yapısal/SHAPE_Seq/HeLa
+2026-11-24 15:32:09.415 | DEBUG    | src.stage5_biophysics.shape_profile:get_shape_accessibility:332 - SHAPE data unavailable for HeLa in chr9:132940598-132940618(-); reactivity is unknown
+2026-11-24 15:32:09.415 | DEBUG    | src.stage5_biophysics.shape_profile:get_shape_accessibility:324 - icSHAPE: transcript ENST00000229135 not in HeLa table — trying legacy fallback
+2026-11-24 15:32:09.415 | DEBUG    | src.stage5_biophysics.shape_profile:_load_shape_data:85 - No .shape/.map files found in data/4_Biyofizik_Yapısal/SHAPE_Seq/HeLa
+2026-11-24 15:32:09.415 | DEBUG    | src.stage5_biophysics.shape_profile:get_shape_accessibility:332 - SHAPE data unavailable for HeLa in chr12:68159107-68159127(-); reactivity is unknown
+2026-11-24 15:32:09.415 | DEBUG    | src.stage5_biophysics.shape_profile:get_shape_accessibility:324 - icSHAPE: transcript ENST00000326279 not in HeLa table — trying legacy fallback
+2026-11-24 15:32:09.415 | DEBUG    | src.stage5_biophysics.shape_profile:_load_shape_data:85 - No .shape/.map files found in data/4_Biyofizik_Yapısal/SHAPE_Seq/HeLa
+2026-11-24 15:32:09.415 | DEBUG    | src.stage5_biophysics.shape_profile:get_shape_accessibility:332 - SHAPE data unavailable for HeLa in chr1:26414640-26414660(+); reactivity is unknown
+2026-11-24 15:32:09.415 | DEBUG    | src.stage5_biophysics.shape_profile:get_shape_accessibility:324 - icSHAPE: transcript ENST00000343455 not in HeLa table — trying legacy fallback
+2026-11-24 15:32:09.415 | DEBUG    | src.stage5_biophysics.shape_profile:_load_shape_data:85 - No .shape/.map files found in data/4_Biyofizik_Yapısal/SHAPE_Seq/HeLa
+2026-11-24 15:32:09.415 | DEBUG    | src.stage5_biophysics.shape_profile:get_shape_accessibility:332 - SHAPE data unavailable for HeLa in chr14:95147794-95147814(-); reactivity is unknown
+2026-11-24 15:32:09.415 | DEBUG    | src.stage5_biophysics.shape_profile:get_shape_accessibility:324 - icSHAPE: transcript ENST00000454349 not in HeLa table — trying legacy fallback
+2026-11-24 15:32:09.415 | DEBUG    | src.stage5_biophysics.shape_profile:_load_shape_data:85 - No .shape/.map files found in data/4_Biyofizik_Yapısal/SHAPE_Seq/HeLa
+2026-11-24 15:32:09.415 | DEBUG    | src.stage5_biophysics.shape_profile:get_shape_accessibility:332 - SHAPE data unavailable for HeLa in chr22:40180363-40180383(+); reactivity is unknown
+2026-11-24 15:32:09.415 | DEBUG    | src.stage5_biophysics.shape_profile:get_shape_accessibility:324 - icSHAPE: transcript ENST00000261254 not in HeLa table — trying legacy fallback
+2026-11-24 15:32:09.415 | DEBUG    | src.stage5_biophysics.shape_profile:_load_shape_data:85 - No .shape/.map files found in data/4_Biyofizik_Yapısal/SHAPE_Seq/HeLa
+2026-11-24 15:32:09.415 | DEBUG    | src.stage5_biophysics.shape_profile:get_shape_accessibility:332 - SHAPE data unavailable for HeLa in chr12:4276799-4276819(+); reactivity is unknown
+2026-11-24 15:32:09.415 | DEBUG    | src.stage5_biophysics.shape_profile:get_shape_accessibility:324 - icSHAPE: transcript ENST00000298552 not in HeLa table — trying legacy fallback
+2026-11-24 15:32:09.415 | DEBUG    | src.stage5_biophysics.shape_profile:_load_shape_data:85 - No .shape/.map files found in data/4_Biyofizik_Yapısal/SHAPE_Seq/HeLa
+2026-11-24 15:32:09.415 | DEBUG    | src.stage5_biophysics.shape_profile:get_shape_accessibility:332 - SHAPE data unavailable for HeLa in chr9:132937751-132937771(-); reactivity is unknown
+2026-11-24 15:32:09.416 | INFO     | src.stage5_biophysics.shape_reader:run:87 - shape_reader: 41 regions in HeLa (24 consulted icSHAPE, 24 with measured signal) → /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/results/VEGFA_HeLa/stage5_shape.json

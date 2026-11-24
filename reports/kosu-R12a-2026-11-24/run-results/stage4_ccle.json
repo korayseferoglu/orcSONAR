@@ -1,0 +1,208 @@
+{
+  "ccle_results": {
+    "AGO4": {
+      "gene": "AGO4",
+      "cell_line": "HeLa",
+      "expression_value": 2.9858775,
+      "is_expressed": true,
+      "expression_percentile": 0.5683536940081443
+    },
+    "AKT2": {
+      "gene": "AKT2",
+      "cell_line": "HeLa",
+      "expression_value": 6.10851,
+      "is_expressed": true,
+      "expression_percentile": 0.4851657940663176
+    },
+    "ATR": {
+      "gene": "ATR",
+      "cell_line": "HeLa",
+      "expression_value": 4.735219,
+      "is_expressed": true,
+      "expression_percentile": 0.9296102385107621
+    },
+    "BRCA1": {
+      "gene": "BRCA1",
+      "cell_line": "HeLa",
+      "expression_value": 5.4544063,
+      "is_expressed": true,
+      "expression_percentile": 0.9278650378126818
+    },
+    "CALM2": {
+      "gene": "CALM2",
+      "cell_line": "HeLa",
+      "expression_value": 10.269536,
+      "is_expressed": true,
+      "expression_percentile": 0.7033158813263525
+    },
+    "CASP3": {
+      "gene": "CASP3",
+      "cell_line": "HeLa",
+      "expression_value": 5.383041,
+      "is_expressed": true,
+      "expression_percentile": 0.7696335078534031
+    },
+    "CCND2": {
+      "gene": "CCND2",
+      "cell_line": "HeLa",
+      "expression_value": 0.0,
+      "is_expressed": false,
+      "expression_percentile": 0.0
+    },
+    "CTNNB1": {
+      "gene": "CTNNB1",
+      "cell_line": "HeLa",
+      "expression_value": 8.002162,
+      "is_expressed": true,
+      "expression_percentile": 0.8248981966259453
+    },
+    "CUL1": {
+      "gene": "CUL1",
+      "cell_line": "HeLa",
+      "expression_value": 5.745423,
+      "is_expressed": true,
+      "expression_percentile": 0.8266433973240256
+    },
+    "DDX17": {
+      "gene": "DDX17",
+      "cell_line": "HeLa",
+      "expression_value": 7.751986,
+      "is_expressed": true,
+      "expression_percentile": 0.8656195462478184
+    },
+    "DDX5": {
+      "gene": "DDX5",
+      "cell_line": "HeLa",
+      "expression_value": 10.335859,
+      "is_expressed": true,
+      "expression_percentile": 0.9918557300756253
+    },
+    "DICER1": {
+      "gene": "DICER1",
+      "cell_line": "HeLa",
+      "expression_value": 5.0479355,
+      "is_expressed": true,
+      "expression_percentile": 0.9301919720767888
+    },
+    "EGFR": {
+      "gene": "EGFR",
+      "cell_line": "HeLa",
+      "expression_value": 6.237099,
+      "is_expressed": true,
+      "expression_percentile": 0.910413030831879
+    },
+    "HNRNPA2B1": {
+      "gene": "HNRNPA2B1",
+      "cell_line": "HeLa",
+      "expression_value": 9.78048,
+      "is_expressed": true,
+      "expression_percentile": 0.6655031995346131
+    },
+    "HNRNPK": {
+      "gene": "HNRNPK",
+      "cell_line": "HeLa",
+      "expression_value": 9.762885,
+      "is_expressed": true,
+      "expression_percentile": 0.9331006399069226
+    },
+    "IFNG": {
+      "gene": "IFNG",
+      "cell_line": "HeLa",
+      "expression_value": 0.0,
+      "is_expressed": false,
+      "expression_percentile": 0.0
+    },
+    "LIN28A": {
+      "gene": "LIN28A",
+      "cell_line": "HeLa",
+      "expression_value": 0.0,
+      "is_expressed": false,
+      "expression_percentile": 0.0
+    },
+    "MDM2": {
+      "gene": "MDM2",
+      "cell_line": "HeLa",
+      "expression_value": 5.334618,
+      "is_expressed": true,
+      "expression_percentile": 0.5898778359511344
+    },
+    "MTOR": {
+      "gene": "MTOR",
+      "cell_line": "HeLa",
+      "expression_value": 4.126923,
+      "is_expressed": true,
+      "expression_percentile": 0.3158813263525305
+    },
+    "PIK3CA": {
+      "gene": "PIK3CA",
+      "cell_line": "HeLa",
+      "expression_value": 5.3713984,
+      "is_expressed": true,
+      "expression_percentile": 0.9941826643397323
+    },
+    "PTBP2": {
+      "gene": "PTBP2",
+      "cell_line": "HeLa",
+      "expression_value": 4.0335727,
+      "is_expressed": true,
+      "expression_percentile": 0.7126236183827807
+    },
+    "PTEN": {
+      "gene": "PTEN",
+      "cell_line": "HeLa",
+      "expression_value": 5.5959063,
+      "is_expressed": true,
+      "expression_percentile": 0.8097731239092496
+    },
+    "RPL11": {
+      "gene": "RPL11",
+      "cell_line": "HeLa",
+      "expression_value": 9.817547,
+      "is_expressed": true,
+      "expression_percentile": 0.20767888307155322
+    },
+    "RPS3": {
+      "gene": "RPS3",
+      "cell_line": "HeLa",
+      "expression_value": 11.058905,
+      "is_expressed": true,
+      "expression_percentile": 0.2588714368819081
+    },
+    "SMAD2": {
+      "gene": "SMAD2",
+      "cell_line": "HeLa",
+      "expression_value": 5.62667,
+      "is_expressed": true,
+      "expression_percentile": 0.39267015706806285
+    },
+    "TNRC6B": {
+      "gene": "TNRC6B",
+      "cell_line": "HeLa",
+      "expression_value": 3.6356964,
+      "is_expressed": true,
+      "expression_percentile": 0.9813845258871436
+    },
+    "TSC1": {
+      "gene": "TSC1",
+      "cell_line": "HeLa",
+      "expression_value": 3.8737345,
+      "is_expressed": true,
+      "expression_percentile": 0.4758580570098895
+    },
+    "VEGFA": {
+      "gene": "VEGFA",
+      "cell_line": "HeLa",
+      "expression_value": 6.230987,
+      "is_expressed": true,
+      "expression_percentile": 0.6346713205351949
+    },
+    "YAP1": {
+      "gene": "YAP1",
+      "cell_line": "HeLa",
+      "expression_value": 5.486711,
+      "is_expressed": true,
+      "expression_percentile": 0.46596858638743455
+    }
+  },
+  "cell_line": "HeLa"
+}

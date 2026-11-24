@@ -1,0 +1,2989 @@
+{
+  "g4_results": {
+    "MTOR:ENST00000361445:chr1:11255438": {
+      "motifs": [
+        {
+          "start": 21,
+          "end": 48,
+          "sequence": "GGGGAAGGCGGGCGGUGGGGCAGGGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            4,
+            3,
+            4,
+            5
+          ],
+          "loop_lengths": [
+            5,
+            4,
+            2
+          ],
+          "stability_score": 0.6111
+        },
+        {
+          "start": 22,
+          "end": 48,
+          "sequence": "GGGAAGGCGGGCGGUGGGGCAGGGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            3,
+            3,
+            4,
+            5
+          ],
+          "loop_lengths": [
+            5,
+            4,
+            2
+          ],
+          "stability_score": 0.5903
+        }
+      ],
+      "g4_count": 2,
+      "g4_density": 0.2293,
+      "risk_score": 0.2403
+    },
+    "VEGFA:ENST00000480614:chr6:43777011": {
+      "motifs": [
+        {
+          "start": 38,
+          "end": 71,
+          "sequence": "GGGGUGCAUUUGGGGUGUGUGGGAAGGAGAGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            4,
+            4,
+            3,
+            3
+          ],
+          "loop_lengths": [
+            7,
+            5,
+            7
+          ],
+          "stability_score": 0.3472
+        },
+        {
+          "start": 39,
+          "end": 71,
+          "sequence": "GGGUGCAUUUGGGGUGUGUGGGAAGGAGAGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            3,
+            4,
+            3,
+            3
+          ],
+          "loop_lengths": [
+            7,
+            5,
+            7
+          ],
+          "stability_score": 0.3264
+        },
+        {
+          "start": 1090,
+          "end": 1114,
+          "sequence": "GGGAGGAGGGGCUGGGUGGCUGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            3,
+            4,
+            3,
+            3
+          ],
+          "loop_lengths": [
+            4,
+            2,
+            5
+          ],
+          "stability_score": 0.5486
+        },
+        {
+          "start": 2836,
+          "end": 2861,
+          "sequence": "GGGGGGUGGGGGUUGGGAGCUGGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            6,
+            5,
+            3,
+            4
+          ],
+          "loop_lengths": [
+            1,
+            2,
+            4
+          ],
+          "stability_score": 0.7639
+        },
+        {
+          "start": 2837,
+          "end": 2861,
+          "sequence": "GGGGGUGGGGGUUGGGAGCUGGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            5,
+            5,
+            3,
+            4
+          ],
+          "loop_lengths": [
+            1,
+            2,
+            4
+          ],
+          "stability_score": 0.7431
+        },
+        {
+          "start": 2838,
+          "end": 2861,
+          "sequence": "GGGGUGGGGGUUGGGAGCUGGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            4,
+            5,
+            3,
+            4
+          ],
+          "loop_lengths": [
+            1,
+            2,
+            4
+          ],
+          "stability_score": 0.7222
+        },
+        {
+          "start": 2839,
+          "end": 2861,
+          "sequence": "GGGUGGGGGUUGGGAGCUGGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            3,
+            5,
+            3,
+            4
+          ],
+          "loop_lengths": [
+            1,
+            2,
+            4
+          ],
+          "stability_score": 0.7014
+        },
+        {
+          "start": 11725,
+          "end": 11749,
+          "sequence": "GGGGAGCCAGGGGAUCGGGGAGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            4,
+            4,
+            4,
+            3
+          ],
+          "loop_lengths": [
+            5,
+            3,
+            1
+          ],
+          "stability_score": 0.6458
+        },
+        {
+          "start": 11725,
+          "end": 11748,
+          "sequence": "GGGAGCCAGGGGAUCGGGGAGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            3,
+            4,
+            4,
+            3
+          ],
+          "loop_lengths": [
+            5,
+            3,
+            1
+          ],
+          "stability_score": 0.625
+        },
+        {
+          "start": 6558,
+          "end": 6582,
+          "sequence": "GGGGAGGGAGGCAGGGUUACAGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            4,
+            3,
+            3,
+            3
+          ],
+          "loop_lengths": [
+            1,
+            5,
+            5
+          ],
+          "stability_score": 0.5486
+        },
+        {
+          "start": 6558,
+          "end": 6581,
+          "sequence": "GGGAGGGAGGCAGGGUUACAGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "loop_lengths": [
+            1,
+            5,
+            5
+          ],
+          "stability_score": 0.5278
+        },
+        {
+          "start": 1786,
+          "end": 1808,
+          "sequence": "GGGGUUGGGCAGGGGGGCGGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            4,
+            3,
+            6,
+            4
+          ],
+          "loop_lengths": [
+            2,
+            2,
+            1
+          ],
+          "stability_score": 0.7986
+        },
+        {
+          "start": 1786,
+          "end": 1807,
+          "sequence": "GGGUUGGGCAGGGGGGCGGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            3,
+            3,
+            6,
+            4
+          ],
+          "loop_lengths": [
+            2,
+            2,
+            1
+          ],
+          "stability_score": 0.7778
+        },
+        {
+          "start": 1778,
+          "end": 1802,
+          "sequence": "GGGCAGGGGGGCGGGGCGCCUGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            3,
+            6,
+            4,
+            3
+          ],
+          "loop_lengths": [
+            2,
+            1,
+            5
+          ],
+          "stability_score": 0.6944
+        },
+        {
+          "start": 1122,
+          "end": 1143,
+          "sequence": "GGGCAUGGGCAGGGGCUGGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            3,
+            3,
+            4,
+            4
+          ],
+          "loop_lengths": [
+            3,
+            2,
+            2
+          ],
+          "stability_score": 0.6806
+        }
+      ],
+      "g4_count": 15,
+      "g4_density": 1.2328,
+      "risk_score": 1.0
+    },
+    "HNRNPA2B1:ENST00000618183:chr7:26198044": {
+      "motifs": [],
+      "g4_count": 0,
+      "g4_density": 0.0,
+      "risk_score": 0.0
+    },
+    "DICER1:ENST00000343455:chr14:95152261": {
+      "motifs": [],
+      "g4_count": 0,
+      "g4_density": 0.0,
+      "risk_score": 0.0
+    },
+    "TNRC6B:ENST00000454349:chr22:40182273": {
+      "motifs": [
+        {
+          "start": 14219,
+          "end": 14248,
+          "sequence": "GGGGGUGGGGAGGAGAGGGCAGAAAGGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            5,
+            4,
+            3,
+            4
+          ],
+          "loop_lengths": [
+            1,
+            6,
+            6
+          ],
+          "stability_score": 0.5556
+        },
+        {
+          "start": 14220,
+          "end": 14248,
+          "sequence": "GGGGUGGGGAGGAGAGGGCAGAAAGGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            4,
+            4,
+            3,
+            4
+          ],
+          "loop_lengths": [
+            1,
+            6,
+            6
+          ],
+          "stability_score": 0.5347
+        },
+        {
+          "start": 14221,
+          "end": 14248,
+          "sequence": "GGGUGGGGAGGAGAGGGCAGAAAGGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            3,
+            4,
+            3,
+            4
+          ],
+          "loop_lengths": [
+            1,
+            6,
+            6
+          ],
+          "stability_score": 0.5139
+        },
+        {
+          "start": 14225,
+          "end": 14253,
+          "sequence": "GGGGAGGAGAGGGCAGAAAGGGGAAGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            4,
+            3,
+            4,
+            3
+          ],
+          "loop_lengths": [
+            6,
+            6,
+            2
+          ],
+          "stability_score": 0.4861
+        },
+        {
+          "start": 14226,
+          "end": 14253,
+          "sequence": "GGGAGGAGAGGGCAGAAAGGGGAAGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            3,
+            3,
+            4,
+            3
+          ],
+          "loop_lengths": [
+            6,
+            6,
+            2
+          ],
+          "stability_score": 0.4653
+        },
+        {
+          "start": 16958,
+          "end": 16983,
+          "sequence": "GGGAUGAGGUGGGUGGCGGGGAGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            3,
+            3,
+            4,
+            3
+          ],
+          "loop_lengths": [
+            7,
+            4,
+            1
+          ],
+          "stability_score": 0.5208
+        },
+        {
+          "start": 6424,
+          "end": 6445,
+          "sequence": "GGGUGGGGCAGGGGAGAAGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            3,
+            4,
+            4,
+            3
+          ],
+          "loop_lengths": [
+            1,
+            2,
+            4
+          ],
+          "stability_score": 0.6806
+        },
+        {
+          "start": 3670,
+          "end": 3697,
+          "sequence": "GGGAGAAGGGGAGAAGGGAGAGCAGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            3,
+            4,
+            3,
+            3
+          ],
+          "loop_lengths": [
+            4,
+            4,
+            6
+          ],
+          "stability_score": 0.4653
+        }
+      ],
+      "g4_count": 8,
+      "g4_density": 0.4376,
+      "risk_score": 0.8445
+    },
+    "CTNNB1:ENST00000349496:chr3:41200550": {
+      "motifs": [],
+      "g4_count": 0,
+      "g4_density": 0.0,
+      "risk_score": 0.0
+    },
+    "ATR:ENST00000350721:chr3:142571301": {
+      "motifs": [],
+      "g4_count": 0,
+      "g4_density": 0.0,
+      "risk_score": 0.0
+    },
+    "RPL11:ENST00000643754:chr1:23692780": {
+      "motifs": [],
+      "g4_count": 0,
+      "g4_density": 0.0,
+      "risk_score": 0.0
+    },
+    "PTBP2:ENST00000674951:chr1:96724335": {
+      "motifs": [],
+      "g4_count": 0,
+      "g4_density": 0.0,
+      "risk_score": 0.0
+    },
+    "PTBP2:ENST00000674951:chr1:96724850": {
+      "motifs": [],
+      "g4_count": 0,
+      "g4_density": 0.0,
+      "risk_score": 0.0
+    },
+    "BRCA1:ENST00000357654:chr17:43122797": {
+      "motifs": [],
+      "g4_count": 0,
+      "g4_density": 0.0,
+      "risk_score": 0.0
+    },
+    "CALM2:ENST00000272298:chr2:47175374": {
+      "motifs": [],
+      "g4_count": 0,
+      "g4_density": 0.0,
+      "risk_score": 0.0
+    },
+    "HNRNPK:ENST00000376263:chr9:83979914": {
+      "motifs": [
+        {
+          "start": 1777,
+          "end": 1796,
+          "sequence": "GGGUUGGGGGGGGGAAGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            3,
+            5,
+            3,
+            3
+          ],
+          "loop_lengths": [
+            2,
+            1,
+            2
+          ],
+          "stability_score": 0.7361
+        }
+      ],
+      "g4_count": 1,
+      "g4_density": 0.3461,
+      "risk_score": 0.1472
+    },
+    "AGO4:ENST00000373210:chr1:35815110": {
+      "motifs": [
+        {
+          "start": 96,
+          "end": 117,
+          "sequence": "GGGAGGGAAGGGGGCGCGGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            3,
+            3,
+            5,
+            4
+          ],
+          "loop_lengths": [
+            1,
+            2,
+            3
+          ],
+          "stability_score": 0.7292
+        }
+      ],
+      "g4_count": 1,
+      "g4_density": 0.1375,
+      "risk_score": 0.1458
+    },
+    "MDM2:ENST00000258149:chr12:68809823": {
+      "motifs": [
+        {
+          "start": 6443,
+          "end": 6465,
+          "sequence": "GGGACAGGGAGGGGAGUUUGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            3,
+            3,
+            4,
+            3
+          ],
+          "loop_lengths": [
+            3,
+            1,
+            5
+          ],
+          "stability_score": 0.6042
+        }
+      ],
+      "g4_count": 1,
+      "g4_density": 0.1335,
+      "risk_score": 0.1208
+    },
+    "EGFR:ENST00000275493:chr7:55027996": {
+      "motifs": [],
+      "g4_count": 0,
+      "g4_density": 0.0,
+      "risk_score": 0.0
+    },
+    "PIK3CA:ENST00000263967:chr3:179151174": {
+      "motifs": [
+        {
+          "start": 122,
+          "end": 148,
+          "sequence": "GGGGGAGAGGGGCCGGGAGGCGGGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            5,
+            4,
+            3,
+            5
+          ],
+          "loop_lengths": [
+            3,
+            2,
+            4
+          ],
+          "stability_score": 0.6875
+        },
+        {
+          "start": 123,
+          "end": 148,
+          "sequence": "GGGGAGAGGGGCCGGGAGGCGGGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            4,
+            4,
+            3,
+            5
+          ],
+          "loop_lengths": [
+            3,
+            2,
+            4
+          ],
+          "stability_score": 0.6667
+        },
+        {
+          "start": 124,
+          "end": 148,
+          "sequence": "GGGAGAGGGGCCGGGAGGCGGGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            3,
+            4,
+            3,
+            5
+          ],
+          "loop_lengths": [
+            3,
+            2,
+            4
+          ],
+          "stability_score": 0.6458
+        },
+        {
+          "start": 7217,
+          "end": 7248,
+          "sequence": "GGGGAAUGUGAGGGGAGGGGGCAGAACAGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            4,
+            4,
+            5,
+            3
+          ],
+          "loop_lengths": [
+            7,
+            1,
+            7
+          ],
+          "stability_score": 0.5
+        },
+        {
+          "start": 7218,
+          "end": 7248,
+          "sequence": "GGGAAUGUGAGGGGAGGGGGCAGAACAGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            3,
+            4,
+            5,
+            3
+          ],
+          "loop_lengths": [
+            7,
+            1,
+            7
+          ],
+          "stability_score": 0.4792
+        }
+      ],
+      "g4_count": 5,
+      "g4_density": 0.54,
+      "risk_score": 0.5958
+    },
+    "VEGFA:ENST00000497139:chr6:43777871": {
+      "motifs": [
+        {
+          "start": 554,
+          "end": 576,
+          "sequence": "GGGUUGGGGGAGUUGGGGUGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            3,
+            5,
+            4,
+            3
+          ],
+          "loop_lengths": [
+            2,
+            4,
+            1
+          ],
+          "stability_score": 0.7014
+        },
+        {
+          "start": 2349,
+          "end": 2373,
+          "sequence": "GGGGAGCCAGGGGAUCGGGGAGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            4,
+            4,
+            4,
+            3
+          ],
+          "loop_lengths": [
+            5,
+            3,
+            1
+          ],
+          "stability_score": 0.6458
+        },
+        {
+          "start": 2349,
+          "end": 2372,
+          "sequence": "GGGAGCCAGGGGAUCGGGGAGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            3,
+            4,
+            4,
+            3
+          ],
+          "loop_lengths": [
+            5,
+            3,
+            1
+          ],
+          "stability_score": 0.625
+        },
+        {
+          "start": 118,
+          "end": 144,
+          "sequence": "GGGGCUUGCUGGGAACCUGGGCUGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            4,
+            3,
+            3,
+            3
+          ],
+          "loop_lengths": [
+            6,
+            5,
+            2
+          ],
+          "stability_score": 0.4931
+        },
+        {
+          "start": 118,
+          "end": 143,
+          "sequence": "GGGCUUGCUGGGAACCUGGGCUGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "loop_lengths": [
+            6,
+            5,
+            2
+          ],
+          "stability_score": 0.4722
+        }
+      ],
+      "g4_count": 5,
+      "g4_density": 1.8208,
+      "risk_score": 0.5875
+    },
+    "HNRNPK:ENST00000376263:chr9:83979032": {
+      "motifs": [
+        {
+          "start": 1777,
+          "end": 1796,
+          "sequence": "GGGUUGGGGGGGGGAAGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            3,
+            5,
+            3,
+            3
+          ],
+          "loop_lengths": [
+            2,
+            1,
+            2
+          ],
+          "stability_score": 0.7361
+        }
+      ],
+      "g4_count": 1,
+      "g4_density": 0.3461,
+      "risk_score": 0.1472
+    },
+    "DDX17:ENST00000403230:chr22:38504908": {
+      "motifs": [
+        {
+          "start": 2653,
+          "end": 2671,
+          "sequence": "GGGGAGGGAGGGAGGGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            4,
+            3,
+            3,
+            5
+          ],
+          "loop_lengths": [
+            1,
+            1,
+            1
+          ],
+          "stability_score": 0.8125
+        },
+        {
+          "start": 2654,
+          "end": 2671,
+          "sequence": "GGGAGGGAGGGAGGGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            3,
+            3,
+            3,
+            5
+          ],
+          "loop_lengths": [
+            1,
+            1,
+            1
+          ],
+          "stability_score": 0.7917
+        },
+        {
+          "start": 2658,
+          "end": 2675,
+          "sequence": "GGGAGGGAGGGGGAGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            3,
+            3,
+            5,
+            3
+          ],
+          "loop_lengths": [
+            1,
+            1,
+            1
+          ],
+          "stability_score": 0.7917
+        }
+      ],
+      "g4_count": 3,
+      "g4_density": 0.6301,
+      "risk_score": 0.4792
+    },
+    "DDX17:ENST00000403230:chr22:38501867": {
+      "motifs": [
+        {
+          "start": 2653,
+          "end": 2671,
+          "sequence": "GGGGAGGGAGGGAGGGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            4,
+            3,
+            3,
+            5
+          ],
+          "loop_lengths": [
+            1,
+            1,
+            1
+          ],
+          "stability_score": 0.8125
+        },
+        {
+          "start": 2654,
+          "end": 2671,
+          "sequence": "GGGAGGGAGGGAGGGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            3,
+            3,
+            3,
+            5
+          ],
+          "loop_lengths": [
+            1,
+            1,
+            1
+          ],
+          "stability_score": 0.7917
+        },
+        {
+          "start": 2658,
+          "end": 2675,
+          "sequence": "GGGAGGGAGGGGGAGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            3,
+            3,
+            5,
+            3
+          ],
+          "loop_lengths": [
+            1,
+            1,
+            1
+          ],
+          "stability_score": 0.7917
+        }
+      ],
+      "g4_count": 3,
+      "g4_density": 0.6301,
+      "risk_score": 0.4792
+    },
+    "DDX5:ENST00000225792:chr17:64505712": {
+      "motifs": [],
+      "g4_count": 0,
+      "g4_density": 0.0,
+      "risk_score": 0.0
+    },
+    "CCND2:ENST00000261254:chr12:4276729": {
+      "motifs": [
+        {
+          "start": 5270,
+          "end": 5293,
+          "sequence": "GGGCCACAGGGGACAGGGCUGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            3,
+            4,
+            3,
+            3
+          ],
+          "loop_lengths": [
+            5,
+            3,
+            2
+          ],
+          "stability_score": 0.5764
+        }
+      ],
+      "g4_count": 1,
+      "g4_density": 0.154,
+      "risk_score": 0.1153
+    },
+    "PTEN:ENST00000371953:chr10:87869740": {
+      "motifs": [],
+      "g4_count": 0,
+      "g4_density": 0.0,
+      "risk_score": 0.0
+    },
+    "ATR:ENST00000350721:chr3:142572942": {
+      "motifs": [],
+      "g4_count": 0,
+      "g4_density": 0.0,
+      "risk_score": 0.0
+    },
+    "CASP3:ENST00000308394:chr4:184648366": {
+      "motifs": [],
+      "g4_count": 0,
+      "g4_density": 0.0,
+      "risk_score": 0.0
+    },
+    "CUL1:ENST00000325222:chr7:148700526": {
+      "motifs": [],
+      "g4_count": 0,
+      "g4_density": 0.0,
+      "risk_score": 0.0
+    },
+    "AKT2:ENST00000392038:chr19:40280283": {
+      "motifs": [
+        {
+          "start": 2226,
+          "end": 2258,
+          "sequence": "GGGGCAGGCAGGGGCCCUUGGGAGCUGCAGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            4,
+            4,
+            3,
+            3
+          ],
+          "loop_lengths": [
+            6,
+            5,
+            7
+          ],
+          "stability_score": 0.375
+        },
+        {
+          "start": 2227,
+          "end": 2258,
+          "sequence": "GGGCAGGCAGGGGCCCUUGGGAGCUGCAGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            3,
+            4,
+            3,
+            3
+          ],
+          "loop_lengths": [
+            6,
+            5,
+            7
+          ],
+          "stability_score": 0.3542
+        },
+        {
+          "start": 2236,
+          "end": 2265,
+          "sequence": "GGGGCCCUUGGGAGCUGCAGGGCUGGGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            4,
+            3,
+            3,
+            5
+          ],
+          "loop_lengths": [
+            5,
+            7,
+            2
+          ],
+          "stability_score": 0.5069
+        },
+        {
+          "start": 2237,
+          "end": 2265,
+          "sequence": "GGGCCCUUGGGAGCUGCAGGGCUGGGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            3,
+            3,
+            3,
+            5
+          ],
+          "loop_lengths": [
+            5,
+            7,
+            2
+          ],
+          "stability_score": 0.4861
+        },
+        {
+          "start": 2245,
+          "end": 2271,
+          "sequence": "GGGAGCUGCAGGGCUGGGGGUUAGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            3,
+            3,
+            5,
+            3
+          ],
+          "loop_lengths": [
+            7,
+            2,
+            3
+          ],
+          "stability_score": 0.5417
+        },
+        {
+          "start": 2617,
+          "end": 2635,
+          "sequence": "GGGAGGGGUGGGGGUGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            3,
+            4,
+            5,
+            3
+          ],
+          "loop_lengths": [
+            1,
+            1,
+            1
+          ],
+          "stability_score": 0.8125
+        },
+        {
+          "start": 3085,
+          "end": 3103,
+          "sequence": "GGGUGGGGAGGGGUGGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            3,
+            4,
+            4,
+            4
+          ],
+          "loop_lengths": [
+            1,
+            1,
+            1
+          ],
+          "stability_score": 0.8125
+        },
+        {
+          "start": 3089,
+          "end": 3113,
+          "sequence": "GGGGAGGGGUGGGGUUGGUUCGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            4,
+            4,
+            4,
+            3
+          ],
+          "loop_lengths": [
+            1,
+            1,
+            7
+          ],
+          "stability_score": 0.6458
+        },
+        {
+          "start": 3090,
+          "end": 3113,
+          "sequence": "GGGAGGGGUGGGGUUGGUUCGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            3,
+            4,
+            4,
+            3
+          ],
+          "loop_lengths": [
+            1,
+            1,
+            7
+          ],
+          "stability_score": 0.625
+        },
+        {
+          "start": 3094,
+          "end": 3117,
+          "sequence": "GGGGUGGGGUUGGUUCGGGUGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            4,
+            4,
+            3,
+            3
+          ],
+          "loop_lengths": [
+            1,
+            7,
+            1
+          ],
+          "stability_score": 0.625
+        },
+        {
+          "start": 3095,
+          "end": 3117,
+          "sequence": "GGGUGGGGUUGGUUCGGGUGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            3,
+            4,
+            3,
+            3
+          ],
+          "loop_lengths": [
+            1,
+            7,
+            1
+          ],
+          "stability_score": 0.6042
+        },
+        {
+          "start": 3099,
+          "end": 3123,
+          "sequence": "GGGGUUGGUUCGGGUGGGUGAGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            4,
+            3,
+            3,
+            3
+          ],
+          "loop_lengths": [
+            7,
+            1,
+            3
+          ],
+          "stability_score": 0.5486
+        },
+        {
+          "start": 3100,
+          "end": 3123,
+          "sequence": "GGGUUGGUUCGGGUGGGUGAGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "loop_lengths": [
+            7,
+            1,
+            3
+          ],
+          "stability_score": 0.5278
+        },
+        {
+          "start": 2977,
+          "end": 2999,
+          "sequence": "GGGAGGGGAGGCGUGGGCAGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            3,
+            4,
+            3,
+            3
+          ],
+          "loop_lengths": [
+            1,
+            6,
+            2
+          ],
+          "stability_score": 0.6042
+        },
+        {
+          "start": 2696,
+          "end": 2719,
+          "sequence": "GGGGCCCUGGGGAGAGGGAGGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            4,
+            4,
+            3,
+            4
+          ],
+          "loop_lengths": [
+            4,
+            3,
+            1
+          ],
+          "stability_score": 0.6736
+        },
+        {
+          "start": 2696,
+          "end": 2718,
+          "sequence": "GGGCCCUGGGGAGAGGGAGGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            3,
+            4,
+            3,
+            4
+          ],
+          "loop_lengths": [
+            4,
+            3,
+            1
+          ],
+          "stability_score": 0.6528
+        },
+        {
+          "start": 2687,
+          "end": 2711,
+          "sequence": "GGGGAGAGGGAGGGGUGAGGGGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            4,
+            3,
+            4,
+            6
+          ],
+          "loop_lengths": [
+            3,
+            1,
+            3
+          ],
+          "stability_score": 0.7431
+        },
+        {
+          "start": 2687,
+          "end": 2710,
+          "sequence": "GGGAGAGGGAGGGGUGAGGGGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            3,
+            3,
+            4,
+            6
+          ],
+          "loop_lengths": [
+            3,
+            1,
+            3
+          ],
+          "stability_score": 0.7222
+        },
+        {
+          "start": 1836,
+          "end": 1868,
+          "sequence": "GGGGCUGCAGGGGCCGCUGGGGUGCGUCUGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            4,
+            4,
+            4,
+            3
+          ],
+          "loop_lengths": [
+            5,
+            5,
+            7
+          ],
+          "stability_score": 0.4236
+        },
+        {
+          "start": 1836,
+          "end": 1867,
+          "sequence": "GGGCUGCAGGGGCCGCUGGGGUGCGUCUGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            3,
+            4,
+            4,
+            3
+          ],
+          "loop_lengths": [
+            5,
+            5,
+            7
+          ],
+          "stability_score": 0.4028
+        },
+        {
+          "start": 1831,
+          "end": 1859,
+          "sequence": "GGGGCCGCUGGGGUGCGUCUGGGAGGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            4,
+            4,
+            3,
+            4
+          ],
+          "loop_lengths": [
+            5,
+            7,
+            1
+          ],
+          "stability_score": 0.5347
+        },
+        {
+          "start": 1831,
+          "end": 1858,
+          "sequence": "GGGCCGCUGGGGUGCGUCUGGGAGGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            3,
+            4,
+            3,
+            4
+          ],
+          "loop_lengths": [
+            5,
+            7,
+            1
+          ],
+          "stability_score": 0.5139
+        }
+      ],
+      "g4_count": 22,
+      "g4_density": 4.1905,
+      "risk_score": 1.0
+    },
+    "TSC1:ENST00000298552:chr9:132940598": {
+      "motifs": [
+        {
+          "start": 8061,
+          "end": 8080,
+          "sequence": "GGGGAAAGGGAGGGAAGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            4,
+            3,
+            3,
+            3
+          ],
+          "loop_lengths": [
+            3,
+            1,
+            2
+          ],
+          "stability_score": 0.6875
+        },
+        {
+          "start": 8061,
+          "end": 8079,
+          "sequence": "GGGAAAGGGAGGGAAGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "loop_lengths": [
+            3,
+            1,
+            2
+          ],
+          "stability_score": 0.6667
+        },
+        {
+          "start": 8049,
+          "end": 8073,
+          "sequence": "GGGAGGGAAGGGUUGGUCUGGGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            3,
+            3,
+            3,
+            5
+          ],
+          "loop_lengths": [
+            1,
+            2,
+            7
+          ],
+          "stability_score": 0.5972
+        },
+        {
+          "start": 3905,
+          "end": 3928,
+          "sequence": "GGGGGUUAGGGCGGGUGGAGGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            5,
+            3,
+            3,
+            4
+          ],
+          "loop_lengths": [
+            3,
+            1,
+            4
+          ],
+          "stability_score": 0.6736
+        },
+        {
+          "start": 3905,
+          "end": 3927,
+          "sequence": "GGGGUUAGGGCGGGUGGAGGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            4,
+            3,
+            3,
+            4
+          ],
+          "loop_lengths": [
+            3,
+            1,
+            4
+          ],
+          "stability_score": 0.6528
+        },
+        {
+          "start": 3905,
+          "end": 3926,
+          "sequence": "GGGUUAGGGCGGGUGGAGGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            3,
+            3,
+            3,
+            4
+          ],
+          "loop_lengths": [
+            3,
+            1,
+            4
+          ],
+          "stability_score": 0.6319
+        },
+        {
+          "start": 3627,
+          "end": 3651,
+          "sequence": "GGGGUCGGGGGAGACGGGUGAGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            4,
+            5,
+            3,
+            3
+          ],
+          "loop_lengths": [
+            2,
+            4,
+            3
+          ],
+          "stability_score": 0.6458
+        },
+        {
+          "start": 3627,
+          "end": 3650,
+          "sequence": "GGGUCGGGGGAGACGGGUGAGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            3,
+            5,
+            3,
+            3
+          ],
+          "loop_lengths": [
+            2,
+            4,
+            3
+          ],
+          "stability_score": 0.625
+        }
+      ],
+      "g4_count": 8,
+      "g4_density": 0.9304,
+      "risk_score": 1.0
+    },
+    "YAP1:ENST00000282441:chr11:102115206": {
+      "motifs": [
+        {
+          "start": 4235,
+          "end": 4265,
+          "sequence": "GGGGGAGGGUGGGAAAGUUUGGGGGGGGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            5,
+            3,
+            3,
+            10
+          ],
+          "loop_lengths": [
+            1,
+            1,
+            7
+          ],
+          "stability_score": 0.7708
+        },
+        {
+          "start": 4236,
+          "end": 4265,
+          "sequence": "GGGGAGGGUGGGAAAGUUUGGGGGGGGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            4,
+            3,
+            3,
+            10
+          ],
+          "loop_lengths": [
+            1,
+            1,
+            7
+          ],
+          "stability_score": 0.75
+        },
+        {
+          "start": 4237,
+          "end": 4265,
+          "sequence": "GGGAGGGUGGGAAAGUUUGGGGGGGGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            3,
+            3,
+            3,
+            10
+          ],
+          "loop_lengths": [
+            1,
+            1,
+            7
+          ],
+          "stability_score": 0.7292
+        },
+        {
+          "start": 4241,
+          "end": 4265,
+          "sequence": "GGGUGGGAAAGUUUGGGGGGGGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            3,
+            3,
+            6,
+            3
+          ],
+          "loop_lengths": [
+            1,
+            7,
+            1
+          ],
+          "stability_score": 0.6458
+        }
+      ],
+      "g4_count": 4,
+      "g4_density": 0.7406,
+      "risk_score": 0.5792
+    },
+    "IFNG:ENST00000229135:chr12:68159107": {
+      "motifs": [],
+      "g4_count": 0,
+      "g4_density": 0.0,
+      "risk_score": 0.0
+    },
+    "LIN28A:ENST00000326279:chr1:26414640": {
+      "motifs": [],
+      "g4_count": 0,
+      "g4_density": 0.0,
+      "risk_score": 0.0
+    },
+    "DICER1:ENST00000343455:chr14:95147794": {
+      "motifs": [],
+      "g4_count": 0,
+      "g4_density": 0.0,
+      "risk_score": 0.0
+    },
+    "TNRC6B:ENST00000454349:chr22:40180363": {
+      "motifs": [
+        {
+          "start": 14219,
+          "end": 14248,
+          "sequence": "GGGGGUGGGGAGGAGAGGGCAGAAAGGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            5,
+            4,
+            3,
+            4
+          ],
+          "loop_lengths": [
+            1,
+            6,
+            6
+          ],
+          "stability_score": 0.5556
+        },
+        {
+          "start": 14220,
+          "end": 14248,
+          "sequence": "GGGGUGGGGAGGAGAGGGCAGAAAGGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            4,
+            4,
+            3,
+            4
+          ],
+          "loop_lengths": [
+            1,
+            6,
+            6
+          ],
+          "stability_score": 0.5347
+        },
+        {
+          "start": 14221,
+          "end": 14248,
+          "sequence": "GGGUGGGGAGGAGAGGGCAGAAAGGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            3,
+            4,
+            3,
+            4
+          ],
+          "loop_lengths": [
+            1,
+            6,
+            6
+          ],
+          "stability_score": 0.5139
+        },
+        {
+          "start": 14225,
+          "end": 14253,
+          "sequence": "GGGGAGGAGAGGGCAGAAAGGGGAAGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            4,
+            3,
+            4,
+            3
+          ],
+          "loop_lengths": [
+            6,
+            6,
+            2
+          ],
+          "stability_score": 0.4861
+        },
+        {
+          "start": 14226,
+          "end": 14253,
+          "sequence": "GGGAGGAGAGGGCAGAAAGGGGAAGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            3,
+            3,
+            4,
+            3
+          ],
+          "loop_lengths": [
+            6,
+            6,
+            2
+          ],
+          "stability_score": 0.4653
+        },
+        {
+          "start": 16958,
+          "end": 16983,
+          "sequence": "GGGAUGAGGUGGGUGGCGGGGAGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            3,
+            3,
+            4,
+            3
+          ],
+          "loop_lengths": [
+            7,
+            4,
+            1
+          ],
+          "stability_score": 0.5208
+        },
+        {
+          "start": 6424,
+          "end": 6445,
+          "sequence": "GGGUGGGGCAGGGGAGAAGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            3,
+            4,
+            4,
+            3
+          ],
+          "loop_lengths": [
+            1,
+            2,
+            4
+          ],
+          "stability_score": 0.6806
+        },
+        {
+          "start": 3670,
+          "end": 3697,
+          "sequence": "GGGAGAAGGGGAGAAGGGAGAGCAGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            3,
+            4,
+            3,
+            3
+          ],
+          "loop_lengths": [
+            4,
+            4,
+            6
+          ],
+          "stability_score": 0.4653
+        }
+      ],
+      "g4_count": 8,
+      "g4_density": 0.4376,
+      "risk_score": 0.8445
+    },
+    "CCND2:ENST00000261254:chr12:4276799": {
+      "motifs": [
+        {
+          "start": 5270,
+          "end": 5293,
+          "sequence": "GGGCCACAGGGGACAGGGCUGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            3,
+            4,
+            3,
+            3
+          ],
+          "loop_lengths": [
+            5,
+            3,
+            2
+          ],
+          "stability_score": 0.5764
+        }
+      ],
+      "g4_count": 1,
+      "g4_density": 0.154,
+      "risk_score": 0.1153
+    },
+    "MTOR:ENST00000361445:chr1:11259515": {
+      "motifs": [
+        {
+          "start": 21,
+          "end": 48,
+          "sequence": "GGGGAAGGCGGGCGGUGGGGCAGGGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            4,
+            3,
+            4,
+            5
+          ],
+          "loop_lengths": [
+            5,
+            4,
+            2
+          ],
+          "stability_score": 0.6111
+        },
+        {
+          "start": 22,
+          "end": 48,
+          "sequence": "GGGAAGGCGGGCGGUGGGGCAGGGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            3,
+            3,
+            4,
+            5
+          ],
+          "loop_lengths": [
+            5,
+            4,
+            2
+          ],
+          "stability_score": 0.5903
+        }
+      ],
+      "g4_count": 2,
+      "g4_density": 0.2293,
+      "risk_score": 0.2403
+    },
+    "RPS3:ENST00000531188:chr11:75401416": {
+      "motifs": [],
+      "g4_count": 0,
+      "g4_density": 0.0,
+      "risk_score": 0.0
+    },
+    "HNRNPA2B1:ENST00000618183:chr7:26197989": {
+      "motifs": [],
+      "g4_count": 0,
+      "g4_density": 0.0,
+      "risk_score": 0.0
+    },
+    "TSC1:ENST00000298552:chr9:132937751": {
+      "motifs": [
+        {
+          "start": 8061,
+          "end": 8080,
+          "sequence": "GGGGAAAGGGAGGGAAGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            4,
+            3,
+            3,
+            3
+          ],
+          "loop_lengths": [
+            3,
+            1,
+            2
+          ],
+          "stability_score": 0.6875
+        },
+        {
+          "start": 8061,
+          "end": 8079,
+          "sequence": "GGGAAAGGGAGGGAAGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "loop_lengths": [
+            3,
+            1,
+            2
+          ],
+          "stability_score": 0.6667
+        },
+        {
+          "start": 8049,
+          "end": 8073,
+          "sequence": "GGGAGGGAAGGGUUGGUCUGGGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            3,
+            3,
+            3,
+            5
+          ],
+          "loop_lengths": [
+            1,
+            2,
+            7
+          ],
+          "stability_score": 0.5972
+        },
+        {
+          "start": 3905,
+          "end": 3928,
+          "sequence": "GGGGGUUAGGGCGGGUGGAGGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            5,
+            3,
+            3,
+            4
+          ],
+          "loop_lengths": [
+            3,
+            1,
+            4
+          ],
+          "stability_score": 0.6736
+        },
+        {
+          "start": 3905,
+          "end": 3927,
+          "sequence": "GGGGUUAGGGCGGGUGGAGGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            4,
+            3,
+            3,
+            4
+          ],
+          "loop_lengths": [
+            3,
+            1,
+            4
+          ],
+          "stability_score": 0.6528
+        },
+        {
+          "start": 3905,
+          "end": 3926,
+          "sequence": "GGGUUAGGGCGGGUGGAGGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            3,
+            3,
+            3,
+            4
+          ],
+          "loop_lengths": [
+            3,
+            1,
+            4
+          ],
+          "stability_score": 0.6319
+        },
+        {
+          "start": 3627,
+          "end": 3651,
+          "sequence": "GGGGUCGGGGGAGACGGGUGAGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            4,
+            5,
+            3,
+            3
+          ],
+          "loop_lengths": [
+            2,
+            4,
+            3
+          ],
+          "stability_score": 0.6458
+        },
+        {
+          "start": 3627,
+          "end": 3650,
+          "sequence": "GGGUCGGGGGAGACGGGUGAGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            3,
+            5,
+            3,
+            3
+          ],
+          "loop_lengths": [
+            2,
+            4,
+            3
+          ],
+          "stability_score": 0.625
+        }
+      ],
+      "g4_count": 8,
+      "g4_density": 0.9304,
+      "risk_score": 1.0
+    },
+    "SMAD2:ENST00000262160:chr18:47898662": {
+      "motifs": [
+        {
+          "start": 122,
+          "end": 144,
+          "sequence": "GGGCCCGGGCCUGGGGGCGGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            3,
+            3,
+            5,
+            4
+          ],
+          "loop_lengths": [
+            3,
+            3,
+            1
+          ],
+          "stability_score": 0.7014
+        },
+        {
+          "start": 128,
+          "end": 148,
+          "sequence": "GGGCCUGGGGGCGGGGCGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            3,
+            5,
+            4,
+            3
+          ],
+          "loop_lengths": [
+            3,
+            1,
+            1
+          ],
+          "stability_score": 0.7569
+        },
+        {
+          "start": 16097,
+          "end": 16123,
+          "sequence": "GGGAGACGGGGGGAGACGGGAGAGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            3,
+            6,
+            3,
+            3
+          ],
+          "loop_lengths": [
+            4,
+            4,
+            3
+          ],
+          "stability_score": 0.5903
+        },
+        {
+          "start": 16104,
+          "end": 16129,
+          "sequence": "GGGGGGAGACGGGAGAGGGAGAGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            6,
+            3,
+            3,
+            3
+          ],
+          "loop_lengths": [
+            4,
+            3,
+            3
+          ],
+          "stability_score": 0.6181
+        },
+        {
+          "start": 16105,
+          "end": 16129,
+          "sequence": "GGGGGAGACGGGAGAGGGAGAGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            5,
+            3,
+            3,
+            3
+          ],
+          "loop_lengths": [
+            4,
+            3,
+            3
+          ],
+          "stability_score": 0.5972
+        },
+        {
+          "start": 16106,
+          "end": 16129,
+          "sequence": "GGGGAGACGGGAGAGGGAGAGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            4,
+            3,
+            3,
+            3
+          ],
+          "loop_lengths": [
+            4,
+            3,
+            3
+          ],
+          "stability_score": 0.5764
+        },
+        {
+          "start": 16107,
+          "end": 16129,
+          "sequence": "GGGAGACGGGAGAGGGAGAGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "loop_lengths": [
+            4,
+            3,
+            3
+          ],
+          "stability_score": 0.5556
+        },
+        {
+          "start": 24819,
+          "end": 24846,
+          "sequence": "GGGAAAAAAGGGGUUGGGGAGGUGGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            3,
+            4,
+            4,
+            4
+          ],
+          "loop_lengths": [
+            6,
+            2,
+            4
+          ],
+          "stability_score": 0.5625
+        },
+        {
+          "start": 5751,
+          "end": 5770,
+          "sequence": "GGGCAGGGGCUUGGGAGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            3,
+            4,
+            3,
+            3
+          ],
+          "loop_lengths": [
+            2,
+            3,
+            1
+          ],
+          "stability_score": 0.6875
+        },
+        {
+          "start": 203,
+          "end": 226,
+          "sequence": "GGGAUGGAGGGGGCUGGGAGGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            3,
+            5,
+            3,
+            4
+          ],
+          "loop_lengths": [
+            5,
+            2,
+            1
+          ],
+          "stability_score": 0.6736
+        },
+        {
+          "start": 195,
+          "end": 218,
+          "sequence": "GGGGGCUGGGAGGGGAAGAGGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            5,
+            3,
+            4,
+            4
+          ],
+          "loop_lengths": [
+            2,
+            1,
+            4
+          ],
+          "stability_score": 0.7222
+        },
+        {
+          "start": 195,
+          "end": 217,
+          "sequence": "GGGGCUGGGAGGGGAAGAGGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            4,
+            3,
+            4,
+            4
+          ],
+          "loop_lengths": [
+            2,
+            1,
+            4
+          ],
+          "stability_score": 0.7014
+        },
+        {
+          "start": 195,
+          "end": 216,
+          "sequence": "GGGCUGGGAGGGGAAGAGGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            3,
+            3,
+            4,
+            4
+          ],
+          "loop_lengths": [
+            2,
+            1,
+            4
+          ],
+          "stability_score": 0.6806
+        },
+        {
+          "start": 189,
+          "end": 211,
+          "sequence": "GGGAGGGGAAGAGGGGAAUGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            3,
+            4,
+            4,
+            3
+          ],
+          "loop_lengths": [
+            1,
+            4,
+            3
+          ],
+          "stability_score": 0.6528
+        },
+        {
+          "start": 89,
+          "end": 110,
+          "sequence": "GGGCGCGCGGGAGGGUAGGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            3,
+            3,
+            3,
+            4
+          ],
+          "loop_lengths": [
+            5,
+            1,
+            2
+          ],
+          "stability_score": 0.6319
+        },
+        {
+          "start": 79,
+          "end": 102,
+          "sequence": "GGGAGGGUAGGGGAAGAGAGGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            3,
+            3,
+            4,
+            4
+          ],
+          "loop_lengths": [
+            1,
+            2,
+            6
+          ],
+          "stability_score": 0.625
+        },
+        {
+          "start": 74,
+          "end": 98,
+          "sequence": "GGGUAGGGGAAGAGAGGGGAGGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            3,
+            4,
+            4,
+            4
+          ],
+          "loop_lengths": [
+            2,
+            6,
+            1
+          ],
+          "stability_score": 0.6458
+        },
+        {
+          "start": 69,
+          "end": 93,
+          "sequence": "GGGGAAGAGAGGGGAGGGGAGGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            4,
+            4,
+            4,
+            4
+          ],
+          "loop_lengths": [
+            6,
+            1,
+            1
+          ],
+          "stability_score": 0.6944
+        },
+        {
+          "start": 69,
+          "end": 92,
+          "sequence": "GGGAAGAGAGGGGAGGGGAGGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            3,
+            4,
+            4,
+            4
+          ],
+          "loop_lengths": [
+            6,
+            1,
+            1
+          ],
+          "stability_score": 0.6736
+        },
+        {
+          "start": 60,
+          "end": 83,
+          "sequence": "GGGGAGGGGAGGGGAGGAGAGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            4,
+            4,
+            4,
+            3
+          ],
+          "loop_lengths": [
+            1,
+            1,
+            6
+          ],
+          "stability_score": 0.6736
+        },
+        {
+          "start": 60,
+          "end": 82,
+          "sequence": "GGGAGGGGAGGGGAGGAGAGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            3,
+            4,
+            4,
+            3
+          ],
+          "loop_lengths": [
+            1,
+            1,
+            6
+          ],
+          "stability_score": 0.6528
+        },
+        {
+          "start": 54,
+          "end": 78,
+          "sequence": "GGGGAGGGGAGGAGAGGGAAGGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            4,
+            4,
+            3,
+            4
+          ],
+          "loop_lengths": [
+            1,
+            6,
+            2
+          ],
+          "stability_score": 0.6458
+        },
+        {
+          "start": 54,
+          "end": 77,
+          "sequence": "GGGAGGGGAGGAGAGGGAAGGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            3,
+            4,
+            3,
+            4
+          ],
+          "loop_lengths": [
+            1,
+            6,
+            2
+          ],
+          "stability_score": 0.625
+        },
+        {
+          "start": 49,
+          "end": 73,
+          "sequence": "GGGGAGGAGAGGGAAGGGGAGGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            4,
+            3,
+            4,
+            4
+          ],
+          "loop_lengths": [
+            6,
+            2,
+            1
+          ],
+          "stability_score": 0.6458
+        },
+        {
+          "start": 49,
+          "end": 72,
+          "sequence": "GGGAGGAGAGGGAAGGGGAGGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            3,
+            3,
+            4,
+            4
+          ],
+          "loop_lengths": [
+            6,
+            2,
+            1
+          ],
+          "stability_score": 0.625
+        },
+        {
+          "start": 45,
+          "end": 63,
+          "sequence": "GGGAAGGGGAGGGGAGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            3,
+            4,
+            4,
+            3
+          ],
+          "loop_lengths": [
+            2,
+            1,
+            1
+          ],
+          "stability_score": 0.7639
+        }
+      ],
+      "g4_count": 26,
+      "g4_density": 0.7509,
+      "risk_score": 1.0
+    },
+    "SMAD2:ENST00000262160:chr18:47916332": {
+      "motifs": [
+        {
+          "start": 122,
+          "end": 144,
+          "sequence": "GGGCCCGGGCCUGGGGGCGGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            3,
+            3,
+            5,
+            4
+          ],
+          "loop_lengths": [
+            3,
+            3,
+            1
+          ],
+          "stability_score": 0.7014
+        },
+        {
+          "start": 128,
+          "end": 148,
+          "sequence": "GGGCCUGGGGGCGGGGCGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            3,
+            5,
+            4,
+            3
+          ],
+          "loop_lengths": [
+            3,
+            1,
+            1
+          ],
+          "stability_score": 0.7569
+        },
+        {
+          "start": 16097,
+          "end": 16123,
+          "sequence": "GGGAGACGGGGGGAGACGGGAGAGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            3,
+            6,
+            3,
+            3
+          ],
+          "loop_lengths": [
+            4,
+            4,
+            3
+          ],
+          "stability_score": 0.5903
+        },
+        {
+          "start": 16104,
+          "end": 16129,
+          "sequence": "GGGGGGAGACGGGAGAGGGAGAGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            6,
+            3,
+            3,
+            3
+          ],
+          "loop_lengths": [
+            4,
+            3,
+            3
+          ],
+          "stability_score": 0.6181
+        },
+        {
+          "start": 16105,
+          "end": 16129,
+          "sequence": "GGGGGAGACGGGAGAGGGAGAGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            5,
+            3,
+            3,
+            3
+          ],
+          "loop_lengths": [
+            4,
+            3,
+            3
+          ],
+          "stability_score": 0.5972
+        },
+        {
+          "start": 16106,
+          "end": 16129,
+          "sequence": "GGGGAGACGGGAGAGGGAGAGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            4,
+            3,
+            3,
+            3
+          ],
+          "loop_lengths": [
+            4,
+            3,
+            3
+          ],
+          "stability_score": 0.5764
+        },
+        {
+          "start": 16107,
+          "end": 16129,
+          "sequence": "GGGAGACGGGAGAGGGAGAGGG",
+          "strand": "+",
+          "g_tract_lengths": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "loop_lengths": [
+            4,
+            3,
+            3
+          ],
+          "stability_score": 0.5556
+        },
+        {
+          "start": 24819,
+          "end": 24846,
+          "sequence": "GGGAAAAAAGGGGUUGGGGAGGUGGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            3,
+            4,
+            4,
+            4
+          ],
+          "loop_lengths": [
+            6,
+            2,
+            4
+          ],
+          "stability_score": 0.5625
+        },
+        {
+          "start": 5751,
+          "end": 5770,
+          "sequence": "GGGCAGGGGCUUGGGAGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            3,
+            4,
+            3,
+            3
+          ],
+          "loop_lengths": [
+            2,
+            3,
+            1
+          ],
+          "stability_score": 0.6875
+        },
+        {
+          "start": 203,
+          "end": 226,
+          "sequence": "GGGAUGGAGGGGGCUGGGAGGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            3,
+            5,
+            3,
+            4
+          ],
+          "loop_lengths": [
+            5,
+            2,
+            1
+          ],
+          "stability_score": 0.6736
+        },
+        {
+          "start": 195,
+          "end": 218,
+          "sequence": "GGGGGCUGGGAGGGGAAGAGGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            5,
+            3,
+            4,
+            4
+          ],
+          "loop_lengths": [
+            2,
+            1,
+            4
+          ],
+          "stability_score": 0.7222
+        },
+        {
+          "start": 195,
+          "end": 217,
+          "sequence": "GGGGCUGGGAGGGGAAGAGGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            4,
+            3,
+            4,
+            4
+          ],
+          "loop_lengths": [
+            2,
+            1,
+            4
+          ],
+          "stability_score": 0.7014
+        },
+        {
+          "start": 195,
+          "end": 216,
+          "sequence": "GGGCUGGGAGGGGAAGAGGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            3,
+            3,
+            4,
+            4
+          ],
+          "loop_lengths": [
+            2,
+            1,
+            4
+          ],
+          "stability_score": 0.6806
+        },
+        {
+          "start": 189,
+          "end": 211,
+          "sequence": "GGGAGGGGAAGAGGGGAAUGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            3,
+            4,
+            4,
+            3
+          ],
+          "loop_lengths": [
+            1,
+            4,
+            3
+          ],
+          "stability_score": 0.6528
+        },
+        {
+          "start": 89,
+          "end": 110,
+          "sequence": "GGGCGCGCGGGAGGGUAGGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            3,
+            3,
+            3,
+            4
+          ],
+          "loop_lengths": [
+            5,
+            1,
+            2
+          ],
+          "stability_score": 0.6319
+        },
+        {
+          "start": 79,
+          "end": 102,
+          "sequence": "GGGAGGGUAGGGGAAGAGAGGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            3,
+            3,
+            4,
+            4
+          ],
+          "loop_lengths": [
+            1,
+            2,
+            6
+          ],
+          "stability_score": 0.625
+        },
+        {
+          "start": 74,
+          "end": 98,
+          "sequence": "GGGUAGGGGAAGAGAGGGGAGGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            3,
+            4,
+            4,
+            4
+          ],
+          "loop_lengths": [
+            2,
+            6,
+            1
+          ],
+          "stability_score": 0.6458
+        },
+        {
+          "start": 69,
+          "end": 93,
+          "sequence": "GGGGAAGAGAGGGGAGGGGAGGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            4,
+            4,
+            4,
+            4
+          ],
+          "loop_lengths": [
+            6,
+            1,
+            1
+          ],
+          "stability_score": 0.6944
+        },
+        {
+          "start": 69,
+          "end": 92,
+          "sequence": "GGGAAGAGAGGGGAGGGGAGGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            3,
+            4,
+            4,
+            4
+          ],
+          "loop_lengths": [
+            6,
+            1,
+            1
+          ],
+          "stability_score": 0.6736
+        },
+        {
+          "start": 60,
+          "end": 83,
+          "sequence": "GGGGAGGGGAGGGGAGGAGAGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            4,
+            4,
+            4,
+            3
+          ],
+          "loop_lengths": [
+            1,
+            1,
+            6
+          ],
+          "stability_score": 0.6736
+        },
+        {
+          "start": 60,
+          "end": 82,
+          "sequence": "GGGAGGGGAGGGGAGGAGAGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            3,
+            4,
+            4,
+            3
+          ],
+          "loop_lengths": [
+            1,
+            1,
+            6
+          ],
+          "stability_score": 0.6528
+        },
+        {
+          "start": 54,
+          "end": 78,
+          "sequence": "GGGGAGGGGAGGAGAGGGAAGGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            4,
+            4,
+            3,
+            4
+          ],
+          "loop_lengths": [
+            1,
+            6,
+            2
+          ],
+          "stability_score": 0.6458
+        },
+        {
+          "start": 54,
+          "end": 77,
+          "sequence": "GGGAGGGGAGGAGAGGGAAGGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            3,
+            4,
+            3,
+            4
+          ],
+          "loop_lengths": [
+            1,
+            6,
+            2
+          ],
+          "stability_score": 0.625
+        },
+        {
+          "start": 49,
+          "end": 73,
+          "sequence": "GGGGAGGAGAGGGAAGGGGAGGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            4,
+            3,
+            4,
+            4
+          ],
+          "loop_lengths": [
+            6,
+            2,
+            1
+          ],
+          "stability_score": 0.6458
+        },
+        {
+          "start": 49,
+          "end": 72,
+          "sequence": "GGGAGGAGAGGGAAGGGGAGGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            3,
+            3,
+            4,
+            4
+          ],
+          "loop_lengths": [
+            6,
+            2,
+            1
+          ],
+          "stability_score": 0.625
+        },
+        {
+          "start": 45,
+          "end": 63,
+          "sequence": "GGGAAGGGGAGGGGAGGG",
+          "strand": "-",
+          "g_tract_lengths": [
+            3,
+            4,
+            4,
+            3
+          ],
+          "loop_lengths": [
+            2,
+            1,
+            1
+          ],
+          "stability_score": 0.7639
+        }
+      ],
+      "g4_count": 26,
+      "g4_density": 0.7509,
+      "risk_score": 1.0
+    }
+  }
+}

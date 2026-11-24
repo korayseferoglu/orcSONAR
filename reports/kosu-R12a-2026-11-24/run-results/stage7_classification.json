@@ -1,0 +1,212 @@
+{
+  "site_classifications": {
+    "MTOR:ENST00000361445:chr1:11255438": {
+      "base_score": 0.326475,
+      "final_score": 0.248299,
+      "risk_class": "SAFE"
+    },
+    "VEGFA:ENST00000480614:chr6:43777011": {
+      "base_score": 0.3424,
+      "final_score": 0.26041,
+      "risk_class": "SAFE"
+    },
+    "HNRNPA2B1:ENST00000618183:chr7:26198044": {
+      "base_score": 0.36953,
+      "final_score": 0.281044,
+      "risk_class": "SAFE"
+    },
+    "DICER1:ENST00000343455:chr14:95152261": {
+      "base_score": 0.367435,
+      "final_score": 0.27945,
+      "risk_class": "SAFE"
+    },
+    "TNRC6B:ENST00000454349:chr22:40182273": {
+      "base_score": 0.334385,
+      "final_score": 0.254315,
+      "risk_class": "SAFE"
+    },
+    "CTNNB1:ENST00000349496:chr3:41200550": {
+      "base_score": 0.34822,
+      "final_score": 0.264837,
+      "risk_class": "SAFE"
+    },
+    "ATR:ENST00000350721:chr3:142571301": {
+      "base_score": 0.30966,
+      "final_score": 0.23551,
+      "risk_class": "SAFE"
+    },
+    "RPL11:ENST00000643754:chr1:23692780": {
+      "base_score": 0.428575,
+      "final_score": 0.32595,
+      "risk_class": "WARNING"
+    },
+    "PTBP2:ENST00000674951:chr1:96724335": {
+      "base_score": 0.337155,
+      "final_score": 0.256421,
+      "risk_class": "SAFE"
+    },
+    "PTBP2:ENST00000674951:chr1:96724850": {
+      "base_score": 0.313145,
+      "final_score": 0.238161,
+      "risk_class": "SAFE"
+    },
+    "BRCA1:ENST00000357654:chr17:43122797": {
+      "base_score": 0.342515,
+      "final_score": 0.260498,
+      "risk_class": "SAFE"
+    },
+    "CALM2:ENST00000272298:chr2:47175374": {
+      "base_score": 0.31115,
+      "final_score": 0.236643,
+      "risk_class": "SAFE"
+    },
+    "HNRNPK:ENST00000376263:chr9:83979914": {
+      "base_score": 0.373955,
+      "final_score": 0.284409,
+      "risk_class": "SAFE"
+    },
+    "AGO4:ENST00000373210:chr1:35815110": {
+      "base_score": 0.348355,
+      "final_score": 0.264939,
+      "risk_class": "SAFE"
+    },
+    "MDM2:ENST00000258149:chr12:68809823": {
+      "base_score": 0.387135,
+      "final_score": 0.294433,
+      "risk_class": "SAFE"
+    },
+    "EGFR:ENST00000275493:chr7:55027996": {
+      "base_score": 0.237575,
+      "final_score": 0.180686,
+      "risk_class": "SAFE"
+    },
+    "PIK3CA:ENST00000263967:chr3:179151174": {
+      "base_score": 0.325255,
+      "final_score": 0.247371,
+      "risk_class": "SAFE"
+    },
+    "VEGFA:ENST00000497139:chr6:43777871": {
+      "base_score": 0.3302,
+      "final_score": 0.251132,
+      "risk_class": "SAFE"
+    },
+    "HNRNPK:ENST00000376263:chr9:83979032": {
+      "base_score": 0.380425,
+      "final_score": 0.28933,
+      "risk_class": "SAFE"
+    },
+    "DDX17:ENST00000403230:chr22:38504908": {
+      "base_score": 0.382415,
+      "final_score": 0.290843,
+      "risk_class": "SAFE"
+    },
+    "DDX17:ENST00000403230:chr22:38501867": {
+      "base_score": 0.33223,
+      "final_score": 0.252676,
+      "risk_class": "SAFE"
+    },
+    "DDX5:ENST00000225792:chr17:64505712": {
+      "base_score": 0.36923,
+      "final_score": 0.280816,
+      "risk_class": "SAFE"
+    },
+    "CCND2:ENST00000261254:chr12:4276729": {
+      "base_score": 0.27769,
+      "final_score": 0.211195,
+      "risk_class": "SAFE"
+    },
+    "PTEN:ENST00000371953:chr10:87869740": {
+      "base_score": 0.308625,
+      "final_score": 0.234723,
+      "risk_class": "SAFE"
+    },
+    "ATR:ENST00000350721:chr3:142572942": {
+      "base_score": 0.258885,
+      "final_score": 0.196893,
+      "risk_class": "SAFE"
+    },
+    "CASP3:ENST00000308394:chr4:184648366": {
+      "base_score": 0.28674,
+      "final_score": 0.218078,
+      "risk_class": "SAFE"
+    },
+    "CUL1:ENST00000325222:chr7:148700526": {
+      "base_score": 0.2842,
+      "final_score": 0.216147,
+      "risk_class": "SAFE"
+    },
+    "AKT2:ENST00000392038:chr19:40280283": {
+      "base_score": 0.33945,
+      "final_score": 0.258167,
+      "risk_class": "SAFE"
+    },
+    "TSC1:ENST00000298552:chr9:132940598": {
+      "base_score": 0.28498,
+      "final_score": 0.21674,
+      "risk_class": "SAFE"
+    },
+    "YAP1:ENST00000282441:chr11:102115206": {
+      "base_score": 0.33848,
+      "final_score": 0.257429,
+      "risk_class": "SAFE"
+    },
+    "IFNG:ENST00000229135:chr12:68159107": {
+      "base_score": 0.230275,
+      "final_score": 0.175134,
+      "risk_class": "SAFE"
+    },
+    "LIN28A:ENST00000326279:chr1:26414640": {
+      "base_score": 0.261955,
+      "final_score": 0.199228,
+      "risk_class": "SAFE"
+    },
+    "DICER1:ENST00000343455:chr14:95147794": {
+      "base_score": 0.302505,
+      "final_score": 0.230068,
+      "risk_class": "SAFE"
+    },
+    "TNRC6B:ENST00000454349:chr22:40180363": {
+      "base_score": 0.348485,
+      "final_score": 0.265038,
+      "risk_class": "SAFE"
+    },
+    "CCND2:ENST00000261254:chr12:4276799": {
+      "base_score": 0.280225,
+      "final_score": 0.213123,
+      "risk_class": "SAFE"
+    },
+    "MTOR:ENST00000361445:chr1:11259515": {
+      "base_score": 0.32948,
+      "final_score": 0.250584,
+      "risk_class": "SAFE"
+    },
+    "RPS3:ENST00000531188:chr11:75401416": {
+      "base_score": 0.39483,
+      "final_score": 0.300286,
+      "risk_class": "WARNING"
+    },
+    "HNRNPA2B1:ENST00000618183:chr7:26197989": {
+      "base_score": 0.36794,
+      "final_score": 0.279835,
+      "risk_class": "SAFE"
+    },
+    "TSC1:ENST00000298552:chr9:132937751": {
+      "base_score": 0.35739,
+      "final_score": 0.271811,
+      "risk_class": "SAFE"
+    },
+    "SMAD2:ENST00000262160:chr18:47898662": {
+      "base_score": 0.33935,
+      "final_score": 0.258091,
+      "risk_class": "SAFE"
+    },
+    "SMAD2:ENST00000262160:chr18:47916332": {
+      "base_score": 0.34453,
+      "final_score": 0.26203,
+      "risk_class": "SAFE"
+    }
+  },
+  "overall_risk_score": 0.32595,
+  "overall_risk_class": "WARNING",
+  "cell_line_context": "Active chromatin detected at 2 of 41 off-target sites. Overall risk: WARNING. Moderate off-target risk detected. Perform dose-response experiments and transcriptome-wide RNA-seq to confirm specificity."
+}

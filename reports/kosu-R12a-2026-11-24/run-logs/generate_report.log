@@ -1,0 +1,45 @@
+2026-11-24 15:47:01.195 | INFO     | src.reporting.report_generator:run:112 - report_generator: assembling FinalReport
+2026-11-24 15:47:01.198 | INFO     | src.reporting.json_report:save_json_report:97 - json_report: saved → /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/results/VEGFA_HeLa/final_report.json (27673 bytes)
+2026-11-24 15:47:01.223 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.3265 → WARNING
+2026-11-24 15:47:01.224 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.3424 → WARNING
+2026-11-24 15:47:01.224 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.3695 → WARNING
+2026-11-24 15:47:01.225 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.3674 → WARNING
+2026-11-24 15:47:01.225 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.3344 → WARNING
+2026-11-24 15:47:01.225 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.3482 → WARNING
+2026-11-24 15:47:01.226 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.3097 → WARNING
+2026-11-24 15:47:01.226 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.4286 → WARNING
+2026-11-24 15:47:01.226 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.3372 → WARNING
+2026-11-24 15:47:01.227 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.3131 → WARNING
+2026-11-24 15:47:01.227 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.3425 → WARNING
+2026-11-24 15:47:01.228 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.3112 → WARNING
+2026-11-24 15:47:01.228 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.3740 → WARNING
+2026-11-24 15:47:01.229 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.3484 → WARNING
+2026-11-24 15:47:01.229 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.3871 → WARNING
+2026-11-24 15:47:01.230 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.2376 → SAFE
+2026-11-24 15:47:01.230 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.3253 → WARNING
+2026-11-24 15:47:01.230 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.3302 → WARNING
+2026-11-24 15:47:01.231 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.3804 → WARNING
+2026-11-24 15:47:01.231 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.3824 → WARNING
+2026-11-24 15:47:01.232 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.3322 → WARNING
+2026-11-24 15:47:01.232 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.3692 → WARNING
+2026-11-24 15:47:01.232 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.2777 → SAFE
+2026-11-24 15:47:01.233 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.3086 → WARNING
+2026-11-24 15:47:01.233 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.2589 → SAFE
+2026-11-24 15:47:01.233 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.2867 → SAFE
+2026-11-24 15:47:01.234 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.2842 → SAFE
+2026-11-24 15:47:01.234 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.3395 → WARNING
+2026-11-24 15:47:01.234 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.2850 → SAFE
+2026-11-24 15:47:01.235 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.3385 → WARNING
+2026-11-24 15:47:01.235 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.2303 → SAFE
+2026-11-24 15:47:01.235 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.2620 → SAFE
+2026-11-24 15:47:01.236 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.3025 → WARNING
+2026-11-24 15:47:01.236 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.3485 → WARNING
+2026-11-24 15:47:01.236 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.2802 → SAFE
+2026-11-24 15:47:01.237 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.3295 → WARNING
+2026-11-24 15:47:01.237 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.3948 → WARNING
+2026-11-24 15:47:01.237 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.3679 → WARNING
+2026-11-24 15:47:01.238 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.3574 → WARNING
+2026-11-24 15:47:01.238 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.3394 → WARNING
+2026-11-24 15:47:01.238 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.3445 → WARNING
+2026-11-24 15:47:01.244 | INFO     | src.reporting.html_report:generate_html_report:246 - html_report: saved → /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/results/VEGFA_HeLa/final_report.html (383,109 bytes)
+2026-11-24 15:47:01.244 | INFO     | src.reporting.report_generator:run:157 - report_generator: 41 sites, risk=WARNING (0.3260) → /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/results/VEGFA_HeLa/final_report.html

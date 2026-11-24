@@ -11,6 +11,9 @@ vermiyor** — ikisi de ön kayıt maddesi (`A12`), kilidi kullanıcı atar
 
 ## Bölüm 0 — Önce bir uyarı: taze koşu bilimsel olarak kullanılabilir DEĞİL
 
+> ✅ **GÜNCELLEME 2026-11-24:** bu bölümün teşhis ettiği arıza `R12a`'da kapandı. Sebep ölçüldü (`expand=1` + batch=80 Ensembl'de 120 s'de timeout), `_LOOKUP_BATCH` 20'ye indirildi, ve yeni koşu **182/182 arka plan (%100)** ile **41 site** üretti — tek 504 bile almadan. Koşu artık kendi kapsamını `stage2_seed_hits.json`'daki `background_coverage` alanına yazıyor.
+> Aşağıdaki teşhis tarihsel kayıt olarak duruyor; **§1.4'ün sayıları o zayıf koşudan geldiği için düzeltildi** (bkz. oradaki DÜZELTME kutusu).
+
 Aşağıdaki sayıların hepsi bu koşudan, ve koşunun kendisi bir bulgu üretti:
 
 ```
@@ -128,18 +131,26 @@ doğrulandı). Yani `_clamp` aynı anda:
 
 ### 1.4 `0.5`'in neden özellikle yanlış olduğu — taze ölçüm
 
-`0.5`, beş domainin **dördünün gözlenen maksimumunun üstünde**:
+⚠️ **DÜZELTME (2026-11-24, R12a sonrası tam kapsamlı koşu).** Bu bölümün ilk
+hâli %12 kapsamlı, n=4 siteli koşudan ölçülmüştü ve iddiayı **olduğundan
+güçlü** gösteriyordu ("beş domainin dördü"). Kendi §0 uyarımı kendi sayıma
+uygulamak zorundayım. Tam kapsamlı koşu (n=41, 182/182 arka plan):
 
-```
-biophysics_structure  maks 0.1333  → 0.5, ölçülebilen en riskli siteden 3.8× riskli
-execution_safety      maks 0.2222  → 2.3×
-variant_toxicity      maks 0.1999  → 2.5×
-epigenetic_context    maks 0.5035  → tavana eşit
-```
+| domain | maks | ortalama | `0.5` tavanın üstünde mi | sitelerin kaçı 0.5 altında |
+|---|---|---|---|---|
+| `variant_toxicity` | 0.6698 | 0.2282 | hayır | %95 |
+| `epigenetic_context` | 0.6095 | 0.2232 | hayır | %90 |
+| `biophysics_structure` | 0.2933 | 0.0704 | **evet** | %100 |
+| `execution_safety` | 0.2222 | 0.1680 | **evet** | %100 |
+| `sequence_specificity` | 1.0000 | 1.0000 | hayır (sabit, `C1`) | %0 |
 
-Sonuç: **ölçülmemiş bir domain, ölçülebilen her siteden daha riskli
-sıralanıyor.** `biostatistician` bunu eski koşularda bulmuştu; taze koşu
-daha da keskin (eskiden 3/5 domain, şimdi 4/5).
+Yani doğru ifade: `0.5`, beş domainin **ikisinin** gözlenen maksimumunun
+üstünde (dördünün değil), ve **dördünün ortalamasının** belirgin şekilde
+üstünde. Ölçülmemiş bir `biophysics` ya da `execution` domaini hâlâ
+ölçülebilen **her** siteden riskli sıralanıyor; `variant` ve `epigenetic`
+için ise `0.5` sitelerin %90-95'inden riskli — yani argüman ayakta ama
+"her domain için" değil, **iki domain için kesin, diğer ikisi için
+olasılıksal**.
 
 Ve yön, merger'ların içindeki renormalizasyonun **tersi**: renormalizasyon
 Bulgu 7'de aşağı yönlü sapma gösteriyor (CCLE düşünce 37/41 site güvenliye),

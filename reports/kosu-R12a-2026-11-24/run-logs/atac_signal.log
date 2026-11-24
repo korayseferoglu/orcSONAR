@@ -1,0 +1,97 @@
+2026-11-24 15:31:09.447 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:13.762 | DEBUG    | src.stage4_epigenetic.encode_reader:_bigwig_mean:138 - encode_reader: no intervals in chr1:11255438-11255458 — measured zero
+2026-11-24 15:31:13.765 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF184TYT:chr1:11255438:11255458 (TTL 168h, schema v1)
+2026-11-24 15:31:13.765 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr1:11255438-11255458(-) signal=0.0000
+2026-11-24 15:31:14.805 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF184TYT:chr6:43777011:43777031 (TTL 168h, schema v1)
+2026-11-24 15:31:14.805 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr6:43777011-43777031(+) signal=0.1027
+2026-11-24 15:31:15.631 | DEBUG    | src.stage4_epigenetic.encode_reader:_bigwig_mean:138 - encode_reader: no intervals in chr7:26198044-26198064 — measured zero
+2026-11-24 15:31:15.631 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF184TYT:chr7:26198044:26198064 (TTL 168h, schema v1)
+2026-11-24 15:31:15.632 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr7:26198044-26198064(-) signal=0.0000
+2026-11-24 15:31:16.440 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF184TYT:chr14:95152261:95152281 (TTL 168h, schema v1)
+2026-11-24 15:31:16.440 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr14:95152261-95152281(-) signal=0.0298
+2026-11-24 15:31:17.260 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF184TYT:chr22:40182273:40182293 (TTL 168h, schema v1)
+2026-11-24 15:31:17.260 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr22:40182273-40182293(+) signal=0.0298
+2026-11-24 15:31:18.069 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF184TYT:chr3:41200550:41200570 (TTL 168h, schema v1)
+2026-11-24 15:31:18.069 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr3:41200550-41200570(+) signal=0.0595
+2026-11-24 15:31:18.871 | DEBUG    | src.stage4_epigenetic.encode_reader:_bigwig_mean:138 - encode_reader: no intervals in chr3:142571301-142571321 — measured zero
+2026-11-24 15:31:18.872 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF184TYT:chr3:142571301:142571321 (TTL 168h, schema v1)
+2026-11-24 15:31:18.872 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr3:142571301-142571321(-) signal=0.0000
+2026-11-24 15:31:19.395 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF184TYT:chr1:23692780:23692800 (TTL 168h, schema v1)
+2026-11-24 15:31:19.395 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr1:23692780-23692800(+) signal=0.1191
+2026-11-24 15:31:19.888 | DEBUG    | src.stage4_epigenetic.encode_reader:_bigwig_mean:138 - encode_reader: no intervals in chr1:96724335-96724355 — measured zero
+2026-11-24 15:31:19.891 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF184TYT:chr1:96724335:96724355 (TTL 168h, schema v1)
+2026-11-24 15:31:19.891 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr1:96724335-96724355(+) signal=0.0000
+2026-11-24 15:31:19.892 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF184TYT:chr1:96724850:96724870 (TTL 168h, schema v1)
+2026-11-24 15:31:19.892 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr1:96724850-96724870(+) signal=0.0298
+2026-11-24 15:31:20.725 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF184TYT:chr17:43122797:43122817 (TTL 168h, schema v1)
+2026-11-24 15:31:20.725 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr17:43122797-43122817(-) signal=0.0298
+2026-11-24 15:31:21.526 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF184TYT:chr2:47175374:47175394 (TTL 168h, schema v1)
+2026-11-24 15:31:21.526 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr2:47175374-47175394(-) signal=0.4286
+2026-11-24 15:31:22.342 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF184TYT:chr9:83979914:83979934 (TTL 168h, schema v1)
+2026-11-24 15:31:22.342 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr9:83979914-83979934(-) signal=0.2619
+2026-11-24 15:31:22.826 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF184TYT:chr1:35815110:35815130 (TTL 168h, schema v1)
+2026-11-24 15:31:22.826 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr1:35815110-35815130(+) signal=0.0298
+2026-11-24 15:31:23.716 | DEBUG    | src.stage4_epigenetic.encode_reader:_bigwig_mean:138 - encode_reader: no intervals in chr12:68809823-68809843 — measured zero
+2026-11-24 15:31:23.717 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF184TYT:chr12:68809823:68809843 (TTL 168h, schema v1)
+2026-11-24 15:31:23.717 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr12:68809823-68809843(+) signal=0.0000
+2026-11-24 15:31:24.504 | DEBUG    | src.stage4_epigenetic.encode_reader:_bigwig_mean:138 - encode_reader: no intervals in chr7:55027996-55028016 — measured zero
+2026-11-24 15:31:24.505 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF184TYT:chr7:55027996:55028016 (TTL 168h, schema v1)
+2026-11-24 15:31:24.505 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr7:55027996-55028016(+) signal=0.0000
+2026-11-24 15:31:25.306 | DEBUG    | src.stage4_epigenetic.encode_reader:_bigwig_mean:138 - encode_reader: no intervals in chr3:179151174-179151194 — measured zero
+2026-11-24 15:31:25.309 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF184TYT:chr3:179151174:179151194 (TTL 168h, schema v1)
+2026-11-24 15:31:25.309 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr3:179151174-179151194(+) signal=0.0000
+2026-11-24 15:31:25.841 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF184TYT:chr6:43777871:43777891 (TTL 168h, schema v1)
+2026-11-24 15:31:25.841 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr6:43777871-43777891(+) signal=0.0298
+2026-11-24 15:31:26.113 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF184TYT:chr9:83979032:83979052 (TTL 168h, schema v1)
+2026-11-24 15:31:26.113 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr9:83979032-83979052(-) signal=0.1488
+2026-11-24 15:31:26.446 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF184TYT:chr22:38504908:38504928 (TTL 168h, schema v1)
+2026-11-24 15:31:26.446 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr22:38504908-38504928(-) signal=0.2500
+2026-11-24 15:31:26.447 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF184TYT:chr22:38501867:38501887 (TTL 168h, schema v1)
+2026-11-24 15:31:26.447 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr22:38501867-38501887(-) signal=0.0893
+2026-11-24 15:31:27.233 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF184TYT:chr17:64505712:64505732 (TTL 168h, schema v1)
+2026-11-24 15:31:27.233 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr17:64505712-64505732(-) signal=0.1012
+2026-11-24 15:31:29.806 | DEBUG    | src.stage4_epigenetic.encode_reader:_bigwig_mean:138 - encode_reader: no intervals in chr12:4276729-4276749 — measured zero
+2026-11-24 15:31:29.809 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF184TYT:chr12:4276729:4276749 (TTL 168h, schema v1)
+2026-11-24 15:31:29.809 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr12:4276729-4276749(+) signal=0.0000
+2026-11-24 15:31:30.351 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF184TYT:chr10:87869740:87869760 (TTL 168h, schema v1)
+2026-11-24 15:31:30.351 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr10:87869740-87869760(+) signal=0.0893
+2026-11-24 15:31:30.631 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF184TYT:chr3:142572942:142572962 (TTL 168h, schema v1)
+2026-11-24 15:31:30.632 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr3:142572942-142572962(-) signal=0.0952
+2026-11-24 15:31:31.455 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF184TYT:chr4:184648366:184648386 (TTL 168h, schema v1)
+2026-11-24 15:31:31.455 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr4:184648366-184648386(-) signal=0.1488
+2026-11-24 15:31:32.291 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF184TYT:chr7:148700526:148700546 (TTL 168h, schema v1)
+2026-11-24 15:31:32.292 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr7:148700526-148700546(+) signal=0.0893
+2026-11-24 15:31:33.139 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF184TYT:chr19:40280283:40280303 (TTL 168h, schema v1)
+2026-11-24 15:31:33.139 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr19:40280283-40280303(-) signal=0.0298
+2026-11-24 15:31:33.975 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF184TYT:chr9:132940598:132940618 (TTL 168h, schema v1)
+2026-11-24 15:31:33.975 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr9:132940598-132940618(-) signal=0.0327
+2026-11-24 15:31:34.737 | DEBUG    | src.stage4_epigenetic.encode_reader:_bigwig_mean:138 - encode_reader: no intervals in chr11:102115206-102115226 — measured zero
+2026-11-24 15:31:34.738 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF184TYT:chr11:102115206:102115226 (TTL 168h, schema v1)
+2026-11-24 15:31:34.739 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr11:102115206-102115226(+) signal=0.0000
+2026-11-24 15:31:35.059 | DEBUG    | src.stage4_epigenetic.encode_reader:_bigwig_mean:138 - encode_reader: no intervals in chr12:68159107-68159127 — measured zero
+2026-11-24 15:31:35.062 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF184TYT:chr12:68159107:68159127 (TTL 168h, schema v1)
+2026-11-24 15:31:35.062 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr12:68159107-68159127(-) signal=0.0000
+2026-11-24 15:31:35.301 | DEBUG    | src.stage4_epigenetic.encode_reader:_bigwig_mean:138 - encode_reader: no intervals in chr1:26414640-26414660 — measured zero
+2026-11-24 15:31:35.303 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF184TYT:chr1:26414640:26414660 (TTL 168h, schema v1)
+2026-11-24 15:31:35.303 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr1:26414640-26414660(+) signal=0.0000
+2026-11-24 15:31:35.698 | DEBUG    | src.stage4_epigenetic.encode_reader:_bigwig_mean:138 - encode_reader: no intervals in chr14:95147794-95147814 — measured zero
+2026-11-24 15:31:35.699 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF184TYT:chr14:95147794:95147814 (TTL 168h, schema v1)
+2026-11-24 15:31:35.699 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr14:95147794-95147814(-) signal=0.0000
+2026-11-24 15:31:36.053 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF184TYT:chr22:40180363:40180383 (TTL 168h, schema v1)
+2026-11-24 15:31:36.053 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr22:40180363-40180383(+) signal=0.0298
+2026-11-24 15:31:36.317 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF184TYT:chr12:4276799:4276819 (TTL 168h, schema v1)
+2026-11-24 15:31:36.317 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr12:4276799-4276819(+) signal=0.0595
+2026-11-24 15:31:36.574 | DEBUG    | src.stage4_epigenetic.encode_reader:_bigwig_mean:138 - encode_reader: no intervals in chr1:11259515-11259535 — measured zero
+2026-11-24 15:31:36.576 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF184TYT:chr1:11259515:11259535 (TTL 168h, schema v1)
+2026-11-24 15:31:36.576 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr1:11259515-11259535(-) signal=0.0000
+2026-11-24 15:32:08.491 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF184TYT:chr11:75401416:75401436 (TTL 168h, schema v1)
+2026-11-24 15:32:08.491 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr11:75401416-75401436(+) signal=0.0774
+2026-11-24 15:32:10.381 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF184TYT:chr7:26197989:26198009 (TTL 168h, schema v1)
+2026-11-24 15:32:10.381 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr7:26197989-26198009(-) signal=0.0595
+2026-11-24 15:32:11.774 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF184TYT:chr9:132937751:132937771 (TTL 168h, schema v1)
+2026-11-24 15:32:11.774 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr9:132937751-132937771(-) signal=1.5477
+2026-11-24 15:32:14.090 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF184TYT:chr18:47898662:47898682 (TTL 168h, schema v1)
+2026-11-24 15:32:14.090 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr18:47898662-47898682(-) signal=0.2083
+2026-11-24 15:32:14.091 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF184TYT:chr18:47916332:47916352 (TTL 168h, schema v1)
+2026-11-24 15:32:14.092 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr18:47916332-47916352(-) signal=0.4881
+2026-11-24 15:32:14.092 | INFO     | src.stage4_epigenetic.atac_fetcher:run:56 - atac_fetcher: 41 regions for HeLa → /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/results/VEGFA_HeLa/stage4_atac.json

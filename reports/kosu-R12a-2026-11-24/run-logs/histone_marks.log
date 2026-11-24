@@ -1,0 +1,167 @@
+2026-11-24 15:32:20.493 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:32:24.400 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF432PYK:chr1:11255438:11255458 (TTL 168h, schema v1)
+2026-11-24 15:32:24.400 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr1:11255438-11255458(-) signal=0.3704
+2026-11-24 15:32:25.262 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF432PYK:chr6:43777011:43777031 (TTL 168h, schema v1)
+2026-11-24 15:32:25.262 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr6:43777011-43777031(+) signal=0.6924
+2026-11-24 15:32:25.917 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF432PYK:chr7:26198044:26198064 (TTL 168h, schema v1)
+2026-11-24 15:32:25.917 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr7:26198044-26198064(-) signal=7.1659
+2026-11-24 15:32:26.732 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF432PYK:chr14:95152261:95152281 (TTL 168h, schema v1)
+2026-11-24 15:32:26.733 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr14:95152261-95152281(-) signal=0.5651
+2026-11-24 15:32:27.519 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF432PYK:chr22:40182273:40182293 (TTL 168h, schema v1)
+2026-11-24 15:32:27.519 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr22:40182273-40182293(+) signal=0.5277
+2026-11-24 15:32:28.087 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF432PYK:chr3:41200550:41200570 (TTL 168h, schema v1)
+2026-11-24 15:32:28.087 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr3:41200550-41200570(+) signal=12.0151
+2026-11-24 15:32:28.677 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF432PYK:chr3:142571301:142571321 (TTL 168h, schema v1)
+2026-11-24 15:32:28.677 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr3:142571301-142571321(-) signal=0.1319
+2026-11-24 15:32:29.172 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF432PYK:chr1:23692780:23692800 (TTL 168h, schema v1)
+2026-11-24 15:32:29.172 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr1:23692780-23692800(+) signal=25.2004
+2026-11-24 15:32:29.735 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF432PYK:chr1:96724335:96724355 (TTL 168h, schema v1)
+2026-11-24 15:32:29.735 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr1:96724335-96724355(+) signal=1.4577
+2026-11-24 15:32:29.736 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF432PYK:chr1:96724850:96724870 (TTL 168h, schema v1)
+2026-11-24 15:32:29.736 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr1:96724850-96724870(+) signal=0.4688
+2026-11-24 15:32:30.298 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF432PYK:chr17:43122797:43122817 (TTL 168h, schema v1)
+2026-11-24 15:32:30.298 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr17:43122797-43122817(-) signal=0.3958
+2026-11-24 15:32:30.871 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF432PYK:chr2:47175374:47175394 (TTL 168h, schema v1)
+2026-11-24 15:32:30.871 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr2:47175374-47175394(-) signal=24.3015
+2026-11-24 15:32:31.449 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF432PYK:chr9:83979914:83979934 (TTL 168h, schema v1)
+2026-11-24 15:32:31.450 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr9:83979914-83979934(-) signal=35.2843
+2026-11-24 15:32:32.009 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF432PYK:chr1:35815110:35815130 (TTL 168h, schema v1)
+2026-11-24 15:32:32.009 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr1:35815110-35815130(+) signal=0.1319
+2026-11-24 15:32:32.582 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF432PYK:chr12:68809823:68809843 (TTL 168h, schema v1)
+2026-11-24 15:32:32.582 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr12:68809823-68809843(+) signal=6.5693
+2026-11-24 15:32:33.175 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF432PYK:chr7:55027996:55028016 (TTL 168h, schema v1)
+2026-11-24 15:32:33.175 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr7:55027996-55028016(+) signal=0.1662
+2026-11-24 15:32:33.708 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF432PYK:chr3:179151174:179151194 (TTL 168h, schema v1)
+2026-11-24 15:32:33.709 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr3:179151174-179151194(+) signal=1.0963
+2026-11-24 15:32:34.060 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF432PYK:chr6:43777871:43777891 (TTL 168h, schema v1)
+2026-11-24 15:32:34.060 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr6:43777871-43777891(+) signal=1.1873
+2026-11-24 15:32:34.323 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF432PYK:chr9:83979032:83979052 (TTL 168h, schema v1)
+2026-11-24 15:32:34.324 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr9:83979032-83979052(-) signal=20.3881
+2026-11-24 15:32:34.623 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF432PYK:chr22:38504908:38504928 (TTL 168h, schema v1)
+2026-11-24 15:32:34.623 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr22:38504908-38504928(-) signal=16.0943
+2026-11-24 15:32:34.890 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF432PYK:chr22:38501867:38501887 (TTL 168h, schema v1)
+2026-11-24 15:32:34.890 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr22:38501867-38501887(-) signal=1.7283
+2026-11-24 15:32:35.516 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF432PYK:chr17:64505712:64505732 (TTL 168h, schema v1)
+2026-11-24 15:32:35.516 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr17:64505712-64505732(-) signal=33.8072
+2026-11-24 15:32:36.133 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF432PYK:chr12:4276729:4276749 (TTL 168h, schema v1)
+2026-11-24 15:32:36.133 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr12:4276729-4276749(+) signal=0.5733
+2026-11-24 15:32:36.691 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF432PYK:chr10:87869740:87869760 (TTL 168h, schema v1)
+2026-11-24 15:32:36.692 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr10:87869740-87869760(+) signal=4.0537
+2026-11-24 15:32:37.062 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF432PYK:chr3:142572942:142572962 (TTL 168h, schema v1)
+2026-11-24 15:32:37.062 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr3:142572942-142572962(-) signal=0.9714
+2026-11-24 15:32:37.625 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF432PYK:chr4:184648366:184648386 (TTL 168h, schema v1)
+2026-11-24 15:32:37.625 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr4:184648366-184648386(-) signal=11.5035
+2026-11-24 15:32:38.213 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF432PYK:chr7:148700526:148700546 (TTL 168h, schema v1)
+2026-11-24 15:32:38.213 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr7:148700526-148700546(+) signal=14.7422
+2026-11-24 15:32:38.775 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF432PYK:chr19:40280283:40280303 (TTL 168h, schema v1)
+2026-11-24 15:32:38.775 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr19:40280283-40280303(-) signal=0.3035
+2026-11-24 15:32:39.660 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF432PYK:chr9:132940598:132940618 (TTL 168h, schema v1)
+2026-11-24 15:32:39.660 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr9:132940598-132940618(-) signal=1.2752
+2026-11-24 15:32:40.379 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF432PYK:chr11:102115206:102115226 (TTL 168h, schema v1)
+2026-11-24 15:32:40.379 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr11:102115206-102115226(+) signal=1.9019
+2026-11-24 15:32:40.709 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF432PYK:chr12:68159107:68159127 (TTL 168h, schema v1)
+2026-11-24 15:32:40.709 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr12:68159107-68159127(-) signal=0.2194
+2026-11-24 15:32:41.267 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF432PYK:chr1:26414640:26414660 (TTL 168h, schema v1)
+2026-11-24 15:32:41.268 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr1:26414640-26414660(+) signal=0.9815
+2026-11-24 15:32:41.565 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF432PYK:chr14:95147794:95147814 (TTL 168h, schema v1)
+2026-11-24 15:32:41.565 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr14:95147794-95147814(-) signal=0.6484
+2026-11-24 15:32:41.850 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF432PYK:chr22:40180363:40180383 (TTL 168h, schema v1)
+2026-11-24 15:32:41.851 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr22:40180363-40180383(+) signal=2.9035
+2026-11-24 15:32:42.202 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF432PYK:chr12:4276799:4276819 (TTL 168h, schema v1)
+2026-11-24 15:32:42.203 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr12:4276799-4276819(+) signal=0.4660
+2026-11-24 15:32:42.478 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF432PYK:chr1:11259515:11259535 (TTL 168h, schema v1)
+2026-11-24 15:32:42.479 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr1:11259515-11259535(-) signal=1.1352
+2026-11-24 15:32:43.030 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF432PYK:chr11:75401416:75401436 (TTL 168h, schema v1)
+2026-11-24 15:32:43.030 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr11:75401416-75401436(+) signal=20.1380
+2026-11-24 15:32:43.320 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF432PYK:chr7:26197989:26198009 (TTL 168h, schema v1)
+2026-11-24 15:32:43.320 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr7:26197989-26198009(-) signal=5.9230
+2026-11-24 15:32:43.584 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF432PYK:chr9:132937751:132937771 (TTL 168h, schema v1)
+2026-11-24 15:32:43.584 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr9:132937751-132937771(-) signal=2.1093
+2026-11-24 15:32:44.132 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF432PYK:chr18:47898662:47898682 (TTL 168h, schema v1)
+2026-11-24 15:32:44.133 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr18:47898662-47898682(-) signal=1.3180
+2026-11-24 15:32:44.135 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF432PYK:chr18:47916332:47916352 (TTL 168h, schema v1)
+2026-11-24 15:32:44.135 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr18:47916332-47916352(-) signal=2.5442
+2026-11-24 15:32:44.137 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:32:48.174 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF658XKZ:chr1:11255438:11255458 (TTL 168h, schema v1)
+2026-11-24 15:32:48.174 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr1:11255438-11255458(-) signal=0.3447
+2026-11-24 15:32:49.050 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF658XKZ:chr6:43777011:43777031 (TTL 168h, schema v1)
+2026-11-24 15:32:49.050 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr6:43777011-43777031(+) signal=1.6695
+2026-11-24 15:32:49.604 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF658XKZ:chr7:26198044:26198064 (TTL 168h, schema v1)
+2026-11-24 15:32:49.604 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr7:26198044-26198064(-) signal=0.6225
+2026-11-24 15:32:50.199 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF658XKZ:chr14:95152261:95152281 (TTL 168h, schema v1)
+2026-11-24 15:32:50.200 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr14:95152261-95152281(-) signal=0.1690
+2026-11-24 15:32:50.753 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF658XKZ:chr22:40182273:40182293 (TTL 168h, schema v1)
+2026-11-24 15:32:50.753 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr22:40182273-40182293(+) signal=0.8094
+2026-11-24 15:32:51.384 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF658XKZ:chr3:41200550:41200570 (TTL 168h, schema v1)
+2026-11-24 15:32:51.384 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr3:41200550-41200570(+) signal=4.2516
+2026-11-24 15:32:51.926 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF658XKZ:chr3:142571301:142571321 (TTL 168h, schema v1)
+2026-11-24 15:32:51.926 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr3:142571301-142571321(-) signal=0.1349
+2026-11-24 15:32:52.422 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF658XKZ:chr1:23692780:23692800 (TTL 168h, schema v1)
+2026-11-24 15:32:52.422 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr1:23692780-23692800(+) signal=20.7322
+2026-11-24 15:32:52.996 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF658XKZ:chr1:96724335:96724355 (TTL 168h, schema v1)
+2026-11-24 15:32:52.997 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr1:96724335-96724355(+) signal=1.1562
+2026-11-24 15:32:52.998 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF658XKZ:chr1:96724850:96724870 (TTL 168h, schema v1)
+2026-11-24 15:32:52.998 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr1:96724850-96724870(+) signal=0.0000
+2026-11-24 15:32:53.903 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF658XKZ:chr17:43122797:43122817 (TTL 168h, schema v1)
+2026-11-24 15:32:53.903 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr17:43122797-43122817(-) signal=0.1542
+2026-11-24 15:32:54.467 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF658XKZ:chr2:47175374:47175394 (TTL 168h, schema v1)
+2026-11-24 15:32:54.467 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr2:47175374-47175394(-) signal=42.9472
+2026-11-24 15:32:55.384 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF658XKZ:chr9:83979914:83979934 (TTL 168h, schema v1)
+2026-11-24 15:32:55.384 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr9:83979914-83979934(-) signal=138.9054
+2026-11-24 15:32:55.895 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF658XKZ:chr1:35815110:35815130 (TTL 168h, schema v1)
+2026-11-24 15:32:55.895 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr1:35815110-35815130(+) signal=0.7708
+2026-11-24 15:32:56.473 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF658XKZ:chr12:68809823:68809843 (TTL 168h, schema v1)
+2026-11-24 15:32:56.473 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr12:68809823-68809843(+) signal=1.1094
+2026-11-24 15:32:57.055 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF658XKZ:chr7:55027996:55028016 (TTL 168h, schema v1)
+2026-11-24 15:32:57.056 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr7:55027996-55028016(+) signal=0.2428
+2026-11-24 15:32:57.629 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF658XKZ:chr3:179151174:179151194 (TTL 168h, schema v1)
+2026-11-24 15:32:57.629 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr3:179151174-179151194(+) signal=0.5362
+2026-11-24 15:32:57.995 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF658XKZ:chr6:43777871:43777891 (TTL 168h, schema v1)
+2026-11-24 15:32:57.995 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr6:43777871-43777891(+) signal=2.1583
+2026-11-24 15:32:58.257 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF658XKZ:chr9:83979032:83979052 (TTL 168h, schema v1)
+2026-11-24 15:32:58.257 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr9:83979032-83979052(-) signal=15.9747
+2026-11-24 15:32:58.586 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF658XKZ:chr22:38504908:38504928 (TTL 168h, schema v1)
+2026-11-24 15:32:58.586 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr22:38504908-38504928(-) signal=12.4100
+2026-11-24 15:32:58.588 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF658XKZ:chr22:38501867:38501887 (TTL 168h, schema v1)
+2026-11-24 15:32:58.588 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr22:38501867-38501887(-) signal=1.0756
+2026-11-24 15:32:59.158 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF658XKZ:chr17:64505712:64505732 (TTL 168h, schema v1)
+2026-11-24 15:32:59.158 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr17:64505712-64505732(-) signal=112.5040
+2026-11-24 15:32:59.743 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF658XKZ:chr12:4276729:4276749 (TTL 168h, schema v1)
+2026-11-24 15:32:59.743 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr12:4276729-4276749(+) signal=1.0251
+2026-11-24 15:33:00.310 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF658XKZ:chr10:87869740:87869760 (TTL 168h, schema v1)
+2026-11-24 15:33:00.310 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr10:87869740-87869760(+) signal=0.0329
+2026-11-24 15:33:00.637 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF658XKZ:chr3:142572942:142572962 (TTL 168h, schema v1)
+2026-11-24 15:33:00.637 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr3:142572942-142572962(-) signal=0.3231
+2026-11-24 15:33:01.182 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF658XKZ:chr4:184648366:184648386 (TTL 168h, schema v1)
+2026-11-24 15:33:01.182 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr4:184648366-184648386(-) signal=8.3632
+2026-11-24 15:33:01.788 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF658XKZ:chr7:148700526:148700546 (TTL 168h, schema v1)
+2026-11-24 15:33:01.788 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr7:148700526-148700546(+) signal=2.3768
+2026-11-24 15:33:02.352 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF658XKZ:chr19:40280283:40280303 (TTL 168h, schema v1)
+2026-11-24 15:33:02.353 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr19:40280283-40280303(-) signal=0.6888
+2026-11-24 15:33:02.984 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF658XKZ:chr9:132940598:132940618 (TTL 168h, schema v1)
+2026-11-24 15:33:02.984 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr9:132940598-132940618(-) signal=0.8206
+2026-11-24 15:33:03.566 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF658XKZ:chr11:102115206:102115226 (TTL 168h, schema v1)
+2026-11-24 15:33:03.567 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr11:102115206-102115226(+) signal=0.1630
+2026-11-24 15:33:03.898 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF658XKZ:chr12:68159107:68159127 (TTL 168h, schema v1)
+2026-11-24 15:33:03.899 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr12:68159107-68159127(-) signal=0.0000
+2026-11-24 15:33:04.403 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF658XKZ:chr1:26414640:26414660 (TTL 168h, schema v1)
+2026-11-24 15:33:04.403 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr1:26414640-26414660(+) signal=0.3569
+2026-11-24 15:33:04.750 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF658XKZ:chr14:95147794:95147814 (TTL 168h, schema v1)
+2026-11-24 15:33:04.750 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr14:95147794-95147814(-) signal=1.4460
+2026-11-24 15:33:05.061 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF658XKZ:chr22:40180363:40180383 (TTL 168h, schema v1)
+2026-11-24 15:33:05.061 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr22:40180363-40180383(+) signal=1.0293
+2026-11-24 15:33:05.354 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF658XKZ:chr12:4276799:4276819 (TTL 168h, schema v1)
+2026-11-24 15:33:05.355 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr12:4276799-4276819(+) signal=0.3382
+2026-11-24 15:33:05.601 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF658XKZ:chr1:11259515:11259535 (TTL 168h, schema v1)
+2026-11-24 15:33:05.602 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr1:11259515-11259535(-) signal=1.0991
+2026-11-24 15:33:06.150 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF658XKZ:chr11:75401416:75401436 (TTL 168h, schema v1)
+2026-11-24 15:33:06.150 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr11:75401416-75401436(+) signal=7.5357
+2026-11-24 15:33:06.488 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF658XKZ:chr7:26197989:26198009 (TTL 168h, schema v1)
+2026-11-24 15:33:06.488 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr7:26197989-26198009(-) signal=0.2965
+2026-11-24 15:33:06.741 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF658XKZ:chr9:132937751:132937771 (TTL 168h, schema v1)
+2026-11-24 15:33:06.741 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr9:132937751-132937771(-) signal=24.2158
+2026-11-24 15:33:07.284 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF658XKZ:chr18:47898662:47898682 (TTL 168h, schema v1)
+2026-11-24 15:33:07.284 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr18:47898662-47898682(-) signal=1.1359
+2026-11-24 15:33:07.285 | DEBUG    | src.core.cache:set:216 - Cache SET: encode_signal:ENCFF658XKZ:chr18:47916332:47916352 (TTL 168h, schema v1)
+2026-11-24 15:33:07.286 | DEBUG    | src.stage4_epigenetic.encode_reader:read_signal_bulk:324 - encode_reader: chr18:47916332-47916352(-) signal=3.1755
+2026-11-24 15:33:07.288 | INFO     | src.stage4_epigenetic.histone_fetcher:run:63 - histone_fetcher: 41 regions for HeLa → /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/results/VEGFA_HeLa/stage4_histones.json

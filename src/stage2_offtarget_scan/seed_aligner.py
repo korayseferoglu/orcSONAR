@@ -384,8 +384,12 @@ def run(
             logger.debug(f"seed_aligner: sequence fetch failed for {t.transcript_id}: {exc}")
 
     # --- Background transcriptome (whole-transcriptome scan) ---
+    # Unknown until the fetch reports it. The generic `except` below keeps the
+    # run going, and in that case the coverage is genuinely not known — which
+    # must not read as full coverage (roadmap R12a).
+    bg_coverage: dict[str, Any] | None = None
     try:
-        bg_transcripts, bg_sequences = get_background_transcriptome(
+        bg_transcripts, bg_sequences, bg_coverage = get_background_transcriptome(
             config, exclude_gene=gene
         )
         # Normalise to RNA alphabet
@@ -428,6 +432,10 @@ def run(
     payload = {
         "sites": [s.model_dump() for s in sites],
         "sequence_scores": seq_scores,
+        # How much of the declared 183-gene background was actually searched.
+        # A run that does not carry this cannot be compared with another one
+        # (roadmap R12a); the 2026-11-19 run searched 12% and said nothing.
+        "background_coverage": bg_coverage,
     }
 
     out = _Path(output_path)

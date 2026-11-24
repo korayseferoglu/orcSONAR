@@ -1,0 +1,708 @@
+{
+  "sites": [
+    {
+      "gene": "MTOR",
+      "transcript_id": "ENST00000361445",
+      "region": {
+        "chrom": "chr1",
+        "start": 11255438,
+        "end": 11255458,
+        "strand": "-"
+      },
+      "seed_match_type": "G:U_wobble",
+      "mismatches": 5,
+      "alignment_score": 14.5,
+      "tx_start": 7093,
+      "tx_end": 7113,
+      "site_id": "MTOR:ENST00000361445:chr1:11255438"
+    },
+    {
+      "gene": "VEGFA",
+      "transcript_id": "ENST00000480614",
+      "region": {
+        "chrom": "chr6",
+        "start": 43777011,
+        "end": 43777031,
+        "strand": "+"
+      },
+      "seed_match_type": "G:U_wobble",
+      "mismatches": 6,
+      "alignment_score": 13.5,
+      "tx_start": 3839,
+      "tx_end": 3859,
+      "site_id": "VEGFA:ENST00000480614:chr6:43777011"
+    },
+    {
+      "gene": "HNRNPA2B1",
+      "transcript_id": "ENST00000618183",
+      "region": {
+        "chrom": "chr7",
+        "start": 26198044,
+        "end": 26198064,
+        "strand": "-"
+      },
+      "seed_match_type": "G:U_wobble",
+      "mismatches": 5,
+      "alignment_score": 12.5,
+      "tx_start": 2682,
+      "tx_end": 2702,
+      "site_id": "HNRNPA2B1:ENST00000618183:chr7:26198044"
+    },
+    {
+      "gene": "DICER1",
+      "transcript_id": "ENST00000343455",
+      "region": {
+        "chrom": "chr14",
+        "start": 95152261,
+        "end": 95152281,
+        "strand": "-"
+      },
+      "seed_match_type": "G:U_wobble",
+      "mismatches": 6,
+      "alignment_score": 12.5,
+      "tx_start": 5248,
+      "tx_end": 5268,
+      "site_id": "DICER1:ENST00000343455:chr14:95152261"
+    },
+    {
+      "gene": "TNRC6B",
+      "transcript_id": "ENST00000454349",
+      "region": {
+        "chrom": "chr22",
+        "start": 40182273,
+        "end": 40182293,
+        "strand": "+"
+      },
+      "seed_match_type": "G:U_wobble",
+      "mismatches": 7,
+      "alignment_score": 12.5,
+      "tx_start": 4348,
+      "tx_end": 4368,
+      "site_id": "TNRC6B:ENST00000454349:chr22:40182273"
+    },
+    {
+      "gene": "CTNNB1",
+      "transcript_id": "ENST00000349496",
+      "region": {
+        "chrom": "chr3",
+        "start": 41200550,
+        "end": 41200570,
+        "strand": "+"
+      },
+      "seed_match_type": "G:U_wobble",
+      "mismatches": 7,
+      "alignment_score": 12.5,
+      "tx_start": 1045,
+      "tx_end": 1065,
+      "site_id": "CTNNB1:ENST00000349496:chr3:41200550"
+    },
+    {
+      "gene": "ATR",
+      "transcript_id": "ENST00000350721",
+      "region": {
+        "chrom": "chr3",
+        "start": 142571301,
+        "end": 142571321,
+        "strand": "-"
+      },
+      "seed_match_type": "G:U_wobble",
+      "mismatches": 7,
+      "alignment_score": 12.5,
+      "tx_start": 7412,
+      "tx_end": 7432,
+      "site_id": "ATR:ENST00000350721:chr3:142571301"
+    },
+    {
+      "gene": "RPL11",
+      "transcript_id": "ENST00000643754",
+      "region": {
+        "chrom": "chr1",
+        "start": 23692780,
+        "end": 23692800,
+        "strand": "+"
+      },
+      "seed_match_type": "G:U_wobble",
+      "mismatches": 6,
+      "alignment_score": 12.0,
+      "tx_start": 974,
+      "tx_end": 994,
+      "site_id": "RPL11:ENST00000643754:chr1:23692780"
+    },
+    {
+      "gene": "PTBP2",
+      "transcript_id": "ENST00000674951",
+      "region": {
+        "chrom": "chr1",
+        "start": 96724335,
+        "end": 96724355,
+        "strand": "+"
+      },
+      "seed_match_type": "G:U_wobble",
+      "mismatches": 6,
+      "alignment_score": 12.0,
+      "tx_start": 2551,
+      "tx_end": 2571,
+      "site_id": "PTBP2:ENST00000674951:chr1:96724335"
+    },
+    {
+      "gene": "PTBP2",
+      "transcript_id": "ENST00000674951",
+      "region": {
+        "chrom": "chr1",
+        "start": 96724850,
+        "end": 96724870,
+        "strand": "+"
+      },
+      "seed_match_type": "G:U_wobble",
+      "mismatches": 6,
+      "alignment_score": 12.0,
+      "tx_start": 3066,
+      "tx_end": 3086,
+      "site_id": "PTBP2:ENST00000674951:chr1:96724850"
+    },
+    {
+      "gene": "BRCA1",
+      "transcript_id": "ENST00000357654",
+      "region": {
+        "chrom": "chr17",
+        "start": 43122797,
+        "end": 43122817,
+        "strand": "-"
+      },
+      "seed_match_type": "G:U_wobble",
+      "mismatches": 7,
+      "alignment_score": 12.0,
+      "tx_start": 2547,
+      "tx_end": 2567,
+      "site_id": "BRCA1:ENST00000357654:chr17:43122797"
+    },
+    {
+      "gene": "CALM2",
+      "transcript_id": "ENST00000272298",
+      "region": {
+        "chrom": "chr2",
+        "start": 47175374,
+        "end": 47175394,
+        "strand": "-"
+      },
+      "seed_match_type": "G:U_wobble",
+      "mismatches": 7,
+      "alignment_score": 12.0,
+      "tx_start": 1117,
+      "tx_end": 1137,
+      "site_id": "CALM2:ENST00000272298:chr2:47175374"
+    },
+    {
+      "gene": "HNRNPK",
+      "transcript_id": "ENST00000376263",
+      "region": {
+        "chrom": "chr9",
+        "start": 83979914,
+        "end": 83979934,
+        "strand": "-"
+      },
+      "seed_match_type": "G:U_wobble",
+      "mismatches": 8,
+      "alignment_score": 11.5,
+      "tx_start": 281,
+      "tx_end": 301,
+      "site_id": "HNRNPK:ENST00000376263:chr9:83979914"
+    },
+    {
+      "gene": "AGO4",
+      "transcript_id": "ENST00000373210",
+      "region": {
+        "chrom": "chr1",
+        "start": 35815110,
+        "end": 35815130,
+        "strand": "+"
+      },
+      "seed_match_type": "G:U_wobble",
+      "mismatches": 8,
+      "alignment_score": 11.5,
+      "tx_start": 7094,
+      "tx_end": 7114,
+      "site_id": "AGO4:ENST00000373210:chr1:35815110"
+    },
+    {
+      "gene": "MDM2",
+      "transcript_id": "ENST00000258149",
+      "region": {
+        "chrom": "chr12",
+        "start": 68809823,
+        "end": 68809843,
+        "strand": "+"
+      },
+      "seed_match_type": "G:U_wobble",
+      "mismatches": 8,
+      "alignment_score": 11.5,
+      "tx_start": 1646,
+      "tx_end": 1666,
+      "site_id": "MDM2:ENST00000258149:chr12:68809823"
+    },
+    {
+      "gene": "EGFR",
+      "transcript_id": "ENST00000275493",
+      "region": {
+        "chrom": "chr7",
+        "start": 55027996,
+        "end": 55028016,
+        "strand": "+"
+      },
+      "seed_match_type": "G:U_wobble",
+      "mismatches": 8,
+      "alignment_score": 11.5,
+      "tx_start": 8979,
+      "tx_end": 8999,
+      "site_id": "EGFR:ENST00000275493:chr7:55027996"
+    },
+    {
+      "gene": "PIK3CA",
+      "transcript_id": "ENST00000263967",
+      "region": {
+        "chrom": "chr3",
+        "start": 179151174,
+        "end": 179151194,
+        "strand": "+"
+      },
+      "seed_match_type": "G:U_wobble",
+      "mismatches": 7,
+      "alignment_score": 11.5,
+      "tx_start": 2817,
+      "tx_end": 2837,
+      "site_id": "PIK3CA:ENST00000263967:chr3:179151174"
+    },
+    {
+      "gene": "VEGFA",
+      "transcript_id": "ENST00000497139",
+      "region": {
+        "chrom": "chr6",
+        "start": 43777871,
+        "end": 43777891,
+        "strand": "+"
+      },
+      "seed_match_type": "G:U_wobble",
+      "mismatches": 8,
+      "alignment_score": 11.0,
+      "tx_start": 151,
+      "tx_end": 171,
+      "site_id": "VEGFA:ENST00000497139:chr6:43777871"
+    },
+    {
+      "gene": "HNRNPK",
+      "transcript_id": "ENST00000376263",
+      "region": {
+        "chrom": "chr9",
+        "start": 83979032,
+        "end": 83979052,
+        "strand": "-"
+      },
+      "seed_match_type": "perfect",
+      "mismatches": 9,
+      "alignment_score": 11.0,
+      "tx_start": 1163,
+      "tx_end": 1183,
+      "site_id": "HNRNPK:ENST00000376263:chr9:83979032"
+    },
+    {
+      "gene": "DDX17",
+      "transcript_id": "ENST00000403230",
+      "region": {
+        "chrom": "chr22",
+        "start": 38504908,
+        "end": 38504928,
+        "strand": "-"
+      },
+      "seed_match_type": "perfect",
+      "mismatches": 9,
+      "alignment_score": 11.0,
+      "tx_start": 1383,
+      "tx_end": 1403,
+      "site_id": "DDX17:ENST00000403230:chr22:38504908"
+    },
+    {
+      "gene": "DDX17",
+      "transcript_id": "ENST00000403230",
+      "region": {
+        "chrom": "chr22",
+        "start": 38501867,
+        "end": 38501887,
+        "strand": "-"
+      },
+      "seed_match_type": "G:U_wobble",
+      "mismatches": 7,
+      "alignment_score": 11.0,
+      "tx_start": 4424,
+      "tx_end": 4444,
+      "site_id": "DDX17:ENST00000403230:chr22:38501867"
+    },
+    {
+      "gene": "DDX5",
+      "transcript_id": "ENST00000225792",
+      "region": {
+        "chrom": "chr17",
+        "start": 64505712,
+        "end": 64505732,
+        "strand": "-"
+      },
+      "seed_match_type": "perfect",
+      "mismatches": 9,
+      "alignment_score": 11.0,
+      "tx_start": 557,
+      "tx_end": 577,
+      "site_id": "DDX5:ENST00000225792:chr17:64505712"
+    },
+    {
+      "gene": "CCND2",
+      "transcript_id": "ENST00000261254",
+      "region": {
+        "chrom": "chr12",
+        "start": 4276729,
+        "end": 4276749,
+        "strand": "+"
+      },
+      "seed_match_type": "G:U_wobble",
+      "mismatches": 8,
+      "alignment_score": 11.0,
+      "tx_start": 2967,
+      "tx_end": 2987,
+      "site_id": "CCND2:ENST00000261254:chr12:4276729"
+    },
+    {
+      "gene": "PTEN",
+      "transcript_id": "ENST00000371953",
+      "region": {
+        "chrom": "chr10",
+        "start": 87869740,
+        "end": 87869760,
+        "strand": "+"
+      },
+      "seed_match_type": "G:U_wobble",
+      "mismatches": 8,
+      "alignment_score": 11.0,
+      "tx_start": 6115,
+      "tx_end": 6135,
+      "site_id": "PTEN:ENST00000371953:chr10:87869740"
+    },
+    {
+      "gene": "ATR",
+      "transcript_id": "ENST00000350721",
+      "region": {
+        "chrom": "chr3",
+        "start": 142572942,
+        "end": 142572962,
+        "strand": "-"
+      },
+      "seed_match_type": "perfect",
+      "mismatches": 9,
+      "alignment_score": 11.0,
+      "tx_start": 5771,
+      "tx_end": 5791,
+      "site_id": "ATR:ENST00000350721:chr3:142572942"
+    },
+    {
+      "gene": "CASP3",
+      "transcript_id": "ENST00000308394",
+      "region": {
+        "chrom": "chr4",
+        "start": 184648366,
+        "end": 184648386,
+        "strand": "-"
+      },
+      "seed_match_type": "G:U_wobble",
+      "mismatches": 8,
+      "alignment_score": 11.0,
+      "tx_start": 1061,
+      "tx_end": 1081,
+      "site_id": "CASP3:ENST00000308394:chr4:184648366"
+    },
+    {
+      "gene": "CUL1",
+      "transcript_id": "ENST00000325222",
+      "region": {
+        "chrom": "chr7",
+        "start": 148700526,
+        "end": 148700546,
+        "strand": "+"
+      },
+      "seed_match_type": "G:U_wobble",
+      "mismatches": 7,
+      "alignment_score": 11.0,
+      "tx_start": 1623,
+      "tx_end": 1643,
+      "site_id": "CUL1:ENST00000325222:chr7:148700526"
+    },
+    {
+      "gene": "AKT2",
+      "transcript_id": "ENST00000392038",
+      "region": {
+        "chrom": "chr19",
+        "start": 40280283,
+        "end": 40280303,
+        "strand": "-"
+      },
+      "seed_match_type": "G:U_wobble",
+      "mismatches": 8,
+      "alignment_score": 10.5,
+      "tx_start": 5042,
+      "tx_end": 5062,
+      "site_id": "AKT2:ENST00000392038:chr19:40280283"
+    },
+    {
+      "gene": "TSC1",
+      "transcript_id": "ENST00000298552",
+      "region": {
+        "chrom": "chr9",
+        "start": 132940598,
+        "end": 132940618,
+        "strand": "-"
+      },
+      "seed_match_type": "G:U_wobble",
+      "mismatches": 9,
+      "alignment_score": 10.5,
+      "tx_start": 3998,
+      "tx_end": 4018,
+      "site_id": "TSC1:ENST00000298552:chr9:132940598"
+    },
+    {
+      "gene": "YAP1",
+      "transcript_id": "ENST00000282441",
+      "region": {
+        "chrom": "chr11",
+        "start": 102115206,
+        "end": 102115226,
+        "strand": "+"
+      },
+      "seed_match_type": "G:U_wobble",
+      "mismatches": 8,
+      "alignment_score": 10.5,
+      "tx_start": 4759,
+      "tx_end": 4779,
+      "site_id": "YAP1:ENST00000282441:chr11:102115206"
+    },
+    {
+      "gene": "IFNG",
+      "transcript_id": "ENST00000229135",
+      "region": {
+        "chrom": "chr12",
+        "start": 68159107,
+        "end": 68159127,
+        "strand": "-"
+      },
+      "seed_match_type": "G:U_wobble",
+      "mismatches": 8,
+      "alignment_score": 10.5,
+      "tx_start": 613,
+      "tx_end": 633,
+      "site_id": "IFNG:ENST00000229135:chr12:68159107"
+    },
+    {
+      "gene": "LIN28A",
+      "transcript_id": "ENST00000326279",
+      "region": {
+        "chrom": "chr1",
+        "start": 26414640,
+        "end": 26414660,
+        "strand": "+"
+      },
+      "seed_match_type": "G:U_wobble",
+      "mismatches": 8,
+      "alignment_score": 10.5,
+      "tx_start": 3823,
+      "tx_end": 3843,
+      "site_id": "LIN28A:ENST00000326279:chr1:26414640"
+    },
+    {
+      "gene": "DICER1",
+      "transcript_id": "ENST00000343455",
+      "region": {
+        "chrom": "chr14",
+        "start": 95147794,
+        "end": 95147814,
+        "strand": "-"
+      },
+      "seed_match_type": "G:U_wobble",
+      "mismatches": 8,
+      "alignment_score": 10.0,
+      "tx_start": 9715,
+      "tx_end": 9735,
+      "site_id": "DICER1:ENST00000343455:chr14:95147794"
+    },
+    {
+      "gene": "TNRC6B",
+      "transcript_id": "ENST00000454349",
+      "region": {
+        "chrom": "chr22",
+        "start": 40180363,
+        "end": 40180383,
+        "strand": "+"
+      },
+      "seed_match_type": "G:U_wobble",
+      "mismatches": 9,
+      "alignment_score": 10.0,
+      "tx_start": 2438,
+      "tx_end": 2458,
+      "site_id": "TNRC6B:ENST00000454349:chr22:40180363"
+    },
+    {
+      "gene": "CCND2",
+      "transcript_id": "ENST00000261254",
+      "region": {
+        "chrom": "chr12",
+        "start": 4276799,
+        "end": 4276819,
+        "strand": "+"
+      },
+      "seed_match_type": "G:U_wobble",
+      "mismatches": 9,
+      "alignment_score": 10.0,
+      "tx_start": 3037,
+      "tx_end": 3057,
+      "site_id": "CCND2:ENST00000261254:chr12:4276799"
+    },
+    {
+      "gene": "MTOR",
+      "transcript_id": "ENST00000361445",
+      "region": {
+        "chrom": "chr1",
+        "start": 11259515,
+        "end": 11259535,
+        "strand": "-"
+      },
+      "seed_match_type": "G:U_wobble",
+      "mismatches": 9,
+      "alignment_score": 10.0,
+      "tx_start": 3016,
+      "tx_end": 3036,
+      "site_id": "MTOR:ENST00000361445:chr1:11259515"
+    },
+    {
+      "gene": "RPS3",
+      "transcript_id": "ENST00000531188",
+      "region": {
+        "chrom": "chr11",
+        "start": 75401416,
+        "end": 75401436,
+        "strand": "+"
+      },
+      "seed_match_type": "G:U_wobble",
+      "mismatches": 10,
+      "alignment_score": 9.5,
+      "tx_start": 1898,
+      "tx_end": 1918,
+      "site_id": "RPS3:ENST00000531188:chr11:75401416"
+    },
+    {
+      "gene": "HNRNPA2B1",
+      "transcript_id": "ENST00000618183",
+      "region": {
+        "chrom": "chr7",
+        "start": 26197989,
+        "end": 26198009,
+        "strand": "-"
+      },
+      "seed_match_type": "perfect",
+      "mismatches": 11,
+      "alignment_score": 9.0,
+      "tx_start": 2737,
+      "tx_end": 2757,
+      "site_id": "HNRNPA2B1:ENST00000618183:chr7:26197989"
+    },
+    {
+      "gene": "TSC1",
+      "transcript_id": "ENST00000298552",
+      "region": {
+        "chrom": "chr9",
+        "start": 132937751,
+        "end": 132937771,
+        "strand": "-"
+      },
+      "seed_match_type": "G:U_wobble",
+      "mismatches": 10,
+      "alignment_score": 9.0,
+      "tx_start": 6845,
+      "tx_end": 6865,
+      "site_id": "TSC1:ENST00000298552:chr9:132937751"
+    },
+    {
+      "gene": "SMAD2",
+      "transcript_id": "ENST00000262160",
+      "region": {
+        "chrom": "chr18",
+        "start": 47898662,
+        "end": 47898682,
+        "strand": "-"
+      },
+      "seed_match_type": "G:U_wobble",
+      "mismatches": 11,
+      "alignment_score": 8.5,
+      "tx_start": 31977,
+      "tx_end": 31997,
+      "site_id": "SMAD2:ENST00000262160:chr18:47898662"
+    },
+    {
+      "gene": "SMAD2",
+      "transcript_id": "ENST00000262160",
+      "region": {
+        "chrom": "chr18",
+        "start": 47916332,
+        "end": 47916352,
+        "strand": "-"
+      },
+      "seed_match_type": "G:U_wobble",
+      "mismatches": 11,
+      "alignment_score": 8.0,
+      "tx_start": 14307,
+      "tx_end": 14327,
+      "site_id": "SMAD2:ENST00000262160:chr18:47916332"
+    }
+  ],
+  "sequence_scores": {
+    "MTOR:ENST00000361445:chr1:11255438": 14.5,
+    "VEGFA:ENST00000480614:chr6:43777011": 13.5,
+    "HNRNPA2B1:ENST00000618183:chr7:26198044": 12.5,
+    "DICER1:ENST00000343455:chr14:95152261": 12.5,
+    "TNRC6B:ENST00000454349:chr22:40182273": 12.5,
+    "CTNNB1:ENST00000349496:chr3:41200550": 12.5,
+    "ATR:ENST00000350721:chr3:142571301": 12.5,
+    "RPL11:ENST00000643754:chr1:23692780": 12.0,
+    "PTBP2:ENST00000674951:chr1:96724335": 12.0,
+    "PTBP2:ENST00000674951:chr1:96724850": 12.0,
+    "BRCA1:ENST00000357654:chr17:43122797": 12.0,
+    "CALM2:ENST00000272298:chr2:47175374": 12.0,
+    "HNRNPK:ENST00000376263:chr9:83979914": 11.5,
+    "AGO4:ENST00000373210:chr1:35815110": 11.5,
+    "MDM2:ENST00000258149:chr12:68809823": 11.5,
+    "EGFR:ENST00000275493:chr7:55027996": 11.5,
+    "PIK3CA:ENST00000263967:chr3:179151174": 11.5,
+    "VEGFA:ENST00000497139:chr6:43777871": 11.0,
+    "HNRNPK:ENST00000376263:chr9:83979032": 11.0,
+    "DDX17:ENST00000403230:chr22:38504908": 11.0,
+    "DDX17:ENST00000403230:chr22:38501867": 11.0,
+    "DDX5:ENST00000225792:chr17:64505712": 11.0,
+    "CCND2:ENST00000261254:chr12:4276729": 11.0,
+    "PTEN:ENST00000371953:chr10:87869740": 11.0,
+    "ATR:ENST00000350721:chr3:142572942": 11.0,
+    "CASP3:ENST00000308394:chr4:184648366": 11.0,
+    "CUL1:ENST00000325222:chr7:148700526": 11.0,
+    "AKT2:ENST00000392038:chr19:40280283": 10.5,
+    "TSC1:ENST00000298552:chr9:132940598": 10.5,
+    "YAP1:ENST00000282441:chr11:102115206": 10.5,
+    "IFNG:ENST00000229135:chr12:68159107": 10.5,
+    "LIN28A:ENST00000326279:chr1:26414640": 10.5,
+    "DICER1:ENST00000343455:chr14:95147794": 10.0,
+    "TNRC6B:ENST00000454349:chr22:40180363": 10.0,
+    "CCND2:ENST00000261254:chr12:4276799": 10.0,
+    "MTOR:ENST00000361445:chr1:11259515": 10.0,
+    "RPS3:ENST00000531188:chr11:75401416": 9.5,
+    "HNRNPA2B1:ENST00000618183:chr7:26197989": 9.0,
+    "TSC1:ENST00000298552:chr9:132937751": 9.0,
+    "SMAD2:ENST00000262160:chr18:47898662": 8.5,
+    "SMAD2:ENST00000262160:chr18:47916332": 8.0
+  },
+  "background_coverage": {
+    "requested": 182,
+    "resolved": 182,
+    "fraction": 1.0
+  }
+}

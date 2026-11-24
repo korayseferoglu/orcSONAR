@@ -1,0 +1,125 @@
+2026-11-24 15:30:33.194 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:30:35.477 | DEBUG    | src.stage2_offtarget_scan.repeat_scanner:_fetch_rmsk:153 - UCSC rmsk: chr1:11255438-11255458(-) → 1 element(s)
+2026-11-24 15:30:35.485 | DEBUG    | src.core.cache:set:216 - Cache SET: rmsk:chr1:11255438:11255458 (TTL 168h, schema v1)
+2026-11-24 15:30:35.486 | INFO     | src.stage2_offtarget_scan.repeat_scanner:scan_repeats:63 - repeat_scanner: chr1:11255438-11255458(-) → 1 repeat(s), alu=False, line=False, adar_risk=0.00
+2026-11-24 15:30:36.197 | DEBUG    | src.stage2_offtarget_scan.repeat_scanner:_fetch_rmsk:153 - UCSC rmsk: chr6:43777011-43777031(+) → 1 element(s)
+2026-11-24 15:30:36.200 | DEBUG    | src.core.cache:set:216 - Cache SET: rmsk:chr6:43777011:43777031 (TTL 168h, schema v1)
+2026-11-24 15:30:36.201 | INFO     | src.stage2_offtarget_scan.repeat_scanner:scan_repeats:63 - repeat_scanner: chr6:43777011-43777031(+) → 1 repeat(s), alu=False, line=False, adar_risk=0.00
+2026-11-24 15:30:36.908 | DEBUG    | src.stage2_offtarget_scan.repeat_scanner:_fetch_rmsk:153 - UCSC rmsk: chr7:26198044-26198064(-) → 0 element(s)
+2026-11-24 15:30:36.914 | DEBUG    | src.core.cache:set:216 - Cache SET: rmsk:chr7:26198044:26198064 (TTL 168h, schema v1)
+2026-11-24 15:30:36.914 | INFO     | src.stage2_offtarget_scan.repeat_scanner:scan_repeats:63 - repeat_scanner: chr7:26198044-26198064(-) → 0 repeat(s), alu=False, line=False, adar_risk=0.00
+2026-11-24 15:30:37.627 | DEBUG    | src.stage2_offtarget_scan.repeat_scanner:_fetch_rmsk:153 - UCSC rmsk: chr14:95152261-95152281(-) → 0 element(s)
+2026-11-24 15:30:37.634 | DEBUG    | src.core.cache:set:216 - Cache SET: rmsk:chr14:95152261:95152281 (TTL 168h, schema v1)
+2026-11-24 15:30:37.634 | INFO     | src.stage2_offtarget_scan.repeat_scanner:scan_repeats:63 - repeat_scanner: chr14:95152261-95152281(-) → 0 repeat(s), alu=False, line=False, adar_risk=0.00
+2026-11-24 15:30:38.356 | DEBUG    | src.stage2_offtarget_scan.repeat_scanner:_fetch_rmsk:153 - UCSC rmsk: chr22:40182273-40182293(+) → 0 element(s)
+2026-11-24 15:30:38.363 | DEBUG    | src.core.cache:set:216 - Cache SET: rmsk:chr22:40182273:40182293 (TTL 168h, schema v1)
+2026-11-24 15:30:38.363 | INFO     | src.stage2_offtarget_scan.repeat_scanner:scan_repeats:63 - repeat_scanner: chr22:40182273-40182293(+) → 0 repeat(s), alu=False, line=False, adar_risk=0.00
+2026-11-24 15:30:39.076 | DEBUG    | src.stage2_offtarget_scan.repeat_scanner:_fetch_rmsk:153 - UCSC rmsk: chr3:41200550-41200570(+) → 0 element(s)
+2026-11-24 15:30:39.082 | DEBUG    | src.core.cache:set:216 - Cache SET: rmsk:chr3:41200550:41200570 (TTL 168h, schema v1)
+2026-11-24 15:30:39.083 | INFO     | src.stage2_offtarget_scan.repeat_scanner:scan_repeats:63 - repeat_scanner: chr3:41200550-41200570(+) → 0 repeat(s), alu=False, line=False, adar_risk=0.00
+2026-11-24 15:30:39.766 | DEBUG    | src.stage2_offtarget_scan.repeat_scanner:_fetch_rmsk:153 - UCSC rmsk: chr3:142571301-142571321(-) → 1 element(s)
+2026-11-24 15:30:39.773 | DEBUG    | src.core.cache:set:216 - Cache SET: rmsk:chr3:142571301:142571321 (TTL 168h, schema v1)
+2026-11-24 15:30:39.773 | INFO     | src.stage2_offtarget_scan.repeat_scanner:scan_repeats:63 - repeat_scanner: chr3:142571301-142571321(-) → 1 repeat(s), alu=True, line=False, adar_risk=0.80
+2026-11-24 15:30:40.486 | DEBUG    | src.stage2_offtarget_scan.repeat_scanner:_fetch_rmsk:153 - UCSC rmsk: chr1:23692780-23692800(+) → 0 element(s)
+2026-11-24 15:30:40.491 | DEBUG    | src.core.cache:set:216 - Cache SET: rmsk:chr1:23692780:23692800 (TTL 168h, schema v1)
+2026-11-24 15:30:40.491 | INFO     | src.stage2_offtarget_scan.repeat_scanner:scan_repeats:63 - repeat_scanner: chr1:23692780-23692800(+) → 0 repeat(s), alu=False, line=False, adar_risk=0.00
+2026-11-24 15:30:41.205 | DEBUG    | src.stage2_offtarget_scan.repeat_scanner:_fetch_rmsk:153 - UCSC rmsk: chr1:96724335-96724355(+) → 1 element(s)
+2026-11-24 15:30:41.211 | DEBUG    | src.core.cache:set:216 - Cache SET: rmsk:chr1:96724335:96724355 (TTL 168h, schema v1)
+2026-11-24 15:30:41.212 | INFO     | src.stage2_offtarget_scan.repeat_scanner:scan_repeats:63 - repeat_scanner: chr1:96724335-96724355(+) → 1 repeat(s), alu=True, line=False, adar_risk=0.80
+2026-11-24 15:30:41.930 | DEBUG    | src.stage2_offtarget_scan.repeat_scanner:_fetch_rmsk:153 - UCSC rmsk: chr1:96724850-96724870(+) → 1 element(s)
+2026-11-24 15:30:41.936 | DEBUG    | src.core.cache:set:216 - Cache SET: rmsk:chr1:96724850:96724870 (TTL 168h, schema v1)
+2026-11-24 15:30:41.937 | INFO     | src.stage2_offtarget_scan.repeat_scanner:scan_repeats:63 - repeat_scanner: chr1:96724850-96724870(+) → 1 repeat(s), alu=False, line=True, adar_risk=0.30
+2026-11-24 15:30:42.648 | DEBUG    | src.stage2_offtarget_scan.repeat_scanner:_fetch_rmsk:153 - UCSC rmsk: chr17:43122797-43122817(-) → 1 element(s)
+2026-11-24 15:30:42.654 | DEBUG    | src.core.cache:set:216 - Cache SET: rmsk:chr17:43122797:43122817 (TTL 168h, schema v1)
+2026-11-24 15:30:42.654 | INFO     | src.stage2_offtarget_scan.repeat_scanner:scan_repeats:63 - repeat_scanner: chr17:43122797-43122817(-) → 1 repeat(s), alu=True, line=False, adar_risk=0.80
+2026-11-24 15:30:43.365 | DEBUG    | src.stage2_offtarget_scan.repeat_scanner:_fetch_rmsk:153 - UCSC rmsk: chr2:47175374-47175394(-) → 0 element(s)
+2026-11-24 15:30:43.372 | DEBUG    | src.core.cache:set:216 - Cache SET: rmsk:chr2:47175374:47175394 (TTL 168h, schema v1)
+2026-11-24 15:30:43.372 | INFO     | src.stage2_offtarget_scan.repeat_scanner:scan_repeats:63 - repeat_scanner: chr2:47175374-47175394(-) → 0 repeat(s), alu=False, line=False, adar_risk=0.00
+2026-11-24 15:30:44.931 | DEBUG    | src.stage2_offtarget_scan.repeat_scanner:_fetch_rmsk:153 - UCSC rmsk: chr9:83979914-83979934(-) → 0 element(s)
+2026-11-24 15:30:44.938 | DEBUG    | src.core.cache:set:216 - Cache SET: rmsk:chr9:83979914:83979934 (TTL 168h, schema v1)
+2026-11-24 15:30:44.939 | INFO     | src.stage2_offtarget_scan.repeat_scanner:scan_repeats:63 - repeat_scanner: chr9:83979914-83979934(-) → 0 repeat(s), alu=False, line=False, adar_risk=0.00
+2026-11-24 15:30:45.649 | DEBUG    | src.stage2_offtarget_scan.repeat_scanner:_fetch_rmsk:153 - UCSC rmsk: chr1:35815110-35815130(+) → 1 element(s)
+2026-11-24 15:30:45.654 | DEBUG    | src.core.cache:set:216 - Cache SET: rmsk:chr1:35815110:35815130 (TTL 168h, schema v1)
+2026-11-24 15:30:45.655 | INFO     | src.stage2_offtarget_scan.repeat_scanner:scan_repeats:63 - repeat_scanner: chr1:35815110-35815130(+) → 1 repeat(s), alu=True, line=False, adar_risk=0.80
+2026-11-24 15:30:46.366 | DEBUG    | src.stage2_offtarget_scan.repeat_scanner:_fetch_rmsk:153 - UCSC rmsk: chr12:68809823-68809843(+) → 1 element(s)
+2026-11-24 15:30:46.372 | DEBUG    | src.core.cache:set:216 - Cache SET: rmsk:chr12:68809823:68809843 (TTL 168h, schema v1)
+2026-11-24 15:30:46.373 | INFO     | src.stage2_offtarget_scan.repeat_scanner:scan_repeats:63 - repeat_scanner: chr12:68809823-68809843(+) → 1 repeat(s), alu=False, line=True, adar_risk=0.30
+2026-11-24 15:30:47.048 | DEBUG    | src.stage2_offtarget_scan.repeat_scanner:_fetch_rmsk:153 - UCSC rmsk: chr7:55027996-55028016(+) → 1 element(s)
+2026-11-24 15:30:47.053 | DEBUG    | src.core.cache:set:216 - Cache SET: rmsk:chr7:55027996:55028016 (TTL 168h, schema v1)
+2026-11-24 15:30:47.054 | INFO     | src.stage2_offtarget_scan.repeat_scanner:scan_repeats:63 - repeat_scanner: chr7:55027996-55028016(+) → 1 repeat(s), alu=False, line=False, adar_risk=0.00
+2026-11-24 15:30:47.761 | DEBUG    | src.stage2_offtarget_scan.repeat_scanner:_fetch_rmsk:153 - UCSC rmsk: chr3:179151174-179151194(+) → 0 element(s)
+2026-11-24 15:30:47.766 | DEBUG    | src.core.cache:set:216 - Cache SET: rmsk:chr3:179151174:179151194 (TTL 168h, schema v1)
+2026-11-24 15:30:47.767 | INFO     | src.stage2_offtarget_scan.repeat_scanner:scan_repeats:63 - repeat_scanner: chr3:179151174-179151194(+) → 0 repeat(s), alu=False, line=False, adar_risk=0.00
+2026-11-24 15:30:48.470 | DEBUG    | src.stage2_offtarget_scan.repeat_scanner:_fetch_rmsk:153 - UCSC rmsk: chr6:43777871-43777891(+) → 0 element(s)
+2026-11-24 15:30:48.477 | DEBUG    | src.core.cache:set:216 - Cache SET: rmsk:chr6:43777871:43777891 (TTL 168h, schema v1)
+2026-11-24 15:30:48.477 | INFO     | src.stage2_offtarget_scan.repeat_scanner:scan_repeats:63 - repeat_scanner: chr6:43777871-43777891(+) → 0 repeat(s), alu=False, line=False, adar_risk=0.00
+2026-11-24 15:30:49.161 | DEBUG    | src.stage2_offtarget_scan.repeat_scanner:_fetch_rmsk:153 - UCSC rmsk: chr9:83979032-83979052(-) → 0 element(s)
+2026-11-24 15:30:49.167 | DEBUG    | src.core.cache:set:216 - Cache SET: rmsk:chr9:83979032:83979052 (TTL 168h, schema v1)
+2026-11-24 15:30:49.167 | INFO     | src.stage2_offtarget_scan.repeat_scanner:scan_repeats:63 - repeat_scanner: chr9:83979032-83979052(-) → 0 repeat(s), alu=False, line=False, adar_risk=0.00
+2026-11-24 15:30:49.865 | DEBUG    | src.stage2_offtarget_scan.repeat_scanner:_fetch_rmsk:153 - UCSC rmsk: chr22:38504908-38504928(-) → 1 element(s)
+2026-11-24 15:30:49.871 | DEBUG    | src.core.cache:set:216 - Cache SET: rmsk:chr22:38504908:38504928 (TTL 168h, schema v1)
+2026-11-24 15:30:49.872 | INFO     | src.stage2_offtarget_scan.repeat_scanner:scan_repeats:63 - repeat_scanner: chr22:38504908-38504928(-) → 1 repeat(s), alu=True, line=False, adar_risk=0.80
+2026-11-24 15:30:50.556 | DEBUG    | src.stage2_offtarget_scan.repeat_scanner:_fetch_rmsk:153 - UCSC rmsk: chr22:38501867-38501887(-) → 1 element(s)
+2026-11-24 15:30:50.561 | DEBUG    | src.core.cache:set:216 - Cache SET: rmsk:chr22:38501867:38501887 (TTL 168h, schema v1)
+2026-11-24 15:30:50.561 | INFO     | src.stage2_offtarget_scan.repeat_scanner:scan_repeats:63 - repeat_scanner: chr22:38501867-38501887(-) → 1 repeat(s), alu=False, line=True, adar_risk=0.30
+2026-11-24 15:30:51.257 | DEBUG    | src.stage2_offtarget_scan.repeat_scanner:_fetch_rmsk:153 - UCSC rmsk: chr17:64505712-64505732(-) → 0 element(s)
+2026-11-24 15:30:51.261 | DEBUG    | src.core.cache:set:216 - Cache SET: rmsk:chr17:64505712:64505732 (TTL 168h, schema v1)
+2026-11-24 15:30:51.261 | INFO     | src.stage2_offtarget_scan.repeat_scanner:scan_repeats:63 - repeat_scanner: chr17:64505712-64505732(-) → 0 repeat(s), alu=False, line=False, adar_risk=0.00
+2026-11-24 15:30:51.945 | DEBUG    | src.stage2_offtarget_scan.repeat_scanner:_fetch_rmsk:153 - UCSC rmsk: chr12:4276729-4276749(+) → 0 element(s)
+2026-11-24 15:30:51.951 | DEBUG    | src.core.cache:set:216 - Cache SET: rmsk:chr12:4276729:4276749 (TTL 168h, schema v1)
+2026-11-24 15:30:51.951 | INFO     | src.stage2_offtarget_scan.repeat_scanner:scan_repeats:63 - repeat_scanner: chr12:4276729-4276749(+) → 0 repeat(s), alu=False, line=False, adar_risk=0.00
+2026-11-24 15:30:52.652 | DEBUG    | src.stage2_offtarget_scan.repeat_scanner:_fetch_rmsk:153 - UCSC rmsk: chr10:87869740-87869760(+) → 0 element(s)
+2026-11-24 15:30:52.659 | DEBUG    | src.core.cache:set:216 - Cache SET: rmsk:chr10:87869740:87869760 (TTL 168h, schema v1)
+2026-11-24 15:30:52.659 | INFO     | src.stage2_offtarget_scan.repeat_scanner:scan_repeats:63 - repeat_scanner: chr10:87869740-87869760(+) → 0 repeat(s), alu=False, line=False, adar_risk=0.00
+2026-11-24 15:30:53.378 | DEBUG    | src.stage2_offtarget_scan.repeat_scanner:_fetch_rmsk:153 - UCSC rmsk: chr3:142572942-142572962(-) → 1 element(s)
+2026-11-24 15:30:53.385 | DEBUG    | src.core.cache:set:216 - Cache SET: rmsk:chr3:142572942:142572962 (TTL 168h, schema v1)
+2026-11-24 15:30:53.385 | INFO     | src.stage2_offtarget_scan.repeat_scanner:scan_repeats:63 - repeat_scanner: chr3:142572942-142572962(-) → 1 repeat(s), alu=False, line=True, adar_risk=0.30
+2026-11-24 15:30:54.083 | DEBUG    | src.stage2_offtarget_scan.repeat_scanner:_fetch_rmsk:153 - UCSC rmsk: chr4:184648366-184648386(-) → 0 element(s)
+2026-11-24 15:30:54.089 | DEBUG    | src.core.cache:set:216 - Cache SET: rmsk:chr4:184648366:184648386 (TTL 168h, schema v1)
+2026-11-24 15:30:54.089 | INFO     | src.stage2_offtarget_scan.repeat_scanner:scan_repeats:63 - repeat_scanner: chr4:184648366-184648386(-) → 0 repeat(s), alu=False, line=False, adar_risk=0.00
+2026-11-24 15:30:54.802 | DEBUG    | src.stage2_offtarget_scan.repeat_scanner:_fetch_rmsk:153 - UCSC rmsk: chr7:148700526-148700546(+) → 0 element(s)
+2026-11-24 15:30:54.808 | DEBUG    | src.core.cache:set:216 - Cache SET: rmsk:chr7:148700526:148700546 (TTL 168h, schema v1)
+2026-11-24 15:30:54.809 | INFO     | src.stage2_offtarget_scan.repeat_scanner:scan_repeats:63 - repeat_scanner: chr7:148700526-148700546(+) → 0 repeat(s), alu=False, line=False, adar_risk=0.00
+2026-11-24 15:30:55.514 | DEBUG    | src.stage2_offtarget_scan.repeat_scanner:_fetch_rmsk:153 - UCSC rmsk: chr19:40280283-40280303(-) → 0 element(s)
+2026-11-24 15:30:55.520 | DEBUG    | src.core.cache:set:216 - Cache SET: rmsk:chr19:40280283:40280303 (TTL 168h, schema v1)
+2026-11-24 15:30:55.521 | INFO     | src.stage2_offtarget_scan.repeat_scanner:scan_repeats:63 - repeat_scanner: chr19:40280283-40280303(-) → 0 repeat(s), alu=False, line=False, adar_risk=0.00
+2026-11-24 15:30:56.243 | DEBUG    | src.stage2_offtarget_scan.repeat_scanner:_fetch_rmsk:153 - UCSC rmsk: chr9:132940598-132940618(-) → 1 element(s)
+2026-11-24 15:30:56.250 | DEBUG    | src.core.cache:set:216 - Cache SET: rmsk:chr9:132940598:132940618 (TTL 168h, schema v1)
+2026-11-24 15:30:56.250 | INFO     | src.stage2_offtarget_scan.repeat_scanner:scan_repeats:63 - repeat_scanner: chr9:132940598-132940618(-) → 1 repeat(s), alu=False, line=False, adar_risk=0.00
+2026-11-24 15:30:56.969 | DEBUG    | src.stage2_offtarget_scan.repeat_scanner:_fetch_rmsk:153 - UCSC rmsk: chr11:102115206-102115226(+) → 0 element(s)
+2026-11-24 15:30:56.975 | DEBUG    | src.core.cache:set:216 - Cache SET: rmsk:chr11:102115206:102115226 (TTL 168h, schema v1)
+2026-11-24 15:30:56.976 | INFO     | src.stage2_offtarget_scan.repeat_scanner:scan_repeats:63 - repeat_scanner: chr11:102115206-102115226(+) → 0 repeat(s), alu=False, line=False, adar_risk=0.00
+2026-11-24 15:30:57.687 | DEBUG    | src.stage2_offtarget_scan.repeat_scanner:_fetch_rmsk:153 - UCSC rmsk: chr12:68159107-68159127(-) → 0 element(s)
+2026-11-24 15:30:57.693 | DEBUG    | src.core.cache:set:216 - Cache SET: rmsk:chr12:68159107:68159127 (TTL 168h, schema v1)
+2026-11-24 15:30:57.694 | INFO     | src.stage2_offtarget_scan.repeat_scanner:scan_repeats:63 - repeat_scanner: chr12:68159107-68159127(-) → 0 repeat(s), alu=False, line=False, adar_risk=0.00
+2026-11-24 15:30:58.397 | DEBUG    | src.stage2_offtarget_scan.repeat_scanner:_fetch_rmsk:153 - UCSC rmsk: chr1:26414640-26414660(+) → 0 element(s)
+2026-11-24 15:30:58.403 | DEBUG    | src.core.cache:set:216 - Cache SET: rmsk:chr1:26414640:26414660 (TTL 168h, schema v1)
+2026-11-24 15:30:58.404 | INFO     | src.stage2_offtarget_scan.repeat_scanner:scan_repeats:63 - repeat_scanner: chr1:26414640-26414660(+) → 0 repeat(s), alu=False, line=False, adar_risk=0.00
+2026-11-24 15:30:59.104 | DEBUG    | src.stage2_offtarget_scan.repeat_scanner:_fetch_rmsk:153 - UCSC rmsk: chr14:95147794-95147814(-) → 1 element(s)
+2026-11-24 15:30:59.110 | DEBUG    | src.core.cache:set:216 - Cache SET: rmsk:chr14:95147794:95147814 (TTL 168h, schema v1)
+2026-11-24 15:30:59.111 | INFO     | src.stage2_offtarget_scan.repeat_scanner:scan_repeats:63 - repeat_scanner: chr14:95147794-95147814(-) → 1 repeat(s), alu=False, line=False, adar_risk=0.00
+2026-11-24 15:30:59.797 | DEBUG    | src.stage2_offtarget_scan.repeat_scanner:_fetch_rmsk:153 - UCSC rmsk: chr22:40180363-40180383(+) → 0 element(s)
+2026-11-24 15:30:59.803 | DEBUG    | src.core.cache:set:216 - Cache SET: rmsk:chr22:40180363:40180383 (TTL 168h, schema v1)
+2026-11-24 15:30:59.804 | INFO     | src.stage2_offtarget_scan.repeat_scanner:scan_repeats:63 - repeat_scanner: chr22:40180363-40180383(+) → 0 repeat(s), alu=False, line=False, adar_risk=0.00
+2026-11-24 15:31:00.498 | DEBUG    | src.stage2_offtarget_scan.repeat_scanner:_fetch_rmsk:153 - UCSC rmsk: chr12:4276799-4276819(+) → 0 element(s)
+2026-11-24 15:31:00.504 | DEBUG    | src.core.cache:set:216 - Cache SET: rmsk:chr12:4276799:4276819 (TTL 168h, schema v1)
+2026-11-24 15:31:00.505 | INFO     | src.stage2_offtarget_scan.repeat_scanner:scan_repeats:63 - repeat_scanner: chr12:4276799-4276819(+) → 0 repeat(s), alu=False, line=False, adar_risk=0.00
+2026-11-24 15:31:01.179 | DEBUG    | src.stage2_offtarget_scan.repeat_scanner:_fetch_rmsk:153 - UCSC rmsk: chr1:11259515-11259535(-) → 0 element(s)
+2026-11-24 15:31:01.183 | DEBUG    | src.core.cache:set:216 - Cache SET: rmsk:chr1:11259515:11259535 (TTL 168h, schema v1)
+2026-11-24 15:31:01.184 | INFO     | src.stage2_offtarget_scan.repeat_scanner:scan_repeats:63 - repeat_scanner: chr1:11259515-11259535(-) → 0 repeat(s), alu=False, line=False, adar_risk=0.00
+2026-11-24 15:31:01.892 | DEBUG    | src.stage2_offtarget_scan.repeat_scanner:_fetch_rmsk:153 - UCSC rmsk: chr11:75401416-75401436(+) → 1 element(s)
+2026-11-24 15:31:01.899 | DEBUG    | src.core.cache:set:216 - Cache SET: rmsk:chr11:75401416:75401436 (TTL 168h, schema v1)
+2026-11-24 15:31:01.899 | INFO     | src.stage2_offtarget_scan.repeat_scanner:scan_repeats:63 - repeat_scanner: chr11:75401416-75401436(+) → 1 repeat(s), alu=True, line=False, adar_risk=0.80
+2026-11-24 15:31:02.575 | DEBUG    | src.stage2_offtarget_scan.repeat_scanner:_fetch_rmsk:153 - UCSC rmsk: chr7:26197989-26198009(-) → 0 element(s)
+2026-11-24 15:31:02.581 | DEBUG    | src.core.cache:set:216 - Cache SET: rmsk:chr7:26197989:26198009 (TTL 168h, schema v1)
+2026-11-24 15:31:02.581 | INFO     | src.stage2_offtarget_scan.repeat_scanner:scan_repeats:63 - repeat_scanner: chr7:26197989-26198009(-) → 0 repeat(s), alu=False, line=False, adar_risk=0.00
+2026-11-24 15:31:03.290 | DEBUG    | src.stage2_offtarget_scan.repeat_scanner:_fetch_rmsk:153 - UCSC rmsk: chr9:132937751-132937771(-) → 1 element(s)
+2026-11-24 15:31:03.296 | DEBUG    | src.core.cache:set:216 - Cache SET: rmsk:chr9:132937751:132937771 (TTL 168h, schema v1)
+2026-11-24 15:31:03.297 | INFO     | src.stage2_offtarget_scan.repeat_scanner:scan_repeats:63 - repeat_scanner: chr9:132937751-132937771(-) → 1 repeat(s), alu=True, line=False, adar_risk=0.80
+2026-11-24 15:31:04.006 | DEBUG    | src.stage2_offtarget_scan.repeat_scanner:_fetch_rmsk:153 - UCSC rmsk: chr18:47898662-47898682(-) → 1 element(s)
+2026-11-24 15:31:04.012 | DEBUG    | src.core.cache:set:216 - Cache SET: rmsk:chr18:47898662:47898682 (TTL 168h, schema v1)
+2026-11-24 15:31:04.012 | INFO     | src.stage2_offtarget_scan.repeat_scanner:scan_repeats:63 - repeat_scanner: chr18:47898662-47898682(-) → 1 repeat(s), alu=False, line=True, adar_risk=0.30
+2026-11-24 15:31:04.722 | DEBUG    | src.stage2_offtarget_scan.repeat_scanner:_fetch_rmsk:153 - UCSC rmsk: chr18:47916332-47916352(-) → 0 element(s)
+2026-11-24 15:31:04.729 | DEBUG    | src.core.cache:set:216 - Cache SET: rmsk:chr18:47916332:47916352 (TTL 168h, schema v1)
+2026-11-24 15:31:04.729 | INFO     | src.stage2_offtarget_scan.repeat_scanner:scan_repeats:63 - repeat_scanner: chr18:47916332-47916352(-) → 0 repeat(s), alu=False, line=False, adar_risk=0.00
+2026-11-24 15:31:04.734 | INFO     | src.stage2_offtarget_scan.repeat_scanner:run:233 - repeat_scanner: scanned 41 regions

@@ -1,0 +1,3533 @@
+{
+  "gnomad_results": {
+    "MTOR:ENST00000361445:chr1:11255438": {
+      "region": {
+        "chrom": "chr1",
+        "start": 11255438,
+        "end": 11255458,
+        "strand": "-"
+      },
+      "variants": [
+        {
+          "variant_id": "1-11255440-C-A",
+          "position": 11255440,
+          "ref": "C",
+          "alt": "A",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "1-11255442-T-A",
+          "position": 11255442,
+          "ref": "T",
+          "alt": "A",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "1-11255443-A-G",
+          "position": 11255443,
+          "ref": "A",
+          "alt": "G",
+          "allele_frequency": 6.615419219115915e-06
+        },
+        {
+          "variant_id": "1-11255445-T-C",
+          "position": 11255445,
+          "ref": "T",
+          "alt": "C",
+          "allele_frequency": 0.006846330578075897
+        },
+        {
+          "variant_id": "1-11255449-A-G",
+          "position": 11255449,
+          "ref": "A",
+          "alt": "G",
+          "allele_frequency": 5.27030053888823e-05
+        },
+        {
+          "variant_id": "1-11255452-C-T",
+          "position": 11255452,
+          "ref": "C",
+          "alt": "T",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "1-11255453-T-C",
+          "position": 11255453,
+          "ref": "T",
+          "alt": "C",
+          "allele_frequency": 9.878559574299939e-05
+        },
+        {
+          "variant_id": "1-11255455-A-G",
+          "position": 11255455,
+          "ref": "A",
+          "alt": "G",
+          "allele_frequency": 1.3196442239172319e-05
+        }
+      ],
+      "variant_count": 8,
+      "max_af": 0.006846330578075897,
+      "polymorphism_score": 0.31536694219241024
+    },
+    "VEGFA:ENST00000480614:chr6:43777011": {
+      "region": {
+        "chrom": "chr6",
+        "start": 43777011,
+        "end": 43777031,
+        "strand": "+"
+      },
+      "variants": [
+        {
+          "variant_id": "6-43777011-A-G",
+          "position": 43777011,
+          "ref": "A",
+          "alt": "G",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "6-43777012-C-A",
+          "position": 43777012,
+          "ref": "C",
+          "alt": "A",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "6-43777012-C-T",
+          "position": 43777012,
+          "ref": "C",
+          "alt": "T",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "6-43777013-A-G",
+          "position": 43777013,
+          "ref": "A",
+          "alt": "G",
+          "allele_frequency": 6.568921120395186e-06
+        },
+        {
+          "variant_id": "6-43777015-C-T",
+          "position": 43777015,
+          "ref": "C",
+          "alt": "T",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "6-43777015-C-A",
+          "position": 43777015,
+          "ref": "C",
+          "alt": "A",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "6-43777018-T-G",
+          "position": 43777018,
+          "ref": "T",
+          "alt": "G",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "6-43777019-T-G",
+          "position": 43777019,
+          "ref": "T",
+          "alt": "G",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "6-43777021-G-A",
+          "position": 43777021,
+          "ref": "G",
+          "alt": "A",
+          "allele_frequency": 1.9705986678753006e-05
+        },
+        {
+          "variant_id": "6-43777021-G-T",
+          "position": 43777021,
+          "ref": "G",
+          "alt": "T",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "6-43777022-T-G",
+          "position": 43777022,
+          "ref": "T",
+          "alt": "G",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "6-43777022-T-C",
+          "position": 43777022,
+          "ref": "T",
+          "alt": "C",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "6-43777023-A-C",
+          "position": 43777023,
+          "ref": "A",
+          "alt": "C",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "6-43777023-A-G",
+          "position": 43777023,
+          "ref": "A",
+          "alt": "G",
+          "allele_frequency": 5.2513423743944546e-05
+        },
+        {
+          "variant_id": "6-43777025-G-A",
+          "position": 43777025,
+          "ref": "G",
+          "alt": "A",
+          "allele_frequency": 6.5684896414918355e-06
+        },
+        {
+          "variant_id": "6-43777026-G-T",
+          "position": 43777026,
+          "ref": "G",
+          "alt": "T",
+          "allele_frequency": 5.404412162089129e-06
+        },
+        {
+          "variant_id": "6-43777029-G-T",
+          "position": 43777029,
+          "ref": "G",
+          "alt": "T",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "6-43777029-G-A",
+          "position": 43777029,
+          "ref": "G",
+          "alt": "A",
+          "allele_frequency": 5.389673385792821e-06
+        },
+        {
+          "variant_id": "6-43777031-C-T",
+          "position": 43777031,
+          "ref": "C",
+          "alt": "T",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "6-43777031-C-A",
+          "position": 43777031,
+          "ref": "C",
+          "alt": "A",
+          "allele_frequency": 0.0
+        }
+      ],
+      "variant_count": 20,
+      "max_af": 5.2513423743944546e-05,
+      "polymorphism_score": 0.9947486576256055
+    },
+    "HNRNPA2B1:ENST00000618183:chr7:26198044": {
+      "region": {
+        "chrom": "chr7",
+        "start": 26198044,
+        "end": 26198064,
+        "strand": "-"
+      },
+      "variants": [
+        {
+          "variant_id": "7-26198045-AAGG-A",
+          "position": 26198045,
+          "ref": "AAGG",
+          "alt": "A",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "7-26198046-A-C",
+          "position": 26198046,
+          "ref": "A",
+          "alt": "C",
+          "allele_frequency": 1.973216869688758e-05
+        },
+        {
+          "variant_id": "7-26198046-AG-A",
+          "position": 26198046,
+          "ref": "AG",
+          "alt": "A",
+          "allele_frequency": 6.957973838018369e-06
+        },
+        {
+          "variant_id": "7-26198047-G-T",
+          "position": 26198047,
+          "ref": "G",
+          "alt": "T",
+          "allele_frequency": 3.5456215119948374e-06
+        },
+        {
+          "variant_id": "7-26198047-G-A",
+          "position": 26198047,
+          "ref": "G",
+          "alt": "A",
+          "allele_frequency": 3.545696942190957e-05
+        },
+        {
+          "variant_id": "7-26198048-G-A",
+          "position": 26198048,
+          "ref": "G",
+          "alt": "A",
+          "allele_frequency": 2.8106269806137005e-05
+        },
+        {
+          "variant_id": "7-26198048-G-T",
+          "position": 26198048,
+          "ref": "G",
+          "alt": "T",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "7-26198049-A-T",
+          "position": 26198049,
+          "ref": "A",
+          "alt": "T",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "7-26198049-A-G",
+          "position": 26198049,
+          "ref": "A",
+          "alt": "G",
+          "allele_frequency": 3.4965034965034966e-06
+        },
+        {
+          "variant_id": "7-26198050-AAAAT-A",
+          "position": 26198050,
+          "ref": "AAAAT",
+          "alt": "A",
+          "allele_frequency": 2.0968756552736423e-05
+        },
+        {
+          "variant_id": "7-26198050-A-G",
+          "position": 26198050,
+          "ref": "A",
+          "alt": "G",
+          "allele_frequency": 3.4947683318072846e-06
+        },
+        {
+          "variant_id": "7-26198052-A-G",
+          "position": 26198052,
+          "ref": "A",
+          "alt": "G",
+          "allele_frequency": 2.0990029735875458e-05
+        },
+        {
+          "variant_id": "7-26198052-AAT-A",
+          "position": 26198052,
+          "ref": "AAT",
+          "alt": "A",
+          "allele_frequency": 5.26281165712782e-05
+        },
+        {
+          "variant_id": "7-26198054-T-A",
+          "position": 26198054,
+          "ref": "T",
+          "alt": "A",
+          "allele_frequency": 7.05407655083873e-06
+        },
+        {
+          "variant_id": "7-26198054-TAAAC-T",
+          "position": 26198054,
+          "ref": "TAAAC",
+          "alt": "T",
+          "allele_frequency": 0.008029139386913622
+        },
+        {
+          "variant_id": "7-26198054-T-C",
+          "position": 26198054,
+          "ref": "T",
+          "alt": "C",
+          "allele_frequency": 3.527038275419365e-06
+        },
+        {
+          "variant_id": "7-26198058-CAA-C",
+          "position": 26198058,
+          "ref": "CAA",
+          "alt": "C",
+          "allele_frequency": 3.7909517563479485e-06
+        },
+        {
+          "variant_id": "7-26198058-C-T",
+          "position": 26198058,
+          "ref": "C",
+          "alt": "T",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "7-26198059-A-G",
+          "position": 26198059,
+          "ref": "A",
+          "alt": "G",
+          "allele_frequency": 3.7625669736921315e-06
+        },
+        {
+          "variant_id": "7-26198059-A-C",
+          "position": 26198059,
+          "ref": "A",
+          "alt": "C",
+          "allele_frequency": 3.7625669736921315e-06
+        },
+        {
+          "variant_id": "7-26198060-A-C",
+          "position": 26198060,
+          "ref": "A",
+          "alt": "C",
+          "allele_frequency": 3.8018766062928663e-06
+        },
+        {
+          "variant_id": "7-26198061-A-C",
+          "position": 26198061,
+          "ref": "A",
+          "alt": "C",
+          "allele_frequency": 1.1603799857660056e-05
+        },
+        {
+          "variant_id": "7-26198062-T-C",
+          "position": 26198062,
+          "ref": "T",
+          "alt": "C",
+          "allele_frequency": 2.678769602853272e-05
+        },
+        {
+          "variant_id": "7-26198062-T-G",
+          "position": 26198062,
+          "ref": "T",
+          "alt": "G",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "7-26198063-G-C",
+          "position": 26198063,
+          "ref": "G",
+          "alt": "C",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "7-26198063-G-A",
+          "position": 26198063,
+          "ref": "G",
+          "alt": "A",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "7-26198064-T-A",
+          "position": 26198064,
+          "ref": "T",
+          "alt": "A",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "7-26198064-T-C",
+          "position": 26198064,
+          "ref": "T",
+          "alt": "C",
+          "allele_frequency": 3.852733128881629e-06
+        }
+      ],
+      "variant_count": 28,
+      "max_af": 0.008029139386913622,
+      "polymorphism_score": 0.19708606130863782
+    },
+    "DICER1:ENST00000343455:chr14:95152261": {
+      "region": {
+        "chrom": "chr14",
+        "start": 95152261,
+        "end": 95152281,
+        "strand": "-"
+      },
+      "variants": [
+        {
+          "variant_id": "14-95152262-T-C",
+          "position": 95152262,
+          "ref": "T",
+          "alt": "C",
+          "allele_frequency": 6.569093727829309e-06
+        },
+        {
+          "variant_id": "14-95152271-A-C",
+          "position": 95152271,
+          "ref": "A",
+          "alt": "C",
+          "allele_frequency": 1.3125426576363732e-05
+        },
+        {
+          "variant_id": "14-95152272-C-T",
+          "position": 95152272,
+          "ref": "C",
+          "alt": "T",
+          "allele_frequency": 6.5688348200796145e-06
+        },
+        {
+          "variant_id": "14-95152273-A-G",
+          "position": 95152273,
+          "ref": "A",
+          "alt": "G",
+          "allele_frequency": 0.00029533372711163615
+        },
+        {
+          "variant_id": "14-95152275-A-G",
+          "position": 95152275,
+          "ref": "A",
+          "alt": "G",
+          "allele_frequency": 6.568144499178982e-06
+        }
+      ],
+      "variant_count": 5,
+      "max_af": 0.00029533372711163615,
+      "polymorphism_score": 0.9704666272888364
+    },
+    "TNRC6B:ENST00000454349:chr22:40182273": {
+      "region": {
+        "chrom": "chr22",
+        "start": 40182273,
+        "end": 40182293,
+        "strand": "+"
+      },
+      "variants": [
+        {
+          "variant_id": "22-40182273-A-AT",
+          "position": 40182273,
+          "ref": "A",
+          "alt": "AT",
+          "allele_frequency": 6.570647603027754e-06
+        },
+        {
+          "variant_id": "22-40182274-G-A",
+          "position": 40182274,
+          "ref": "G",
+          "alt": "A",
+          "allele_frequency": 6.57825492053468e-06
+        },
+        {
+          "variant_id": "22-40182276-C-A",
+          "position": 40182276,
+          "ref": "C",
+          "alt": "A",
+          "allele_frequency": 6.576870461959381e-06
+        },
+        {
+          "variant_id": "22-40182282-A-C",
+          "position": 40182282,
+          "ref": "A",
+          "alt": "C",
+          "allele_frequency": 6.571856680949502e-06
+        },
+        {
+          "variant_id": "22-40182285-A-AC",
+          "position": 40182285,
+          "ref": "A",
+          "alt": "AC",
+          "allele_frequency": 6.577908751249803e-06
+        },
+        {
+          "variant_id": "22-40182285-A-G",
+          "position": 40182285,
+          "ref": "A",
+          "alt": "G",
+          "allele_frequency": 6.577908751249803e-06
+        },
+        {
+          "variant_id": "22-40182289-C-T",
+          "position": 40182289,
+          "ref": "C",
+          "alt": "T",
+          "allele_frequency": 1.314837946223128e-05
+        },
+        {
+          "variant_id": "22-40182291-T-C",
+          "position": 40182291,
+          "ref": "T",
+          "alt": "C",
+          "allele_frequency": 6.5733254453427986e-06
+        }
+      ],
+      "variant_count": 8,
+      "max_af": 1.314837946223128e-05,
+      "polymorphism_score": 0.9986851620537769
+    },
+    "CTNNB1:ENST00000349496:chr3:41200550": {
+      "region": {
+        "chrom": "chr3",
+        "start": 41200550,
+        "end": 41200570,
+        "strand": "+"
+      },
+      "variants": [
+        {
+          "variant_id": "3-41200551-T-C",
+          "position": 41200551,
+          "ref": "T",
+          "alt": "C",
+          "allele_frequency": 7.883326763894364e-05
+        },
+        {
+          "variant_id": "3-41200554-G-T",
+          "position": 41200554,
+          "ref": "G",
+          "alt": "T",
+          "allele_frequency": 6.571856680949502e-06
+        },
+        {
+          "variant_id": "3-41200560-A-C",
+          "position": 41200560,
+          "ref": "A",
+          "alt": "C",
+          "allele_frequency": 6.5686622262510016e-06
+        },
+        {
+          "variant_id": "3-41200565-T-A",
+          "position": 41200565,
+          "ref": "T",
+          "alt": "A",
+          "allele_frequency": 6.569956901082729e-06
+        }
+      ],
+      "variant_count": 4,
+      "max_af": 7.883326763894364e-05,
+      "polymorphism_score": 0.9921166732361056
+    },
+    "ATR:ENST00000350721:chr3:142571301": {
+      "region": {
+        "chrom": "chr3",
+        "start": 142571301,
+        "end": 142571321,
+        "strand": "-"
+      },
+      "variants": [
+        {
+          "variant_id": "3-142571301-G-A",
+          "position": 142571301,
+          "ref": "G",
+          "alt": "A",
+          "allele_frequency": 6.5831051190225406e-06
+        },
+        {
+          "variant_id": "3-142571303-T-C",
+          "position": 142571303,
+          "ref": "T",
+          "alt": "C",
+          "allele_frequency": 5.264196880963348e-05
+        },
+        {
+          "variant_id": "3-142571304-G-A",
+          "position": 142571304,
+          "ref": "G",
+          "alt": "A",
+          "allele_frequency": 0.017908582703058205
+        },
+        {
+          "variant_id": "3-142571310-A-T",
+          "position": 142571310,
+          "ref": "A",
+          "alt": "T",
+          "allele_frequency": 6.575313642460746e-06
+        },
+        {
+          "variant_id": "3-142571311-C-A",
+          "position": 142571311,
+          "ref": "C",
+          "alt": "A",
+          "allele_frequency": 1.9739439399921042e-05
+        }
+      ],
+      "variant_count": 5,
+      "max_af": 0.017908582703058205,
+      "polymorphism_score": 0.0
+    },
+    "RPL11:ENST00000643754:chr1:23692780": {
+      "region": {
+        "chrom": "chr1",
+        "start": 23692780,
+        "end": 23692800,
+        "strand": "+"
+      },
+      "variants": [
+        {
+          "variant_id": "1-23692780-A-C",
+          "position": 23692780,
+          "ref": "A",
+          "alt": "C",
+          "allele_frequency": 6.848358174611219e-07
+        },
+        {
+          "variant_id": "1-23692781-C-T",
+          "position": 23692781,
+          "ref": "C",
+          "alt": "T",
+          "allele_frequency": 1.3697166604116272e-06
+        },
+        {
+          "variant_id": "1-23692783-G-T",
+          "position": 23692783,
+          "ref": "G",
+          "alt": "T",
+          "allele_frequency": 8.903255852178557e-06
+        },
+        {
+          "variant_id": "1-23692783-G-A",
+          "position": 23692783,
+          "ref": "G",
+          "alt": "A",
+          "allele_frequency": 1.3142158730993153e-05
+        },
+        {
+          "variant_id": "1-23692784-G-A",
+          "position": 23692784,
+          "ref": "G",
+          "alt": "A",
+          "allele_frequency": 6.848686490418003e-07
+        },
+        {
+          "variant_id": "1-23692786-T-C",
+          "position": 23692786,
+          "ref": "T",
+          "alt": "C",
+          "allele_frequency": 6.849483959878462e-07
+        },
+        {
+          "variant_id": "1-23692786-T-G",
+          "position": 23692786,
+          "ref": "T",
+          "alt": "G",
+          "allele_frequency": 6.849483959878462e-07
+        },
+        {
+          "variant_id": "1-23692789-G-C",
+          "position": 23692789,
+          "ref": "G",
+          "alt": "C",
+          "allele_frequency": 0.004255934006751698
+        },
+        {
+          "variant_id": "1-23692791-C-T",
+          "position": 23692791,
+          "ref": "C",
+          "alt": "T",
+          "allele_frequency": 2.740232782774897e-06
+        },
+        {
+          "variant_id": "1-23692794-C-T",
+          "position": 23692794,
+          "ref": "C",
+          "alt": "T",
+          "allele_frequency": 6.852741439212757e-07
+        },
+        {
+          "variant_id": "1-23692798-G-T",
+          "position": 23692798,
+          "ref": "G",
+          "alt": "T",
+          "allele_frequency": 6.574103292310929e-06
+        },
+        {
+          "variant_id": "1-23692798-G-A",
+          "position": 23692798,
+          "ref": "G",
+          "alt": "A",
+          "allele_frequency": 1.3703773745213957e-06
+        },
+        {
+          "variant_id": "1-23692799-G-T",
+          "position": 23692799,
+          "ref": "G",
+          "alt": "T",
+          "allele_frequency": 1.0278126092050897e-05
+        },
+        {
+          "variant_id": "1-23692799-G-A",
+          "position": 23692799,
+          "ref": "G",
+          "alt": "A",
+          "allele_frequency": 6.852084061367265e-07
+        }
+      ],
+      "variant_count": 14,
+      "max_af": 0.004255934006751698,
+      "polymorphism_score": 0.5744065993248302
+    },
+    "PTBP2:ENST00000674951:chr1:96724335": {
+      "region": {
+        "chrom": "chr1",
+        "start": 96724335,
+        "end": 96724355,
+        "strand": "+"
+      },
+      "variants": [
+        {
+          "variant_id": "1-96724336-T-C",
+          "position": 96724336,
+          "ref": "T",
+          "alt": "C",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "1-96724339-C-T",
+          "position": 96724339,
+          "ref": "C",
+          "alt": "T",
+          "allele_frequency": 0.00045339255910530535
+        },
+        {
+          "variant_id": "1-96724340-T-C",
+          "position": 96724340,
+          "ref": "T",
+          "alt": "C",
+          "allele_frequency": 0.0002825378469301934
+        },
+        {
+          "variant_id": "1-96724343-T-C",
+          "position": 96724343,
+          "ref": "T",
+          "alt": "C",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "1-96724343-TG-T",
+          "position": 96724343,
+          "ref": "TG",
+          "alt": "T",
+          "allele_frequency": 6.5766974456107125e-06
+        },
+        {
+          "variant_id": "1-96724349-C-G",
+          "position": 96724349,
+          "ref": "C",
+          "alt": "G",
+          "allele_frequency": 1.3144922773578704e-05
+        },
+        {
+          "variant_id": "1-96724351-A-G",
+          "position": 96724351,
+          "ref": "A",
+          "alt": "G",
+          "allele_frequency": 6.575659538651727e-06
+        }
+      ],
+      "variant_count": 7,
+      "max_af": 0.00045339255910530535,
+      "polymorphism_score": 0.9546607440894694
+    },
+    "PTBP2:ENST00000674951:chr1:96724850": {
+      "region": {
+        "chrom": "chr1",
+        "start": 96724850,
+        "end": 96724870,
+        "strand": "+"
+      },
+      "variants": [
+        {
+          "variant_id": "1-96724850-G-C",
+          "position": 96724850,
+          "ref": "G",
+          "alt": "C",
+          "allele_frequency": 6.573671132380589e-06
+        },
+        {
+          "variant_id": "1-96724851-T-TATAATA",
+          "position": 96724851,
+          "ref": "T",
+          "alt": "TATAATA",
+          "allele_frequency": 3.2851079486471923e-05
+        },
+        {
+          "variant_id": "1-96724851-T-TATA",
+          "position": 96724851,
+          "ref": "T",
+          "alt": "TATA",
+          "allele_frequency": 6.575573061192283e-06
+        },
+        {
+          "variant_id": "1-96724857-AATG-A",
+          "position": 96724857,
+          "ref": "AATG",
+          "alt": "A",
+          "allele_frequency": 1.3159279924202548e-05
+        },
+        {
+          "variant_id": "1-96724860-G-A",
+          "position": 96724860,
+          "ref": "G",
+          "alt": "A",
+          "allele_frequency": 0.2914711310308463
+        },
+        {
+          "variant_id": "1-96724860-GATA-G",
+          "position": 96724860,
+          "ref": "GATA",
+          "alt": "G",
+          "allele_frequency": 1.9772745247950224e-05
+        },
+        {
+          "variant_id": "1-96724860-GATAATA-G",
+          "position": 96724860,
+          "ref": "GATAATA",
+          "alt": "G",
+          "allele_frequency": 2.63636603306003e-05
+        },
+        {
+          "variant_id": "1-96724863-A-G",
+          "position": 96724863,
+          "ref": "A",
+          "alt": "G",
+          "allele_frequency": 6.579813133307014e-06
+        }
+      ],
+      "variant_count": 8,
+      "max_af": 0.2914711310308463,
+      "polymorphism_score": 0.0
+    },
+    "BRCA1:ENST00000357654:chr17:43122797": {
+      "region": {
+        "chrom": "chr17",
+        "start": 43122797,
+        "end": 43122817,
+        "strand": "-"
+      },
+      "variants": [
+        {
+          "variant_id": "17-43122801-C-T",
+          "position": 43122801,
+          "ref": "C",
+          "alt": "T",
+          "allele_frequency": 6.592479299614999e-06
+        },
+        {
+          "variant_id": "17-43122805-G-GGGA",
+          "position": 43122805,
+          "ref": "G",
+          "alt": "GGGA",
+          "allele_frequency": 1.316777056476568e-05
+        },
+        {
+          "variant_id": "17-43122807-G-A",
+          "position": 43122807,
+          "ref": "G",
+          "alt": "A",
+          "allele_frequency": 1.3167597176867165e-05
+        },
+        {
+          "variant_id": "17-43122812-C-G",
+          "position": 43122812,
+          "ref": "C",
+          "alt": "G",
+          "allele_frequency": 6.595174969991954e-06
+        }
+      ],
+      "variant_count": 4,
+      "max_af": 1.316777056476568e-05,
+      "polymorphism_score": 0.9986832229435234
+    },
+    "CALM2:ENST00000272298:chr2:47175374": {
+      "region": {
+        "chrom": "chr2",
+        "start": 47175374,
+        "end": 47175394,
+        "strand": "-"
+      },
+      "variants": [
+        {
+          "variant_id": "2-47175375-G-A",
+          "position": 47175375,
+          "ref": "G",
+          "alt": "A",
+          "allele_frequency": 6.576264944562087e-06
+        },
+        {
+          "variant_id": "2-47175380-C-T",
+          "position": 47175380,
+          "ref": "C",
+          "alt": "T",
+          "allele_frequency": 0.02082429786171457
+        },
+        {
+          "variant_id": "2-47175383-T-C",
+          "position": 47175383,
+          "ref": "T",
+          "alt": "C",
+          "allele_frequency": 6.576783952647156e-06
+        },
+        {
+          "variant_id": "2-47175388-T-C",
+          "position": 47175388,
+          "ref": "T",
+          "alt": "C",
+          "allele_frequency": 1.314907101813257e-05
+        },
+        {
+          "variant_id": "2-47175390-G-C",
+          "position": 47175390,
+          "ref": "G",
+          "alt": "C",
+          "allele_frequency": 6.575313642460746e-06
+        },
+        {
+          "variant_id": "2-47175391-T-A",
+          "position": 47175391,
+          "ref": "T",
+          "alt": "A",
+          "allele_frequency": 2.629295611705624e-05
+        },
+        {
+          "variant_id": "2-47175392-T-C",
+          "position": 47175392,
+          "ref": "T",
+          "alt": "C",
+          "allele_frequency": 0.00011825300888211489
+        },
+        {
+          "variant_id": "2-47175393-A-C",
+          "position": 47175393,
+          "ref": "A",
+          "alt": "C",
+          "allele_frequency": 6.569525286102826e-06
+        },
+        {
+          "variant_id": "2-47175394-C-T",
+          "position": 47175394,
+          "ref": "C",
+          "alt": "T",
+          "allele_frequency": 6.5696116045619385e-06
+        }
+      ],
+      "variant_count": 9,
+      "max_af": 0.02082429786171457,
+      "polymorphism_score": 0.0
+    },
+    "HNRNPK:ENST00000376263:chr9:83979914": {
+      "region": {
+        "chrom": "chr9",
+        "start": 83979914,
+        "end": 83979934,
+        "strand": "-"
+      },
+      "variants": [
+        {
+          "variant_id": "9-83979916-G-A",
+          "position": 83979916,
+          "ref": "G",
+          "alt": "A",
+          "allele_frequency": 6.570561257342603e-06
+        },
+        {
+          "variant_id": "9-83979919-C-A",
+          "position": 83979919,
+          "ref": "C",
+          "alt": "A",
+          "allele_frequency": 0.0001510018645447622
+        },
+        {
+          "variant_id": "9-83979930-T-C",
+          "position": 83979930,
+          "ref": "T",
+          "alt": "C",
+          "allele_frequency": 0.0015428451377399617
+        },
+        {
+          "variant_id": "9-83979931-A-G",
+          "position": 83979931,
+          "ref": "A",
+          "alt": "G",
+          "allele_frequency": 6.573498284316948e-06
+        },
+        {
+          "variant_id": "9-83979932-G-A",
+          "position": 83979932,
+          "ref": "G",
+          "alt": "A",
+          "allele_frequency": 6.5714248163286764e-06
+        },
+        {
+          "variant_id": "9-83979934-G-A",
+          "position": 83979934,
+          "ref": "G",
+          "alt": "A",
+          "allele_frequency": 2.6263952724885094e-05
+        }
+      ],
+      "variant_count": 6,
+      "max_af": 0.0015428451377399617,
+      "polymorphism_score": 0.8457154862260039
+    },
+    "AGO4:ENST00000373210:chr1:35815110": {
+      "region": {
+        "chrom": "chr1",
+        "start": 35815110,
+        "end": 35815130,
+        "strand": "+"
+      },
+      "variants": [
+        {
+          "variant_id": "1-35815115-T-G",
+          "position": 35815115,
+          "ref": "T",
+          "alt": "G",
+          "allele_frequency": 6.5710793654965765e-06
+        },
+        {
+          "variant_id": "1-35815122-C-A",
+          "position": 35815122,
+          "ref": "C",
+          "alt": "A",
+          "allele_frequency": 0.0008469346218994971
+        }
+      ],
+      "variant_count": 2,
+      "max_af": 0.0008469346218994971,
+      "polymorphism_score": 0.9153065378100503
+    },
+    "MDM2:ENST00000258149:chr12:68809823": {
+      "region": {
+        "chrom": "chr12",
+        "start": 68809823,
+        "end": 68809843,
+        "strand": "+"
+      },
+      "variants": [
+        {
+          "variant_id": "12-68809832-CAATA-C",
+          "position": 68809832,
+          "ref": "CAATA",
+          "alt": "C",
+          "allele_frequency": 7.881152224455216e-05
+        },
+        {
+          "variant_id": "12-68809834-A-G",
+          "position": 68809834,
+          "ref": "A",
+          "alt": "G",
+          "allele_frequency": 0.00011161740180951506
+        },
+        {
+          "variant_id": "12-68809842-A-G",
+          "position": 68809842,
+          "ref": "A",
+          "alt": "G",
+          "allele_frequency": 6.5696979252893955e-06
+        }
+      ],
+      "variant_count": 3,
+      "max_af": 0.00011161740180951506,
+      "polymorphism_score": 0.9888382598190485
+    },
+    "EGFR:ENST00000275493:chr7:55027996": {
+      "region": {
+        "chrom": "chr7",
+        "start": 55027996,
+        "end": 55028016,
+        "strand": "+"
+      },
+      "variants": [
+        {
+          "variant_id": "7-55027997-TATATATATATATATATATATATATATATAC-T",
+          "position": 55027997,
+          "ref": "TATATATATATATATATATATATATATATAC",
+          "alt": "T",
+          "allele_frequency": 2.9238056254020234e-05
+        },
+        {
+          "variant_id": "7-55027997-T-A",
+          "position": 55027997,
+          "ref": "T",
+          "alt": "A",
+          "allele_frequency": 0.000126698243767421
+        },
+        {
+          "variant_id": "7-55027999-T-A",
+          "position": 55027999,
+          "ref": "T",
+          "alt": "A",
+          "allele_frequency": 1.9285287254353654e-05
+        },
+        {
+          "variant_id": "7-55027999-T-TATATAG",
+          "position": 55027999,
+          "ref": "T",
+          "alt": "TATATAG",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "7-55028001-T-TATATATATATATATATATATATATATATATATATATACAC",
+          "position": 55028001,
+          "ref": "T",
+          "alt": "TATATATATATATATATATATATATATATATATATATACAC",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "7-55028001-T-A",
+          "position": 55028001,
+          "ref": "T",
+          "alt": "A",
+          "allele_frequency": 0.0006243979020230492
+        },
+        {
+          "variant_id": "7-55028003-T-A",
+          "position": 55028003,
+          "ref": "T",
+          "alt": "A",
+          "allele_frequency": 0.003659919889404842
+        },
+        {
+          "variant_id": "7-55028004-A-ATATG",
+          "position": 55028004,
+          "ref": "A",
+          "alt": "ATATG",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "7-55028005-T-C",
+          "position": 55028005,
+          "ref": "T",
+          "alt": "C",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "7-55028005-TATATATATATATATATATATAC-T",
+          "position": 55028005,
+          "ref": "TATATATATATATATATATATAC",
+          "alt": "T",
+          "allele_frequency": 5.350741077639253e-05
+        },
+        {
+          "variant_id": "7-55028005-T-A",
+          "position": 55028005,
+          "ref": "T",
+          "alt": "A",
+          "allele_frequency": 0.00048175573200107054
+        },
+        {
+          "variant_id": "7-55028007-TATATATATATATATATATAC-T",
+          "position": 55028007,
+          "ref": "TATATATATATATATATATAC",
+          "alt": "T",
+          "allele_frequency": 0.0011972930765226444
+        },
+        {
+          "variant_id": "7-55028009-TATATATATATATATATAC-T",
+          "position": 55028009,
+          "ref": "TATATATATATATATATAC",
+          "alt": "T",
+          "allele_frequency": 0.04001794526693585
+        },
+        {
+          "variant_id": "7-55028009-T-A",
+          "position": 55028009,
+          "ref": "T",
+          "alt": "A",
+          "allele_frequency": 2.2426888343998563e-05
+        },
+        {
+          "variant_id": "7-55028009-T-C",
+          "position": 55028009,
+          "ref": "T",
+          "alt": "C",
+          "allele_frequency": 7.4756294479995216e-06
+        },
+        {
+          "variant_id": "7-55028010-A-G",
+          "position": 55028010,
+          "ref": "A",
+          "alt": "G",
+          "allele_frequency": 8.01963205928112e-06
+        },
+        {
+          "variant_id": "7-55028011-TATATATATATATATAC-T",
+          "position": 55028011,
+          "ref": "TATATATATATATATAC",
+          "alt": "T",
+          "allele_frequency": 0.03192580014737449
+        },
+        {
+          "variant_id": "7-55028011-T-A",
+          "position": 55028011,
+          "ref": "T",
+          "alt": "A",
+          "allele_frequency": 8.006020527436632e-06
+        },
+        {
+          "variant_id": "7-55028011-TATATATATATATATACAC-T",
+          "position": 55028011,
+          "ref": "TATATATATATATATACAC",
+          "alt": "T",
+          "allele_frequency": 2.4018061582309896e-05
+        },
+        {
+          "variant_id": "7-55028012-A-G",
+          "position": 55028012,
+          "ref": "A",
+          "alt": "G",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "7-55028013-T-A",
+          "position": 55028013,
+          "ref": "T",
+          "alt": "A",
+          "allele_frequency": 8.39602364320258e-06
+        },
+        {
+          "variant_id": "7-55028013-TATATATATATATAC-T",
+          "position": 55028013,
+          "ref": "TATATATATATATAC",
+          "alt": "T",
+          "allele_frequency": 0.005466821182042626
+        },
+        {
+          "variant_id": "7-55028015-TATATATATATAC-T",
+          "position": 55028015,
+          "ref": "TATATATATATAC",
+          "alt": "T",
+          "allele_frequency": 0.00893643694517856
+        }
+      ],
+      "variant_count": 23,
+      "max_af": 0.04001794526693585,
+      "polymorphism_score": 0.0
+    },
+    "PIK3CA:ENST00000263967:chr3:179151174": {
+      "region": {
+        "chrom": "chr3",
+        "start": 179151174,
+        "end": 179151194,
+        "strand": "+"
+      },
+      "variants": [
+        {
+          "variant_id": "3-179151192-C-T",
+          "position": 179151192,
+          "ref": "C",
+          "alt": "T",
+          "allele_frequency": 6.574535509066285e-06
+        },
+        {
+          "variant_id": "3-179151194-T-G",
+          "position": 179151194,
+          "ref": "T",
+          "alt": "G",
+          "allele_frequency": 6.564953651427221e-06
+        }
+      ],
+      "variant_count": 2,
+      "max_af": 6.574535509066285e-06,
+      "polymorphism_score": 0.9993425464490934
+    },
+    "VEGFA:ENST00000497139:chr6:43777871": {
+      "region": {
+        "chrom": "chr6",
+        "start": 43777871,
+        "end": 43777891,
+        "strand": "+"
+      },
+      "variants": [
+        {
+          "variant_id": "6-43777871-T-C",
+          "position": 43777871,
+          "ref": "T",
+          "alt": "C",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "6-43777872-C-A",
+          "position": 43777872,
+          "ref": "C",
+          "alt": "A",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "6-43777873-C-A",
+          "position": 43777873,
+          "ref": "C",
+          "alt": "A",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "6-43777873-C-T",
+          "position": 43777873,
+          "ref": "C",
+          "alt": "T",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "6-43777875-T-C",
+          "position": 43777875,
+          "ref": "T",
+          "alt": "C",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "6-43777876-C-T",
+          "position": 43777876,
+          "ref": "C",
+          "alt": "T",
+          "allele_frequency": 6.5726341803267915e-06
+        },
+        {
+          "variant_id": "6-43777876-C-A",
+          "position": 43777876,
+          "ref": "C",
+          "alt": "A",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "6-43777877-T-C",
+          "position": 43777877,
+          "ref": "T",
+          "alt": "C",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "6-43777878-C-A",
+          "position": 43777878,
+          "ref": "C",
+          "alt": "A",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "6-43777878-C-T",
+          "position": 43777878,
+          "ref": "C",
+          "alt": "T",
+          "allele_frequency": 6.572115826969334e-06
+        },
+        {
+          "variant_id": "6-43777879-C-G",
+          "position": 43777879,
+          "ref": "C",
+          "alt": "G",
+          "allele_frequency": 6.59552295901542e-06
+        },
+        {
+          "variant_id": "6-43777879-C-A",
+          "position": 43777879,
+          "ref": "C",
+          "alt": "A",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "6-43777880-C-A",
+          "position": 43777880,
+          "ref": "C",
+          "alt": "A",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "6-43777880-C-T",
+          "position": 43777880,
+          "ref": "C",
+          "alt": "T",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "6-43777881-TG-T",
+          "position": 43777881,
+          "ref": "TG",
+          "alt": "T",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "6-43777881-T-A",
+          "position": 43777881,
+          "ref": "T",
+          "alt": "A",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "6-43777881-T-C",
+          "position": 43777881,
+          "ref": "T",
+          "alt": "C",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "6-43777882-G-T",
+          "position": 43777882,
+          "ref": "G",
+          "alt": "T",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "6-43777883-A-C",
+          "position": 43777883,
+          "ref": "A",
+          "alt": "C",
+          "allele_frequency": 6.579813133307014e-06
+        },
+        {
+          "variant_id": "6-43777883-A-T",
+          "position": 43777883,
+          "ref": "A",
+          "alt": "T",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "6-43777884-T-C",
+          "position": 43777884,
+          "ref": "T",
+          "alt": "C",
+          "allele_frequency": 2.243943596233765e-06
+        },
+        {
+          "variant_id": "6-43777885-G-A",
+          "position": 43777885,
+          "ref": "G",
+          "alt": "A",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "6-43777885-G-T",
+          "position": 43777885,
+          "ref": "G",
+          "alt": "T",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "6-43777887-T-G",
+          "position": 43777887,
+          "ref": "T",
+          "alt": "G",
+          "allele_frequency": 2.255890129127151e-06
+        },
+        {
+          "variant_id": "6-43777889-G-T",
+          "position": 43777889,
+          "ref": "G",
+          "alt": "T",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "6-43777889-G-A",
+          "position": 43777889,
+          "ref": "G",
+          "alt": "A",
+          "allele_frequency": 4.518242403704958e-06
+        },
+        {
+          "variant_id": "6-43777890-C-A",
+          "position": 43777890,
+          "ref": "C",
+          "alt": "A",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "6-43777890-C-T",
+          "position": 43777890,
+          "ref": "C",
+          "alt": "T",
+          "allele_frequency": 6.5714248163286764e-06
+        },
+        {
+          "variant_id": "6-43777891-C-A",
+          "position": 43777891,
+          "ref": "C",
+          "alt": "A",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "6-43777891-C-T",
+          "position": 43777891,
+          "ref": "C",
+          "alt": "T",
+          "allele_frequency": 0.0
+        }
+      ],
+      "variant_count": 30,
+      "max_af": 6.59552295901542e-06,
+      "polymorphism_score": 0.9993404477040985
+    },
+    "HNRNPK:ENST00000376263:chr9:83979032": {
+      "region": {
+        "chrom": "chr9",
+        "start": 83979032,
+        "end": 83979052,
+        "strand": "-"
+      },
+      "variants": [
+        {
+          "variant_id": "9-83979034-C-G",
+          "position": 83979034,
+          "ref": "C",
+          "alt": "G",
+          "allele_frequency": 0.00012472593117754407
+        },
+        {
+          "variant_id": "9-83979034-C-T",
+          "position": 83979034,
+          "ref": "C",
+          "alt": "T",
+          "allele_frequency": 6.5696116045619385e-06
+        },
+        {
+          "variant_id": "9-83979036-AAC-A",
+          "position": 83979036,
+          "ref": "AAC",
+          "alt": "A",
+          "allele_frequency": 1.3127149570742208e-05
+        },
+        {
+          "variant_id": "9-83979042-C-T",
+          "position": 83979042,
+          "ref": "C",
+          "alt": "T",
+          "allele_frequency": 1.3140259125909963e-05
+        },
+        {
+          "variant_id": "9-83979049-G-A",
+          "position": 83979049,
+          "ref": "G",
+          "alt": "A",
+          "allele_frequency": 0.0006700211516481206
+        }
+      ],
+      "variant_count": 5,
+      "max_af": 0.0006700211516481206,
+      "polymorphism_score": 0.932997884835188
+    },
+    "DDX17:ENST00000403230:chr22:38504908": {
+      "region": {
+        "chrom": "chr22",
+        "start": 38504908,
+        "end": 38504928,
+        "strand": "-"
+      },
+      "variants": [
+        {
+          "variant_id": "22-38504909-G-A",
+          "position": 38504909,
+          "ref": "G",
+          "alt": "A",
+          "allele_frequency": 1.3204980918802572e-05
+        },
+        {
+          "variant_id": "22-38504913-GCGGGGGGGT-G",
+          "position": 38504913,
+          "ref": "GCGGGGGGGT",
+          "alt": "G",
+          "allele_frequency": 6.608948516291058e-06
+        },
+        {
+          "variant_id": "22-38504914-C-CG",
+          "position": 38504914,
+          "ref": "C",
+          "alt": "CG",
+          "allele_frequency": 0.04554287434655281
+        },
+        {
+          "variant_id": "22-38504914-C-T",
+          "position": 38504914,
+          "ref": "C",
+          "alt": "T",
+          "allele_frequency": 1.3683259899838537e-05
+        },
+        {
+          "variant_id": "22-38504914-C-CGG",
+          "position": 38504914,
+          "ref": "C",
+          "alt": "CGG",
+          "allele_frequency": 6.846501437765302e-05
+        },
+        {
+          "variant_id": "22-38504915-G-C",
+          "position": 38504915,
+          "ref": "G",
+          "alt": "C",
+          "allele_frequency": 1.4392009556294345e-05
+        },
+        {
+          "variant_id": "22-38504915-G-A",
+          "position": 38504915,
+          "ref": "G",
+          "alt": "A",
+          "allele_frequency": 7.196004778147172e-06
+        },
+        {
+          "variant_id": "22-38504916-G-T",
+          "position": 38504916,
+          "ref": "G",
+          "alt": "T",
+          "allele_frequency": 1.3149416823363884e-05
+        },
+        {
+          "variant_id": "22-38504916-G-A",
+          "position": 38504916,
+          "ref": "G",
+          "alt": "A",
+          "allele_frequency": 0.0005452777631786409
+        },
+        {
+          "variant_id": "22-38504916-G-C",
+          "position": 38504916,
+          "ref": "G",
+          "alt": "C",
+          "allele_frequency": 6.574708411681942e-06
+        },
+        {
+          "variant_id": "22-38504919-G-C",
+          "position": 38504919,
+          "ref": "G",
+          "alt": "C",
+          "allele_frequency": 6.5704749139267785e-06
+        },
+        {
+          "variant_id": "22-38504921-G-A",
+          "position": 38504921,
+          "ref": "G",
+          "alt": "A",
+          "allele_frequency": 6.583018445617685e-06
+        },
+        {
+          "variant_id": "22-38504922-T-G",
+          "position": 38504922,
+          "ref": "T",
+          "alt": "G",
+          "allele_frequency": 2.025630984051532e-05
+        },
+        {
+          "variant_id": "22-38504924-G-C",
+          "position": 38504924,
+          "ref": "G",
+          "alt": "C",
+          "allele_frequency": 6.582411795681938e-06
+        },
+        {
+          "variant_id": "22-38504924-G-A",
+          "position": 38504924,
+          "ref": "G",
+          "alt": "A",
+          "allele_frequency": 1.3164823591363876e-05
+        },
+        {
+          "variant_id": "22-38504925-G-A",
+          "position": 38504925,
+          "ref": "G",
+          "alt": "A",
+          "allele_frequency": 1.3150800226193763e-05
+        },
+        {
+          "variant_id": "22-38504926-G-A",
+          "position": 38504926,
+          "ref": "G",
+          "alt": "A",
+          "allele_frequency": 6.574103292310929e-06
+        },
+        {
+          "variant_id": "22-38504927-G-A",
+          "position": 38504927,
+          "ref": "G",
+          "alt": "A",
+          "allele_frequency": 6.575918984678109e-06
+        },
+        {
+          "variant_id": "22-38504928-G-A",
+          "position": 38504928,
+          "ref": "G",
+          "alt": "A",
+          "allele_frequency": 9.194073762740359e-05
+        },
+        {
+          "variant_id": "22-38504928-GA-G",
+          "position": 38504928,
+          "ref": "GA",
+          "alt": "G",
+          "allele_frequency": 6.572288602337106e-06
+        }
+      ],
+      "variant_count": 20,
+      "max_af": 0.04554287434655281,
+      "polymorphism_score": 0.0
+    },
+    "DDX17:ENST00000403230:chr22:38501867": {
+      "region": {
+        "chrom": "chr22",
+        "start": 38501867,
+        "end": 38501887,
+        "strand": "-"
+      },
+      "variants": [
+        {
+          "variant_id": "22-38501870-G-C",
+          "position": 38501870,
+          "ref": "G",
+          "alt": "C",
+          "allele_frequency": 0.00015110900872490276
+        },
+        {
+          "variant_id": "22-38501876-AT-A",
+          "position": 38501876,
+          "ref": "AT",
+          "alt": "A",
+          "allele_frequency": 6.569438969911969e-06
+        },
+        {
+          "variant_id": "22-38501880-T-C",
+          "position": 38501880,
+          "ref": "T",
+          "alt": "C",
+          "allele_frequency": 0.0007220216606498195
+        },
+        {
+          "variant_id": "22-38501884-G-C",
+          "position": 38501884,
+          "ref": "G",
+          "alt": "C",
+          "allele_frequency": 6.570043230884459e-06
+        }
+      ],
+      "variant_count": 4,
+      "max_af": 0.0007220216606498195,
+      "polymorphism_score": 0.927797833935018
+    },
+    "DDX5:ENST00000225792:chr17:64505712": {
+      "region": {
+        "chrom": "chr17",
+        "start": 64505712,
+        "end": 64505732,
+        "strand": "-"
+      },
+      "variants": [
+        {
+          "variant_id": "17-64505712-G-A",
+          "position": 64505712,
+          "ref": "G",
+          "alt": "A",
+          "allele_frequency": 1.447508981793232e-05
+        },
+        {
+          "variant_id": "17-64505712-G-C",
+          "position": 64505712,
+          "ref": "G",
+          "alt": "C",
+          "allele_frequency": 7.23754490896616e-07
+        },
+        {
+          "variant_id": "17-64505713-G-A",
+          "position": 64505713,
+          "ref": "G",
+          "alt": "A",
+          "allele_frequency": 1.8816663458184307e-05
+        },
+        {
+          "variant_id": "17-64505713-G-T",
+          "position": 64505713,
+          "ref": "G",
+          "alt": "T",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "17-64505714-C-T",
+          "position": 64505714,
+          "ref": "C",
+          "alt": "T",
+          "allele_frequency": 7.234591766455802e-07
+        },
+        {
+          "variant_id": "17-64505714-C-G",
+          "position": 64505714,
+          "ref": "C",
+          "alt": "G",
+          "allele_frequency": 6.570388572780194e-06
+        },
+        {
+          "variant_id": "17-64505714-CCA-C",
+          "position": 64505714,
+          "ref": "CCA",
+          "alt": "C",
+          "allele_frequency": 7.234591766455802e-07
+        },
+        {
+          "variant_id": "17-64505715-C-A",
+          "position": 64505715,
+          "ref": "C",
+          "alt": "A",
+          "allele_frequency": 7.232885907011126e-07
+        },
+        {
+          "variant_id": "17-64505715-C-T",
+          "position": 64505715,
+          "ref": "C",
+          "alt": "T",
+          "allele_frequency": 7.232885907011126e-07
+        },
+        {
+          "variant_id": "17-64505716-AC-A",
+          "position": 64505716,
+          "ref": "AC",
+          "alt": "A",
+          "allele_frequency": 6.583018445617685e-06
+        },
+        {
+          "variant_id": "17-64505717-C-T",
+          "position": 64505717,
+          "ref": "C",
+          "alt": "T",
+          "allele_frequency": 6.507036999012377e-06
+        },
+        {
+          "variant_id": "17-64505717-C-A",
+          "position": 64505717,
+          "ref": "C",
+          "alt": "A",
+          "allele_frequency": 7.230030655329978e-07
+        },
+        {
+          "variant_id": "17-64505718-C-G",
+          "position": 64505718,
+          "ref": "C",
+          "alt": "G",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "17-64505718-C-T",
+          "position": 64505718,
+          "ref": "C",
+          "alt": "T",
+          "allele_frequency": 9.857266777068055e-05
+        },
+        {
+          "variant_id": "17-64505719-C-G",
+          "position": 64505719,
+          "ref": "C",
+          "alt": "G",
+          "allele_frequency": 6.505042853776755e-06
+        },
+        {
+          "variant_id": "17-64505719-C-T",
+          "position": 64505719,
+          "ref": "C",
+          "alt": "T",
+          "allele_frequency": 4.599936915150878e-05
+        },
+        {
+          "variant_id": "17-64505720-CAAA-C",
+          "position": 64505720,
+          "ref": "CAAA",
+          "alt": "C",
+          "allele_frequency": 1.4455295552972875e-06
+        },
+        {
+          "variant_id": "17-64505720-CA-C",
+          "position": 64505720,
+          "ref": "CA",
+          "alt": "C",
+          "allele_frequency": 4.600722970752547e-05
+        },
+        {
+          "variant_id": "17-64505720-C-A",
+          "position": 64505720,
+          "ref": "C",
+          "alt": "A",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "17-64505721-A-G",
+          "position": 64505721,
+          "ref": "A",
+          "alt": "G",
+          "allele_frequency": 7.231578277495907e-07
+        },
+        {
+          "variant_id": "17-64505721-A-C",
+          "position": 64505721,
+          "ref": "A",
+          "alt": "C",
+          "allele_frequency": 4.338946966497544e-06
+        },
+        {
+          "variant_id": "17-64505722-A-T",
+          "position": 64505722,
+          "ref": "A",
+          "alt": "T",
+          "allele_frequency": 6.577562618396127e-06
+        },
+        {
+          "variant_id": "17-64505722-A-G",
+          "position": 64505722,
+          "ref": "A",
+          "alt": "G",
+          "allele_frequency": 6.577562618396127e-06
+        },
+        {
+          "variant_id": "17-64505723-A-G",
+          "position": 64505723,
+          "ref": "A",
+          "alt": "G",
+          "allele_frequency": 4.605808582595307e-05
+        },
+        {
+          "variant_id": "17-64505725-A-C",
+          "position": 64505725,
+          "ref": "A",
+          "alt": "C",
+          "allele_frequency": 6.58085235199663e-06
+        },
+        {
+          "variant_id": "17-64505726-C-G",
+          "position": 64505726,
+          "ref": "C",
+          "alt": "G",
+          "allele_frequency": 7.226718043814146e-07
+        },
+        {
+          "variant_id": "17-64505728-C-T",
+          "position": 64505728,
+          "ref": "C",
+          "alt": "T",
+          "allele_frequency": 7.226561370849786e-07
+        },
+        {
+          "variant_id": "17-64505728-C-A",
+          "position": 64505728,
+          "ref": "C",
+          "alt": "A",
+          "allele_frequency": 6.569266344334665e-06
+        },
+        {
+          "variant_id": "17-64505729-C-A",
+          "position": 64505729,
+          "ref": "C",
+          "alt": "A",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "17-64505729-C-T",
+          "position": 64505729,
+          "ref": "C",
+          "alt": "T",
+          "allele_frequency": 7.226519592539919e-07
+        },
+        {
+          "variant_id": "17-64505730-T-C",
+          "position": 64505730,
+          "ref": "T",
+          "alt": "C",
+          "allele_frequency": 0.0017697135564005736
+        },
+        {
+          "variant_id": "17-64505731-C-A",
+          "position": 64505731,
+          "ref": "C",
+          "alt": "A",
+          "allele_frequency": 0.0
+        }
+      ],
+      "variant_count": 32,
+      "max_af": 0.0017697135564005736,
+      "polymorphism_score": 0.8230286443599426
+    },
+    "CCND2:ENST00000261254:chr12:4276729": {
+      "region": {
+        "chrom": "chr12",
+        "start": 4276729,
+        "end": 4276749,
+        "strand": "+"
+      },
+      "variants": [
+        {
+          "variant_id": "12-4276738-C-A",
+          "position": 4276738,
+          "ref": "C",
+          "alt": "A",
+          "allele_frequency": 0.00107692105643329
+        },
+        {
+          "variant_id": "12-4276740-A-C",
+          "position": 4276740,
+          "ref": "A",
+          "alt": "C",
+          "allele_frequency": 0.00025605336414727663
+        },
+        {
+          "variant_id": "12-4276740-A-G",
+          "position": 4276740,
+          "ref": "A",
+          "alt": "G",
+          "allele_frequency": 0.00016426187284816947
+        },
+        {
+          "variant_id": "12-4276743-T-C",
+          "position": 4276743,
+          "ref": "T",
+          "alt": "C",
+          "allele_frequency": 6.570129562954982e-06
+        },
+        {
+          "variant_id": "12-4276748-C-T",
+          "position": 4276748,
+          "ref": "C",
+          "alt": "T",
+          "allele_frequency": 6.572029442691903e-06
+        }
+      ],
+      "variant_count": 5,
+      "max_af": 0.00107692105643329,
+      "polymorphism_score": 0.892307894356671
+    },
+    "PTEN:ENST00000371953:chr10:87869740": {
+      "region": {
+        "chrom": "chr10",
+        "start": 87869740,
+        "end": 87869760,
+        "strand": "+"
+      },
+      "variants": [
+        {
+          "variant_id": "10-87869756-ATATT-A",
+          "position": 87869756,
+          "ref": "ATATT",
+          "alt": "A",
+          "allele_frequency": 6.570647603027754e-06
+        }
+      ],
+      "variant_count": 1,
+      "max_af": 6.570647603027754e-06,
+      "polymorphism_score": 0.9993429352396972
+    },
+    "ATR:ENST00000350721:chr3:142572942": {
+      "region": {
+        "chrom": "chr3",
+        "start": 142572942,
+        "end": 142572962,
+        "strand": "-"
+      },
+      "variants": [
+        {
+          "variant_id": "3-142572943-T-A",
+          "position": 142572943,
+          "ref": "T",
+          "alt": "A",
+          "allele_frequency": 6.570993008463439e-06
+        },
+        {
+          "variant_id": "3-142572949-C-A",
+          "position": 142572949,
+          "ref": "C",
+          "alt": "A",
+          "allele_frequency": 1.9716606640553118e-05
+        },
+        {
+          "variant_id": "3-142572951-A-T",
+          "position": 142572951,
+          "ref": "A",
+          "alt": "T",
+          "allele_frequency": 6.574535509066285e-06
+        },
+        {
+          "variant_id": "3-142572957-C-T",
+          "position": 142572957,
+          "ref": "C",
+          "alt": "T",
+          "allele_frequency": 4.5999973714300736e-05
+        },
+        {
+          "variant_id": "3-142572957-C-G",
+          "position": 142572957,
+          "ref": "C",
+          "alt": "G",
+          "allele_frequency": 6.5714248163286764e-06
+        },
+        {
+          "variant_id": "3-142572959-A-C",
+          "position": 142572959,
+          "ref": "A",
+          "alt": "C",
+          "allele_frequency": 6.572374993427625e-06
+        },
+        {
+          "variant_id": "3-142572961-A-C",
+          "position": 142572961,
+          "ref": "A",
+          "alt": "C",
+          "allele_frequency": 1.3134908646710362e-05
+        },
+        {
+          "variant_id": "3-142572962-A-G",
+          "position": 142572962,
+          "ref": "A",
+          "alt": "G",
+          "allele_frequency": 6.571856680949502e-06
+        }
+      ],
+      "variant_count": 8,
+      "max_af": 4.5999973714300736e-05,
+      "polymorphism_score": 0.99540000262857
+    },
+    "CASP3:ENST00000308394:chr4:184648366": {
+      "region": {
+        "chrom": "chr4",
+        "start": 184648366,
+        "end": 184648386,
+        "strand": "-"
+      },
+      "variants": [
+        {
+          "variant_id": "4-184648367-A-G",
+          "position": 184648367,
+          "ref": "A",
+          "alt": "G",
+          "allele_frequency": 8.533991544783762e-05
+        },
+        {
+          "variant_id": "4-184648368-G-T",
+          "position": 184648368,
+          "ref": "G",
+          "alt": "T",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "4-184648371-C-T",
+          "position": 184648371,
+          "ref": "C",
+          "alt": "T",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "4-184648371-C-A",
+          "position": 184648371,
+          "ref": "C",
+          "alt": "A",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "4-184648372-G-T",
+          "position": 184648372,
+          "ref": "G",
+          "alt": "T",
+          "allele_frequency": 6.570733950982325e-06
+        },
+        {
+          "variant_id": "4-184648372-G-A",
+          "position": 184648372,
+          "ref": "G",
+          "alt": "A",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "4-184648374-C-G",
+          "position": 184648374,
+          "ref": "C",
+          "alt": "G",
+          "allele_frequency": 0.0001182996398433187
+        },
+        {
+          "variant_id": "4-184648375-A-G",
+          "position": 184648375,
+          "ref": "A",
+          "alt": "G",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "4-184648375-A-T",
+          "position": 184648375,
+          "ref": "A",
+          "alt": "T",
+          "allele_frequency": 6.5704749139267785e-06
+        },
+        {
+          "variant_id": "4-184648376-A-T",
+          "position": 184648376,
+          "ref": "A",
+          "alt": "T",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "4-184648376-A-G",
+          "position": 184648376,
+          "ref": "A",
+          "alt": "G",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "4-184648377-G-T",
+          "position": 184648377,
+          "ref": "G",
+          "alt": "T",
+          "allele_frequency": 6.570733950982325e-06
+        },
+        {
+          "variant_id": "4-184648378-G-T",
+          "position": 184648378,
+          "ref": "G",
+          "alt": "T",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "4-184648379-C-A",
+          "position": 184648379,
+          "ref": "C",
+          "alt": "A",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "4-184648381-TG-T",
+          "position": 184648381,
+          "ref": "TG",
+          "alt": "T",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "4-184648383-G-T",
+          "position": 184648383,
+          "ref": "G",
+          "alt": "T",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "4-184648384-C-A",
+          "position": 184648384,
+          "ref": "C",
+          "alt": "A",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "4-184648384-C-T",
+          "position": 184648384,
+          "ref": "C",
+          "alt": "T",
+          "allele_frequency": 6.5684896414918355e-06
+        },
+        {
+          "variant_id": "4-184648386-A-T",
+          "position": 184648386,
+          "ref": "A",
+          "alt": "T",
+          "allele_frequency": 0.0
+        }
+      ],
+      "variant_count": 19,
+      "max_af": 0.0001182996398433187,
+      "polymorphism_score": 0.9881700360156681
+    },
+    "CUL1:ENST00000325222:chr7:148700526": {
+      "region": {
+        "chrom": "chr7",
+        "start": 148700526,
+        "end": 148700546,
+        "strand": "+"
+      },
+      "variants": [
+        {
+          "variant_id": "7-148700526-A-T",
+          "position": 148700526,
+          "ref": "A",
+          "alt": "T",
+          "allele_frequency": 6.571165724799579e-06
+        },
+        {
+          "variant_id": "7-148700527-A-G",
+          "position": 148700527,
+          "ref": "A",
+          "alt": "G",
+          "allele_frequency": 6.5686622262510016e-06
+        },
+        {
+          "variant_id": "7-148700532-G-T",
+          "position": 148700532,
+          "ref": "G",
+          "alt": "T",
+          "allele_frequency": 1.971479266609713e-05
+        },
+        {
+          "variant_id": "7-148700532-G-A",
+          "position": 148700532,
+          "ref": "G",
+          "alt": "A",
+          "allele_frequency": 9.857396333048565e-05
+        }
+      ],
+      "variant_count": 4,
+      "max_af": 9.857396333048565e-05,
+      "polymorphism_score": 0.9901426036669514
+    },
+    "AKT2:ENST00000392038:chr19:40280283": {
+      "region": {
+        "chrom": "chr19",
+        "start": 40280283,
+        "end": 40280303,
+        "strand": "-"
+      },
+      "variants": [
+        {
+          "variant_id": "19-40280292-A-G",
+          "position": 40280292,
+          "ref": "A",
+          "alt": "G",
+          "allele_frequency": 3.2857987776828546e-05
+        },
+        {
+          "variant_id": "19-40280302-C-A",
+          "position": 40280302,
+          "ref": "C",
+          "alt": "A",
+          "allele_frequency": 0.000124750499001996
+        }
+      ],
+      "variant_count": 2,
+      "max_af": 0.000124750499001996,
+      "polymorphism_score": 0.9875249500998003
+    },
+    "TSC1:ENST00000298552:chr9:132940598": {
+      "region": {
+        "chrom": "chr9",
+        "start": 132940598,
+        "end": 132940618,
+        "strand": "-"
+      },
+      "variants": [
+        {
+          "variant_id": "9-132940598-T-C",
+          "position": 132940598,
+          "ref": "T",
+          "alt": "C",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "9-132940599-C-T",
+          "position": 132940599,
+          "ref": "C",
+          "alt": "T",
+          "allele_frequency": 0.0003218052618444039
+        },
+        {
+          "variant_id": "9-132940600-C-G",
+          "position": 132940600,
+          "ref": "C",
+          "alt": "G",
+          "allele_frequency": 6.567971941623865e-06
+        },
+        {
+          "variant_id": "9-132940601-C-A",
+          "position": 132940601,
+          "ref": "C",
+          "alt": "A",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "9-132940601-C-T",
+          "position": 132940601,
+          "ref": "C",
+          "alt": "T",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "9-132940603-G-T",
+          "position": 132940603,
+          "ref": "G",
+          "alt": "T",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "9-132940604-C-A",
+          "position": 132940604,
+          "ref": "C",
+          "alt": "A",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "9-132940607-A-G",
+          "position": 132940607,
+          "ref": "A",
+          "alt": "G",
+          "allele_frequency": 6.5688348200796145e-06
+        },
+        {
+          "variant_id": "9-132940608-G-A",
+          "position": 132940608,
+          "ref": "G",
+          "alt": "A",
+          "allele_frequency": 6.572547782422378e-06
+        },
+        {
+          "variant_id": "9-132940614-G-T",
+          "position": 132940614,
+          "ref": "G",
+          "alt": "T",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "9-132940617-T-G",
+          "position": 132940617,
+          "ref": "T",
+          "alt": "G",
+          "allele_frequency": 6.568748522031582e-06
+        }
+      ],
+      "variant_count": 11,
+      "max_af": 0.0003218052618444039,
+      "polymorphism_score": 0.9678194738155597
+    },
+    "YAP1:ENST00000282441:chr11:102115206": {
+      "region": {
+        "chrom": "chr11",
+        "start": 102115206,
+        "end": 102115226,
+        "strand": "+"
+      },
+      "variants": [
+        {
+          "variant_id": "11-102115214-A-G",
+          "position": 102115214,
+          "ref": "A",
+          "alt": "G",
+          "allele_frequency": 1.3128528291978469e-05
+        },
+        {
+          "variant_id": "11-102115225-T-C",
+          "position": 102115225,
+          "ref": "T",
+          "alt": "C",
+          "allele_frequency": 6.569438969911969e-06
+        }
+      ],
+      "variant_count": 2,
+      "max_af": 1.3128528291978469e-05,
+      "polymorphism_score": 0.9986871471708022
+    },
+    "IFNG:ENST00000229135:chr12:68159107": {
+      "region": {
+        "chrom": "chr12",
+        "start": 68159107,
+        "end": 68159127,
+        "strand": "-"
+      },
+      "variants": [
+        {
+          "variant_id": "12-68159110-A-G",
+          "position": 68159110,
+          "ref": "A",
+          "alt": "G",
+          "allele_frequency": 6.574535509066285e-06
+        },
+        {
+          "variant_id": "12-68159111-T-C",
+          "position": 68159111,
+          "ref": "T",
+          "alt": "C",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "12-68159114-C-G",
+          "position": 68159114,
+          "ref": "C",
+          "alt": "G",
+          "allele_frequency": 6.574362615544423e-06
+        },
+        {
+          "variant_id": "12-68159115-CT-C",
+          "position": 68159115,
+          "ref": "CT",
+          "alt": "C",
+          "allele_frequency": 6.577735680269424e-06
+        },
+        {
+          "variant_id": "12-68159117-T-C",
+          "position": 68159117,
+          "ref": "T",
+          "alt": "C",
+          "allele_frequency": 1.3141295206055508e-05
+        },
+        {
+          "variant_id": "12-68159121-A-G",
+          "position": 68159121,
+          "ref": "A",
+          "alt": "G",
+          "allele_frequency": 6.572029442691903e-06
+        }
+      ],
+      "variant_count": 6,
+      "max_af": 1.3141295206055508e-05,
+      "polymorphism_score": 0.9986858704793945
+    },
+    "LIN28A:ENST00000326279:chr1:26414640": {
+      "region": {
+        "chrom": "chr1",
+        "start": 26414640,
+        "end": 26414660,
+        "strand": "+"
+      },
+      "variants": [
+        {
+          "variant_id": "1-26414640-C-T",
+          "position": 26414640,
+          "ref": "C",
+          "alt": "T",
+          "allele_frequency": 6.571252086372537e-06
+        },
+        {
+          "variant_id": "1-26414653-G-A",
+          "position": 26414653,
+          "ref": "G",
+          "alt": "A",
+          "allele_frequency": 1.314043179458877e-05
+        }
+      ],
+      "variant_count": 2,
+      "max_af": 1.314043179458877e-05,
+      "polymorphism_score": 0.9986859568205412
+    },
+    "DICER1:ENST00000343455:chr14:95147794": {
+      "region": {
+        "chrom": "chr14",
+        "start": 95147794,
+        "end": 95147814,
+        "strand": "-"
+      },
+      "variants": [
+        {
+          "variant_id": "14-95147796-C-T",
+          "position": 95147796,
+          "ref": "C",
+          "alt": "T",
+          "allele_frequency": 8.542066391568323e-05
+        },
+        {
+          "variant_id": "14-95147797-G-C",
+          "position": 95147797,
+          "ref": "G",
+          "alt": "C",
+          "allele_frequency": 6.574708411681942e-06
+        },
+        {
+          "variant_id": "14-95147797-G-A",
+          "position": 95147797,
+          "ref": "G",
+          "alt": "A",
+          "allele_frequency": 6.574708411681942e-06
+        },
+        {
+          "variant_id": "14-95147799-C-G",
+          "position": 95147799,
+          "ref": "C",
+          "alt": "G",
+          "allele_frequency": 6.5704749139267785e-06
+        },
+        {
+          "variant_id": "14-95147810-A-G",
+          "position": 95147810,
+          "ref": "A",
+          "alt": "G",
+          "allele_frequency": 0.00010514141520344864
+        }
+      ],
+      "variant_count": 5,
+      "max_af": 0.00010514141520344864,
+      "polymorphism_score": 0.9894858584796551
+    },
+    "TNRC6B:ENST00000454349:chr22:40180363": {
+      "region": {
+        "chrom": "chr22",
+        "start": 40180363,
+        "end": 40180383,
+        "strand": "+"
+      },
+      "variants": [
+        {
+          "variant_id": "22-40180363-C-T",
+          "position": 40180363,
+          "ref": "C",
+          "alt": "T",
+          "allele_frequency": 6.574276172193441e-06
+        },
+        {
+          "variant_id": "22-40180370-AT-A",
+          "position": 40180370,
+          "ref": "AT",
+          "alt": "A",
+          "allele_frequency": 1.3139050572205653e-05
+        },
+        {
+          "variant_id": "22-40180379-G-T",
+          "position": 40180379,
+          "ref": "G",
+          "alt": "T",
+          "allele_frequency": 1.3129907302854442e-05
+        },
+        {
+          "variant_id": "22-40180381-A-G",
+          "position": 40180381,
+          "ref": "A",
+          "alt": "G",
+          "allele_frequency": 3.941818755173637e-05
+        }
+      ],
+      "variant_count": 4,
+      "max_af": 3.941818755173637e-05,
+      "polymorphism_score": 0.9960581812448264
+    },
+    "CCND2:ENST00000261254:chr12:4276799": {
+      "region": {
+        "chrom": "chr12",
+        "start": 4276799,
+        "end": 4276819,
+        "strand": "+"
+      },
+      "variants": [
+        {
+          "variant_id": "12-4276802-C-T",
+          "position": 4276802,
+          "ref": "C",
+          "alt": "T",
+          "allele_frequency": 2.6279827604330916e-05
+        },
+        {
+          "variant_id": "12-4276816-A-G",
+          "position": 4276816,
+          "ref": "A",
+          "alt": "G",
+          "allele_frequency": 6.569525286102826e-06
+        },
+        {
+          "variant_id": "12-4276819-G-A",
+          "position": 4276819,
+          "ref": "G",
+          "alt": "A",
+          "allele_frequency": 6.5715975553657095e-06
+        }
+      ],
+      "variant_count": 3,
+      "max_af": 2.6279827604330916e-05,
+      "polymorphism_score": 0.9973720172395669
+    },
+    "MTOR:ENST00000361445:chr1:11259515": {
+      "region": {
+        "chrom": "chr1",
+        "start": 11259515,
+        "end": 11259535,
+        "strand": "-"
+      },
+      "variants": [
+        {
+          "variant_id": "1-11259515-T-A",
+          "position": 11259515,
+          "ref": "T",
+          "alt": "A",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "1-11259515-T-G",
+          "position": 11259515,
+          "ref": "T",
+          "alt": "G",
+          "allele_frequency": 1.6485545473728634e-06
+        },
+        {
+          "variant_id": "1-11259516-A-C",
+          "position": 11259516,
+          "ref": "A",
+          "alt": "C",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "1-11259516-A-G",
+          "position": 11259516,
+          "ref": "A",
+          "alt": "G",
+          "allele_frequency": 6.950795070462638e-05
+        },
+        {
+          "variant_id": "1-11259517-G-A",
+          "position": 11259517,
+          "ref": "G",
+          "alt": "A",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "1-11259517-G-T",
+          "position": 11259517,
+          "ref": "G",
+          "alt": "T",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "1-11259518-C-T",
+          "position": 11259518,
+          "ref": "C",
+          "alt": "T",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "1-11259518-C-A",
+          "position": 11259518,
+          "ref": "C",
+          "alt": "A",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "1-11259519-C-A",
+          "position": 11259519,
+          "ref": "C",
+          "alt": "A",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "1-11259519-CCT-C",
+          "position": 11259519,
+          "ref": "CCT",
+          "alt": "C",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "1-11259519-C-T",
+          "position": 11259519,
+          "ref": "C",
+          "alt": "T",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "1-11259520-CT-C",
+          "position": 11259520,
+          "ref": "CT",
+          "alt": "C",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "1-11259520-C-A",
+          "position": 11259520,
+          "ref": "C",
+          "alt": "A",
+          "allele_frequency": 6.570043230884459e-06
+        },
+        {
+          "variant_id": "1-11259520-C-CT",
+          "position": 11259520,
+          "ref": "C",
+          "alt": "CT",
+          "allele_frequency": 1.3129907302854442e-05
+        },
+        {
+          "variant_id": "1-11259521-T-C",
+          "position": 11259521,
+          "ref": "T",
+          "alt": "C",
+          "allele_frequency": 4.2644577912496734e-06
+        },
+        {
+          "variant_id": "1-11259521-T-A",
+          "position": 11259521,
+          "ref": "T",
+          "alt": "A",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "1-11259521-T-G",
+          "position": 11259521,
+          "ref": "T",
+          "alt": "G",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "1-11259522-T-G",
+          "position": 11259522,
+          "ref": "T",
+          "alt": "G",
+          "allele_frequency": 8.646375352988273e-07
+        },
+        {
+          "variant_id": "1-11259522-T-A",
+          "position": 11259522,
+          "ref": "T",
+          "alt": "A",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "1-11259522-T-C",
+          "position": 11259522,
+          "ref": "T",
+          "alt": "C",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "1-11259523-G-T",
+          "position": 11259523,
+          "ref": "G",
+          "alt": "T",
+          "allele_frequency": 3.4958190004754315e-06
+        },
+        {
+          "variant_id": "1-11259523-G-C",
+          "position": 11259523,
+          "ref": "G",
+          "alt": "C",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "1-11259524-T-A",
+          "position": 11259524,
+          "ref": "T",
+          "alt": "A",
+          "allele_frequency": 8.711347750033103e-07
+        },
+        {
+          "variant_id": "1-11259525-C-T",
+          "position": 11259525,
+          "ref": "C",
+          "alt": "T",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "1-11259525-C-G",
+          "position": 11259525,
+          "ref": "C",
+          "alt": "G",
+          "allele_frequency": 6.565298458467922e-06
+        },
+        {
+          "variant_id": "1-11259525-C-A",
+          "position": 11259525,
+          "ref": "C",
+          "alt": "A",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "1-11259526-A-G",
+          "position": 11259526,
+          "ref": "A",
+          "alt": "G",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "1-11259526-A-C",
+          "position": 11259526,
+          "ref": "A",
+          "alt": "C",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "1-11259527-G-A",
+          "position": 11259527,
+          "ref": "G",
+          "alt": "A",
+          "allele_frequency": 8.766101136262029e-07
+        },
+        {
+          "variant_id": "1-11259527-G-T",
+          "position": 11259527,
+          "ref": "G",
+          "alt": "T",
+          "allele_frequency": 8.766101136262029e-07
+        },
+        {
+          "variant_id": "1-11259528-G-T",
+          "position": 11259528,
+          "ref": "G",
+          "alt": "T",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "1-11259529-CAG-C",
+          "position": 11259529,
+          "ref": "CAG",
+          "alt": "C",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "1-11259529-C-A",
+          "position": 11259529,
+          "ref": "C",
+          "alt": "A",
+          "allele_frequency": 1.7919444927273933e-06
+        },
+        {
+          "variant_id": "1-11259529-CA-C",
+          "position": 11259529,
+          "ref": "CA",
+          "alt": "C",
+          "allele_frequency": 8.959722463636967e-07
+        },
+        {
+          "variant_id": "1-11259529-C-T",
+          "position": 11259529,
+          "ref": "C",
+          "alt": "T",
+          "allele_frequency": 1.7919380706202795e-05
+        },
+        {
+          "variant_id": "1-11259530-A-G",
+          "position": 11259530,
+          "ref": "A",
+          "alt": "G",
+          "allele_frequency": 0.6936960606645772
+        },
+        {
+          "variant_id": "1-11259530-A-T",
+          "position": 11259530,
+          "ref": "A",
+          "alt": "T",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "1-11259530-AGG-A",
+          "position": 11259530,
+          "ref": "AGG",
+          "alt": "A",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "1-11259531-G-T",
+          "position": 11259531,
+          "ref": "G",
+          "alt": "T",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "1-11259531-G-A",
+          "position": 11259531,
+          "ref": "G",
+          "alt": "A",
+          "allele_frequency": 1.9429435205748003e-06
+        },
+        {
+          "variant_id": "1-11259532-G-A",
+          "position": 11259532,
+          "ref": "G",
+          "alt": "A",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "1-11259532-G-T",
+          "position": 11259532,
+          "ref": "G",
+          "alt": "T",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "1-11259532-G-C",
+          "position": 11259532,
+          "ref": "G",
+          "alt": "C",
+          "allele_frequency": 1.953945504459881e-06
+        },
+        {
+          "variant_id": "1-11259533-G-A",
+          "position": 11259533,
+          "ref": "G",
+          "alt": "A",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "1-11259533-G-T",
+          "position": 11259533,
+          "ref": "G",
+          "alt": "T",
+          "allele_frequency": 1.3148725231088847e-05
+        },
+        {
+          "variant_id": "1-11259534-G-A",
+          "position": 11259534,
+          "ref": "G",
+          "alt": "A",
+          "allele_frequency": 1.971667143152893e-06
+        },
+        {
+          "variant_id": "1-11259534-G-C",
+          "position": 11259534,
+          "ref": "G",
+          "alt": "C",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "1-11259534-G-T",
+          "position": 11259534,
+          "ref": "G",
+          "alt": "T",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "1-11259535-A-G",
+          "position": 11259535,
+          "ref": "A",
+          "alt": "G",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "1-11259535-A-C",
+          "position": 11259535,
+          "ref": "A",
+          "alt": "C",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "1-11259535-A-T",
+          "position": 11259535,
+          "ref": "A",
+          "alt": "T",
+          "allele_frequency": 9.95381430164039e-07
+        }
+      ],
+      "variant_count": 51,
+      "max_af": 0.6936960606645772,
+      "polymorphism_score": 0.0
+    },
+    "RPS3:ENST00000531188:chr11:75401416": {
+      "region": {
+        "chrom": "chr11",
+        "start": 75401416,
+        "end": 75401436,
+        "strand": "+"
+      },
+      "variants": [
+        {
+          "variant_id": "11-75401425-G-C",
+          "position": 75401425,
+          "ref": "G",
+          "alt": "C",
+          "allele_frequency": 4.600602021635974e-05
+        },
+        {
+          "variant_id": "11-75401427-G-A",
+          "position": 75401427,
+          "ref": "G",
+          "alt": "A",
+          "allele_frequency": 1.314768797906888e-05
+        },
+        {
+          "variant_id": "11-75401428-G-C",
+          "position": 75401428,
+          "ref": "G",
+          "alt": "C",
+          "allele_frequency": 3.945136304459319e-05
+        },
+        {
+          "variant_id": "11-75401434-G-C",
+          "position": 75401434,
+          "ref": "G",
+          "alt": "C",
+          "allele_frequency": 6.574362615544423e-06
+        },
+        {
+          "variant_id": "11-75401435-C-T",
+          "position": 75401435,
+          "ref": "C",
+          "alt": "T",
+          "allele_frequency": 0.0003285798777682855
+        }
+      ],
+      "variant_count": 5,
+      "max_af": 0.0003285798777682855,
+      "polymorphism_score": 0.9671420122231714
+    },
+    "HNRNPA2B1:ENST00000618183:chr7:26197989": {
+      "region": {
+        "chrom": "chr7",
+        "start": 26197989,
+        "end": 26198009,
+        "strand": "-"
+      },
+      "variants": [
+        {
+          "variant_id": "7-26197989-A-C",
+          "position": 26197989,
+          "ref": "A",
+          "alt": "C",
+          "allele_frequency": 0.03198961472092201
+        },
+        {
+          "variant_id": "7-26197990-T-A",
+          "position": 26197990,
+          "ref": "T",
+          "alt": "A",
+          "allele_frequency": 2.663413750672512e-06
+        },
+        {
+          "variant_id": "7-26197990-T-C",
+          "position": 26197990,
+          "ref": "T",
+          "alt": "C",
+          "allele_frequency": 1.8643896254707583e-05
+        },
+        {
+          "variant_id": "7-26197993-A-G",
+          "position": 26197993,
+          "ref": "A",
+          "alt": "G",
+          "allele_frequency": 1.9723347183506022e-05
+        },
+        {
+          "variant_id": "7-26197994-T-C",
+          "position": 26197994,
+          "ref": "T",
+          "alt": "C",
+          "allele_frequency": 6.580159503066354e-06
+        },
+        {
+          "variant_id": "7-26197994-T-G",
+          "position": 26197994,
+          "ref": "T",
+          "alt": "G",
+          "allele_frequency": 2.7563243863043753e-06
+        },
+        {
+          "variant_id": "7-26197995-T-C",
+          "position": 26197995,
+          "ref": "T",
+          "alt": "C",
+          "allele_frequency": 2.799552071668533e-06
+        },
+        {
+          "variant_id": "7-26197996-T-C",
+          "position": 26197996,
+          "ref": "T",
+          "alt": "C",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "7-26197996-T-A",
+          "position": 26197996,
+          "ref": "T",
+          "alt": "A",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "7-26197997-A-G",
+          "position": 26197997,
+          "ref": "A",
+          "alt": "G",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "7-26197997-A-C",
+          "position": 26197997,
+          "ref": "A",
+          "alt": "C",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "7-26197998-C-T",
+          "position": 26197998,
+          "ref": "C",
+          "alt": "T",
+          "allele_frequency": 6.589959537648439e-06
+        },
+        {
+          "variant_id": "7-26197998-C-A",
+          "position": 26197998,
+          "ref": "C",
+          "alt": "A",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "7-26197998-C-G",
+          "position": 26197998,
+          "ref": "C",
+          "alt": "G",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "7-26197999-TCAA-T",
+          "position": 26197999,
+          "ref": "TCAA",
+          "alt": "T",
+          "allele_frequency": 6.580505909294307e-06
+        },
+        {
+          "variant_id": "7-26197999-T-A",
+          "position": 26197999,
+          "ref": "T",
+          "alt": "A",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "7-26197999-T-C",
+          "position": 26197999,
+          "ref": "T",
+          "alt": "C",
+          "allele_frequency": 5.667777551066676e-06
+        },
+        {
+          "variant_id": "7-26198000-C-A",
+          "position": 26198000,
+          "ref": "C",
+          "alt": "A",
+          "allele_frequency": 2.8888709136920927e-06
+        },
+        {
+          "variant_id": "7-26198000-CAACATT-C",
+          "position": 26198000,
+          "ref": "CAACATT",
+          "alt": "C",
+          "allele_frequency": 2.888820841109076e-06
+        },
+        {
+          "variant_id": "7-26198000-C-G",
+          "position": 26198000,
+          "ref": "C",
+          "alt": "G",
+          "allele_frequency": 1.1555283364436304e-05
+        },
+        {
+          "variant_id": "7-26198002-A-C",
+          "position": 26198002,
+          "ref": "A",
+          "alt": "C",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "7-26198003-CATTAA-C",
+          "position": 26198003,
+          "ref": "CATTAA",
+          "alt": "C",
+          "allele_frequency": 9.565952614590855e-05
+        },
+        {
+          "variant_id": "7-26198003-C-A",
+          "position": 26198003,
+          "ref": "C",
+          "alt": "A",
+          "allele_frequency": 3.085810210328824e-06
+        },
+        {
+          "variant_id": "7-26198004-A-C",
+          "position": 26198004,
+          "ref": "A",
+          "alt": "C",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "7-26198004-ATTAAATTATC-A",
+          "position": 26198004,
+          "ref": "ATTAAATTATC",
+          "alt": "A",
+          "allele_frequency": 6.581025587027483e-06
+        },
+        {
+          "variant_id": "7-26198004-A-ATTAAATTATC",
+          "position": 26198004,
+          "ref": "A",
+          "alt": "ATTAAATTATC",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "7-26198004-A-G",
+          "position": 26198004,
+          "ref": "A",
+          "alt": "G",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "7-26198006-T-A",
+          "position": 26198006,
+          "ref": "T",
+          "alt": "A",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "7-26198007-A-C",
+          "position": 26198007,
+          "ref": "A",
+          "alt": "C",
+          "allele_frequency": 3.3288283190082756e-06
+        },
+        {
+          "variant_id": "7-26198008-A-G",
+          "position": 26198008,
+          "ref": "A",
+          "alt": "G",
+          "allele_frequency": 3.3294268058810993e-06
+        },
+        {
+          "variant_id": "7-26198009-A-C",
+          "position": 26198009,
+          "ref": "A",
+          "alt": "C",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "7-26198009-A-G",
+          "position": 26198009,
+          "ref": "A",
+          "alt": "G",
+          "allele_frequency": 6.593174745503455e-06
+        }
+      ],
+      "variant_count": 32,
+      "max_af": 0.03198961472092201,
+      "polymorphism_score": 0.0
+    },
+    "TSC1:ENST00000298552:chr9:132937751": {
+      "region": {
+        "chrom": "chr9",
+        "start": 132937751,
+        "end": 132937771,
+        "strand": "-"
+      },
+      "variants": [
+        {
+          "variant_id": "9-132937767-G-A",
+          "position": 132937767,
+          "ref": "G",
+          "alt": "A",
+          "allele_frequency": 6.574708411681942e-06
+        }
+      ],
+      "variant_count": 1,
+      "max_af": 6.574708411681942e-06,
+      "polymorphism_score": 0.9993425291588318
+    },
+    "SMAD2:ENST00000262160:chr18:47898662": {
+      "region": {
+        "chrom": "chr18",
+        "start": 47898662,
+        "end": 47898682,
+        "strand": "-"
+      },
+      "variants": [
+        {
+          "variant_id": "18-47898662-T-A",
+          "position": 47898662,
+          "ref": "T",
+          "alt": "A",
+          "allele_frequency": 0.00014558159848595138
+        },
+        {
+          "variant_id": "18-47898662-T-TTA",
+          "position": 47898662,
+          "ref": "T",
+          "alt": "TTA",
+          "allele_frequency": 3.6382158189623806e-05
+        },
+        {
+          "variant_id": "18-47898663-T-TC",
+          "position": 47898663,
+          "ref": "T",
+          "alt": "TC",
+          "allele_frequency": 6.621639517944643e-06
+        },
+        {
+          "variant_id": "18-47898672-TAAA-T",
+          "position": 47898672,
+          "ref": "TAAA",
+          "alt": "T",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "18-47898672-T-A",
+          "position": 47898672,
+          "ref": "T",
+          "alt": "A",
+          "allele_frequency": 2.63189061862589e-05
+        },
+        {
+          "variant_id": "18-47898673-A-T",
+          "position": 47898673,
+          "ref": "A",
+          "alt": "T",
+          "allele_frequency": 7.3377261854096654e-06
+        },
+        {
+          "variant_id": "18-47898674-A-T",
+          "position": 47898674,
+          "ref": "A",
+          "alt": "T",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "18-47898675-A-ATTTT",
+          "position": 47898675,
+          "ref": "A",
+          "alt": "ATTTT",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "18-47898675-A-T",
+          "position": 47898675,
+          "ref": "A",
+          "alt": "T",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "18-47898676-T-C",
+          "position": 47898676,
+          "ref": "T",
+          "alt": "C",
+          "allele_frequency": 6.593000870276115e-06
+        },
+        {
+          "variant_id": "18-47898677-A-T",
+          "position": 47898677,
+          "ref": "A",
+          "alt": "T",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "18-47898679-TCCC-T",
+          "position": 47898679,
+          "ref": "TCCC",
+          "alt": "T",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "18-47898680-C-T",
+          "position": 47898680,
+          "ref": "C",
+          "alt": "T",
+          "allele_frequency": 0.0
+        },
+        {
+          "variant_id": "18-47898681-C-T",
+          "position": 47898681,
+          "ref": "C",
+          "alt": "T",
+          "allele_frequency": 0.0
+        }
+      ],
+      "variant_count": 14,
+      "max_af": 0.00014558159848595138,
+      "polymorphism_score": 0.9854418401514049
+    },
+    "SMAD2:ENST00000262160:chr18:47916332": {
+      "region": {
+        "chrom": "chr18",
+        "start": 47916332,
+        "end": 47916352,
+        "strand": "-"
+      },
+      "variants": [
+        {
+          "variant_id": "18-47916334-G-A",
+          "position": 47916334,
+          "ref": "G",
+          "alt": "A",
+          "allele_frequency": 8.548357400247245e-05
+        },
+        {
+          "variant_id": "18-47916334-G-C",
+          "position": 47916334,
+          "ref": "G",
+          "alt": "C",
+          "allele_frequency": 0.00014455234766153725
+        },
+        {
+          "variant_id": "18-47916338-T-G",
+          "position": 47916338,
+          "ref": "T",
+          "alt": "G",
+          "allele_frequency": 6.573066203922806e-06
+        },
+        {
+          "variant_id": "18-47916339-C-T",
+          "position": 47916339,
+          "ref": "C",
+          "alt": "T",
+          "allele_frequency": 1.972075412163761e-05
+        },
+        {
+          "variant_id": "18-47916344-T-C",
+          "position": 47916344,
+          "ref": "T",
+          "alt": "C",
+          "allele_frequency": 6.570561257342603e-06
+        },
+        {
+          "variant_id": "18-47916344-T-A",
+          "position": 47916344,
+          "ref": "T",
+          "alt": "A",
+          "allele_frequency": 6.570561257342603e-06
+        }
+      ],
+      "variant_count": 6,
+      "max_af": 0.00014455234766153725,
+      "polymorphism_score": 0.9855447652338463
+    }
+  }
+}

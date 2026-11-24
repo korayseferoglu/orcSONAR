@@ -1,0 +1,88 @@
+2026-11-24 15:31:44.607 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:45.049 | DEBUG    | src.core.cache:set:216 - Cache SET: phylop:chr1:11255438:11255458 (TTL 168h, schema v1)
+2026-11-24 15:31:45.049 | INFO     | src.stage3_variant_tox.phylop_scorer:score_phylop:83 - phylop_scorer: chr1:11255438-11255458(-) → mean=0.021, conservation_score=0.005
+2026-11-24 15:31:45.049 | DEBUG    | src.core.cache:get:193 - Cache HIT: phylop:chr6:43777011:43777031
+2026-11-24 15:31:45.049 | DEBUG    | src.stage3_variant_tox.phylop_scorer:_score_region:116 - phylop cache HIT: phylop:chr6:43777011:43777031
+2026-11-24 15:31:45.049 | INFO     | src.stage3_variant_tox.phylop_scorer:score_phylop:83 - phylop_scorer: chr6:43777011-43777031(+) → mean=-0.591, conservation_score=0.000
+2026-11-24 15:31:45.749 | DEBUG    | src.core.cache:set:216 - Cache SET: phylop:chr7:26198044:26198064 (TTL 168h, schema v1)
+2026-11-24 15:31:45.749 | INFO     | src.stage3_variant_tox.phylop_scorer:score_phylop:83 - phylop_scorer: chr7:26198044-26198064(-) → mean=-0.437, conservation_score=0.000
+2026-11-24 15:31:46.436 | DEBUG    | src.core.cache:set:216 - Cache SET: phylop:chr14:95152261:95152281 (TTL 168h, schema v1)
+2026-11-24 15:31:46.436 | INFO     | src.stage3_variant_tox.phylop_scorer:score_phylop:83 - phylop_scorer: chr14:95152261-95152281(-) → mean=-0.152, conservation_score=0.000
+2026-11-24 15:31:47.131 | DEBUG    | src.core.cache:set:216 - Cache SET: phylop:chr22:40182273:40182293 (TTL 168h, schema v1)
+2026-11-24 15:31:47.131 | INFO     | src.stage3_variant_tox.phylop_scorer:score_phylop:83 - phylop_scorer: chr22:40182273-40182293(+) → mean=0.146, conservation_score=0.037
+2026-11-24 15:31:47.817 | DEBUG    | src.core.cache:set:216 - Cache SET: phylop:chr3:41200550:41200570 (TTL 168h, schema v1)
+2026-11-24 15:31:47.817 | INFO     | src.stage3_variant_tox.phylop_scorer:score_phylop:83 - phylop_scorer: chr3:41200550-41200570(+) → mean=-0.474, conservation_score=0.000
+2026-11-24 15:31:48.542 | DEBUG    | src.core.cache:set:216 - Cache SET: phylop:chr3:142571301:142571321 (TTL 168h, schema v1)
+2026-11-24 15:31:48.542 | INFO     | src.stage3_variant_tox.phylop_scorer:score_phylop:83 - phylop_scorer: chr3:142571301-142571321(-) → mean=0.122, conservation_score=0.031
+2026-11-24 15:31:48.998 | DEBUG    | src.core.cache:set:216 - Cache SET: phylop:chr1:23692780:23692800 (TTL 168h, schema v1)
+2026-11-24 15:31:48.998 | INFO     | src.stage3_variant_tox.phylop_scorer:score_phylop:83 - phylop_scorer: chr1:23692780-23692800(+) → mean=-0.530, conservation_score=0.000
+2026-11-24 15:31:49.817 | DEBUG    | src.core.cache:set:216 - Cache SET: phylop:chr1:96724335:96724355 (TTL 168h, schema v1)
+2026-11-24 15:31:49.817 | INFO     | src.stage3_variant_tox.phylop_scorer:score_phylop:83 - phylop_scorer: chr1:96724335-96724355(+) → mean=-0.208, conservation_score=0.000
+2026-11-24 15:31:49.818 | DEBUG    | src.core.cache:set:216 - Cache SET: phylop:chr1:96724850:96724870 (TTL 168h, schema v1)
+2026-11-24 15:31:49.818 | INFO     | src.stage3_variant_tox.phylop_scorer:score_phylop:83 - phylop_scorer: chr1:96724850-96724870(+) → mean=0.299, conservation_score=0.075
+2026-11-24 15:31:50.566 | DEBUG    | src.core.cache:set:216 - Cache SET: phylop:chr17:43122797:43122817 (TTL 168h, schema v1)
+2026-11-24 15:31:50.567 | INFO     | src.stage3_variant_tox.phylop_scorer:score_phylop:83 - phylop_scorer: chr17:43122797-43122817(-) → mean=-0.081, conservation_score=0.000
+2026-11-24 15:31:50.567 | DEBUG    | src.core.cache:get:193 - Cache HIT: phylop:chr2:47175374:47175394
+2026-11-24 15:31:50.567 | DEBUG    | src.stage3_variant_tox.phylop_scorer:_score_region:116 - phylop cache HIT: phylop:chr2:47175374:47175394
+2026-11-24 15:31:50.567 | INFO     | src.stage3_variant_tox.phylop_scorer:score_phylop:83 - phylop_scorer: chr2:47175374-47175394(-) → mean=-0.147, conservation_score=0.000
+2026-11-24 15:31:51.263 | DEBUG    | src.core.cache:set:216 - Cache SET: phylop:chr9:83979914:83979934 (TTL 168h, schema v1)
+2026-11-24 15:31:51.264 | INFO     | src.stage3_variant_tox.phylop_scorer:score_phylop:83 - phylop_scorer: chr9:83979914-83979934(-) → mean=-0.391, conservation_score=0.000
+2026-11-24 15:31:51.734 | DEBUG    | src.core.cache:set:216 - Cache SET: phylop:chr1:35815110:35815130 (TTL 168h, schema v1)
+2026-11-24 15:31:51.734 | INFO     | src.stage3_variant_tox.phylop_scorer:score_phylop:83 - phylop_scorer: chr1:35815110-35815130(+) → mean=-0.647, conservation_score=0.000
+2026-11-24 15:31:52.473 | DEBUG    | src.core.cache:set:216 - Cache SET: phylop:chr12:68809823:68809843 (TTL 168h, schema v1)
+2026-11-24 15:31:52.474 | INFO     | src.stage3_variant_tox.phylop_scorer:score_phylop:83 - phylop_scorer: chr12:68809823-68809843(+) → mean=0.353, conservation_score=0.088
+2026-11-24 15:31:53.176 | DEBUG    | src.core.cache:set:216 - Cache SET: phylop:chr7:55027996:55028016 (TTL 168h, schema v1)
+2026-11-24 15:31:53.176 | INFO     | src.stage3_variant_tox.phylop_scorer:score_phylop:83 - phylop_scorer: chr7:55027996-55028016(+) → mean=0.616, conservation_score=0.154
+2026-11-24 15:31:54.008 | DEBUG    | src.core.cache:set:216 - Cache SET: phylop:chr3:179151174:179151194 (TTL 168h, schema v1)
+2026-11-24 15:31:54.009 | INFO     | src.stage3_variant_tox.phylop_scorer:score_phylop:83 - phylop_scorer: chr3:179151174-179151194(+) → mean=0.180, conservation_score=0.045
+2026-11-24 15:31:54.009 | DEBUG    | src.core.cache:get:193 - Cache HIT: phylop:chr6:43777871:43777891
+2026-11-24 15:31:54.009 | DEBUG    | src.stage3_variant_tox.phylop_scorer:_score_region:116 - phylop cache HIT: phylop:chr6:43777871:43777891
+2026-11-24 15:31:54.009 | INFO     | src.stage3_variant_tox.phylop_scorer:score_phylop:83 - phylop_scorer: chr6:43777871-43777891(+) → mean=-0.184, conservation_score=0.000
+2026-11-24 15:31:54.215 | DEBUG    | src.core.cache:set:216 - Cache SET: phylop:chr9:83979032:83979052 (TTL 168h, schema v1)
+2026-11-24 15:31:54.215 | INFO     | src.stage3_variant_tox.phylop_scorer:score_phylop:83 - phylop_scorer: chr9:83979032-83979052(-) → mean=-0.351, conservation_score=0.000
+2026-11-24 15:31:54.677 | DEBUG    | src.core.cache:set:216 - Cache SET: phylop:chr22:38504908:38504928 (TTL 168h, schema v1)
+2026-11-24 15:31:54.677 | INFO     | src.stage3_variant_tox.phylop_scorer:score_phylop:83 - phylop_scorer: chr22:38504908-38504928(-) → mean=-0.957, conservation_score=0.000
+2026-11-24 15:31:54.921 | DEBUG    | src.core.cache:set:216 - Cache SET: phylop:chr22:38501867:38501887 (TTL 168h, schema v1)
+2026-11-24 15:31:54.921 | INFO     | src.stage3_variant_tox.phylop_scorer:score_phylop:83 - phylop_scorer: chr22:38501867-38501887(-) → mean=0.085, conservation_score=0.021
+2026-11-24 15:31:55.447 | DEBUG    | src.core.cache:set:216 - Cache SET: phylop:chr17:64505712:64505732 (TTL 168h, schema v1)
+2026-11-24 15:31:55.447 | INFO     | src.stage3_variant_tox.phylop_scorer:score_phylop:83 - phylop_scorer: chr17:64505712-64505732(-) → mean=-0.349, conservation_score=0.000
+2026-11-24 15:31:56.155 | DEBUG    | src.core.cache:set:216 - Cache SET: phylop:chr12:4276729:4276749 (TTL 168h, schema v1)
+2026-11-24 15:31:56.155 | INFO     | src.stage3_variant_tox.phylop_scorer:score_phylop:83 - phylop_scorer: chr12:4276729-4276749(+) → mean=0.025, conservation_score=0.006
+2026-11-24 15:31:56.852 | DEBUG    | src.core.cache:set:216 - Cache SET: phylop:chr10:87869740:87869760 (TTL 168h, schema v1)
+2026-11-24 15:31:56.852 | INFO     | src.stage3_variant_tox.phylop_scorer:score_phylop:83 - phylop_scorer: chr10:87869740-87869760(+) → mean=-0.001, conservation_score=0.000
+2026-11-24 15:31:57.070 | DEBUG    | src.core.cache:set:216 - Cache SET: phylop:chr3:142572942:142572962 (TTL 168h, schema v1)
+2026-11-24 15:31:57.070 | INFO     | src.stage3_variant_tox.phylop_scorer:score_phylop:83 - phylop_scorer: chr3:142572942-142572962(-) → mean=0.353, conservation_score=0.088
+2026-11-24 15:31:57.802 | DEBUG    | src.core.cache:set:216 - Cache SET: phylop:chr4:184648366:184648386 (TTL 168h, schema v1)
+2026-11-24 15:31:57.802 | INFO     | src.stage3_variant_tox.phylop_scorer:score_phylop:83 - phylop_scorer: chr4:184648366-184648386(-) → mean=0.025, conservation_score=0.006
+2026-11-24 15:31:58.482 | DEBUG    | src.core.cache:set:216 - Cache SET: phylop:chr7:148700526:148700546 (TTL 168h, schema v1)
+2026-11-24 15:31:58.482 | INFO     | src.stage3_variant_tox.phylop_scorer:score_phylop:83 - phylop_scorer: chr7:148700526-148700546(+) → mean=-0.174, conservation_score=0.000
+2026-11-24 15:32:01.645 | DEBUG    | src.core.cache:set:216 - Cache SET: phylop:chr19:40280283:40280303 (TTL 168h, schema v1)
+2026-11-24 15:32:01.645 | INFO     | src.stage3_variant_tox.phylop_scorer:score_phylop:83 - phylop_scorer: chr19:40280283-40280303(-) → mean=-0.018, conservation_score=0.000
+2026-11-24 15:32:02.549 | DEBUG    | src.core.cache:set:216 - Cache SET: phylop:chr9:132940598:132940618 (TTL 168h, schema v1)
+2026-11-24 15:32:02.549 | INFO     | src.stage3_variant_tox.phylop_scorer:score_phylop:83 - phylop_scorer: chr9:132940598-132940618(-) → mean=0.009, conservation_score=0.002
+2026-11-24 15:32:03.273 | DEBUG    | src.core.cache:set:216 - Cache SET: phylop:chr11:102115206:102115226 (TTL 168h, schema v1)
+2026-11-24 15:32:03.273 | INFO     | src.stage3_variant_tox.phylop_scorer:score_phylop:83 - phylop_scorer: chr11:102115206-102115226(+) → mean=0.143, conservation_score=0.036
+2026-11-24 15:32:03.716 | DEBUG    | src.core.cache:set:216 - Cache SET: phylop:chr12:68159107:68159127 (TTL 168h, schema v1)
+2026-11-24 15:32:03.717 | INFO     | src.stage3_variant_tox.phylop_scorer:score_phylop:83 - phylop_scorer: chr12:68159107-68159127(-) → mean=-0.002, conservation_score=0.000
+2026-11-24 15:32:03.717 | DEBUG    | src.core.cache:get:193 - Cache HIT: phylop:chr1:26414640:26414660
+2026-11-24 15:32:03.717 | DEBUG    | src.stage3_variant_tox.phylop_scorer:_score_region:116 - phylop cache HIT: phylop:chr1:26414640:26414660
+2026-11-24 15:32:03.717 | INFO     | src.stage3_variant_tox.phylop_scorer:score_phylop:83 - phylop_scorer: chr1:26414640-26414660(+) → mean=-0.026, conservation_score=0.000
+2026-11-24 15:32:03.932 | DEBUG    | src.core.cache:set:216 - Cache SET: phylop:chr14:95147794:95147814 (TTL 168h, schema v1)
+2026-11-24 15:32:03.932 | INFO     | src.stage3_variant_tox.phylop_scorer:score_phylop:83 - phylop_scorer: chr14:95147794-95147814(-) → mean=-0.177, conservation_score=0.000
+2026-11-24 15:32:04.144 | DEBUG    | src.core.cache:set:216 - Cache SET: phylop:chr22:40180363:40180383 (TTL 168h, schema v1)
+2026-11-24 15:32:04.144 | INFO     | src.stage3_variant_tox.phylop_scorer:score_phylop:83 - phylop_scorer: chr22:40180363-40180383(+) → mean=1.230, conservation_score=0.307
+2026-11-24 15:32:04.359 | DEBUG    | src.core.cache:set:216 - Cache SET: phylop:chr12:4276799:4276819 (TTL 168h, schema v1)
+2026-11-24 15:32:04.359 | INFO     | src.stage3_variant_tox.phylop_scorer:score_phylop:83 - phylop_scorer: chr12:4276799-4276819(+) → mean=0.081, conservation_score=0.020
+2026-11-24 15:32:04.562 | DEBUG    | src.core.cache:set:216 - Cache SET: phylop:chr1:11259515:11259535 (TTL 168h, schema v1)
+2026-11-24 15:32:04.562 | INFO     | src.stage3_variant_tox.phylop_scorer:score_phylop:83 - phylop_scorer: chr1:11259515-11259535(-) → mean=-0.340, conservation_score=0.000
+2026-11-24 15:32:05.067 | DEBUG    | src.core.cache:set:216 - Cache SET: phylop:chr11:75401416:75401436 (TTL 168h, schema v1)
+2026-11-24 15:32:05.067 | INFO     | src.stage3_variant_tox.phylop_scorer:score_phylop:83 - phylop_scorer: chr11:75401416-75401436(+) → mean=-0.055, conservation_score=0.000
+2026-11-24 15:32:05.269 | DEBUG    | src.core.cache:set:216 - Cache SET: phylop:chr7:26197989:26198009 (TTL 168h, schema v1)
+2026-11-24 15:32:05.270 | INFO     | src.stage3_variant_tox.phylop_scorer:score_phylop:83 - phylop_scorer: chr7:26197989-26198009(-) → mean=0.678, conservation_score=0.169
+2026-11-24 15:32:07.668 | DEBUG    | src.core.cache:set:216 - Cache SET: phylop:chr9:132937751:132937771 (TTL 168h, schema v1)
+2026-11-24 15:32:07.669 | INFO     | src.stage3_variant_tox.phylop_scorer:score_phylop:83 - phylop_scorer: chr9:132937751-132937771(-) → mean=-0.079, conservation_score=0.000
+2026-11-24 15:32:08.365 | DEBUG    | src.core.cache:set:216 - Cache SET: phylop:chr18:47898662:47898682 (TTL 168h, schema v1)
+2026-11-24 15:32:08.365 | INFO     | src.stage3_variant_tox.phylop_scorer:score_phylop:83 - phylop_scorer: chr18:47898662-47898682(-) → mean=-0.431, conservation_score=0.000
+2026-11-24 15:32:08.366 | DEBUG    | src.core.cache:set:216 - Cache SET: phylop:chr18:47916332:47916352 (TTL 168h, schema v1)
+2026-11-24 15:32:08.366 | INFO     | src.stage3_variant_tox.phylop_scorer:score_phylop:83 - phylop_scorer: chr18:47916332-47916352(-) → mean=-0.310, conservation_score=0.000
+2026-11-24 15:32:08.367 | INFO     | src.stage3_variant_tox.phylop_fetcher:run:68 - phylop_fetcher: scored 41 regions → /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/results/VEGFA_HeLa/stage3_phylop.json

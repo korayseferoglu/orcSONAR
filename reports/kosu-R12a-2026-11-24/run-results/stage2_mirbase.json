@@ -1,0 +1,43 @@
+{
+  "sarna_seed": "CAACCAT",
+  "overlapping_mirnas": [
+    {
+      "mirna_id": "hsa-miR-497-3p",
+      "mirna_seed": "AAACCAC",
+      "overlap_score": 0.3,
+      "matched_positions": 5
+    },
+    {
+      "mirna_id": "hsa-miR-3065-5p",
+      "mirna_seed": "CAACAAA",
+      "overlap_score": 0.3,
+      "matched_positions": 5
+    },
+    {
+      "mirna_id": "hsa-miR-500b-3p",
+      "mirna_seed": "CACCCAG",
+      "overlap_score": 0.3,
+      "matched_positions": 5
+    },
+    {
+      "mirna_id": "hsa-miR-4691-3p",
+      "mirna_seed": "CAGCCAC",
+      "overlap_score": 0.3,
+      "matched_positions": 5
+    },
+    {
+      "mirna_id": "hsa-miR-4705",
+      "mirna_seed": "CAAUCAC",
+      "overlap_score": 0.3,
+      "matched_positions": 5
+    },
+    {
+      "mirna_id": "hsa-miR-4714-3p",
+      "mirna_seed": "CAACCUA",
+      "overlap_score": 0.3,
+      "matched_positions": 5
+    }
+  ],
+  "max_overlap_score": 0.3,
+  "risk_level": "LOW"
+}

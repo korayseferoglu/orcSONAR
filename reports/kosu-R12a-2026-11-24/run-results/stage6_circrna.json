@@ -1,0 +1,2291 @@
+{
+  "circrna_results": {
+    "MTOR:ENST00000361445:chr1:11255438": {
+      "region": {
+        "chrom": "chr1",
+        "start": 11255438,
+        "end": 11255458,
+        "strand": "-"
+      },
+      "overlapping_circrnas": [
+        {
+          "chrom": "chr1",
+          "start": 11210814,
+          "end": 11256137,
+          "circ_id": "hsa-MTOR_0073",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr1",
+          "start": 11228668,
+          "end": 11256192,
+          "circ_id": "hsa-MTOR_0079",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr1",
+          "start": 11247819,
+          "end": 11259423,
+          "circ_id": "hsa-MTOR_0054",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr1",
+          "start": 11253839,
+          "end": 11259350,
+          "circ_id": "hsa-MTOR_0077",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr1",
+          "start": 11253839,
+          "end": 11259423,
+          "circ_id": "hsa-MTOR_0022",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr1",
+          "start": 11107405,
+          "end": 11256141,
+          "circ_id": "hsa-MTOR_0149",
+          "strand": "-"
+        }
+      ],
+      "overlap_count": 6,
+      "sponge_risk": true,
+      "data_available": true
+    },
+    "VEGFA:ENST00000480614:chr6:43777011": {
+      "region": {
+        "chrom": "chr6",
+        "start": 43777011,
+        "end": 43777031,
+        "strand": "+"
+      },
+      "overlapping_circrnas": [
+        {
+          "chrom": "chr6",
+          "start": 43774341,
+          "end": 43778918,
+          "circ_id": "hsa-VEGFA_0001",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr6",
+          "start": 43771246,
+          "end": 43784706,
+          "circ_id": "hsa-VEGFA_0017",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr6",
+          "start": 43771089,
+          "end": 43778536,
+          "circ_id": "hsa-VEGFA_0013",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr6",
+          "start": 43774341,
+          "end": 43778536,
+          "circ_id": "hsa-VEGFA_0024",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr6",
+          "start": 43774341,
+          "end": 43782087,
+          "circ_id": "hsa-VEGFA_0026",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr6",
+          "start": 43774341,
+          "end": 43780803,
+          "circ_id": "hsa-VEGFA_0032",
+          "strand": "+"
+        }
+      ],
+      "overlap_count": 6,
+      "sponge_risk": true,
+      "data_available": true
+    },
+    "HNRNPA2B1:ENST00000618183:chr7:26198044": {
+      "region": {
+        "chrom": "chr7",
+        "start": 26198044,
+        "end": 26198064,
+        "strand": "-"
+      },
+      "overlapping_circrnas": [
+        {
+          "chrom": "chr7",
+          "start": 26196557,
+          "end": 26200741,
+          "circ_id": "hsa-HNRNPA2B1_0064",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr7",
+          "start": 26197422,
+          "end": 26200741,
+          "circ_id": "hsa-HNRNPA2B1_0042",
+          "strand": "-"
+        }
+      ],
+      "overlap_count": 2,
+      "sponge_risk": true,
+      "data_available": true
+    },
+    "DICER1:ENST00000343455:chr14:95152261": {
+      "region": {
+        "chrom": "chr14",
+        "start": 95152261,
+        "end": 95152281,
+        "strand": "-"
+      },
+      "overlapping_circrnas": [
+        {
+          "chrom": "chr14",
+          "start": 95133386,
+          "end": 95157396,
+          "circ_id": "hsa-DICER1_0066",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr14",
+          "start": 95132534,
+          "end": 95157390,
+          "circ_id": "hsa-DICER1_0057",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr14",
+          "start": 95124196,
+          "end": 95152565,
+          "circ_id": "hsa-DICER1_0128",
+          "strand": "-"
+        }
+      ],
+      "overlap_count": 3,
+      "sponge_risk": true,
+      "data_available": true
+    },
+    "TNRC6B:ENST00000454349:chr22:40182273": {
+      "region": {
+        "chrom": "chr22",
+        "start": 40182273,
+        "end": 40182293,
+        "strand": "+"
+      },
+      "overlapping_circrnas": [
+        {
+          "chrom": "chr22",
+          "start": 40156115,
+          "end": 40251200,
+          "circ_id": "hsa-TNRC6B_0024",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr22",
+          "start": 40117055,
+          "end": 40251200,
+          "circ_id": "hsa-TNRC6B_0013",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr22",
+          "start": 40117055,
+          "end": 40246102,
+          "circ_id": "hsa-TNRC6B_0029",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr22",
+          "start": 40177979,
+          "end": 40246102,
+          "circ_id": "hsa-TNRC6B_0136",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr22",
+          "start": 40164685,
+          "end": 40185072,
+          "circ_id": "hsa-TNRC6B_0077",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr22",
+          "start": 40178122,
+          "end": 40280143,
+          "circ_id": "hsa-TNRC6B_0166",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr22",
+          "start": 40156115,
+          "end": 40323038,
+          "circ_id": "hsa-TNRC6B_0141",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr22",
+          "start": 40164296,
+          "end": 40245185,
+          "circ_id": "hsa-TNRC6B_0076",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr22",
+          "start": 40156115,
+          "end": 40262173,
+          "circ_id": "hsa-TNRC6B_0041",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr22",
+          "start": 40178122,
+          "end": 40285770,
+          "circ_id": "hsa-TNRC6B_0089",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr22",
+          "start": 40156115,
+          "end": 40285770,
+          "circ_id": "hsa-TNRC6B_0112",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr22",
+          "start": 40117055,
+          "end": 40262173,
+          "circ_id": "hsa-TNRC6B_0212",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr22",
+          "start": 40156115,
+          "end": 40323375,
+          "circ_id": "hsa-TNRC6B_0200",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr22",
+          "start": 40178122,
+          "end": 40262173,
+          "circ_id": "hsa-TNRC6B_0140",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr22",
+          "start": 40117055,
+          "end": 40280143,
+          "circ_id": "hsa-TNRC6B_0202",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr22",
+          "start": 40156115,
+          "end": 40267036,
+          "circ_id": "hsa-TNRC6B_0223",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr22",
+          "start": 40117055,
+          "end": 40301333,
+          "circ_id": "hsa-TNRC6B_0201",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr22",
+          "start": 40178122,
+          "end": 40251200,
+          "circ_id": "hsa-TNRC6B_0191",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr22",
+          "start": 40178122,
+          "end": 40267036,
+          "circ_id": "hsa-TNRC6B_0192",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr22",
+          "start": 40178122,
+          "end": 40301333,
+          "circ_id": "hsa-TNRC6B_0190",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr22",
+          "start": 40178122,
+          "end": 40321229,
+          "circ_id": "hsa-TNRC6B_0193",
+          "strand": "+"
+        }
+      ],
+      "overlap_count": 21,
+      "sponge_risk": true,
+      "data_available": true
+    },
+    "CTNNB1:ENST00000349496:chr3:41200550": {
+      "region": {
+        "chrom": "chr3",
+        "start": 41200550,
+        "end": 41200570,
+        "strand": "+"
+      },
+      "overlapping_circrnas": [
+        {
+          "chrom": "chr3",
+          "start": 41199632,
+          "end": 41227260,
+          "circ_id": "hsa-CTNNB1_0030",
+          "strand": "-"
+        }
+      ],
+      "overlap_count": 1,
+      "sponge_risk": true,
+      "data_available": true
+    },
+    "ATR:ENST00000350721:chr3:142571301": {
+      "region": {
+        "chrom": "chr3",
+        "start": 142571301,
+        "end": 142571321,
+        "strand": "-"
+      },
+      "overlapping_circrnas": [
+        {
+          "chrom": "chr3",
+          "start": 142566121,
+          "end": 142572762,
+          "circ_id": "hsa-ATR_0131",
+          "strand": "-"
+        }
+      ],
+      "overlap_count": 1,
+      "sponge_risk": true,
+      "data_available": true
+    },
+    "RPL11:ENST00000643754:chr1:23692780": {
+      "region": {
+        "chrom": "chr1",
+        "start": 23692780,
+        "end": 23692800,
+        "strand": "+"
+      },
+      "overlapping_circrnas": [
+        {
+          "chrom": "chr1",
+          "start": 23692609,
+          "end": 23695908,
+          "circ_id": "hsa-RPL11_0006",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr1",
+          "start": 23692736,
+          "end": 23693905,
+          "circ_id": "hsa-RPL11_0013",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr1",
+          "start": 23692609,
+          "end": 23693913,
+          "circ_id": "hsa-RPL11_0005",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr1",
+          "start": 23692717,
+          "end": 23693913,
+          "circ_id": "hsa-RPL11_0008",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr1",
+          "start": 23692619,
+          "end": 23693868,
+          "circ_id": "hsa-RPL11_0001",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr1",
+          "start": 23692734,
+          "end": 23693907,
+          "circ_id": "hsa-RPL11_0010",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr1",
+          "start": 23692646,
+          "end": 23693907,
+          "circ_id": "hsa-RPL11_0011",
+          "strand": "-"
+        }
+      ],
+      "overlap_count": 7,
+      "sponge_risk": true,
+      "data_available": true
+    },
+    "PTBP2:ENST00000674951:chr1:96724335": {
+      "region": {
+        "chrom": "chr1",
+        "start": 96724335,
+        "end": 96724355,
+        "strand": "+"
+      },
+      "overlapping_circrnas": [
+        {
+          "chrom": "chr1",
+          "start": 96723564,
+          "end": 96770851,
+          "circ_id": "hsa-PTBP2_0073",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr1",
+          "start": 96723564,
+          "end": 96812834,
+          "circ_id": "hsa-PTBP2_0062",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr1",
+          "start": 96722706,
+          "end": 96752892,
+          "circ_id": "hsa-PTBP2_0086",
+          "strand": "+"
+        }
+      ],
+      "overlap_count": 3,
+      "sponge_risk": true,
+      "data_available": true
+    },
+    "PTBP2:ENST00000674951:chr1:96724850": {
+      "region": {
+        "chrom": "chr1",
+        "start": 96724850,
+        "end": 96724870,
+        "strand": "+"
+      },
+      "overlapping_circrnas": [
+        {
+          "chrom": "chr1",
+          "start": 96723564,
+          "end": 96770851,
+          "circ_id": "hsa-PTBP2_0073",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr1",
+          "start": 96723564,
+          "end": 96812834,
+          "circ_id": "hsa-PTBP2_0062",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr1",
+          "start": 96722706,
+          "end": 96752892,
+          "circ_id": "hsa-PTBP2_0086",
+          "strand": "+"
+        }
+      ],
+      "overlap_count": 3,
+      "sponge_risk": true,
+      "data_available": true
+    },
+    "BRCA1:ENST00000357654:chr17:43122797": {
+      "region": {
+        "chrom": "chr17",
+        "start": 43122797,
+        "end": 43122817,
+        "strand": "-"
+      },
+      "overlapping_circrnas": [
+        {
+          "chrom": "chr17",
+          "start": 43095846,
+          "end": 43124115,
+          "circ_id": "hsa-BRCA1_0004",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr17",
+          "start": 43097244,
+          "end": 43124115,
+          "circ_id": "hsa-BRCA1_0020",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr17",
+          "start": 43076488,
+          "end": 43124115,
+          "circ_id": "hsa-BRCA1_0046",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr17",
+          "start": 43104122,
+          "end": 43124115,
+          "circ_id": "hsa-BRCA1_0061",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr17",
+          "start": 43045662,
+          "end": 43124115,
+          "circ_id": "hsa-BRCA1_0111",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr17",
+          "start": 43074331,
+          "end": 43124115,
+          "circ_id": "hsa-BRCA1_0078",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr17",
+          "start": 43076488,
+          "end": 43168268,
+          "circ_id": "hsa-BRCA1_0063",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr17",
+          "start": 43104122,
+          "end": 43124102,
+          "circ_id": "hsa-BRCA1_0089",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr17",
+          "start": 43012179,
+          "end": 43171302,
+          "circ_id": "hsa-intergenic_029044",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr17",
+          "start": 43051063,
+          "end": 43124115,
+          "circ_id": "hsa-BRCA1_0034",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr17",
+          "start": 43047643,
+          "end": 43124115,
+          "circ_id": "hsa-BRCA1_0073",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr17",
+          "start": 43095846,
+          "end": 43168268,
+          "circ_id": "hsa-BRCA1_0092",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr17",
+          "start": 43115726,
+          "end": 43124115,
+          "circ_id": "hsa-BRCA1_0054",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr17",
+          "start": 43063333,
+          "end": 43124115,
+          "circ_id": "hsa-BRCA1_0102",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr17",
+          "start": 43090944,
+          "end": 43124115,
+          "circ_id": "hsa-BRCA1_0104",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr17",
+          "start": 43099775,
+          "end": 43124115,
+          "circ_id": "hsa-BRCA1_0036",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr17",
+          "start": 43070928,
+          "end": 43124115,
+          "circ_id": "hsa-BRCA1_0121",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr17",
+          "start": 43082404,
+          "end": 43124102,
+          "circ_id": "hsa-BRCA1_0127",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr17",
+          "start": 43095846,
+          "end": 43124102,
+          "circ_id": "hsa-BRCA1_0135",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr17",
+          "start": 43097244,
+          "end": 43124102,
+          "circ_id": "hsa-BRCA1_0146",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr17",
+          "start": 43097685,
+          "end": 43124115,
+          "circ_id": "hsa-BRCA1_0147",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr17",
+          "start": 43082404,
+          "end": 43124115,
+          "circ_id": "hsa-BRCA1_0131",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr17",
+          "start": 43094744,
+          "end": 43124039,
+          "circ_id": "hsa-BRCA1_0149",
+          "strand": "-"
+        }
+      ],
+      "overlap_count": 23,
+      "sponge_risk": true,
+      "data_available": true
+    },
+    "CALM2:ENST00000272298:chr2:47175374": {
+      "region": {
+        "chrom": "chr2",
+        "start": 47175374,
+        "end": 47175394,
+        "strand": "-"
+      },
+      "overlapping_circrnas": [],
+      "overlap_count": 0,
+      "sponge_risk": false,
+      "data_available": true
+    },
+    "HNRNPK:ENST00000376263:chr9:83979914": {
+      "region": {
+        "chrom": "chr9",
+        "start": 83979914,
+        "end": 83979934,
+        "strand": "-"
+      },
+      "overlapping_circrnas": [
+        {
+          "chrom": "chr9",
+          "start": 83976995,
+          "end": 83980202,
+          "circ_id": "hsa-HNRNPK_0022",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr9",
+          "start": 83975462,
+          "end": 83980202,
+          "circ_id": "hsa-HNRNPK_0032",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr9",
+          "start": 83977689,
+          "end": 83980202,
+          "circ_id": "hsa-HNRNPK_0042",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr9",
+          "start": 83979820,
+          "end": 83980010,
+          "circ_id": "hsa-HNRNPK_0049",
+          "strand": "+"
+        }
+      ],
+      "overlap_count": 4,
+      "sponge_risk": true,
+      "data_available": true
+    },
+    "AGO4:ENST00000373210:chr1:35815110": {
+      "region": {
+        "chrom": "chr1",
+        "start": 35815110,
+        "end": 35815130,
+        "strand": "+"
+      },
+      "overlapping_circrnas": [
+        {
+          "chrom": "chr1",
+          "start": 35808306,
+          "end": 35816908,
+          "circ_id": "hsa-AGO4_0058",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr1",
+          "start": 35813071,
+          "end": 35826835,
+          "circ_id": "hsa-AGO4_0099",
+          "strand": "+"
+        }
+      ],
+      "overlap_count": 2,
+      "sponge_risk": true,
+      "data_available": true
+    },
+    "MDM2:ENST00000258149:chr12:68809823": {
+      "region": {
+        "chrom": "chr12",
+        "start": 68809823,
+        "end": 68809843,
+        "strand": "+"
+      },
+      "overlapping_circrnas": [
+        {
+          "chrom": "chr12",
+          "start": 68807843,
+          "end": 68820374,
+          "circ_id": "hsa-intergenic_027595",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr12",
+          "start": 68807843,
+          "end": 68824651,
+          "circ_id": "hsa-MDM2_0030",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr12",
+          "start": 68809208,
+          "end": 68820374,
+          "circ_id": "hsa-MDM2_0006",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr12",
+          "start": 68807843,
+          "end": 68816945,
+          "circ_id": "hsa-MDM2_0049",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr12",
+          "start": 68809026,
+          "end": 68816945,
+          "circ_id": "hsa-MDM2_0033",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr12",
+          "start": 68809259,
+          "end": 68824619,
+          "circ_id": "hsa-MDM2_0036",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr12",
+          "start": 68809208,
+          "end": 68835984,
+          "circ_id": "hsa-MDM2_0021",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr12",
+          "start": 68809208,
+          "end": 68816945,
+          "circ_id": "hsa-MDM2_0023",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr12",
+          "start": 68809208,
+          "end": 68828931,
+          "circ_id": "hsa-MDM2_0013",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr12",
+          "start": 68781590,
+          "end": 68839801,
+          "circ_id": "hsa-RP11-611O2_0001",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr12",
+          "start": 68809016,
+          "end": 68816945,
+          "circ_id": "hsa-MDM2_0072",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr12",
+          "start": 68781594,
+          "end": 68839801,
+          "circ_id": "hsa-intergenic_031469",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr12",
+          "start": 68781594,
+          "end": 68820374,
+          "circ_id": "hsa-intergenic_035202",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr12",
+          "start": 68759157,
+          "end": 68813628,
+          "circ_id": "hsa-intergenic_040016",
+          "strand": "+"
+        }
+      ],
+      "overlap_count": 14,
+      "sponge_risk": true,
+      "data_available": true
+    },
+    "EGFR:ENST00000275493:chr7:55027996": {
+      "region": {
+        "chrom": "chr7",
+        "start": 55027996,
+        "end": 55028016,
+        "strand": "+"
+      },
+      "overlapping_circrnas": [],
+      "overlap_count": 0,
+      "sponge_risk": false,
+      "data_available": true
+    },
+    "PIK3CA:ENST00000263967:chr3:179151174": {
+      "region": {
+        "chrom": "chr3",
+        "start": 179151174,
+        "end": 179151194,
+        "strand": "+"
+      },
+      "overlapping_circrnas": [
+        {
+          "chrom": "chr3",
+          "start": 179149622,
+          "end": 179230376,
+          "circ_id": "hsa-PIK3CA_0033",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr3",
+          "start": 179104527,
+          "end": 179188669,
+          "circ_id": "hsa-SNORA25_0004",
+          "strand": "-"
+        }
+      ],
+      "overlap_count": 2,
+      "sponge_risk": true,
+      "data_available": true
+    },
+    "VEGFA:ENST00000497139:chr6:43777871": {
+      "region": {
+        "chrom": "chr6",
+        "start": 43777871,
+        "end": 43777891,
+        "strand": "+"
+      },
+      "overlapping_circrnas": [
+        {
+          "chrom": "chr6",
+          "start": 43774341,
+          "end": 43778918,
+          "circ_id": "hsa-VEGFA_0001",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr6",
+          "start": 43771246,
+          "end": 43784706,
+          "circ_id": "hsa-VEGFA_0017",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr6",
+          "start": 43777469,
+          "end": 43778918,
+          "circ_id": "hsa-VEGFA_0002",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr6",
+          "start": 43771089,
+          "end": 43778536,
+          "circ_id": "hsa-VEGFA_0013",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr6",
+          "start": 43777469,
+          "end": 43782087,
+          "circ_id": "hsa-VEGFA_0014",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr6",
+          "start": 43774341,
+          "end": 43778536,
+          "circ_id": "hsa-VEGFA_0024",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr6",
+          "start": 43777519,
+          "end": 43778536,
+          "circ_id": "hsa-VEGFA_0009",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr6",
+          "start": 43774341,
+          "end": 43782087,
+          "circ_id": "hsa-VEGFA_0026",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr6",
+          "start": 43774341,
+          "end": 43780803,
+          "circ_id": "hsa-VEGFA_0032",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr6",
+          "start": 43777495,
+          "end": 43778918,
+          "circ_id": "hsa-VEGFA_0035",
+          "strand": "+"
+        }
+      ],
+      "overlap_count": 10,
+      "sponge_risk": true,
+      "data_available": true
+    },
+    "HNRNPK:ENST00000376263:chr9:83979032": {
+      "region": {
+        "chrom": "chr9",
+        "start": 83979032,
+        "end": 83979052,
+        "strand": "-"
+      },
+      "overlapping_circrnas": [
+        {
+          "chrom": "chr9",
+          "start": 83976995,
+          "end": 83980202,
+          "circ_id": "hsa-HNRNPK_0022",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr9",
+          "start": 83975462,
+          "end": 83980202,
+          "circ_id": "hsa-HNRNPK_0032",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr9",
+          "start": 83977689,
+          "end": 83980202,
+          "circ_id": "hsa-HNRNPK_0042",
+          "strand": "-"
+        }
+      ],
+      "overlap_count": 3,
+      "sponge_risk": true,
+      "data_available": true
+    },
+    "DDX17:ENST00000403230:chr22:38504908": {
+      "region": {
+        "chrom": "chr22",
+        "start": 38504908,
+        "end": 38504928,
+        "strand": "-"
+      },
+      "overlapping_circrnas": [
+        {
+          "chrom": "chr22",
+          "start": 38498085,
+          "end": 38537652,
+          "circ_id": "hsa-DMC1_0025",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr22",
+          "start": 38497541,
+          "end": 38505018,
+          "circ_id": "hsa-DDX17_0058",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr22",
+          "start": 38495796,
+          "end": 38537652,
+          "circ_id": "hsa-DMC1_0021",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr22",
+          "start": 38501256,
+          "end": 38506237,
+          "circ_id": "hsa-DDX17_0048",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr22",
+          "start": 38504131,
+          "end": 38504990,
+          "circ_id": "hsa-DDX17_0050",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr22",
+          "start": 38487206,
+          "end": 38505139,
+          "circ_id": "hsa-DDX17_0045",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr22",
+          "start": 38487330,
+          "end": 38505139,
+          "circ_id": "hsa-DDX17_0044",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr22",
+          "start": 38487542,
+          "end": 38505018,
+          "circ_id": "hsa-DDX17_0043",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr22",
+          "start": 38495890,
+          "end": 38505990,
+          "circ_id": "hsa-DDX17_0068",
+          "strand": "-"
+        }
+      ],
+      "overlap_count": 9,
+      "sponge_risk": true,
+      "data_available": true
+    },
+    "DDX17:ENST00000403230:chr22:38501867": {
+      "region": {
+        "chrom": "chr22",
+        "start": 38501867,
+        "end": 38501887,
+        "strand": "-"
+      },
+      "overlapping_circrnas": [
+        {
+          "chrom": "chr22",
+          "start": 38498085,
+          "end": 38537652,
+          "circ_id": "hsa-DMC1_0025",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr22",
+          "start": 38497541,
+          "end": 38505018,
+          "circ_id": "hsa-DDX17_0058",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr22",
+          "start": 38495796,
+          "end": 38537652,
+          "circ_id": "hsa-DMC1_0021",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr22",
+          "start": 38501256,
+          "end": 38506237,
+          "circ_id": "hsa-DDX17_0048",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr22",
+          "start": 38487206,
+          "end": 38505139,
+          "circ_id": "hsa-DDX17_0045",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr22",
+          "start": 38487330,
+          "end": 38505139,
+          "circ_id": "hsa-DDX17_0044",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr22",
+          "start": 38487542,
+          "end": 38505018,
+          "circ_id": "hsa-DDX17_0043",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr22",
+          "start": 38495890,
+          "end": 38505990,
+          "circ_id": "hsa-DDX17_0068",
+          "strand": "-"
+        }
+      ],
+      "overlap_count": 8,
+      "sponge_risk": true,
+      "data_available": true
+    },
+    "DDX5:ENST00000225792:chr17:64505712": {
+      "region": {
+        "chrom": "chr17",
+        "start": 64505712,
+        "end": 64505732,
+        "strand": "-"
+      },
+      "overlapping_circrnas": [
+        {
+          "chrom": "chr17",
+          "start": 64501057,
+          "end": 64506262,
+          "circ_id": "hsa-DDX5_0023",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr17",
+          "start": 64449117,
+          "end": 64571956,
+          "circ_id": "hsa-SMURF2_0097",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr17",
+          "start": 64504222,
+          "end": 64506262,
+          "circ_id": "hsa-DDX5_0031",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr17",
+          "start": 64502010,
+          "end": 64506262,
+          "circ_id": "hsa-DDX5_0029",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr17",
+          "start": 64503270,
+          "end": 64506129,
+          "circ_id": "hsa-DDX5_0019",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr17",
+          "start": 64504677,
+          "end": 64506262,
+          "circ_id": "hsa-DDX5_0051",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr17",
+          "start": 64503983,
+          "end": 64506262,
+          "circ_id": "hsa-DDX5_0047",
+          "strand": "-"
+        }
+      ],
+      "overlap_count": 7,
+      "sponge_risk": true,
+      "data_available": true
+    },
+    "CCND2:ENST00000261254:chr12:4276729": {
+      "region": {
+        "chrom": "chr12",
+        "start": 4276729,
+        "end": 4276749,
+        "strand": "+"
+      },
+      "overlapping_circrnas": [
+        {
+          "chrom": "chr12",
+          "start": 4274001,
+          "end": 4278919,
+          "circ_id": "hsa-CCND2_0001",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr12",
+          "start": 4274001,
+          "end": 4288990,
+          "circ_id": "hsa-CCND2_0008",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr12",
+          "start": 4273883,
+          "end": 4301875,
+          "circ_id": "hsa-CCND2_0011",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr12",
+          "start": 4273902,
+          "end": 4300512,
+          "circ_id": "hsa-CCND2_0032",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr12",
+          "start": 4274098,
+          "end": 4278798,
+          "circ_id": "hsa-CCND2_0009",
+          "strand": "-"
+        }
+      ],
+      "overlap_count": 5,
+      "sponge_risk": true,
+      "data_available": true
+    },
+    "PTEN:ENST00000371953:chr10:87869740": {
+      "region": {
+        "chrom": "chr10",
+        "start": 87869740,
+        "end": 87869760,
+        "strand": "+"
+      },
+      "overlapping_circrnas": [
+        {
+          "chrom": "chr10",
+          "start": 87864454,
+          "end": 87880438,
+          "circ_id": "hsa-PTEN_0029",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr10",
+          "start": 87864454,
+          "end": 87894109,
+          "circ_id": "hsa-PTEN_0028",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr10",
+          "start": 87864454,
+          "end": 87933251,
+          "circ_id": "hsa-PTEN_0005",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr10",
+          "start": 87864454,
+          "end": 87931089,
+          "circ_id": "hsa-PTEN_0006",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr10",
+          "start": 87864454,
+          "end": 87966258,
+          "circ_id": "hsa-PTEN_0037",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr10",
+          "start": 87867409,
+          "end": 87880438,
+          "circ_id": "hsa-PTEN_0082",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr10",
+          "start": 87864454,
+          "end": 87958019,
+          "circ_id": "hsa-PTEN_0103",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr10",
+          "start": 87864454,
+          "end": 87925557,
+          "circ_id": "hsa-PTEN_0010",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr10",
+          "start": 87867409,
+          "end": 87879023,
+          "circ_id": "hsa-PTEN_0049",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr10",
+          "start": 87864454,
+          "end": 87961118,
+          "circ_id": "hsa-PTEN_0035",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr10",
+          "start": 87864454,
+          "end": 87952259,
+          "circ_id": "hsa-PTEN_0009",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr10",
+          "start": 87864454,
+          "end": 87975718,
+          "circ_id": "hsa-RP11-380G5_0001",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr10",
+          "start": 87864454,
+          "end": 87879023,
+          "circ_id": "hsa-PTEN_0062",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr10",
+          "start": 87864454,
+          "end": 87936905,
+          "circ_id": "hsa-PTEN_0033",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr10",
+          "start": 87843814,
+          "end": 87958019,
+          "circ_id": "hsa-RP11-380G5_0002",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr10",
+          "start": 87869308,
+          "end": 87870376,
+          "circ_id": "hsa-PTEN_0065",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr10",
+          "start": 87864454,
+          "end": 87942769,
+          "circ_id": "hsa-PTEN_0041",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr10",
+          "start": 87864454,
+          "end": 87951185,
+          "circ_id": "hsa-PTEN_0053",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr10",
+          "start": 87864454,
+          "end": 87935032,
+          "circ_id": "hsa-PTEN_0050",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr10",
+          "start": 87868544,
+          "end": 87880438,
+          "circ_id": "hsa-PTEN_0118",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr10",
+          "start": 87863661,
+          "end": 87952259,
+          "circ_id": "hsa-PTEN_0134",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr10",
+          "start": 87864454,
+          "end": 87875486,
+          "circ_id": "hsa-PTEN_0106",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr10",
+          "start": 87864454,
+          "end": 87934143,
+          "circ_id": "hsa-PTEN_0109",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr10",
+          "start": 87864454,
+          "end": 87936339,
+          "circ_id": "hsa-PTEN_0107",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr10",
+          "start": 87867409,
+          "end": 87894109,
+          "circ_id": "hsa-PTEN_0135",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr10",
+          "start": 87867409,
+          "end": 87933251,
+          "circ_id": "hsa-PTEN_0120",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr10",
+          "start": 87867607,
+          "end": 87880438,
+          "circ_id": "hsa-PTEN_0136",
+          "strand": "+"
+        }
+      ],
+      "overlap_count": 27,
+      "sponge_risk": true,
+      "data_available": true
+    },
+    "ATR:ENST00000350721:chr3:142572942": {
+      "region": {
+        "chrom": "chr3",
+        "start": 142572942,
+        "end": 142572962,
+        "strand": "-"
+      },
+      "overlapping_circrnas": [],
+      "overlap_count": 0,
+      "sponge_risk": false,
+      "data_available": true
+    },
+    "CASP3:ENST00000308394:chr4:184648366": {
+      "region": {
+        "chrom": "chr4",
+        "start": 184648366,
+        "end": 184648386,
+        "strand": "-"
+      },
+      "overlapping_circrnas": [],
+      "overlap_count": 0,
+      "sponge_risk": false,
+      "data_available": true
+    },
+    "CUL1:ENST00000325222:chr7:148700526": {
+      "region": {
+        "chrom": "chr7",
+        "start": 148700526,
+        "end": 148700546,
+        "strand": "+"
+      },
+      "overlapping_circrnas": [],
+      "overlap_count": 0,
+      "sponge_risk": false,
+      "data_available": true
+    },
+    "AKT2:ENST00000392038:chr19:40280283": {
+      "region": {
+        "chrom": "chr19",
+        "start": 40280283,
+        "end": 40280303,
+        "strand": "-"
+      },
+      "overlapping_circrnas": [
+        {
+          "chrom": "chr19",
+          "start": 40241938,
+          "end": 40282952,
+          "circ_id": "hsa-AKT2_0047",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr19",
+          "start": 40204485,
+          "end": 40367879,
+          "circ_id": "hsa-CTC-425O23_0003",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr19",
+          "start": 40255158,
+          "end": 40282776,
+          "circ_id": "hsa-AKT2_0059",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr19",
+          "start": 40255158,
+          "end": 40295341,
+          "circ_id": "hsa-intergenic_034356",
+          "strand": "-"
+        }
+      ],
+      "overlap_count": 4,
+      "sponge_risk": true,
+      "data_available": true
+    },
+    "TSC1:ENST00000298552:chr9:132940598": {
+      "region": {
+        "chrom": "chr9",
+        "start": 132940598,
+        "end": 132940618,
+        "strand": "-"
+      },
+      "overlapping_circrnas": [],
+      "overlap_count": 0,
+      "sponge_risk": false,
+      "data_available": true
+    },
+    "YAP1:ENST00000282441:chr11:102115206": {
+      "region": {
+        "chrom": "chr11",
+        "start": 102115206,
+        "end": 102115226,
+        "strand": "+"
+      },
+      "overlapping_circrnas": [
+        {
+          "chrom": "chr11",
+          "start": 102114144,
+          "end": 102206074,
+          "circ_id": "hsa-YAP1_0011",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr11",
+          "start": 102112600,
+          "end": 102209564,
+          "circ_id": "hsa-YAP1_0065",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr11",
+          "start": 102112600,
+          "end": 102227581,
+          "circ_id": "hsa-YAP1_0029",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr11",
+          "start": 102112600,
+          "end": 102162571,
+          "circ_id": "hsa-YAP1_0024",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr11",
+          "start": 102058880,
+          "end": 102186137,
+          "circ_id": "hsa-YAP1_0057",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr11",
+          "start": 102112600,
+          "end": 102164693,
+          "circ_id": "hsa-YAP1_0060",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr11",
+          "start": 102114144,
+          "end": 102209564,
+          "circ_id": "hsa-YAP1_0006",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr11",
+          "start": 102114144,
+          "end": 102223752,
+          "circ_id": "hsa-YAP1_0017",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr11",
+          "start": 102114144,
+          "end": 102162571,
+          "circ_id": "hsa-YAP1_0019",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr11",
+          "start": 102114144,
+          "end": 102164693,
+          "circ_id": "hsa-YAP1_0051",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr11",
+          "start": 102114144,
+          "end": 102206086,
+          "circ_id": "hsa-YAP1_0013",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr11",
+          "start": 102114325,
+          "end": 102162813,
+          "circ_id": "hsa-YAP1_0035",
+          "strand": "-"
+        }
+      ],
+      "overlap_count": 12,
+      "sponge_risk": true,
+      "data_available": true
+    },
+    "IFNG:ENST00000229135:chr12:68159107": {
+      "region": {
+        "chrom": "chr12",
+        "start": 68159107,
+        "end": 68159127,
+        "strand": "-"
+      },
+      "overlapping_circrnas": [],
+      "overlap_count": 0,
+      "sponge_risk": false,
+      "data_available": true
+    },
+    "LIN28A:ENST00000326279:chr1:26414640": {
+      "region": {
+        "chrom": "chr1",
+        "start": 26414640,
+        "end": 26414660,
+        "strand": "+"
+      },
+      "overlapping_circrnas": [],
+      "overlap_count": 0,
+      "sponge_risk": false,
+      "data_available": true
+    },
+    "DICER1:ENST00000343455:chr14:95147794": {
+      "region": {
+        "chrom": "chr14",
+        "start": 95147794,
+        "end": 95147814,
+        "strand": "-"
+      },
+      "overlapping_circrnas": [
+        {
+          "chrom": "chr14",
+          "start": 95147568,
+          "end": 95148161,
+          "circ_id": "hsa-DICER1_0099",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr14",
+          "start": 95133386,
+          "end": 95157396,
+          "circ_id": "hsa-DICER1_0066",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr14",
+          "start": 95132534,
+          "end": 95157390,
+          "circ_id": "hsa-DICER1_0057",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr14",
+          "start": 95124196,
+          "end": 95152565,
+          "circ_id": "hsa-DICER1_0128",
+          "strand": "-"
+        }
+      ],
+      "overlap_count": 4,
+      "sponge_risk": true,
+      "data_available": true
+    },
+    "TNRC6B:ENST00000454349:chr22:40180363": {
+      "region": {
+        "chrom": "chr22",
+        "start": 40180363,
+        "end": 40180383,
+        "strand": "+"
+      },
+      "overlapping_circrnas": [
+        {
+          "chrom": "chr22",
+          "start": 40156115,
+          "end": 40251200,
+          "circ_id": "hsa-TNRC6B_0024",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr22",
+          "start": 40117055,
+          "end": 40251200,
+          "circ_id": "hsa-TNRC6B_0013",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr22",
+          "start": 40117055,
+          "end": 40246102,
+          "circ_id": "hsa-TNRC6B_0029",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr22",
+          "start": 40177979,
+          "end": 40246102,
+          "circ_id": "hsa-TNRC6B_0136",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr22",
+          "start": 40164685,
+          "end": 40185072,
+          "circ_id": "hsa-TNRC6B_0077",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr22",
+          "start": 40178122,
+          "end": 40280143,
+          "circ_id": "hsa-TNRC6B_0166",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr22",
+          "start": 40156115,
+          "end": 40323038,
+          "circ_id": "hsa-TNRC6B_0141",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr22",
+          "start": 40164296,
+          "end": 40245185,
+          "circ_id": "hsa-TNRC6B_0076",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr22",
+          "start": 40156115,
+          "end": 40262173,
+          "circ_id": "hsa-TNRC6B_0041",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr22",
+          "start": 40178122,
+          "end": 40285770,
+          "circ_id": "hsa-TNRC6B_0089",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr22",
+          "start": 40156115,
+          "end": 40285770,
+          "circ_id": "hsa-TNRC6B_0112",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr22",
+          "start": 40117055,
+          "end": 40262173,
+          "circ_id": "hsa-TNRC6B_0212",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr22",
+          "start": 40156115,
+          "end": 40323375,
+          "circ_id": "hsa-TNRC6B_0200",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr22",
+          "start": 40178122,
+          "end": 40262173,
+          "circ_id": "hsa-TNRC6B_0140",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr22",
+          "start": 40117055,
+          "end": 40280143,
+          "circ_id": "hsa-TNRC6B_0202",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr22",
+          "start": 40156115,
+          "end": 40267036,
+          "circ_id": "hsa-TNRC6B_0223",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr22",
+          "start": 40117055,
+          "end": 40301333,
+          "circ_id": "hsa-TNRC6B_0201",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr22",
+          "start": 40178122,
+          "end": 40251200,
+          "circ_id": "hsa-TNRC6B_0191",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr22",
+          "start": 40178122,
+          "end": 40267036,
+          "circ_id": "hsa-TNRC6B_0192",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr22",
+          "start": 40178122,
+          "end": 40301333,
+          "circ_id": "hsa-TNRC6B_0190",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr22",
+          "start": 40178122,
+          "end": 40321229,
+          "circ_id": "hsa-TNRC6B_0193",
+          "strand": "+"
+        }
+      ],
+      "overlap_count": 21,
+      "sponge_risk": true,
+      "data_available": true
+    },
+    "CCND2:ENST00000261254:chr12:4276799": {
+      "region": {
+        "chrom": "chr12",
+        "start": 4276799,
+        "end": 4276819,
+        "strand": "+"
+      },
+      "overlapping_circrnas": [
+        {
+          "chrom": "chr12",
+          "start": 4274001,
+          "end": 4278919,
+          "circ_id": "hsa-CCND2_0001",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr12",
+          "start": 4274001,
+          "end": 4288990,
+          "circ_id": "hsa-CCND2_0008",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr12",
+          "start": 4273883,
+          "end": 4301875,
+          "circ_id": "hsa-CCND2_0011",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr12",
+          "start": 4273902,
+          "end": 4300512,
+          "circ_id": "hsa-CCND2_0032",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr12",
+          "start": 4274098,
+          "end": 4278798,
+          "circ_id": "hsa-CCND2_0009",
+          "strand": "-"
+        }
+      ],
+      "overlap_count": 5,
+      "sponge_risk": true,
+      "data_available": true
+    },
+    "MTOR:ENST00000361445:chr1:11259515": {
+      "region": {
+        "chrom": "chr1",
+        "start": 11259515,
+        "end": 11259535,
+        "strand": "-"
+      },
+      "overlapping_circrnas": [],
+      "overlap_count": 0,
+      "sponge_risk": false,
+      "data_available": true
+    },
+    "RPS3:ENST00000531188:chr11:75401416": {
+      "region": {
+        "chrom": "chr11",
+        "start": 75401416,
+        "end": 75401436,
+        "strand": "+"
+      },
+      "overlapping_circrnas": [
+        {
+          "chrom": "chr11",
+          "start": 75400778,
+          "end": 75402379,
+          "circ_id": "hsa-RPS3_0018",
+          "strand": "+"
+        }
+      ],
+      "overlap_count": 1,
+      "sponge_risk": true,
+      "data_available": true
+    },
+    "HNRNPA2B1:ENST00000618183:chr7:26197989": {
+      "region": {
+        "chrom": "chr7",
+        "start": 26197989,
+        "end": 26198009,
+        "strand": "-"
+      },
+      "overlapping_circrnas": [
+        {
+          "chrom": "chr7",
+          "start": 26196557,
+          "end": 26200741,
+          "circ_id": "hsa-HNRNPA2B1_0064",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr7",
+          "start": 26197422,
+          "end": 26200741,
+          "circ_id": "hsa-HNRNPA2B1_0042",
+          "strand": "-"
+        }
+      ],
+      "overlap_count": 2,
+      "sponge_risk": true,
+      "data_available": true
+    },
+    "TSC1:ENST00000298552:chr9:132937751": {
+      "region": {
+        "chrom": "chr9",
+        "start": 132937751,
+        "end": 132937771,
+        "strand": "-"
+      },
+      "overlapping_circrnas": [],
+      "overlap_count": 0,
+      "sponge_risk": false,
+      "data_available": true
+    },
+    "SMAD2:ENST00000262160:chr18:47898662": {
+      "region": {
+        "chrom": "chr18",
+        "start": 47898662,
+        "end": 47898682,
+        "strand": "-"
+      },
+      "overlapping_circrnas": [
+        {
+          "chrom": "chr18",
+          "start": 47896521,
+          "end": 47930446,
+          "circ_id": "hsa-SMAD2_0060",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr18",
+          "start": 47865059,
+          "end": 47930446,
+          "circ_id": "hsa-SMAD2_0033",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr18",
+          "start": 47889021,
+          "end": 47920169,
+          "circ_id": "hsa-SMAD2_0069",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr18",
+          "start": 47829474,
+          "end": 47930446,
+          "circ_id": "hsa-SMAD2_0059",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr18",
+          "start": 47845663,
+          "end": 47930920,
+          "circ_id": "hsa-SMAD2_0087",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr18",
+          "start": 47851274,
+          "end": 47920169,
+          "circ_id": "hsa-SMAD2_0045",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr18",
+          "start": 47897950,
+          "end": 47898695,
+          "circ_id": "hsa-SMAD2_0103",
+          "strand": "+"
+        },
+        {
+          "chrom": "chr18",
+          "start": 47848475,
+          "end": 47930446,
+          "circ_id": "hsa-SMAD2_0114",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr18",
+          "start": 47896521,
+          "end": 47920169,
+          "circ_id": "hsa-SMAD2_0050",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr18",
+          "start": 47873897,
+          "end": 47920169,
+          "circ_id": "hsa-SMAD2_0105",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr18",
+          "start": 47868323,
+          "end": 47930446,
+          "circ_id": "hsa-SMAD2_0072",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr18",
+          "start": 47845340,
+          "end": 47920169,
+          "circ_id": "hsa-SMAD2_0123",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr18",
+          "start": 47865059,
+          "end": 47920169,
+          "circ_id": "hsa-SMAD2_0127",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr18",
+          "start": 47868323,
+          "end": 47920169,
+          "circ_id": "hsa-SMAD2_0125",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr18",
+          "start": 47829474,
+          "end": 47920169,
+          "circ_id": "hsa-SMAD2_0134",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr18",
+          "start": 47862920,
+          "end": 47930446,
+          "circ_id": "hsa-SMAD2_0147",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr18",
+          "start": 47865071,
+          "end": 47930446,
+          "circ_id": "hsa-SMAD2_0149",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr18",
+          "start": 47841792,
+          "end": 47930446,
+          "circ_id": "hsa-SMAD2_0133",
+          "strand": "-"
+        }
+      ],
+      "overlap_count": 18,
+      "sponge_risk": true,
+      "data_available": true
+    },
+    "SMAD2:ENST00000262160:chr18:47916332": {
+      "region": {
+        "chrom": "chr18",
+        "start": 47916332,
+        "end": 47916352,
+        "strand": "-"
+      },
+      "overlapping_circrnas": [
+        {
+          "chrom": "chr18",
+          "start": 47896521,
+          "end": 47930446,
+          "circ_id": "hsa-SMAD2_0060",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr18",
+          "start": 47865059,
+          "end": 47930446,
+          "circ_id": "hsa-SMAD2_0033",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr18",
+          "start": 47889021,
+          "end": 47920169,
+          "circ_id": "hsa-SMAD2_0069",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr18",
+          "start": 47829474,
+          "end": 47930446,
+          "circ_id": "hsa-SMAD2_0059",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr18",
+          "start": 47845663,
+          "end": 47930920,
+          "circ_id": "hsa-SMAD2_0087",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr18",
+          "start": 47851274,
+          "end": 47920169,
+          "circ_id": "hsa-SMAD2_0045",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr18",
+          "start": 47848475,
+          "end": 47930446,
+          "circ_id": "hsa-SMAD2_0114",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr18",
+          "start": 47913472,
+          "end": 47917341,
+          "circ_id": "hsa-SMAD2_0118",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr18",
+          "start": 47896521,
+          "end": 47920169,
+          "circ_id": "hsa-SMAD2_0050",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr18",
+          "start": 47873897,
+          "end": 47920169,
+          "circ_id": "hsa-SMAD2_0105",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr18",
+          "start": 47868323,
+          "end": 47930446,
+          "circ_id": "hsa-SMAD2_0072",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr18",
+          "start": 47845340,
+          "end": 47920169,
+          "circ_id": "hsa-SMAD2_0123",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr18",
+          "start": 47865059,
+          "end": 47920169,
+          "circ_id": "hsa-SMAD2_0127",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr18",
+          "start": 47868323,
+          "end": 47920169,
+          "circ_id": "hsa-SMAD2_0125",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr18",
+          "start": 47829474,
+          "end": 47920169,
+          "circ_id": "hsa-SMAD2_0134",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr18",
+          "start": 47862920,
+          "end": 47930446,
+          "circ_id": "hsa-SMAD2_0147",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr18",
+          "start": 47865071,
+          "end": 47930446,
+          "circ_id": "hsa-SMAD2_0149",
+          "strand": "-"
+        },
+        {
+          "chrom": "chr18",
+          "start": 47841792,
+          "end": 47930446,
+          "circ_id": "hsa-SMAD2_0133",
+          "strand": "-"
+        }
+      ],
+      "overlap_count": 18,
+      "sponge_risk": true,
+      "data_available": true
+    }
+  }
+}

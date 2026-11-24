@@ -1,0 +1,279 @@
+{
+  "gene": "VEGFA",
+  "tss": {
+    "gene": "VEGFA",
+    "chrom": "chr6",
+    "position": 43770210,
+    "strand": "+",
+    "source": "EPDnew",
+    "score": 900.0
+  },
+  "promoter_region": {
+    "chrom": "chr6",
+    "start": 43769210,
+    "end": 43770410,
+    "strand": "+"
+  },
+  "transcripts": [
+    {
+      "transcript_id": "ENST00000476772",
+      "gene": "VEGFA",
+      "chrom": "chr6",
+      "start": 43770184,
+      "end": 43778764,
+      "strand": "+",
+      "is_canonical": false,
+      "source": "Ensembl"
+    },
+    {
+      "transcript_id": "ENST00000425836",
+      "gene": "VEGFA",
+      "chrom": "chr6",
+      "start": 43770211,
+      "end": 43786487,
+      "strand": "+",
+      "is_canonical": false,
+      "source": "Ensembl"
+    },
+    {
+      "transcript_id": "ENST00000672860",
+      "gene": "VEGFA",
+      "chrom": "chr6",
+      "start": 43770211,
+      "end": 43786487,
+      "strand": "+",
+      "is_canonical": true,
+      "source": "Ensembl"
+    },
+    {
+      "transcript_id": "ENST00000372067",
+      "gene": "VEGFA",
+      "chrom": "chr6",
+      "start": 43770211,
+      "end": 43786487,
+      "strand": "+",
+      "is_canonical": false,
+      "source": "Ensembl"
+    },
+    {
+      "transcript_id": "ENST00000324450",
+      "gene": "VEGFA",
+      "chrom": "chr6",
+      "start": 43770707,
+      "end": 43784562,
+      "strand": "+",
+      "is_canonical": false,
+      "source": "Ensembl"
+    },
+    {
+      "transcript_id": "ENST00000417285",
+      "gene": "VEGFA",
+      "chrom": "chr6",
+      "start": 43770707,
+      "end": 43784562,
+      "strand": "+",
+      "is_canonical": false,
+      "source": "Ensembl"
+    },
+    {
+      "transcript_id": "ENST00000413642",
+      "gene": "VEGFA",
+      "chrom": "chr6",
+      "start": 43770707,
+      "end": 43784589,
+      "strand": "+",
+      "is_canonical": false,
+      "source": "Ensembl"
+    },
+    {
+      "transcript_id": "ENST00000372055",
+      "gene": "VEGFA",
+      "chrom": "chr6",
+      "start": 43770707,
+      "end": 43784609,
+      "strand": "+",
+      "is_canonical": false,
+      "source": "Ensembl"
+    },
+    {
+      "transcript_id": "ENST00000482630",
+      "gene": "VEGFA",
+      "chrom": "chr6",
+      "start": 43770707,
+      "end": 43784658,
+      "strand": "+",
+      "is_canonical": false,
+      "source": "Ensembl"
+    },
+    {
+      "transcript_id": "ENST00000372064",
+      "gene": "VEGFA",
+      "chrom": "chr6",
+      "start": 43770707,
+      "end": 43786487,
+      "strand": "+",
+      "is_canonical": false,
+      "source": "Ensembl"
+    },
+    {
+      "transcript_id": "ENST00000372077",
+      "gene": "VEGFA",
+      "chrom": "chr6",
+      "start": 43770211,
+      "end": 43786487,
+      "strand": "+",
+      "is_canonical": false,
+      "source": "Ensembl"
+    },
+    {
+      "transcript_id": "ENST00000519767",
+      "gene": "VEGFA",
+      "chrom": "chr6",
+      "start": 43770793,
+      "end": 43784562,
+      "strand": "+",
+      "is_canonical": false,
+      "source": "Ensembl"
+    },
+    {
+      "transcript_id": "ENST00000520948",
+      "gene": "VEGFA",
+      "chrom": "chr6",
+      "start": 43770211,
+      "end": 43786487,
+      "strand": "+",
+      "is_canonical": false,
+      "source": "Ensembl"
+    },
+    {
+      "transcript_id": "ENST00000518538",
+      "gene": "VEGFA",
+      "chrom": "chr6",
+      "start": 43771153,
+      "end": 43778937,
+      "strand": "+",
+      "is_canonical": false,
+      "source": "Ensembl"
+    },
+    {
+      "transcript_id": "ENST00000523873",
+      "gene": "VEGFA",
+      "chrom": "chr6",
+      "start": 43770211,
+      "end": 43786487,
+      "strand": "+",
+      "is_canonical": false,
+      "source": "Ensembl"
+    },
+    {
+      "transcript_id": "ENST00000523950",
+      "gene": "VEGFA",
+      "chrom": "chr6",
+      "start": 43770211,
+      "end": 43786487,
+      "strand": "+",
+      "is_canonical": false,
+      "source": "Ensembl"
+    },
+    {
+      "transcript_id": "ENST00000512683",
+      "gene": "VEGFA",
+      "chrom": "chr6",
+      "start": 43771247,
+      "end": 43777825,
+      "strand": "+",
+      "is_canonical": false,
+      "source": "Ensembl"
+    },
+    {
+      "transcript_id": "ENST00000457104",
+      "gene": "VEGFA",
+      "chrom": "chr6",
+      "start": 43771247,
+      "end": 43784562,
+      "strand": "+",
+      "is_canonical": false,
+      "source": "Ensembl"
+    },
+    {
+      "transcript_id": "ENST00000518689",
+      "gene": "VEGFA",
+      "chrom": "chr6",
+      "start": 43771247,
+      "end": 43784562,
+      "strand": "+",
+      "is_canonical": false,
+      "source": "Ensembl"
+    },
+    {
+      "transcript_id": "ENST00000523125",
+      "gene": "VEGFA",
+      "chrom": "chr6",
+      "start": 43771247,
+      "end": 43784562,
+      "strand": "+",
+      "is_canonical": false,
+      "source": "Ensembl"
+    },
+    {
+      "transcript_id": "ENST00000518824",
+      "gene": "VEGFA",
+      "chrom": "chr6",
+      "start": 43771247,
+      "end": 43784658,
+      "strand": "+",
+      "is_canonical": false,
+      "source": "Ensembl"
+    },
+    {
+      "transcript_id": "ENST00000230480",
+      "gene": "VEGFA",
+      "chrom": "chr6",
+      "start": 43771992,
+      "end": 43786487,
+      "strand": "+",
+      "is_canonical": false,
+      "source": "Ensembl"
+    },
+    {
+      "transcript_id": "ENST00000480614",
+      "gene": "VEGFA",
+      "chrom": "chr6",
+      "start": 43773172,
+      "end": 43786484,
+      "strand": "+",
+      "is_canonical": false,
+      "source": "Ensembl"
+    },
+    {
+      "transcript_id": "ENST00000520265",
+      "gene": "VEGFA",
+      "chrom": "chr6",
+      "start": 43774353,
+      "end": 43784562,
+      "strand": "+",
+      "is_canonical": false,
+      "source": "Ensembl"
+    },
+    {
+      "transcript_id": "ENST00000497139",
+      "gene": "VEGFA",
+      "chrom": "chr6",
+      "start": 43777720,
+      "end": 43786439,
+      "strand": "+",
+      "is_canonical": false,
+      "source": "Ensembl"
+    },
+    {
+      "transcript_id": "ENST00000493786",
+      "gene": "VEGFA",
+      "chrom": "chr6",
+      "start": 43778172,
+      "end": 43784564,
+      "strand": "+",
+      "is_canonical": false,
+      "source": "Ensembl"
+    }
+  ]
+}

@@ -1,0 +1,166 @@
+2026-11-24 15:46:59.215 | INFO     | src.scoring.risk_classifier:run:52 - risk_classifier: loading scores
+2026-11-24 15:46:59.217 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.064 epi=0.259 bio=0.083 exec=0.222 → 0.3265
+2026-11-24 15:46:59.217 | DEBUG    | src.scoring.integrator:apply_cell_modifier:178 - cell_modifier: atac=0.002 expr=0.709 exec=0.223 activity=0.329 modifier=0.761 base=0.3265 → 0.2483
+2026-11-24 15:46:59.218 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.2483 → SAFE
+2026-11-24 15:46:59.218 | DEBUG    | src.scoring.risk_classifier:run:89 - site MTOR:ENST00000361445:chr1:11255438: base=0.3265 final=0.2483 → SAFE
+2026-11-24 15:46:59.218 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.199 epi=0.174 bio=0.133 exec=0.222 → 0.3424
+2026-11-24 15:46:59.218 | DEBUG    | src.scoring.integrator:apply_cell_modifier:178 - cell_modifier: atac=0.002 expr=0.709 exec=0.223 activity=0.329 modifier=0.761 base=0.3424 → 0.2604
+2026-11-24 15:46:59.218 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.2604 → SAFE
+2026-11-24 15:46:59.218 | DEBUG    | src.scoring.risk_classifier:run:89 - site VEGFA:ENST00000480614:chr6:43777011: base=0.3424 final=0.2604 → SAFE
+2026-11-24 15:46:59.218 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.489 epi=0.258 bio=0.000 exec=0.222 → 0.3695
+2026-11-24 15:46:59.218 | DEBUG    | src.scoring.integrator:apply_cell_modifier:178 - cell_modifier: atac=0.002 expr=0.709 exec=0.223 activity=0.329 modifier=0.761 base=0.3695 → 0.2810
+2026-11-24 15:46:59.218 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.2810 → SAFE
+2026-11-24 15:46:59.219 | DEBUG    | src.scoring.risk_classifier:run:89 - site HNRNPA2B1:ENST00000618183:chr7:26198044: base=0.3695 final=0.2810 → SAFE
+2026-11-24 15:46:59.219 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.644 epi=0.132 bio=0.000 exec=0.222 → 0.3674
+2026-11-24 15:46:59.219 | DEBUG    | src.scoring.integrator:apply_cell_modifier:178 - cell_modifier: atac=0.002 expr=0.709 exec=0.223 activity=0.329 modifier=0.761 base=0.3674 → 0.2795
+2026-11-24 15:46:59.219 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.2795 → SAFE
+2026-11-24 15:46:59.219 | DEBUG    | src.scoring.risk_classifier:run:89 - site DICER1:ENST00000343455:chr14:95152261: base=0.3674 final=0.2795 → SAFE
+2026-11-24 15:46:59.219 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.209 epi=0.152 bio=0.113 exec=0.222 → 0.3344
+2026-11-24 15:46:59.219 | DEBUG    | src.scoring.integrator:apply_cell_modifier:178 - cell_modifier: atac=0.002 expr=0.709 exec=0.223 activity=0.329 modifier=0.761 base=0.3344 → 0.2543
+2026-11-24 15:46:59.219 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.2543 → SAFE
+2026-11-24 15:46:59.219 | DEBUG    | src.scoring.risk_classifier:run:89 - site TNRC6B:ENST00000454349:chr22:40182273: base=0.3344 final=0.2543 → SAFE
+2026-11-24 15:46:59.219 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.198 epi=0.324 bio=0.037 exec=0.222 → 0.3482
+2026-11-24 15:46:59.219 | DEBUG    | src.scoring.integrator:apply_cell_modifier:178 - cell_modifier: atac=0.002 expr=0.709 exec=0.223 activity=0.329 modifier=0.761 base=0.3482 → 0.2648
+2026-11-24 15:46:59.219 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.2648 → SAFE
+2026-11-24 15:46:59.219 | DEBUG    | src.scoring.risk_classifier:run:89 - site CTNNB1:ENST00000349496:chr3:41200550: base=0.3482 final=0.2648 → SAFE
+2026-11-24 15:46:59.219 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.008 epi=0.120 bio=0.160 exec=0.222 → 0.3097
+2026-11-24 15:46:59.219 | DEBUG    | src.scoring.integrator:apply_cell_modifier:178 - cell_modifier: atac=0.002 expr=0.709 exec=0.223 activity=0.329 modifier=0.761 base=0.3097 → 0.2355
+2026-11-24 15:46:59.219 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.2355 → SAFE
+2026-11-24 15:46:59.219 | DEBUG    | src.scoring.risk_classifier:run:89 - site ATR:ENST00000350721:chr3:142571301: base=0.3097 final=0.2355 → SAFE
+2026-11-24 15:46:59.220 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.415 epi=0.610 bio=0.000 exec=0.222 → 0.4286
+2026-11-24 15:46:59.220 | DEBUG    | src.scoring.integrator:apply_cell_modifier:178 - cell_modifier: atac=0.002 expr=0.709 exec=0.223 activity=0.329 modifier=0.761 base=0.4286 → 0.3260
+2026-11-24 15:46:59.220 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.3260 → WARNING
+2026-11-24 15:46:59.220 | DEBUG    | src.scoring.risk_classifier:run:89 - site RPL11:ENST00000643754:chr1:23692780: base=0.4286 final=0.3260 → WARNING
+2026-11-24 15:46:59.220 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.191 epi=0.120 bio=0.160 exec=0.222 → 0.3372
+2026-11-24 15:46:59.220 | DEBUG    | src.scoring.integrator:apply_cell_modifier:178 - cell_modifier: atac=0.002 expr=0.709 exec=0.223 activity=0.329 modifier=0.761 base=0.3372 → 0.2564
+2026-11-24 15:46:59.220 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.2564 → SAFE
+2026-11-24 15:46:59.220 | DEBUG    | src.scoring.risk_classifier:run:89 - site PTBP2:ENST00000674951:chr1:96724335: base=0.3372 final=0.2564 → SAFE
+2026-11-24 15:46:59.220 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.319 epi=0.104 bio=0.000 exec=0.222 → 0.3131
+2026-11-24 15:46:59.220 | DEBUG    | src.scoring.integrator:apply_cell_modifier:178 - cell_modifier: atac=0.002 expr=0.709 exec=0.223 activity=0.329 modifier=0.761 base=0.3131 → 0.2382
+2026-11-24 15:46:59.220 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.2382 → SAFE
+2026-11-24 15:46:59.220 | DEBUG    | src.scoring.risk_classifier:run:89 - site PTBP2:ENST00000674951:chr1:96724850: base=0.3131 final=0.2382 → SAFE
+2026-11-24 15:46:59.220 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.200 epi=0.141 bio=0.160 exec=0.222 → 0.3425
+2026-11-24 15:46:59.220 | DEBUG    | src.scoring.integrator:apply_cell_modifier:178 - cell_modifier: atac=0.002 expr=0.709 exec=0.223 activity=0.329 modifier=0.761 base=0.3425 → 0.2605
+2026-11-24 15:46:59.220 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.2605 → SAFE
+2026-11-24 15:46:59.220 | DEBUG    | src.scoring.risk_classifier:run:89 - site BRCA1:ENST00000357654:chr17:43122797: base=0.3425 final=0.2605 → SAFE
+2026-11-24 15:46:59.221 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.000 epi=0.503 bio=0.042 exec=0.000 → 0.3112
+2026-11-24 15:46:59.221 | DEBUG    | src.scoring.integrator:apply_cell_modifier:178 - cell_modifier: atac=0.002 expr=0.709 exec=0.223 activity=0.329 modifier=0.761 base=0.3111 → 0.2366
+2026-11-24 15:46:59.221 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.2366 → SAFE
+2026-11-24 15:46:59.221 | DEBUG    | src.scoring.risk_classifier:run:89 - site CALM2:ENST00000272298:chr2:47175374: base=0.3111 final=0.2366 → SAFE
+2026-11-24 15:46:59.221 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.169 epi=0.502 bio=0.015 exec=0.222 → 0.3740
+2026-11-24 15:46:59.221 | DEBUG    | src.scoring.integrator:apply_cell_modifier:178 - cell_modifier: atac=0.002 expr=0.709 exec=0.223 activity=0.329 modifier=0.761 base=0.3740 → 0.2844
+2026-11-24 15:46:59.221 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.2844 → SAFE
+2026-11-24 15:46:59.221 | DEBUG    | src.scoring.risk_classifier:run:89 - site HNRNPK:ENST00000376263:chr9:83979914: base=0.3740 final=0.2844 → SAFE
+2026-11-24 15:46:59.221 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.183 epi=0.158 bio=0.179 exec=0.222 → 0.3484
+2026-11-24 15:46:59.221 | DEBUG    | src.scoring.integrator:apply_cell_modifier:178 - cell_modifier: atac=0.002 expr=0.709 exec=0.223 activity=0.329 modifier=0.761 base=0.3484 → 0.2649
+2026-11-24 15:46:59.221 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.2649 → SAFE
+2026-11-24 15:46:59.221 | DEBUG    | src.scoring.risk_classifier:run:89 - site AGO4:ENST00000373210:chr1:35815110: base=0.3484 final=0.2649 → SAFE
+2026-11-24 15:46:59.221 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.670 epi=0.191 bio=0.016 exec=0.222 → 0.3871
+2026-11-24 15:46:59.221 | DEBUG    | src.scoring.integrator:apply_cell_modifier:178 - cell_modifier: atac=0.002 expr=0.709 exec=0.223 activity=0.329 modifier=0.761 base=0.3871 → 0.2944
+2026-11-24 15:46:59.221 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.2944 → SAFE
+2026-11-24 15:46:59.221 | DEBUG    | src.scoring.risk_classifier:run:89 - site MDM2:ENST00000258149:chr12:68809823: base=0.3871 final=0.2944 → SAFE
+2026-11-24 15:46:59.221 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.038 epi=0.159 bio=0.000 exec=0.000 → 0.2376
+2026-11-24 15:46:59.221 | DEBUG    | src.scoring.integrator:apply_cell_modifier:178 - cell_modifier: atac=0.002 expr=0.709 exec=0.223 activity=0.329 modifier=0.761 base=0.2376 → 0.1807
+2026-11-24 15:46:59.222 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.1807 → SAFE
+2026-11-24 15:46:59.222 | DEBUG    | src.scoring.risk_classifier:run:89 - site EGFR:ENST00000275493:chr7:55027996: base=0.2376 final=0.1807 → SAFE
+2026-11-24 15:46:59.222 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.211 epi=0.146 bio=0.079 exec=0.222 → 0.3253
+2026-11-24 15:46:59.222 | DEBUG    | src.scoring.integrator:apply_cell_modifier:178 - cell_modifier: atac=0.002 expr=0.709 exec=0.223 activity=0.329 modifier=0.761 base=0.3253 → 0.2474
+2026-11-24 15:46:59.222 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.2474 → SAFE
+2026-11-24 15:46:59.222 | DEBUG    | src.scoring.risk_classifier:run:89 - site PIK3CA:ENST00000263967:chr3:179151174: base=0.3253 final=0.2474 → SAFE
+2026-11-24 15:46:59.222 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.200 epi=0.181 bio=0.078 exec=0.222 → 0.3302
+2026-11-24 15:46:59.222 | DEBUG    | src.scoring.integrator:apply_cell_modifier:178 - cell_modifier: atac=0.002 expr=0.709 exec=0.223 activity=0.329 modifier=0.761 base=0.3302 → 0.2511
+2026-11-24 15:46:59.222 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.2511 → SAFE
+2026-11-24 15:46:59.222 | DEBUG    | src.scoring.risk_classifier:run:89 - site VEGFA:ENST00000497139:chr6:43777871: base=0.3302 final=0.2511 → SAFE
+2026-11-24 15:46:59.222 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.187 epi=0.471 bio=0.056 exec=0.222 → 0.3804
+2026-11-24 15:46:59.222 | DEBUG    | src.scoring.integrator:apply_cell_modifier:178 - cell_modifier: atac=0.002 expr=0.709 exec=0.223 activity=0.329 modifier=0.761 base=0.3804 → 0.2893
+2026-11-24 15:46:59.222 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.2893 → SAFE
+2026-11-24 15:46:59.222 | DEBUG    | src.scoring.risk_classifier:run:89 - site HNRNPK:ENST00000376263:chr9:83979032: base=0.3804 final=0.2893 → SAFE
+2026-11-24 15:46:59.222 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.000 epi=0.410 bio=0.224 exec=0.222 → 0.3824
+2026-11-24 15:46:59.222 | DEBUG    | src.scoring.integrator:apply_cell_modifier:178 - cell_modifier: atac=0.002 expr=0.709 exec=0.223 activity=0.329 modifier=0.761 base=0.3824 → 0.2908
+2026-11-24 15:46:59.222 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.2908 → SAFE
+2026-11-24 15:46:59.222 | DEBUG    | src.scoring.risk_classifier:run:89 - site DDX17:ENST00000403230:chr22:38504908: base=0.3824 final=0.2908 → SAFE
+2026-11-24 15:46:59.222 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.191 epi=0.216 bio=0.064 exec=0.222 → 0.3322
+2026-11-24 15:46:59.222 | DEBUG    | src.scoring.integrator:apply_cell_modifier:178 - cell_modifier: atac=0.002 expr=0.709 exec=0.223 activity=0.329 modifier=0.761 base=0.3322 → 0.2527
+2026-11-24 15:46:59.223 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.2527 → SAFE
+2026-11-24 15:46:59.223 | DEBUG    | src.scoring.risk_classifier:run:89 - site DDX17:ENST00000403230:chr22:38501867: base=0.3322 final=0.2527 → SAFE
+2026-11-24 15:46:59.223 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.165 epi=0.500 bio=0.000 exec=0.222 → 0.3692
+2026-11-24 15:46:59.223 | DEBUG    | src.scoring.integrator:apply_cell_modifier:178 - cell_modifier: atac=0.002 expr=0.709 exec=0.223 activity=0.329 modifier=0.761 base=0.3692 → 0.2808
+2026-11-24 15:46:59.223 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.2808 → SAFE
+2026-11-24 15:46:59.223 | DEBUG    | src.scoring.risk_classifier:run:89 - site DDX5:ENST00000225792:chr17:64505712: base=0.3692 final=0.2808 → SAFE
+2026-11-24 15:46:59.223 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.180 epi=0.012 bio=0.015 exec=0.222 → 0.2777
+2026-11-24 15:46:59.223 | DEBUG    | src.scoring.integrator:apply_cell_modifier:178 - cell_modifier: atac=0.002 expr=0.709 exec=0.223 activity=0.329 modifier=0.761 base=0.2777 → 0.2112
+2026-11-24 15:46:59.223 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.2112 → SAFE
+2026-11-24 15:46:59.223 | DEBUG    | src.scoring.risk_classifier:run:89 - site CCND2:ENST00000261254:chr12:4276729: base=0.2777 final=0.2112 → SAFE
+2026-11-24 15:46:59.223 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.200 epi=0.171 bio=0.000 exec=0.222 → 0.3086
+2026-11-24 15:46:59.223 | DEBUG    | src.scoring.integrator:apply_cell_modifier:178 - cell_modifier: atac=0.002 expr=0.709 exec=0.223 activity=0.329 modifier=0.761 base=0.3086 → 0.2347
+2026-11-24 15:46:59.223 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.2347 → SAFE
+2026-11-24 15:46:59.223 | DEBUG    | src.scoring.risk_classifier:run:89 - site PTEN:ENST00000371953:chr10:87869740: base=0.3086 final=0.2347 → SAFE
+2026-11-24 15:46:59.223 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.221 epi=0.129 bio=0.000 exec=0.000 → 0.2589
+2026-11-24 15:46:59.223 | DEBUG    | src.scoring.integrator:apply_cell_modifier:178 - cell_modifier: atac=0.002 expr=0.709 exec=0.223 activity=0.329 modifier=0.761 base=0.2589 → 0.1969
+2026-11-24 15:46:59.223 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.1969 → SAFE
+2026-11-24 15:46:59.223 | DEBUG    | src.scoring.risk_classifier:run:89 - site ATR:ENST00000350721:chr3:142572942: base=0.2589 final=0.1969 → SAFE
+2026-11-24 15:46:59.223 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.199 epi=0.284 bio=0.000 exec=0.000 → 0.2867
+2026-11-24 15:46:59.224 | DEBUG    | src.scoring.integrator:apply_cell_modifier:178 - cell_modifier: atac=0.002 expr=0.709 exec=0.223 activity=0.329 modifier=0.761 base=0.2867 → 0.2181
+2026-11-24 15:46:59.224 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.2181 → SAFE
+2026-11-24 15:46:59.224 | DEBUG    | src.scoring.risk_classifier:run:89 - site CASP3:ENST00000308394:chr4:184648366: base=0.2867 final=0.2181 → SAFE
+2026-11-24 15:46:59.224 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.198 epi=0.273 bio=0.000 exec=0.000 → 0.2842
+2026-11-24 15:46:59.224 | DEBUG    | src.scoring.integrator:apply_cell_modifier:178 - cell_modifier: atac=0.002 expr=0.709 exec=0.223 activity=0.329 modifier=0.761 base=0.2842 → 0.2161
+2026-11-24 15:46:59.224 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.2161 → SAFE
+2026-11-24 15:46:59.224 | DEBUG    | src.scoring.risk_classifier:run:89 - site CUL1:ENST00000325222:chr7:148700526: base=0.2842 final=0.2161 → SAFE
+2026-11-24 15:46:59.224 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.198 epi=0.160 bio=0.133 exec=0.222 → 0.3395
+2026-11-24 15:46:59.224 | DEBUG    | src.scoring.integrator:apply_cell_modifier:178 - cell_modifier: atac=0.002 expr=0.709 exec=0.223 activity=0.329 modifier=0.761 base=0.3394 → 0.2582
+2026-11-24 15:46:59.224 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.2582 → SAFE
+2026-11-24 15:46:59.224 | DEBUG    | src.scoring.risk_classifier:run:89 - site AKT2:ENST00000392038:chr19:40280283: base=0.3394 final=0.2582 → SAFE
+2026-11-24 15:46:59.224 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.194 epi=0.113 bio=0.133 exec=0.000 → 0.2850
+2026-11-24 15:46:59.224 | DEBUG    | src.scoring.integrator:apply_cell_modifier:178 - cell_modifier: atac=0.002 expr=0.709 exec=0.223 activity=0.329 modifier=0.761 base=0.2850 → 0.2167
+2026-11-24 15:46:59.224 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.2167 → SAFE
+2026-11-24 15:46:59.224 | DEBUG    | src.scoring.risk_classifier:run:89 - site TSC1:ENST00000298552:chr9:132940598: base=0.2850 final=0.2167 → SAFE
+2026-11-24 15:46:59.224 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.209 epi=0.155 bio=0.127 exec=0.222 → 0.3385
+2026-11-24 15:46:59.224 | DEBUG    | src.scoring.integrator:apply_cell_modifier:178 - cell_modifier: atac=0.002 expr=0.709 exec=0.223 activity=0.329 modifier=0.761 base=0.3385 → 0.2574
+2026-11-24 15:46:59.225 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.2574 → SAFE
+2026-11-24 15:46:59.225 | DEBUG    | src.scoring.risk_classifier:run:89 - site YAP1:ENST00000282441:chr11:102115206: base=0.3385 final=0.2574 → SAFE
+2026-11-24 15:46:59.225 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.200 epi=0.002 bio=0.000 exec=0.000 → 0.2303
+2026-11-24 15:46:59.225 | DEBUG    | src.scoring.integrator:apply_cell_modifier:178 - cell_modifier: atac=0.002 expr=0.709 exec=0.223 activity=0.329 modifier=0.761 base=0.2303 → 0.1751
+2026-11-24 15:46:59.225 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.1751 → SAFE
+2026-11-24 15:46:59.225 | DEBUG    | src.scoring.risk_classifier:run:89 - site IFNG:ENST00000229135:chr12:68159107: base=0.2303 final=0.1751 → SAFE
+2026-11-24 15:46:59.225 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.200 epi=0.160 bio=0.000 exec=0.000 → 0.2620
+2026-11-24 15:46:59.225 | DEBUG    | src.scoring.integrator:apply_cell_modifier:178 - cell_modifier: atac=0.002 expr=0.709 exec=0.223 activity=0.329 modifier=0.761 base=0.2620 → 0.1992
+2026-11-24 15:46:59.225 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.1992 → SAFE
+2026-11-24 15:46:59.225 | DEBUG    | src.scoring.risk_classifier:run:89 - site LIN28A:ENST00000326279:chr1:26414640: base=0.2620 final=0.1992 → SAFE
+2026-11-24 15:46:59.225 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.198 epi=0.142 bio=0.000 exec=0.222 → 0.3025
+2026-11-24 15:46:59.225 | DEBUG    | src.scoring.integrator:apply_cell_modifier:178 - cell_modifier: atac=0.002 expr=0.709 exec=0.223 activity=0.329 modifier=0.761 base=0.3025 → 0.2301
+2026-11-24 15:46:59.225 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.2301 → SAFE
+2026-11-24 15:46:59.225 | DEBUG    | src.scoring.risk_classifier:run:89 - site DICER1:ENST00000343455:chr14:95147794: base=0.3025 final=0.2301 → SAFE
+2026-11-24 15:46:59.225 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.276 epi=0.172 bio=0.113 exec=0.222 → 0.3485
+2026-11-24 15:46:59.225 | DEBUG    | src.scoring.integrator:apply_cell_modifier:178 - cell_modifier: atac=0.002 expr=0.709 exec=0.223 activity=0.329 modifier=0.761 base=0.3485 → 0.2650
+2026-11-24 15:46:59.225 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.2650 → SAFE
+2026-11-24 15:46:59.225 | DEBUG    | src.scoring.risk_classifier:run:89 - site TNRC6B:ENST00000454349:chr22:40180363: base=0.3485 final=0.2650 → SAFE
+2026-11-24 15:46:59.226 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.204 epi=0.006 bio=0.015 exec=0.222 → 0.2802
+2026-11-24 15:46:59.226 | DEBUG    | src.scoring.integrator:apply_cell_modifier:178 - cell_modifier: atac=0.002 expr=0.709 exec=0.223 activity=0.329 modifier=0.761 base=0.2802 → 0.2131
+2026-11-24 15:46:59.226 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.2131 → SAFE
+2026-11-24 15:46:59.226 | DEBUG    | src.scoring.risk_classifier:run:89 - site CCND2:ENST00000261254:chr12:4276799: base=0.2802 final=0.2131 → SAFE
+2026-11-24 15:46:59.226 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.450 epi=0.270 bio=0.032 exec=0.000 → 0.3295
+2026-11-24 15:46:59.226 | DEBUG    | src.scoring.integrator:apply_cell_modifier:178 - cell_modifier: atac=0.002 expr=0.709 exec=0.223 activity=0.329 modifier=0.761 base=0.3295 → 0.2506
+2026-11-24 15:46:59.226 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.2506 → SAFE
+2026-11-24 15:46:59.226 | DEBUG    | src.scoring.risk_classifier:run:89 - site MTOR:ENST00000361445:chr1:11259515: base=0.3295 final=0.2506 → SAFE
+2026-11-24 15:46:59.226 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.193 epi=0.407 bio=0.160 exec=0.222 → 0.3948
+2026-11-24 15:46:59.226 | DEBUG    | src.scoring.integrator:apply_cell_modifier:178 - cell_modifier: atac=0.002 expr=0.709 exec=0.223 activity=0.329 modifier=0.761 base=0.3948 → 0.3003
+2026-11-24 15:46:59.226 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.3003 → WARNING
+2026-11-24 15:46:59.226 | DEBUG    | src.scoring.risk_classifier:run:89 - site RPS3:ENST00000531188:chr11:75401416: base=0.3948 final=0.3003 → WARNING
+2026-11-24 15:46:59.226 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.492 epi=0.248 bio=0.000 exec=0.222 → 0.3679
+2026-11-24 15:46:59.226 | DEBUG    | src.scoring.integrator:apply_cell_modifier:178 - cell_modifier: atac=0.002 expr=0.709 exec=0.223 activity=0.329 modifier=0.761 base=0.3679 → 0.2798
+2026-11-24 15:46:59.226 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.2798 → SAFE
+2026-11-24 15:46:59.226 | DEBUG    | src.scoring.risk_classifier:run:89 - site HNRNPA2B1:ENST00000618183:chr7:26197989: base=0.3679 final=0.2798 → SAFE
+2026-11-24 15:46:59.226 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.200 epi=0.270 bio=0.293 exec=0.000 → 0.3574
+2026-11-24 15:46:59.227 | DEBUG    | src.scoring.integrator:apply_cell_modifier:178 - cell_modifier: atac=0.002 expr=0.709 exec=0.223 activity=0.329 modifier=0.761 base=0.3574 → 0.2718
+2026-11-24 15:46:59.227 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.2718 → SAFE
+2026-11-24 15:46:59.227 | DEBUG    | src.scoring.risk_classifier:run:89 - site TSC1:ENST00000298552:chr9:132937751: base=0.3574 final=0.2718 → SAFE
+2026-11-24 15:46:59.227 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.197 epi=0.160 bio=0.133 exec=0.222 → 0.3394
+2026-11-24 15:46:59.227 | DEBUG    | src.scoring.integrator:apply_cell_modifier:178 - cell_modifier: atac=0.002 expr=0.709 exec=0.223 activity=0.329 modifier=0.761 base=0.3393 → 0.2581
+2026-11-24 15:46:59.227 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.2581 → SAFE
+2026-11-24 15:46:59.227 | DEBUG    | src.scoring.risk_classifier:run:89 - site SMAD2:ENST00000262160:chr18:47898662: base=0.3393 final=0.2581 → SAFE
+2026-11-24 15:46:59.227 | DEBUG    | src.scoring.integrator:integrate:116 - integrate: seq=1.000 var=0.197 epi=0.186 bio=0.133 exec=0.222 → 0.3445
+2026-11-24 15:46:59.227 | DEBUG    | src.scoring.integrator:apply_cell_modifier:178 - cell_modifier: atac=0.002 expr=0.709 exec=0.223 activity=0.329 modifier=0.761 base=0.3445 → 0.2620
+2026-11-24 15:46:59.227 | DEBUG    | src.scoring.classifier:classify:77 - classifier: score=0.2620 → SAFE
+2026-11-24 15:46:59.227 | DEBUG    | src.scoring.risk_classifier:run:89 - site SMAD2:ENST00000262160:chr18:47916332: base=0.3445 final=0.2620 → SAFE
+2026-11-24 15:46:59.228 | INFO     | src.scoring.risk_classifier:run:124 - risk_classifier: 41 sites classified — overall=WARNING (0.3260) → /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/results/VEGFA_HeLa/stage7_classification.json

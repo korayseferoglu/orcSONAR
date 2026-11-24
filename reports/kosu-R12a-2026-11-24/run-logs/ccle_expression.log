@@ -1,0 +1,115 @@
+2026-11-24 15:31:13.490 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:14.401 | DEBUG    | src.stage4_epigenetic.ccle_expression:_ensure_header:222 - ccle_expression: indexed 19215 gene columns
+2026-11-24 15:31:15.513 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:15.516 | DEBUG    | src.core.cache:set:216 - Cache SET: ccle:AGO4:HeLa (TTL 8760h, schema v1)
+2026-11-24 15:31:15.516 | DEBUG    | src.stage4_epigenetic.ccle_expression:get_expression:102 - ccle_expression: HeLa/AGO4 val=2.9859 pct=0.568 expressed=True
+2026-11-24 15:31:15.516 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:16.598 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:16.600 | DEBUG    | src.core.cache:set:216 - Cache SET: ccle:AKT2:HeLa (TTL 8760h, schema v1)
+2026-11-24 15:31:16.600 | DEBUG    | src.stage4_epigenetic.ccle_expression:get_expression:102 - ccle_expression: HeLa/AKT2 val=6.1085 pct=0.485 expressed=True
+2026-11-24 15:31:16.601 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:17.744 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:17.747 | DEBUG    | src.core.cache:set:216 - Cache SET: ccle:ATR:HeLa (TTL 8760h, schema v1)
+2026-11-24 15:31:17.747 | DEBUG    | src.stage4_epigenetic.ccle_expression:get_expression:102 - ccle_expression: HeLa/ATR val=4.7352 pct=0.930 expressed=True
+2026-11-24 15:31:17.747 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:18.795 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:18.796 | DEBUG    | src.core.cache:set:216 - Cache SET: ccle:BRCA1:HeLa (TTL 8760h, schema v1)
+2026-11-24 15:31:18.796 | DEBUG    | src.stage4_epigenetic.ccle_expression:get_expression:102 - ccle_expression: HeLa/BRCA1 val=5.4544 pct=0.928 expressed=True
+2026-11-24 15:31:18.796 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:18.797 | DEBUG    | src.core.cache:get:193 - Cache HIT: ccle:CALM2:HeLa
+2026-11-24 15:31:18.797 | DEBUG    | src.stage4_epigenetic.ccle_expression:get_expression:94 - ccle_expression: cache HIT ccle:CALM2:HeLa
+2026-11-24 15:31:18.797 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:19.963 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:19.964 | DEBUG    | src.core.cache:set:216 - Cache SET: ccle:CASP3:HeLa (TTL 8760h, schema v1)
+2026-11-24 15:31:19.964 | DEBUG    | src.stage4_epigenetic.ccle_expression:get_expression:102 - ccle_expression: HeLa/CASP3 val=5.3830 pct=0.770 expressed=True
+2026-11-24 15:31:19.964 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:21.045 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:21.047 | DEBUG    | src.core.cache:set:216 - Cache SET: ccle:CCND2:HeLa (TTL 8760h, schema v1)
+2026-11-24 15:31:21.047 | DEBUG    | src.stage4_epigenetic.ccle_expression:get_expression:102 - ccle_expression: HeLa/CCND2 val=0.0000 pct=0.000 expressed=False
+2026-11-24 15:31:21.048 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:22.237 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:22.238 | DEBUG    | src.core.cache:set:216 - Cache SET: ccle:CTNNB1:HeLa (TTL 8760h, schema v1)
+2026-11-24 15:31:22.238 | DEBUG    | src.stage4_epigenetic.ccle_expression:get_expression:102 - ccle_expression: HeLa/CTNNB1 val=8.0022 pct=0.825 expressed=True
+2026-11-24 15:31:22.238 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:23.315 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:23.319 | DEBUG    | src.core.cache:set:216 - Cache SET: ccle:CUL1:HeLa (TTL 8760h, schema v1)
+2026-11-24 15:31:23.319 | DEBUG    | src.stage4_epigenetic.ccle_expression:get_expression:102 - ccle_expression: HeLa/CUL1 val=5.7454 pct=0.827 expressed=True
+2026-11-24 15:31:23.320 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:24.439 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:24.442 | DEBUG    | src.core.cache:set:216 - Cache SET: ccle:DDX17:HeLa (TTL 8760h, schema v1)
+2026-11-24 15:31:24.442 | DEBUG    | src.stage4_epigenetic.ccle_expression:get_expression:102 - ccle_expression: HeLa/DDX17 val=7.7520 pct=0.866 expressed=True
+2026-11-24 15:31:24.443 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:25.554 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:25.556 | DEBUG    | src.core.cache:set:216 - Cache SET: ccle:DDX5:HeLa (TTL 8760h, schema v1)
+2026-11-24 15:31:25.557 | DEBUG    | src.stage4_epigenetic.ccle_expression:get_expression:102 - ccle_expression: HeLa/DDX5 val=10.3359 pct=0.992 expressed=True
+2026-11-24 15:31:25.557 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:26.639 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:26.642 | DEBUG    | src.core.cache:set:216 - Cache SET: ccle:DICER1:HeLa (TTL 8760h, schema v1)
+2026-11-24 15:31:26.642 | DEBUG    | src.stage4_epigenetic.ccle_expression:get_expression:102 - ccle_expression: HeLa/DICER1 val=5.0479 pct=0.930 expressed=True
+2026-11-24 15:31:26.643 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:27.751 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:27.754 | DEBUG    | src.core.cache:set:216 - Cache SET: ccle:EGFR:HeLa (TTL 8760h, schema v1)
+2026-11-24 15:31:27.754 | DEBUG    | src.stage4_epigenetic.ccle_expression:get_expression:102 - ccle_expression: HeLa/EGFR val=6.2371 pct=0.910 expressed=True
+2026-11-24 15:31:27.754 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:28.852 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:28.853 | DEBUG    | src.core.cache:set:216 - Cache SET: ccle:HNRNPA2B1:HeLa (TTL 8760h, schema v1)
+2026-11-24 15:31:28.854 | DEBUG    | src.stage4_epigenetic.ccle_expression:get_expression:102 - ccle_expression: HeLa/HNRNPA2B1 val=9.7805 pct=0.666 expressed=True
+2026-11-24 15:31:28.854 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:29.991 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:29.997 | DEBUG    | src.core.cache:set:216 - Cache SET: ccle:HNRNPK:HeLa (TTL 8760h, schema v1)
+2026-11-24 15:31:29.997 | DEBUG    | src.stage4_epigenetic.ccle_expression:get_expression:102 - ccle_expression: HeLa/HNRNPK val=9.7629 pct=0.933 expressed=True
+2026-11-24 15:31:29.997 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:31.105 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:31.106 | DEBUG    | src.core.cache:set:216 - Cache SET: ccle:IFNG:HeLa (TTL 8760h, schema v1)
+2026-11-24 15:31:31.106 | DEBUG    | src.stage4_epigenetic.ccle_expression:get_expression:102 - ccle_expression: HeLa/IFNG val=0.0000 pct=0.000 expressed=False
+2026-11-24 15:31:31.107 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:31.107 | DEBUG    | src.core.cache:get:193 - Cache HIT: ccle:LIN28A:HeLa
+2026-11-24 15:31:31.107 | DEBUG    | src.stage4_epigenetic.ccle_expression:get_expression:94 - ccle_expression: cache HIT ccle:LIN28A:HeLa
+2026-11-24 15:31:31.107 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:32.200 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:32.202 | DEBUG    | src.core.cache:set:216 - Cache SET: ccle:MDM2:HeLa (TTL 8760h, schema v1)
+2026-11-24 15:31:32.203 | DEBUG    | src.stage4_epigenetic.ccle_expression:get_expression:102 - ccle_expression: HeLa/MDM2 val=5.3346 pct=0.590 expressed=True
+2026-11-24 15:31:32.203 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:33.335 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:33.337 | DEBUG    | src.core.cache:set:216 - Cache SET: ccle:MTOR:HeLa (TTL 8760h, schema v1)
+2026-11-24 15:31:33.337 | DEBUG    | src.stage4_epigenetic.ccle_expression:get_expression:102 - ccle_expression: HeLa/MTOR val=4.1269 pct=0.316 expressed=True
+2026-11-24 15:31:33.338 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:34.406 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:34.408 | DEBUG    | src.core.cache:set:216 - Cache SET: ccle:PIK3CA:HeLa (TTL 8760h, schema v1)
+2026-11-24 15:31:34.409 | DEBUG    | src.stage4_epigenetic.ccle_expression:get_expression:102 - ccle_expression: HeLa/PIK3CA val=5.3714 pct=0.994 expressed=True
+2026-11-24 15:31:34.409 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:35.475 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:35.476 | DEBUG    | src.core.cache:set:216 - Cache SET: ccle:PTBP2:HeLa (TTL 8760h, schema v1)
+2026-11-24 15:31:35.476 | DEBUG    | src.stage4_epigenetic.ccle_expression:get_expression:102 - ccle_expression: HeLa/PTBP2 val=4.0336 pct=0.713 expressed=True
+2026-11-24 15:31:35.477 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:36.671 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:36.672 | DEBUG    | src.core.cache:set:216 - Cache SET: ccle:PTEN:HeLa (TTL 8760h, schema v1)
+2026-11-24 15:31:36.673 | DEBUG    | src.stage4_epigenetic.ccle_expression:get_expression:102 - ccle_expression: HeLa/PTEN val=5.5959 pct=0.810 expressed=True
+2026-11-24 15:31:36.673 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:37.800 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:37.802 | DEBUG    | src.core.cache:set:216 - Cache SET: ccle:RPL11:HeLa (TTL 8760h, schema v1)
+2026-11-24 15:31:37.802 | DEBUG    | src.stage4_epigenetic.ccle_expression:get_expression:102 - ccle_expression: HeLa/RPL11 val=9.8175 pct=0.208 expressed=True
+2026-11-24 15:31:37.803 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:38.941 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:38.942 | DEBUG    | src.core.cache:set:216 - Cache SET: ccle:RPS3:HeLa (TTL 8760h, schema v1)
+2026-11-24 15:31:38.942 | DEBUG    | src.stage4_epigenetic.ccle_expression:get_expression:102 - ccle_expression: HeLa/RPS3 val=11.0589 pct=0.259 expressed=True
+2026-11-24 15:31:38.942 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:40.130 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:40.132 | DEBUG    | src.core.cache:set:216 - Cache SET: ccle:SMAD2:HeLa (TTL 8760h, schema v1)
+2026-11-24 15:31:40.133 | DEBUG    | src.stage4_epigenetic.ccle_expression:get_expression:102 - ccle_expression: HeLa/SMAD2 val=5.6267 pct=0.393 expressed=True
+2026-11-24 15:31:40.133 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:41.217 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:41.219 | DEBUG    | src.core.cache:set:216 - Cache SET: ccle:TNRC6B:HeLa (TTL 8760h, schema v1)
+2026-11-24 15:31:41.219 | DEBUG    | src.stage4_epigenetic.ccle_expression:get_expression:102 - ccle_expression: HeLa/TNRC6B val=3.6357 pct=0.981 expressed=True
+2026-11-24 15:31:41.220 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:42.414 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:42.417 | DEBUG    | src.core.cache:set:216 - Cache SET: ccle:TSC1:HeLa (TTL 8760h, schema v1)
+2026-11-24 15:31:42.417 | DEBUG    | src.stage4_epigenetic.ccle_expression:get_expression:102 - ccle_expression: HeLa/TSC1 val=3.8737 pct=0.476 expressed=True
+2026-11-24 15:31:42.417 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:42.417 | DEBUG    | src.core.cache:get:193 - Cache HIT: ccle:VEGFA:HeLa
+2026-11-24 15:31:42.417 | DEBUG    | src.stage4_epigenetic.ccle_expression:get_expression:94 - ccle_expression: cache HIT ccle:VEGFA:HeLa
+2026-11-24 15:31:42.418 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:43.544 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:43.546 | DEBUG    | src.core.cache:set:216 - Cache SET: ccle:YAP1:HeLa (TTL 8760h, schema v1)
+2026-11-24 15:31:43.546 | DEBUG    | src.stage4_epigenetic.ccle_expression:get_expression:102 - ccle_expression: HeLa/YAP1 val=5.4867 pct=0.466 expressed=True
+2026-11-24 15:31:43.547 | INFO     | src.stage4_epigenetic.ccle_reader:run:74 - ccle_reader: 29 genes in HeLa → /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/results/VEGFA_HeLa/stage4_ccle.json

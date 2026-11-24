@@ -1,0 +1,154 @@
+2026-11-24 15:31:09.450 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:35.531 | DEBUG    | src.core.cache:set:216 - Cache SET: hic_contact:4DNFIVJ3IIQL:1:11250000:1:11250000:25000 (TTL 720h, schema v1)
+2026-11-24 15:31:35.532 | DEBUG    | src.stage4_epigenetic.hic_contacts:get_contact:135 - hic_contacts: chr1:11255438-11255458(-) ↔ chr1:11255438-11255458(-) contact=3.6444 cell=HeLa
+2026-11-24 15:31:35.532 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:32:10.911 | WARNING  | src.stage4_epigenetic.hic_contacts:_fetch_contact_frequency:245 - hic_contacts: no contact data for chr1:11255438-11255458(-) ↔ chr6:43777011-43777031(+)
+2026-11-24 15:32:10.914 | DEBUG    | src.core.cache:set:216 - Cache SET: hic_contact:4DNFIVJ3IIQL:1:11250000:6:43775000:25000 (TTL 720h, schema v1)
+2026-11-24 15:32:10.914 | DEBUG    | src.stage4_epigenetic.hic_contacts:get_contact:135 - hic_contacts: chr1:11255438-11255458(-) ↔ chr6:43777011-43777031(+) contact=0.0000 cell=HeLa
+2026-11-24 15:32:10.914 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:32:40.839 | WARNING  | src.stage4_epigenetic.hic_contacts:_fetch_contact_frequency:245 - hic_contacts: no contact data for chr1:11255438-11255458(-) ↔ chr7:26198044-26198064(-)
+2026-11-24 15:32:40.842 | DEBUG    | src.core.cache:set:216 - Cache SET: hic_contact:4DNFIVJ3IIQL:1:11250000:7:26175000:25000 (TTL 720h, schema v1)
+2026-11-24 15:32:40.843 | DEBUG    | src.stage4_epigenetic.hic_contacts:get_contact:135 - hic_contacts: chr1:11255438-11255458(-) ↔ chr7:26198044-26198064(-) contact=0.0000 cell=HeLa
+2026-11-24 15:32:40.845 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:33:11.928 | WARNING  | src.stage4_epigenetic.hic_contacts:_fetch_contact_frequency:245 - hic_contacts: no contact data for chr1:11255438-11255458(-) ↔ chr14:95152261-95152281(-)
+2026-11-24 15:33:11.933 | DEBUG    | src.core.cache:set:216 - Cache SET: hic_contact:4DNFIVJ3IIQL:1:11250000:14:95150000:25000 (TTL 720h, schema v1)
+2026-11-24 15:33:11.933 | DEBUG    | src.stage4_epigenetic.hic_contacts:get_contact:135 - hic_contacts: chr1:11255438-11255458(-) ↔ chr14:95152261-95152281(-) contact=0.0000 cell=HeLa
+2026-11-24 15:33:11.935 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:33:37.564 | DEBUG    | src.stage4_epigenetic.hic_contacts:_fetch_contact_frequency:239 - hic_contacts: no exact bin match for 1:11250000:11275000↔22:40175000:40200000; using max of 1 records
+2026-11-24 15:33:37.568 | DEBUG    | src.core.cache:set:216 - Cache SET: hic_contact:4DNFIVJ3IIQL:1:11250000:22:40175000:25000 (TTL 720h, schema v1)
+2026-11-24 15:33:37.568 | DEBUG    | src.stage4_epigenetic.hic_contacts:get_contact:135 - hic_contacts: chr1:11255438-11255458(-) ↔ chr22:40182273-40182293(+) contact=0.3412 cell=HeLa
+2026-11-24 15:33:37.569 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:34:09.048 | WARNING  | src.stage4_epigenetic.hic_contacts:_fetch_contact_frequency:245 - hic_contacts: no contact data for chr1:11255438-11255458(-) ↔ chr3:41200550-41200570(+)
+2026-11-24 15:34:09.054 | DEBUG    | src.core.cache:set:216 - Cache SET: hic_contact:4DNFIVJ3IIQL:1:11250000:3:41200000:25000 (TTL 720h, schema v1)
+2026-11-24 15:34:09.055 | DEBUG    | src.stage4_epigenetic.hic_contacts:get_contact:135 - hic_contacts: chr1:11255438-11255458(-) ↔ chr3:41200550-41200570(+) contact=0.0000 cell=HeLa
+2026-11-24 15:34:09.057 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:34:41.789 | WARNING  | src.stage4_epigenetic.hic_contacts:_fetch_contact_frequency:245 - hic_contacts: no contact data for chr1:11255438-11255458(-) ↔ chr3:142571301-142571321(-)
+2026-11-24 15:34:41.823 | DEBUG    | src.core.cache:set:216 - Cache SET: hic_contact:4DNFIVJ3IIQL:1:11250000:3:142550000:25000 (TTL 720h, schema v1)
+2026-11-24 15:34:41.824 | DEBUG    | src.stage4_epigenetic.hic_contacts:get_contact:135 - hic_contacts: chr1:11255438-11255458(-) ↔ chr3:142571301-142571321(-) contact=0.0000 cell=HeLa
+2026-11-24 15:34:41.825 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:35:07.432 | DEBUG    | src.stage4_epigenetic.hic_contacts:_fetch_contact_frequency:239 - hic_contacts: no exact bin match for 1:11250000:11275000↔1:23675000:23700000; using max of 1 records
+2026-11-24 15:35:07.484 | DEBUG    | src.core.cache:set:216 - Cache SET: hic_contact:4DNFIVJ3IIQL:1:11250000:1:23675000:25000 (TTL 720h, schema v1)
+2026-11-24 15:35:07.484 | DEBUG    | src.stage4_epigenetic.hic_contacts:get_contact:135 - hic_contacts: chr1:11255438-11255458(-) ↔ chr1:23692780-23692800(+) contact=0.7218 cell=HeLa
+2026-11-24 15:35:07.485 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:35:39.590 | WARNING  | src.stage4_epigenetic.hic_contacts:_fetch_contact_frequency:245 - hic_contacts: no contact data for chr1:11255438-11255458(-) ↔ chr1:96724335-96724355(+)
+2026-11-24 15:35:39.592 | DEBUG    | src.core.cache:set:216 - Cache SET: hic_contact:4DNFIVJ3IIQL:1:11250000:1:96700000:25000 (TTL 720h, schema v1)
+2026-11-24 15:35:39.593 | DEBUG    | src.stage4_epigenetic.hic_contacts:get_contact:135 - hic_contacts: chr1:11255438-11255458(-) ↔ chr1:96724335-96724355(+) contact=0.0000 cell=HeLa
+2026-11-24 15:35:39.594 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:35:39.594 | DEBUG    | src.core.cache:get:193 - Cache HIT: hic_contact:4DNFIVJ3IIQL:1:11250000:1:96700000:25000
+2026-11-24 15:35:39.594 | DEBUG    | src.stage4_epigenetic.hic_contacts:get_contact:125 - hic_contacts: cache HIT hic_contact:4DNFIVJ3IIQL:1:11250000:1:96700000:25000
+2026-11-24 15:35:39.595 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:36:12.429 | WARNING  | src.stage4_epigenetic.hic_contacts:_fetch_contact_frequency:245 - hic_contacts: no contact data for chr1:11255438-11255458(-) ↔ chr17:43122797-43122817(-)
+2026-11-24 15:36:12.434 | DEBUG    | src.core.cache:set:216 - Cache SET: hic_contact:4DNFIVJ3IIQL:1:11250000:17:43100000:25000 (TTL 720h, schema v1)
+2026-11-24 15:36:12.435 | DEBUG    | src.stage4_epigenetic.hic_contacts:get_contact:135 - hic_contacts: chr1:11255438-11255458(-) ↔ chr17:43122797-43122817(-) contact=0.0000 cell=HeLa
+2026-11-24 15:36:12.435 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:36:43.825 | WARNING  | src.stage4_epigenetic.hic_contacts:_fetch_contact_frequency:245 - hic_contacts: no contact data for chr1:11255438-11255458(-) ↔ chr2:47175374-47175394(-)
+2026-11-24 15:36:43.829 | DEBUG    | src.core.cache:set:216 - Cache SET: hic_contact:4DNFIVJ3IIQL:1:11250000:2:47175000:25000 (TTL 720h, schema v1)
+2026-11-24 15:36:43.829 | DEBUG    | src.stage4_epigenetic.hic_contacts:get_contact:135 - hic_contacts: chr1:11255438-11255458(-) ↔ chr2:47175374-47175394(-) contact=0.0000 cell=HeLa
+2026-11-24 15:36:43.829 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:37:14.132 | WARNING  | src.stage4_epigenetic.hic_contacts:_fetch_contact_frequency:245 - hic_contacts: no contact data for chr1:11255438-11255458(-) ↔ chr9:83979914-83979934(-)
+2026-11-24 15:37:14.138 | DEBUG    | src.core.cache:set:216 - Cache SET: hic_contact:4DNFIVJ3IIQL:1:11250000:9:83975000:25000 (TTL 720h, schema v1)
+2026-11-24 15:37:14.142 | DEBUG    | src.stage4_epigenetic.hic_contacts:get_contact:135 - hic_contacts: chr1:11255438-11255458(-) ↔ chr9:83979914-83979934(-) contact=0.0000 cell=HeLa
+2026-11-24 15:37:14.143 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:37:37.764 | DEBUG    | src.stage4_epigenetic.hic_contacts:_fetch_contact_frequency:239 - hic_contacts: no exact bin match for 1:11250000:11275000↔1:35800000:35825000; using max of 1 records
+2026-11-24 15:37:37.768 | DEBUG    | src.core.cache:set:216 - Cache SET: hic_contact:4DNFIVJ3IIQL:1:11250000:1:35800000:25000 (TTL 720h, schema v1)
+2026-11-24 15:37:37.769 | DEBUG    | src.stage4_epigenetic.hic_contacts:get_contact:135 - hic_contacts: chr1:11255438-11255458(-) ↔ chr1:35815110-35815130(+) contact=0.5094 cell=HeLa
+2026-11-24 15:37:37.770 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:38:07.493 | WARNING  | src.stage4_epigenetic.hic_contacts:_fetch_contact_frequency:245 - hic_contacts: no contact data for chr1:11255438-11255458(-) ↔ chr12:68809823-68809843(+)
+2026-11-24 15:38:07.500 | DEBUG    | src.core.cache:set:216 - Cache SET: hic_contact:4DNFIVJ3IIQL:1:11250000:12:68800000:25000 (TTL 720h, schema v1)
+2026-11-24 15:38:07.502 | DEBUG    | src.stage4_epigenetic.hic_contacts:get_contact:135 - hic_contacts: chr1:11255438-11255458(-) ↔ chr12:68809823-68809843(+) contact=0.0000 cell=HeLa
+2026-11-24 15:38:07.504 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:38:38.381 | WARNING  | src.stage4_epigenetic.hic_contacts:_fetch_contact_frequency:245 - hic_contacts: no contact data for chr1:11255438-11255458(-) ↔ chr7:55027996-55028016(+)
+2026-11-24 15:38:38.481 | DEBUG    | src.core.cache:set:216 - Cache SET: hic_contact:4DNFIVJ3IIQL:1:11250000:7:55025000:25000 (TTL 720h, schema v1)
+2026-11-24 15:38:38.482 | DEBUG    | src.stage4_epigenetic.hic_contacts:get_contact:135 - hic_contacts: chr1:11255438-11255458(-) ↔ chr7:55027996-55028016(+) contact=0.0000 cell=HeLa
+2026-11-24 15:38:38.483 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:39:09.013 | WARNING  | src.stage4_epigenetic.hic_contacts:_fetch_contact_frequency:245 - hic_contacts: no contact data for chr1:11255438-11255458(-) ↔ chr3:179151174-179151194(+)
+2026-11-24 15:39:09.018 | DEBUG    | src.core.cache:set:216 - Cache SET: hic_contact:4DNFIVJ3IIQL:1:11250000:3:179150000:25000 (TTL 720h, schema v1)
+2026-11-24 15:39:09.019 | DEBUG    | src.stage4_epigenetic.hic_contacts:get_contact:135 - hic_contacts: chr1:11255438-11255458(-) ↔ chr3:179151174-179151194(+) contact=0.0000 cell=HeLa
+2026-11-24 15:39:09.021 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:39:09.021 | DEBUG    | src.core.cache:get:193 - Cache HIT: hic_contact:4DNFIVJ3IIQL:1:11250000:6:43775000:25000
+2026-11-24 15:39:09.021 | DEBUG    | src.stage4_epigenetic.hic_contacts:get_contact:125 - hic_contacts: cache HIT hic_contact:4DNFIVJ3IIQL:1:11250000:6:43775000:25000
+2026-11-24 15:39:09.022 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:39:09.023 | DEBUG    | src.core.cache:get:193 - Cache HIT: hic_contact:4DNFIVJ3IIQL:1:11250000:9:83975000:25000
+2026-11-24 15:39:09.023 | DEBUG    | src.stage4_epigenetic.hic_contacts:get_contact:125 - hic_contacts: cache HIT hic_contact:4DNFIVJ3IIQL:1:11250000:9:83975000:25000
+2026-11-24 15:39:09.024 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:39:39.973 | WARNING  | src.stage4_epigenetic.hic_contacts:_fetch_contact_frequency:245 - hic_contacts: no contact data for chr1:11255438-11255458(-) ↔ chr22:38504908-38504928(-)
+2026-11-24 15:39:39.980 | DEBUG    | src.core.cache:set:216 - Cache SET: hic_contact:4DNFIVJ3IIQL:1:11250000:22:38500000:25000 (TTL 720h, schema v1)
+2026-11-24 15:39:39.981 | DEBUG    | src.stage4_epigenetic.hic_contacts:get_contact:135 - hic_contacts: chr1:11255438-11255458(-) ↔ chr22:38504908-38504928(-) contact=0.0000 cell=HeLa
+2026-11-24 15:39:39.982 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:39:39.983 | DEBUG    | src.core.cache:get:193 - Cache HIT: hic_contact:4DNFIVJ3IIQL:1:11250000:22:38500000:25000
+2026-11-24 15:39:39.983 | DEBUG    | src.stage4_epigenetic.hic_contacts:get_contact:125 - hic_contacts: cache HIT hic_contact:4DNFIVJ3IIQL:1:11250000:22:38500000:25000
+2026-11-24 15:39:39.985 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:40:11.969 | WARNING  | src.stage4_epigenetic.hic_contacts:_fetch_contact_frequency:245 - hic_contacts: no contact data for chr1:11255438-11255458(-) ↔ chr17:64505712-64505732(-)
+2026-11-24 15:40:11.973 | DEBUG    | src.core.cache:set:216 - Cache SET: hic_contact:4DNFIVJ3IIQL:1:11250000:17:64500000:25000 (TTL 720h, schema v1)
+2026-11-24 15:40:11.975 | DEBUG    | src.stage4_epigenetic.hic_contacts:get_contact:135 - hic_contacts: chr1:11255438-11255458(-) ↔ chr17:64505712-64505732(-) contact=0.0000 cell=HeLa
+2026-11-24 15:40:11.976 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:40:42.834 | WARNING  | src.stage4_epigenetic.hic_contacts:_fetch_contact_frequency:245 - hic_contacts: no contact data for chr1:11255438-11255458(-) ↔ chr12:4276729-4276749(+)
+2026-11-24 15:40:42.841 | DEBUG    | src.core.cache:set:216 - Cache SET: hic_contact:4DNFIVJ3IIQL:1:11250000:12:4275000:25000 (TTL 720h, schema v1)
+2026-11-24 15:40:42.842 | DEBUG    | src.stage4_epigenetic.hic_contacts:get_contact:135 - hic_contacts: chr1:11255438-11255458(-) ↔ chr12:4276729-4276749(+) contact=0.0000 cell=HeLa
+2026-11-24 15:40:42.843 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:41:12.640 | WARNING  | src.stage4_epigenetic.hic_contacts:_fetch_contact_frequency:245 - hic_contacts: no contact data for chr1:11255438-11255458(-) ↔ chr10:87869740-87869760(+)
+2026-11-24 15:41:12.677 | DEBUG    | src.core.cache:set:216 - Cache SET: hic_contact:4DNFIVJ3IIQL:1:11250000:10:87850000:25000 (TTL 720h, schema v1)
+2026-11-24 15:41:12.680 | DEBUG    | src.stage4_epigenetic.hic_contacts:get_contact:135 - hic_contacts: chr1:11255438-11255458(-) ↔ chr10:87869740-87869760(+) contact=0.0000 cell=HeLa
+2026-11-24 15:41:12.681 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:41:12.682 | DEBUG    | src.core.cache:get:193 - Cache HIT: hic_contact:4DNFIVJ3IIQL:1:11250000:3:142550000:25000
+2026-11-24 15:41:12.682 | DEBUG    | src.stage4_epigenetic.hic_contacts:get_contact:125 - hic_contacts: cache HIT hic_contact:4DNFIVJ3IIQL:1:11250000:3:142550000:25000
+2026-11-24 15:41:12.683 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:41:42.529 | WARNING  | src.stage4_epigenetic.hic_contacts:_fetch_contact_frequency:245 - hic_contacts: no contact data for chr1:11255438-11255458(-) ↔ chr4:184648366-184648386(-)
+2026-11-24 15:41:42.533 | DEBUG    | src.core.cache:set:216 - Cache SET: hic_contact:4DNFIVJ3IIQL:1:11250000:4:184625000:25000 (TTL 720h, schema v1)
+2026-11-24 15:41:42.534 | DEBUG    | src.stage4_epigenetic.hic_contacts:get_contact:135 - hic_contacts: chr1:11255438-11255458(-) ↔ chr4:184648366-184648386(-) contact=0.0000 cell=HeLa
+2026-11-24 15:41:42.534 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:42:12.218 | WARNING  | src.stage4_epigenetic.hic_contacts:_fetch_contact_frequency:245 - hic_contacts: no contact data for chr1:11255438-11255458(-) ↔ chr7:148700526-148700546(+)
+2026-11-24 15:42:12.221 | DEBUG    | src.core.cache:set:216 - Cache SET: hic_contact:4DNFIVJ3IIQL:1:11250000:7:148700000:25000 (TTL 720h, schema v1)
+2026-11-24 15:42:12.222 | DEBUG    | src.stage4_epigenetic.hic_contacts:get_contact:135 - hic_contacts: chr1:11255438-11255458(-) ↔ chr7:148700526-148700546(+) contact=0.0000 cell=HeLa
+2026-11-24 15:42:12.223 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:42:42.480 | WARNING  | src.stage4_epigenetic.hic_contacts:_fetch_contact_frequency:245 - hic_contacts: no contact data for chr1:11255438-11255458(-) ↔ chr19:40280283-40280303(-)
+2026-11-24 15:42:42.484 | DEBUG    | src.core.cache:set:216 - Cache SET: hic_contact:4DNFIVJ3IIQL:1:11250000:19:40275000:25000 (TTL 720h, schema v1)
+2026-11-24 15:42:42.485 | DEBUG    | src.stage4_epigenetic.hic_contacts:get_contact:135 - hic_contacts: chr1:11255438-11255458(-) ↔ chr19:40280283-40280303(-) contact=0.0000 cell=HeLa
+2026-11-24 15:42:42.485 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:43:11.530 | WARNING  | src.stage4_epigenetic.hic_contacts:_fetch_contact_frequency:245 - hic_contacts: no contact data for chr1:11255438-11255458(-) ↔ chr9:132940598-132940618(-)
+2026-11-24 15:43:11.533 | DEBUG    | src.core.cache:set:216 - Cache SET: hic_contact:4DNFIVJ3IIQL:1:11250000:9:132925000:25000 (TTL 720h, schema v1)
+2026-11-24 15:43:11.534 | DEBUG    | src.stage4_epigenetic.hic_contacts:get_contact:135 - hic_contacts: chr1:11255438-11255458(-) ↔ chr9:132940598-132940618(-) contact=0.0000 cell=HeLa
+2026-11-24 15:43:11.535 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:43:41.417 | WARNING  | src.stage4_epigenetic.hic_contacts:_fetch_contact_frequency:245 - hic_contacts: no contact data for chr1:11255438-11255458(-) ↔ chr11:102115206-102115226(+)
+2026-11-24 15:43:41.440 | DEBUG    | src.core.cache:set:216 - Cache SET: hic_contact:4DNFIVJ3IIQL:1:11250000:11:102100000:25000 (TTL 720h, schema v1)
+2026-11-24 15:43:41.443 | DEBUG    | src.stage4_epigenetic.hic_contacts:get_contact:135 - hic_contacts: chr1:11255438-11255458(-) ↔ chr11:102115206-102115226(+) contact=0.0000 cell=HeLa
+2026-11-24 15:43:41.446 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:44:13.759 | WARNING  | src.stage4_epigenetic.hic_contacts:_fetch_contact_frequency:245 - hic_contacts: no contact data for chr1:11255438-11255458(-) ↔ chr12:68159107-68159127(-)
+2026-11-24 15:44:13.762 | DEBUG    | src.core.cache:set:216 - Cache SET: hic_contact:4DNFIVJ3IIQL:1:11250000:12:68150000:25000 (TTL 720h, schema v1)
+2026-11-24 15:44:13.763 | DEBUG    | src.stage4_epigenetic.hic_contacts:get_contact:135 - hic_contacts: chr1:11255438-11255458(-) ↔ chr12:68159107-68159127(-) contact=0.0000 cell=HeLa
+2026-11-24 15:44:13.763 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:44:38.553 | DEBUG    | src.stage4_epigenetic.hic_contacts:_fetch_contact_frequency:239 - hic_contacts: no exact bin match for 1:11250000:11275000↔1:26400000:26425000; using max of 1 records
+2026-11-24 15:44:38.556 | DEBUG    | src.core.cache:set:216 - Cache SET: hic_contact:4DNFIVJ3IIQL:1:11250000:1:26400000:25000 (TTL 720h, schema v1)
+2026-11-24 15:44:38.557 | DEBUG    | src.stage4_epigenetic.hic_contacts:get_contact:135 - hic_contacts: chr1:11255438-11255458(-) ↔ chr1:26414640-26414660(+) contact=5.9274 cell=HeLa
+2026-11-24 15:44:38.557 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:45:14.724 | WARNING  | src.stage4_epigenetic.hic_contacts:_fetch_contact_frequency:245 - hic_contacts: no contact data for chr1:11255438-11255458(-) ↔ chr14:95147794-95147814(-)
+2026-11-24 15:45:14.728 | DEBUG    | src.core.cache:set:216 - Cache SET: hic_contact:4DNFIVJ3IIQL:1:11250000:14:95125000:25000 (TTL 720h, schema v1)
+2026-11-24 15:45:14.729 | DEBUG    | src.stage4_epigenetic.hic_contacts:get_contact:135 - hic_contacts: chr1:11255438-11255458(-) ↔ chr14:95147794-95147814(-) contact=0.0000 cell=HeLa
+2026-11-24 15:45:14.729 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:45:14.729 | DEBUG    | src.core.cache:get:193 - Cache HIT: hic_contact:4DNFIVJ3IIQL:1:11250000:22:40175000:25000
+2026-11-24 15:45:14.729 | DEBUG    | src.stage4_epigenetic.hic_contacts:get_contact:125 - hic_contacts: cache HIT hic_contact:4DNFIVJ3IIQL:1:11250000:22:40175000:25000
+2026-11-24 15:45:14.730 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:45:14.730 | DEBUG    | src.core.cache:get:193 - Cache HIT: hic_contact:4DNFIVJ3IIQL:1:11250000:12:4275000:25000
+2026-11-24 15:45:14.730 | DEBUG    | src.stage4_epigenetic.hic_contacts:get_contact:125 - hic_contacts: cache HIT hic_contact:4DNFIVJ3IIQL:1:11250000:12:4275000:25000
+2026-11-24 15:45:14.730 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:45:14.730 | DEBUG    | src.core.cache:get:193 - Cache HIT: hic_contact:4DNFIVJ3IIQL:1:11250000:1:11250000:25000
+2026-11-24 15:45:14.731 | DEBUG    | src.stage4_epigenetic.hic_contacts:get_contact:125 - hic_contacts: cache HIT hic_contact:4DNFIVJ3IIQL:1:11250000:1:11250000:25000
+2026-11-24 15:45:14.731 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:45:50.725 | WARNING  | src.stage4_epigenetic.hic_contacts:_fetch_contact_frequency:245 - hic_contacts: no contact data for chr1:11255438-11255458(-) ↔ chr11:75401416-75401436(+)
+2026-11-24 15:45:50.729 | DEBUG    | src.core.cache:set:216 - Cache SET: hic_contact:4DNFIVJ3IIQL:1:11250000:11:75400000:25000 (TTL 720h, schema v1)
+2026-11-24 15:45:50.732 | DEBUG    | src.stage4_epigenetic.hic_contacts:get_contact:135 - hic_contacts: chr1:11255438-11255458(-) ↔ chr11:75401416-75401436(+) contact=0.0000 cell=HeLa
+2026-11-24 15:45:50.732 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:45:50.732 | DEBUG    | src.core.cache:get:193 - Cache HIT: hic_contact:4DNFIVJ3IIQL:1:11250000:7:26175000:25000
+2026-11-24 15:45:50.732 | DEBUG    | src.stage4_epigenetic.hic_contacts:get_contact:125 - hic_contacts: cache HIT hic_contact:4DNFIVJ3IIQL:1:11250000:7:26175000:25000
+2026-11-24 15:45:50.733 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:45:50.733 | DEBUG    | src.core.cache:get:193 - Cache HIT: hic_contact:4DNFIVJ3IIQL:1:11250000:9:132925000:25000
+2026-11-24 15:45:50.733 | DEBUG    | src.stage4_epigenetic.hic_contacts:get_contact:125 - hic_contacts: cache HIT hic_contact:4DNFIVJ3IIQL:1:11250000:9:132925000:25000
+2026-11-24 15:45:50.733 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:46:21.293 | WARNING  | src.stage4_epigenetic.hic_contacts:_fetch_contact_frequency:245 - hic_contacts: no contact data for chr1:11255438-11255458(-) ↔ chr18:47898662-47898682(-)
+2026-11-24 15:46:21.296 | DEBUG    | src.core.cache:set:216 - Cache SET: hic_contact:4DNFIVJ3IIQL:1:11250000:18:47875000:25000 (TTL 720h, schema v1)
+2026-11-24 15:46:21.297 | DEBUG    | src.stage4_epigenetic.hic_contacts:get_contact:135 - hic_contacts: chr1:11255438-11255458(-) ↔ chr18:47898662-47898682(-) contact=0.0000 cell=HeLa
+2026-11-24 15:46:21.297 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:46:53.890 | WARNING  | src.stage4_epigenetic.hic_contacts:_fetch_contact_frequency:245 - hic_contacts: no contact data for chr1:11255438-11255458(-) ↔ chr18:47916332-47916352(-)
+2026-11-24 15:46:53.893 | DEBUG    | src.core.cache:set:216 - Cache SET: hic_contact:4DNFIVJ3IIQL:1:11250000:18:47900000:25000 (TTL 720h, schema v1)
+2026-11-24 15:46:53.894 | DEBUG    | src.stage4_epigenetic.hic_contacts:get_contact:135 - hic_contacts: chr1:11255438-11255458(-) ↔ chr18:47916332-47916352(-) contact=0.0000 cell=HeLa
+2026-11-24 15:46:53.894 | INFO     | src.stage4_epigenetic.hic_fetcher:run:59 - hic_fetcher: 41 regions for HeLa → /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/results/VEGFA_HeLa/stage4_hic.json

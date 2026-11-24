@@ -1,0 +1,44 @@
+2026-11-24 15:32:12.858 | INFO     | src.stage6_execution.circrna_checker:run:53 - circrna_checker: using BED file data/5_Icra_Güvenlik/circAtlas/hg38_circRNAs.bed
+2026-11-24 15:32:16.240 | INFO     | src.stage6_execution.circrna_sponge:_load_circrna_bed:78 - circrna_sponge: loaded 768986 circRNA entries from data/5_Icra_Güvenlik/circAtlas/hg38_circRNAs.bed
+2026-11-24 15:32:16.251 | DEBUG    | src.stage6_execution.circrna_sponge:check_circrna_overlap:190 - circrna_sponge: chr1:11255438-11255458(-) overlaps=6 sponge_risk=True
+2026-11-24 15:32:16.256 | DEBUG    | src.stage6_execution.circrna_sponge:check_circrna_overlap:190 - circrna_sponge: chr6:43777011-43777031(+) overlaps=6 sponge_risk=True
+2026-11-24 15:32:16.261 | DEBUG    | src.stage6_execution.circrna_sponge:check_circrna_overlap:190 - circrna_sponge: chr7:26198044-26198064(-) overlaps=2 sponge_risk=True
+2026-11-24 15:32:16.264 | DEBUG    | src.stage6_execution.circrna_sponge:check_circrna_overlap:190 - circrna_sponge: chr14:95152261-95152281(-) overlaps=3 sponge_risk=True
+2026-11-24 15:32:16.265 | DEBUG    | src.stage6_execution.circrna_sponge:check_circrna_overlap:190 - circrna_sponge: chr22:40182273-40182293(+) overlaps=21 sponge_risk=True
+2026-11-24 15:32:16.271 | DEBUG    | src.stage6_execution.circrna_sponge:check_circrna_overlap:190 - circrna_sponge: chr3:41200550-41200570(+) overlaps=1 sponge_risk=True
+2026-11-24 15:32:16.277 | DEBUG    | src.stage6_execution.circrna_sponge:check_circrna_overlap:190 - circrna_sponge: chr3:142571301-142571321(-) overlaps=1 sponge_risk=True
+2026-11-24 15:32:16.285 | DEBUG    | src.stage6_execution.circrna_sponge:check_circrna_overlap:190 - circrna_sponge: chr1:23692780-23692800(+) overlaps=7 sponge_risk=True
+2026-11-24 15:32:16.292 | DEBUG    | src.stage6_execution.circrna_sponge:check_circrna_overlap:190 - circrna_sponge: chr1:96724335-96724355(+) overlaps=3 sponge_risk=True
+2026-11-24 15:32:16.299 | DEBUG    | src.stage6_execution.circrna_sponge:check_circrna_overlap:190 - circrna_sponge: chr1:96724850-96724870(+) overlaps=3 sponge_risk=True
+2026-11-24 15:32:16.303 | DEBUG    | src.stage6_execution.circrna_sponge:check_circrna_overlap:190 - circrna_sponge: chr17:43122797-43122817(-) overlaps=23 sponge_risk=True
+2026-11-24 15:32:16.311 | DEBUG    | src.stage6_execution.circrna_sponge:check_circrna_overlap:190 - circrna_sponge: chr2:47175374-47175394(-) overlaps=0 sponge_risk=False
+2026-11-24 15:32:16.315 | DEBUG    | src.stage6_execution.circrna_sponge:check_circrna_overlap:190 - circrna_sponge: chr9:83979914-83979934(-) overlaps=4 sponge_risk=True
+2026-11-24 15:32:16.323 | DEBUG    | src.stage6_execution.circrna_sponge:check_circrna_overlap:190 - circrna_sponge: chr1:35815110-35815130(+) overlaps=2 sponge_risk=True
+2026-11-24 15:32:16.327 | DEBUG    | src.stage6_execution.circrna_sponge:check_circrna_overlap:190 - circrna_sponge: chr12:68809823-68809843(+) overlaps=14 sponge_risk=True
+2026-11-24 15:32:16.332 | DEBUG    | src.stage6_execution.circrna_sponge:check_circrna_overlap:190 - circrna_sponge: chr7:55027996-55028016(+) overlaps=0 sponge_risk=False
+2026-11-24 15:32:16.337 | DEBUG    | src.stage6_execution.circrna_sponge:check_circrna_overlap:190 - circrna_sponge: chr3:179151174-179151194(+) overlaps=2 sponge_risk=True
+2026-11-24 15:32:16.342 | DEBUG    | src.stage6_execution.circrna_sponge:check_circrna_overlap:190 - circrna_sponge: chr6:43777871-43777891(+) overlaps=10 sponge_risk=True
+2026-11-24 15:32:16.345 | DEBUG    | src.stage6_execution.circrna_sponge:check_circrna_overlap:190 - circrna_sponge: chr9:83979032-83979052(-) overlaps=3 sponge_risk=True
+2026-11-24 15:32:16.347 | DEBUG    | src.stage6_execution.circrna_sponge:check_circrna_overlap:190 - circrna_sponge: chr22:38504908-38504928(-) overlaps=9 sponge_risk=True
+2026-11-24 15:32:16.349 | DEBUG    | src.stage6_execution.circrna_sponge:check_circrna_overlap:190 - circrna_sponge: chr22:38501867-38501887(-) overlaps=8 sponge_risk=True
+2026-11-24 15:32:16.352 | DEBUG    | src.stage6_execution.circrna_sponge:check_circrna_overlap:190 - circrna_sponge: chr17:64505712-64505732(-) overlaps=7 sponge_risk=True
+2026-11-24 15:32:16.358 | DEBUG    | src.stage6_execution.circrna_sponge:check_circrna_overlap:190 - circrna_sponge: chr12:4276729-4276749(+) overlaps=5 sponge_risk=True
+2026-11-24 15:32:16.361 | DEBUG    | src.stage6_execution.circrna_sponge:check_circrna_overlap:190 - circrna_sponge: chr10:87869740-87869760(+) overlaps=27 sponge_risk=True
+2026-11-24 15:32:16.367 | DEBUG    | src.stage6_execution.circrna_sponge:check_circrna_overlap:190 - circrna_sponge: chr3:142572942-142572962(-) overlaps=0 sponge_risk=False
+2026-11-24 15:32:16.371 | DEBUG    | src.stage6_execution.circrna_sponge:check_circrna_overlap:190 - circrna_sponge: chr4:184648366-184648386(-) overlaps=0 sponge_risk=False
+2026-11-24 15:32:16.375 | DEBUG    | src.stage6_execution.circrna_sponge:check_circrna_overlap:190 - circrna_sponge: chr7:148700526-148700546(+) overlaps=0 sponge_risk=False
+2026-11-24 15:32:16.377 | DEBUG    | src.stage6_execution.circrna_sponge:check_circrna_overlap:190 - circrna_sponge: chr19:40280283-40280303(-) overlaps=4 sponge_risk=True
+2026-11-24 15:32:16.381 | DEBUG    | src.stage6_execution.circrna_sponge:check_circrna_overlap:190 - circrna_sponge: chr9:132940598-132940618(-) overlaps=0 sponge_risk=False
+2026-11-24 15:32:16.385 | DEBUG    | src.stage6_execution.circrna_sponge:check_circrna_overlap:190 - circrna_sponge: chr11:102115206-102115226(+) overlaps=12 sponge_risk=True
+2026-11-24 15:32:16.389 | DEBUG    | src.stage6_execution.circrna_sponge:check_circrna_overlap:190 - circrna_sponge: chr12:68159107-68159127(-) overlaps=0 sponge_risk=False
+2026-11-24 15:32:16.397 | DEBUG    | src.stage6_execution.circrna_sponge:check_circrna_overlap:190 - circrna_sponge: chr1:26414640-26414660(+) overlaps=0 sponge_risk=False
+2026-11-24 15:32:16.400 | DEBUG    | src.stage6_execution.circrna_sponge:check_circrna_overlap:190 - circrna_sponge: chr14:95147794-95147814(-) overlaps=4 sponge_risk=True
+2026-11-24 15:32:16.402 | DEBUG    | src.stage6_execution.circrna_sponge:check_circrna_overlap:190 - circrna_sponge: chr22:40180363-40180383(+) overlaps=21 sponge_risk=True
+2026-11-24 15:32:16.407 | DEBUG    | src.stage6_execution.circrna_sponge:check_circrna_overlap:190 - circrna_sponge: chr12:4276799-4276819(+) overlaps=5 sponge_risk=True
+2026-11-24 15:32:16.416 | DEBUG    | src.stage6_execution.circrna_sponge:check_circrna_overlap:190 - circrna_sponge: chr1:11259515-11259535(-) overlaps=0 sponge_risk=False
+2026-11-24 15:32:16.420 | DEBUG    | src.stage6_execution.circrna_sponge:check_circrna_overlap:190 - circrna_sponge: chr11:75401416-75401436(+) overlaps=1 sponge_risk=True
+2026-11-24 15:32:16.425 | DEBUG    | src.stage6_execution.circrna_sponge:check_circrna_overlap:190 - circrna_sponge: chr7:26197989-26198009(-) overlaps=2 sponge_risk=True
+2026-11-24 15:32:16.428 | DEBUG    | src.stage6_execution.circrna_sponge:check_circrna_overlap:190 - circrna_sponge: chr9:132937751-132937771(-) overlaps=0 sponge_risk=False
+2026-11-24 15:32:16.430 | DEBUG    | src.stage6_execution.circrna_sponge:check_circrna_overlap:190 - circrna_sponge: chr18:47898662-47898682(-) overlaps=18 sponge_risk=True
+2026-11-24 15:32:16.432 | DEBUG    | src.stage6_execution.circrna_sponge:check_circrna_overlap:190 - circrna_sponge: chr18:47916332-47916352(-) overlaps=18 sponge_risk=True
+2026-11-24 15:32:16.683 | INFO     | src.stage6_execution.circrna_checker:run:83 - circrna_checker: 41 regions → /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/results/VEGFA_HeLa/stage6_circrna.json

@@ -1,0 +1,165 @@
+2026-11-24 15:31:07.596 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:07.596 | DEBUG    | src.core.cache:get:193 - Cache HIT: seq:ENST00000361445
+2026-11-24 15:31:07.597 | DEBUG    | src.stage5_biophysics.g4_detector:detect_g4:166 - G4: 2 motifs (2 fwd / 0 rev), density=0.23/kb, risk=0.240
+2026-11-24 15:31:07.597 | DEBUG    | src.stage5_biophysics.g4_detector:run:238 - g4_detector: MTOR:ENST00000361445:chr1:11255438 → g4_count=2
+2026-11-24 15:31:07.597 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:07.597 | DEBUG    | src.core.cache:get:193 - Cache HIT: seq:ENST00000480614
+2026-11-24 15:31:07.598 | DEBUG    | src.stage5_biophysics.g4_detector:detect_g4:166 - G4: 15 motifs (7 fwd / 8 rev), density=1.23/kb, risk=1.000
+2026-11-24 15:31:07.598 | DEBUG    | src.stage5_biophysics.g4_detector:run:238 - g4_detector: VEGFA:ENST00000480614:chr6:43777011 → g4_count=15
+2026-11-24 15:31:07.599 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:07.599 | DEBUG    | src.core.cache:get:193 - Cache HIT: seq:ENST00000618183
+2026-11-24 15:31:07.599 | DEBUG    | src.stage5_biophysics.g4_detector:detect_g4:166 - G4: 0 motifs (0 fwd / 0 rev), density=0.00/kb, risk=0.000
+2026-11-24 15:31:07.599 | DEBUG    | src.stage5_biophysics.g4_detector:run:238 - g4_detector: HNRNPA2B1:ENST00000618183:chr7:26198044 → g4_count=0
+2026-11-24 15:31:07.599 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:07.600 | DEBUG    | src.core.cache:get:193 - Cache HIT: seq:ENST00000343455
+2026-11-24 15:31:07.600 | DEBUG    | src.stage5_biophysics.g4_detector:detect_g4:166 - G4: 0 motifs (0 fwd / 0 rev), density=0.00/kb, risk=0.000
+2026-11-24 15:31:07.600 | DEBUG    | src.stage5_biophysics.g4_detector:run:238 - g4_detector: DICER1:ENST00000343455:chr14:95152261 → g4_count=0
+2026-11-24 15:31:07.600 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:07.600 | DEBUG    | src.core.cache:get:193 - Cache HIT: seq:ENST00000454349
+2026-11-24 15:31:07.602 | DEBUG    | src.stage5_biophysics.g4_detector:detect_g4:166 - G4: 8 motifs (5 fwd / 3 rev), density=0.44/kb, risk=0.845
+2026-11-24 15:31:07.602 | DEBUG    | src.stage5_biophysics.g4_detector:run:238 - g4_detector: TNRC6B:ENST00000454349:chr22:40182273 → g4_count=8
+2026-11-24 15:31:07.602 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:07.602 | DEBUG    | src.core.cache:get:193 - Cache HIT: seq:ENST00000349496
+2026-11-24 15:31:07.602 | DEBUG    | src.stage5_biophysics.g4_detector:detect_g4:166 - G4: 0 motifs (0 fwd / 0 rev), density=0.00/kb, risk=0.000
+2026-11-24 15:31:07.603 | DEBUG    | src.stage5_biophysics.g4_detector:run:238 - g4_detector: CTNNB1:ENST00000349496:chr3:41200550 → g4_count=0
+2026-11-24 15:31:07.603 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:07.603 | DEBUG    | src.core.cache:get:193 - Cache HIT: seq:ENST00000350721
+2026-11-24 15:31:07.603 | DEBUG    | src.stage5_biophysics.g4_detector:detect_g4:166 - G4: 0 motifs (0 fwd / 0 rev), density=0.00/kb, risk=0.000
+2026-11-24 15:31:07.603 | DEBUG    | src.stage5_biophysics.g4_detector:run:238 - g4_detector: ATR:ENST00000350721:chr3:142571301 → g4_count=0
+2026-11-24 15:31:07.604 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:07.604 | DEBUG    | src.core.cache:get:193 - Cache HIT: seq:ENST00000643754
+2026-11-24 15:31:07.604 | DEBUG    | src.stage5_biophysics.g4_detector:detect_g4:166 - G4: 0 motifs (0 fwd / 0 rev), density=0.00/kb, risk=0.000
+2026-11-24 15:31:07.604 | DEBUG    | src.stage5_biophysics.g4_detector:run:238 - g4_detector: RPL11:ENST00000643754:chr1:23692780 → g4_count=0
+2026-11-24 15:31:07.604 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:07.604 | DEBUG    | src.core.cache:get:193 - Cache HIT: seq:ENST00000674951
+2026-11-24 15:31:07.604 | DEBUG    | src.stage5_biophysics.g4_detector:detect_g4:166 - G4: 0 motifs (0 fwd / 0 rev), density=0.00/kb, risk=0.000
+2026-11-24 15:31:07.604 | DEBUG    | src.stage5_biophysics.g4_detector:run:238 - g4_detector: PTBP2:ENST00000674951:chr1:96724335 → g4_count=0
+2026-11-24 15:31:07.605 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:07.605 | DEBUG    | src.core.cache:get:193 - Cache HIT: seq:ENST00000674951
+2026-11-24 15:31:07.605 | DEBUG    | src.stage5_biophysics.g4_detector:detect_g4:166 - G4: 0 motifs (0 fwd / 0 rev), density=0.00/kb, risk=0.000
+2026-11-24 15:31:07.605 | DEBUG    | src.stage5_biophysics.g4_detector:run:238 - g4_detector: PTBP2:ENST00000674951:chr1:96724850 → g4_count=0
+2026-11-24 15:31:07.605 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:07.605 | DEBUG    | src.core.cache:get:193 - Cache HIT: seq:ENST00000357654
+2026-11-24 15:31:07.606 | DEBUG    | src.stage5_biophysics.g4_detector:detect_g4:166 - G4: 0 motifs (0 fwd / 0 rev), density=0.00/kb, risk=0.000
+2026-11-24 15:31:07.606 | DEBUG    | src.stage5_biophysics.g4_detector:run:238 - g4_detector: BRCA1:ENST00000357654:chr17:43122797 → g4_count=0
+2026-11-24 15:31:07.606 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:07.606 | DEBUG    | src.core.cache:get:193 - Cache HIT: seq:ENST00000272298
+2026-11-24 15:31:07.606 | DEBUG    | src.stage5_biophysics.g4_detector:detect_g4:166 - G4: 0 motifs (0 fwd / 0 rev), density=0.00/kb, risk=0.000
+2026-11-24 15:31:07.606 | DEBUG    | src.stage5_biophysics.g4_detector:run:238 - g4_detector: CALM2:ENST00000272298:chr2:47175374 → g4_count=0
+2026-11-24 15:31:07.606 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:07.606 | DEBUG    | src.core.cache:get:193 - Cache HIT: seq:ENST00000376263
+2026-11-24 15:31:07.607 | DEBUG    | src.stage5_biophysics.g4_detector:detect_g4:166 - G4: 1 motifs (1 fwd / 0 rev), density=0.35/kb, risk=0.147
+2026-11-24 15:31:07.607 | DEBUG    | src.stage5_biophysics.g4_detector:run:238 - g4_detector: HNRNPK:ENST00000376263:chr9:83979914 → g4_count=1
+2026-11-24 15:31:07.607 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:07.607 | DEBUG    | src.core.cache:get:193 - Cache HIT: seq:ENST00000373210
+2026-11-24 15:31:07.608 | DEBUG    | src.stage5_biophysics.g4_detector:detect_g4:166 - G4: 1 motifs (0 fwd / 1 rev), density=0.14/kb, risk=0.146
+2026-11-24 15:31:07.608 | DEBUG    | src.stage5_biophysics.g4_detector:run:238 - g4_detector: AGO4:ENST00000373210:chr1:35815110 → g4_count=1
+2026-11-24 15:31:07.608 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:07.608 | DEBUG    | src.core.cache:get:193 - Cache HIT: seq:ENST00000258149
+2026-11-24 15:31:07.608 | DEBUG    | src.stage5_biophysics.g4_detector:detect_g4:166 - G4: 1 motifs (1 fwd / 0 rev), density=0.13/kb, risk=0.121
+2026-11-24 15:31:07.608 | DEBUG    | src.stage5_biophysics.g4_detector:run:238 - g4_detector: MDM2:ENST00000258149:chr12:68809823 → g4_count=1
+2026-11-24 15:31:07.609 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:07.609 | DEBUG    | src.core.cache:get:193 - Cache HIT: seq:ENST00000275493
+2026-11-24 15:31:07.609 | DEBUG    | src.stage5_biophysics.g4_detector:detect_g4:166 - G4: 0 motifs (0 fwd / 0 rev), density=0.00/kb, risk=0.000
+2026-11-24 15:31:07.609 | DEBUG    | src.stage5_biophysics.g4_detector:run:238 - g4_detector: EGFR:ENST00000275493:chr7:55027996 → g4_count=0
+2026-11-24 15:31:07.610 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:07.610 | DEBUG    | src.core.cache:get:193 - Cache HIT: seq:ENST00000263967
+2026-11-24 15:31:07.610 | DEBUG    | src.stage5_biophysics.g4_detector:detect_g4:166 - G4: 5 motifs (5 fwd / 0 rev), density=0.54/kb, risk=0.596
+2026-11-24 15:31:07.610 | DEBUG    | src.stage5_biophysics.g4_detector:run:238 - g4_detector: PIK3CA:ENST00000263967:chr3:179151174 → g4_count=5
+2026-11-24 15:31:07.611 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:07.611 | DEBUG    | src.core.cache:get:193 - Cache HIT: seq:ENST00000497139
+2026-11-24 15:31:07.611 | DEBUG    | src.stage5_biophysics.g4_detector:detect_g4:166 - G4: 5 motifs (1 fwd / 4 rev), density=1.82/kb, risk=0.588
+2026-11-24 15:31:07.611 | DEBUG    | src.stage5_biophysics.g4_detector:run:238 - g4_detector: VEGFA:ENST00000497139:chr6:43777871 → g4_count=5
+2026-11-24 15:31:07.612 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:07.612 | DEBUG    | src.core.cache:get:193 - Cache HIT: seq:ENST00000376263
+2026-11-24 15:31:07.612 | DEBUG    | src.stage5_biophysics.g4_detector:detect_g4:166 - G4: 1 motifs (1 fwd / 0 rev), density=0.35/kb, risk=0.147
+2026-11-24 15:31:07.612 | DEBUG    | src.stage5_biophysics.g4_detector:run:238 - g4_detector: HNRNPK:ENST00000376263:chr9:83979032 → g4_count=1
+2026-11-24 15:31:07.612 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:07.612 | DEBUG    | src.core.cache:get:193 - Cache HIT: seq:ENST00000403230
+2026-11-24 15:31:07.613 | DEBUG    | src.stage5_biophysics.g4_detector:detect_g4:166 - G4: 3 motifs (3 fwd / 0 rev), density=0.63/kb, risk=0.479
+2026-11-24 15:31:07.613 | DEBUG    | src.stage5_biophysics.g4_detector:run:238 - g4_detector: DDX17:ENST00000403230:chr22:38504908 → g4_count=3
+2026-11-24 15:31:07.613 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:07.613 | DEBUG    | src.core.cache:get:193 - Cache HIT: seq:ENST00000403230
+2026-11-24 15:31:07.613 | DEBUG    | src.stage5_biophysics.g4_detector:detect_g4:166 - G4: 3 motifs (3 fwd / 0 rev), density=0.63/kb, risk=0.479
+2026-11-24 15:31:07.613 | DEBUG    | src.stage5_biophysics.g4_detector:run:238 - g4_detector: DDX17:ENST00000403230:chr22:38501867 → g4_count=3
+2026-11-24 15:31:07.614 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:07.614 | DEBUG    | src.core.cache:get:193 - Cache HIT: seq:ENST00000225792
+2026-11-24 15:31:07.614 | DEBUG    | src.stage5_biophysics.g4_detector:detect_g4:166 - G4: 0 motifs (0 fwd / 0 rev), density=0.00/kb, risk=0.000
+2026-11-24 15:31:07.614 | DEBUG    | src.stage5_biophysics.g4_detector:run:238 - g4_detector: DDX5:ENST00000225792:chr17:64505712 → g4_count=0
+2026-11-24 15:31:07.614 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:07.614 | DEBUG    | src.core.cache:get:193 - Cache HIT: seq:ENST00000261254
+2026-11-24 15:31:07.615 | DEBUG    | src.stage5_biophysics.g4_detector:detect_g4:166 - G4: 1 motifs (1 fwd / 0 rev), density=0.15/kb, risk=0.115
+2026-11-24 15:31:07.615 | DEBUG    | src.stage5_biophysics.g4_detector:run:238 - g4_detector: CCND2:ENST00000261254:chr12:4276729 → g4_count=1
+2026-11-24 15:31:07.615 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:07.615 | DEBUG    | src.core.cache:get:193 - Cache HIT: seq:ENST00000371953
+2026-11-24 15:31:07.615 | DEBUG    | src.stage5_biophysics.g4_detector:detect_g4:166 - G4: 0 motifs (0 fwd / 0 rev), density=0.00/kb, risk=0.000
+2026-11-24 15:31:07.615 | DEBUG    | src.stage5_biophysics.g4_detector:run:238 - g4_detector: PTEN:ENST00000371953:chr10:87869740 → g4_count=0
+2026-11-24 15:31:07.616 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:07.616 | DEBUG    | src.core.cache:get:193 - Cache HIT: seq:ENST00000350721
+2026-11-24 15:31:07.616 | DEBUG    | src.stage5_biophysics.g4_detector:detect_g4:166 - G4: 0 motifs (0 fwd / 0 rev), density=0.00/kb, risk=0.000
+2026-11-24 15:31:07.616 | DEBUG    | src.stage5_biophysics.g4_detector:run:238 - g4_detector: ATR:ENST00000350721:chr3:142572942 → g4_count=0
+2026-11-24 15:31:07.616 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:07.617 | DEBUG    | src.core.cache:get:193 - Cache HIT: seq:ENST00000308394
+2026-11-24 15:31:07.617 | DEBUG    | src.stage5_biophysics.g4_detector:detect_g4:166 - G4: 0 motifs (0 fwd / 0 rev), density=0.00/kb, risk=0.000
+2026-11-24 15:31:07.617 | DEBUG    | src.stage5_biophysics.g4_detector:run:238 - g4_detector: CASP3:ENST00000308394:chr4:184648366 → g4_count=0
+2026-11-24 15:31:07.617 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:07.617 | DEBUG    | src.core.cache:get:193 - Cache HIT: seq:ENST00000325222
+2026-11-24 15:31:07.617 | DEBUG    | src.stage5_biophysics.g4_detector:detect_g4:166 - G4: 0 motifs (0 fwd / 0 rev), density=0.00/kb, risk=0.000
+2026-11-24 15:31:07.617 | DEBUG    | src.stage5_biophysics.g4_detector:run:238 - g4_detector: CUL1:ENST00000325222:chr7:148700526 → g4_count=0
+2026-11-24 15:31:07.618 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:07.618 | DEBUG    | src.core.cache:get:193 - Cache HIT: seq:ENST00000392038
+2026-11-24 15:31:07.618 | DEBUG    | src.stage5_biophysics.g4_detector:detect_g4:166 - G4: 22 motifs (13 fwd / 9 rev), density=4.19/kb, risk=1.000
+2026-11-24 15:31:07.618 | DEBUG    | src.stage5_biophysics.g4_detector:run:238 - g4_detector: AKT2:ENST00000392038:chr19:40280283 → g4_count=22
+2026-11-24 15:31:07.619 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:07.619 | DEBUG    | src.core.cache:get:193 - Cache HIT: seq:ENST00000298552
+2026-11-24 15:31:07.619 | DEBUG    | src.stage5_biophysics.g4_detector:detect_g4:166 - G4: 8 motifs (0 fwd / 8 rev), density=0.93/kb, risk=1.000
+2026-11-24 15:31:07.619 | DEBUG    | src.stage5_biophysics.g4_detector:run:238 - g4_detector: TSC1:ENST00000298552:chr9:132940598 → g4_count=8
+2026-11-24 15:31:07.620 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:07.620 | DEBUG    | src.core.cache:get:193 - Cache HIT: seq:ENST00000282441
+2026-11-24 15:31:07.620 | DEBUG    | src.stage5_biophysics.g4_detector:detect_g4:166 - G4: 4 motifs (4 fwd / 0 rev), density=0.74/kb, risk=0.579
+2026-11-24 15:31:07.620 | DEBUG    | src.stage5_biophysics.g4_detector:run:238 - g4_detector: YAP1:ENST00000282441:chr11:102115206 → g4_count=4
+2026-11-24 15:31:07.620 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:07.621 | DEBUG    | src.core.cache:get:193 - Cache HIT: seq:ENST00000229135
+2026-11-24 15:31:07.621 | DEBUG    | src.stage5_biophysics.g4_detector:detect_g4:166 - G4: 0 motifs (0 fwd / 0 rev), density=0.00/kb, risk=0.000
+2026-11-24 15:31:07.621 | DEBUG    | src.stage5_biophysics.g4_detector:run:238 - g4_detector: IFNG:ENST00000229135:chr12:68159107 → g4_count=0
+2026-11-24 15:31:07.621 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:07.621 | DEBUG    | src.core.cache:get:193 - Cache HIT: seq:ENST00000326279
+2026-11-24 15:31:07.621 | DEBUG    | src.stage5_biophysics.g4_detector:detect_g4:166 - G4: 0 motifs (0 fwd / 0 rev), density=0.00/kb, risk=0.000
+2026-11-24 15:31:07.621 | DEBUG    | src.stage5_biophysics.g4_detector:run:238 - g4_detector: LIN28A:ENST00000326279:chr1:26414640 → g4_count=0
+2026-11-24 15:31:07.622 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:07.622 | DEBUG    | src.core.cache:get:193 - Cache HIT: seq:ENST00000343455
+2026-11-24 15:31:07.622 | DEBUG    | src.stage5_biophysics.g4_detector:detect_g4:166 - G4: 0 motifs (0 fwd / 0 rev), density=0.00/kb, risk=0.000
+2026-11-24 15:31:07.622 | DEBUG    | src.stage5_biophysics.g4_detector:run:238 - g4_detector: DICER1:ENST00000343455:chr14:95147794 → g4_count=0
+2026-11-24 15:31:07.622 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:07.622 | DEBUG    | src.core.cache:get:193 - Cache HIT: seq:ENST00000454349
+2026-11-24 15:31:07.624 | DEBUG    | src.stage5_biophysics.g4_detector:detect_g4:166 - G4: 8 motifs (5 fwd / 3 rev), density=0.44/kb, risk=0.845
+2026-11-24 15:31:07.624 | DEBUG    | src.stage5_biophysics.g4_detector:run:238 - g4_detector: TNRC6B:ENST00000454349:chr22:40180363 → g4_count=8
+2026-11-24 15:31:07.624 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:07.624 | DEBUG    | src.core.cache:get:193 - Cache HIT: seq:ENST00000261254
+2026-11-24 15:31:07.624 | DEBUG    | src.stage5_biophysics.g4_detector:detect_g4:166 - G4: 1 motifs (1 fwd / 0 rev), density=0.15/kb, risk=0.115
+2026-11-24 15:31:07.625 | DEBUG    | src.stage5_biophysics.g4_detector:run:238 - g4_detector: CCND2:ENST00000261254:chr12:4276799 → g4_count=1
+2026-11-24 15:31:07.625 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:07.625 | DEBUG    | src.core.cache:get:193 - Cache HIT: seq:ENST00000361445
+2026-11-24 15:31:07.625 | DEBUG    | src.stage5_biophysics.g4_detector:detect_g4:166 - G4: 2 motifs (2 fwd / 0 rev), density=0.23/kb, risk=0.240
+2026-11-24 15:31:07.625 | DEBUG    | src.stage5_biophysics.g4_detector:run:238 - g4_detector: MTOR:ENST00000361445:chr1:11259515 → g4_count=2
+2026-11-24 15:31:07.626 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:07.626 | DEBUG    | src.core.cache:get:193 - Cache HIT: seq:ENST00000531188
+2026-11-24 15:31:07.626 | DEBUG    | src.stage5_biophysics.g4_detector:detect_g4:166 - G4: 0 motifs (0 fwd / 0 rev), density=0.00/kb, risk=0.000
+2026-11-24 15:31:07.626 | DEBUG    | src.stage5_biophysics.g4_detector:run:238 - g4_detector: RPS3:ENST00000531188:chr11:75401416 → g4_count=0
+2026-11-24 15:31:07.626 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:07.626 | DEBUG    | src.core.cache:get:193 - Cache HIT: seq:ENST00000618183
+2026-11-24 15:31:07.626 | DEBUG    | src.stage5_biophysics.g4_detector:detect_g4:166 - G4: 0 motifs (0 fwd / 0 rev), density=0.00/kb, risk=0.000
+2026-11-24 15:31:07.627 | DEBUG    | src.stage5_biophysics.g4_detector:run:238 - g4_detector: HNRNPA2B1:ENST00000618183:chr7:26197989 → g4_count=0
+2026-11-24 15:31:07.627 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:07.627 | DEBUG    | src.core.cache:get:193 - Cache HIT: seq:ENST00000298552
+2026-11-24 15:31:07.627 | DEBUG    | src.stage5_biophysics.g4_detector:detect_g4:166 - G4: 8 motifs (0 fwd / 8 rev), density=0.93/kb, risk=1.000
+2026-11-24 15:31:07.628 | DEBUG    | src.stage5_biophysics.g4_detector:run:238 - g4_detector: TSC1:ENST00000298552:chr9:132937751 → g4_count=8
+2026-11-24 15:31:07.628 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:07.628 | DEBUG    | src.core.cache:get:193 - Cache HIT: seq:ENST00000262160
+2026-11-24 15:31:07.630 | DEBUG    | src.stage5_biophysics.g4_detector:detect_g4:166 - G4: 26 motifs (7 fwd / 19 rev), density=0.75/kb, risk=1.000
+2026-11-24 15:31:07.630 | DEBUG    | src.stage5_biophysics.g4_detector:run:238 - g4_detector: SMAD2:ENST00000262160:chr18:47898662 → g4_count=26
+2026-11-24 15:31:07.630 | DEBUG    | src.core.cache:__init__:131 - Cache initialised at /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/cache.db
+2026-11-24 15:31:07.630 | DEBUG    | src.core.cache:get:193 - Cache HIT: seq:ENST00000262160
+2026-11-24 15:31:07.632 | DEBUG    | src.stage5_biophysics.g4_detector:detect_g4:166 - G4: 26 motifs (7 fwd / 19 rev), density=0.75/kb, risk=1.000
+2026-11-24 15:31:07.632 | DEBUG    | src.stage5_biophysics.g4_detector:run:238 - g4_detector: SMAD2:ENST00000262160:chr18:47916332 → g4_count=26
+2026-11-24 15:31:07.634 | INFO     | src.stage5_biophysics.g4_detector:run:247 - g4_detector: 41 sites → /tmp/claude-1000/-home-koray-orcSONAR/189b5c71-7ae7-4b85-a4f4-ebe0d4a98ccc/scratchpad/r12a/results/VEGFA_HeLa/stage5_g4.json

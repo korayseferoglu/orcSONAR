@@ -27,7 +27,14 @@ from src.core.exceptions import DataSourceError
 from src.core.models import TranscriptInfo
 
 _ENSEMBL_DELAY = 1 / 15        # 15 req/s
-_LOOKUP_BATCH = 80              # genes per POST /lookup/symbol (smaller batch avoids 60s+ Ensembl response times)
+# Genes per POST /lookup/symbol. MEASURED against live Ensembl on
+# 2026-11-24 with expand=1: batch=80 times out after 120s, batch=40 takes
+# 70.4s (too close to the gateway limit), batch=20 takes 31.0s. The old
+# value of 80 is why the 2026-11-19 run lost two of three batches to 504
+# and resolved 22 of 182 genes. expand=1 cannot be dropped — the canonical
+# transcript is picked out of gene_data["Transcript"] — so this is the
+# only lever (roadmap R12a).
+_LOOKUP_BATCH = 20
 _SEQ_BATCH = 50                 # transcript IDs per POST /sequence/id
 
 # ---------------------------------------------------------------------------
@@ -138,9 +145,11 @@ def get_background_transcriptome(
         exclude_gene: HGNC symbol to skip (typically the saRNA target gene).
 
     Returns:
-        Tuple of (list[TranscriptInfo], dict[transcript_id → mRNA sequence]).
-        Both containers have the same set of transcript IDs.
-        A *partial* result passes through — some symbols retiring is normal.
+        Tuple of (list[TranscriptInfo], dict[transcript_id → mRNA sequence],
+        coverage). The first two share the same set of transcript IDs.
+        ``coverage`` carries ``requested``, ``resolved`` and ``fraction``.
+        A *partial* result passes through — some symbols retiring is normal —
+        but the caller is expected to record the coverage (roadmap R12a).
 
     Raises:
         DataSourceError: If no canonical transcript resolves at all. That is an
@@ -149,6 +158,7 @@ def get_background_transcriptome(
     """
     exclude_upper = exclude_gene.upper() if exclude_gene else ""
     genes = [g for g in _BACKGROUND_GENES if g.upper() != exclude_upper]
+    requested = len(genes)
 
     canonical = _load_canonical_transcripts(genes, config)
     if not canonical:
@@ -173,11 +183,29 @@ def get_background_transcriptome(
     # Keep only transcripts for which we actually have a sequence
     transcript_infos = [t for t in transcript_infos if t.transcript_id in sequences]
 
+    # The search space is a *declared* set, so its coverage has a known
+    # denominator and has to travel with the run. A partial resolution is
+    # allowed (a retired symbol must not stop a run) but it is not allowed to
+    # be invisible: the 2026-11-19 run reported SAFE on 12% of the background
+    # and said nothing (roadmap R12a).
+    coverage = {
+        "requested": requested,
+        "resolved": len(transcript_infos),
+        "fraction": round(len(transcript_infos) / requested, 6) if requested else 0.0,
+    }
+    if coverage["fraction"] < 1.0:
+        logger.warning(
+            f"transcriptome_fetcher: background coverage "
+            f"{coverage['resolved']}/{requested} "
+            f"({coverage['fraction']:.1%}) — the search space is incomplete, "
+            f"so this run is not comparable with a full-coverage one"
+        )
+
     logger.info(
         f"transcriptome_fetcher: {len(transcript_infos)} background transcripts ready "
         f"(excluded: {exclude_gene or 'none'})"
     )
-    return transcript_infos, sequences
+    return transcript_infos, sequences, coverage
 
 
 # ---------------------------------------------------------------------------

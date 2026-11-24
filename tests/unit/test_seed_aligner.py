@@ -569,3 +569,75 @@ class TestRunDoesNotSwallowAnOutage:
             "run() wrote an output file despite the outage — a downstream stage "
             "would read it as 'scanned, nothing found'"
         )
+
+
+class TestRunRecordsItsBackgroundCoverage:
+    """The run's own output must say how much of the search space it searched.
+
+    Roadmap R12a's actual criterion. The fetcher knowing its coverage is not
+    enough — the number has to reach the JSON, because that is what a later
+    session, `verify-run` and `B12`'s comparison of four runs all read.
+    """
+
+    def _promoter(self, tmp_path: Path) -> str:
+        path = tmp_path / "stage1_promoter.json"
+        path.write_text(
+            json.dumps({"transcripts": [{
+                "transcript_id": "ENST00000000001", "gene": "VEGFA",
+                "chrom": "chr6", "start": 43770209, "end": 43786487,
+                "strand": "+", "source": "Ensembl",
+            }]}),
+            encoding="utf-8",
+        )
+        return str(path)
+
+    def test_coverage_reaches_the_output_json(self, tmp_path: Path) -> None:
+        from unittest.mock import patch
+
+        out = tmp_path / "stage2_seed_hits.json"
+        with patch(
+            "src.stage1_genomic_map.transcript_resolver.get_transcript_sequence",
+            return_value="ACGU" * 50,
+        ), patch(
+            "src.stage2_offtarget_scan.transcriptome_fetcher.get_background_transcriptome",
+            return_value=([], {}, {"requested": 182, "resolved": 22, "fraction": 0.120879}),
+        ):
+            seed_aligner_run(
+                sarna_sequence="GCAACCAUAGCCUCGGCCGC",
+                promoter_path=self._promoter(tmp_path),
+                seed_length=7, max_mismatches=12, gc_range=[35.0, 65.0],
+                threads=1, output_path=str(out), log_path=str(tmp_path / "s.log"),
+            )
+
+        payload = json.loads(out.read_text(encoding="utf-8"))
+        assert payload["background_coverage"] == {
+            "requested": 182, "resolved": 22, "fraction": 0.120879,
+        }
+
+    def test_an_unreported_coverage_is_null_not_full(self, tmp_path: Path) -> None:
+        """A non-DataSourceError failure leaves coverage genuinely unknown.
+
+        It must not be absent or look complete: `R1` lets the run continue on
+        a generic failure, and an unknown coverage reading as full is the
+        same class of lie this item exists to close.
+        """
+        from unittest.mock import patch
+
+        out = tmp_path / "stage2_seed_hits.json"
+        with patch(
+            "src.stage1_genomic_map.transcript_resolver.get_transcript_sequence",
+            return_value="ACGU" * 50,
+        ), patch(
+            "src.stage2_offtarget_scan.transcriptome_fetcher.get_background_transcriptome",
+            side_effect=RuntimeError("network wobble"),
+        ):
+            seed_aligner_run(
+                sarna_sequence="GCAACCAUAGCCUCGGCCGC",
+                promoter_path=self._promoter(tmp_path),
+                seed_length=7, max_mismatches=12, gc_range=[35.0, 65.0],
+                threads=1, output_path=str(out), log_path=str(tmp_path / "s.log"),
+            )
+
+        payload = json.loads(out.read_text(encoding="utf-8"))
+        assert "background_coverage" in payload
+        assert payload["background_coverage"] is None
