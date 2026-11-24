@@ -641,3 +641,38 @@ class TestRunRecordsItsBackgroundCoverage:
         payload = json.loads(out.read_text(encoding="utf-8"))
         assert "background_coverage" in payload
         assert payload["background_coverage"] is None
+
+
+class TestTargetWindowTravelsWithTheSite:
+    """Stage 2 must hand downstream the 20 nt it actually aligned against.
+
+    Roadmap C3. `delta_g_calculator` had no access to the off-target sequence,
+    so it used the reverse complement of the saRNA *itself* as the target —
+    identical for every site, hence one ΔG for the whole run. CLAUDE.md's
+    "cleaner variant": emit the window here, where it is already in hand as
+    `mRNA_window`, rather than re-deriving it in stage 5 from tx_start/tx_end
+    and risking a different slice.
+    """
+
+    def test_site_carries_the_window_it_was_scored_against(self) -> None:
+        rng = random.Random(7)
+        seq = "".join(rng.choices("ACGU", k=400))
+        # plant a perfect 20-nt target for the guide, antiparallel
+        comp = {"A": "U", "U": "A", "G": "C", "C": "G"}
+        guide = "GCAACCAUAGCCUCGGCCGC"
+        planted = "".join(comp[b] for b in reversed(guide))
+        seq = seq[:100] + planted + seq[120:]
+        t_info = TranscriptInfo(
+            transcript_id="ENST00000000009", gene="PLANT", chrom="chr1",
+            start=0, end=len(seq), strand="+", source="Ensembl",
+        )
+        config = OrcSonarConfig(seed_length=7, max_mismatches=12)
+        hits = find_offtargets(guide, [t_info], {"ENST00000000009": seq}, config)
+        assert hits, "the planted target should be found"
+
+        for h in hits:
+            assert h.target_window is not None, "site has no target_window"
+            assert len(h.target_window) == len(guide)
+            assert h.target_window == seq[h.tx_start:h.tx_end], (
+                "target_window is not the slice the site was scored against"
+            )

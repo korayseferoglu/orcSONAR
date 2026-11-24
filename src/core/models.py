@@ -120,6 +120,13 @@ class OffTargetSite(BaseModel):
     alignment_score: float
     tx_start: int | None = Field(default=None, ge=0)
     tx_end: int | None = Field(default=None, ge=0)
+    #: The transcript slice this site was scored against, 5'→3', same length
+    #: as the guide. Carried from stage 2 because stage 5 otherwise has no
+    #: access to the off-target sequence and used the saRNA's own reverse
+    #: complement instead — one identical ΔG for every site in a run
+    #: (roadmap C3). Added after tx_end on purpose: `site_id`'s field order
+    #: is load-bearing and must not move.
+    target_window: str | None = None
 
     @computed_field  # type: ignore[prop-decorator]
     @property

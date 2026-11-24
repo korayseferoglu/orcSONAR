@@ -128,6 +128,9 @@ def find_offtargets(
                     alignment_score=result.score,
                     tx_start=win_start,
                     tx_end=win_end,
+                    # Already in hand; stage 5 needs it and cannot re-derive
+                    # it without re-fetching the transcript (roadmap C3).
+                    target_window=mRNA_window,
                 )
             )
 

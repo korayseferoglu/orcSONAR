@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from pathlib import Path
 import os
 
 import pytest
@@ -354,3 +355,64 @@ class TestEdgeCases:
         result = calc.calculate_duplex_dg("AAAAA", "CCCCC")
         assert result.delta_g > 5.0
         assert len(result.mismatch_penalties) == 5
+
+
+class TestDeltaGUsesTheRealTargetPerSite:
+    """Roadmap C3 — the biophysics pillar was decorative.
+
+    `delta_g_calculator` built its "target" as the reverse complement of the
+    saRNA itself, so every site in a run got the same duplex, and it passed
+    that target 5'→3' while `calculate_duplex_dg` documents its contract as
+    "Complementary strand 3'→5' relative to sarna (same index alignment)".
+    The misalignment produced 18 of 20 positions as mismatches and a
+    **positive** ΔG of +31.10 — thermodynamically "no duplex formed" — for
+    41 of 41 sites, which pinned `risk_score` at 0.0 everywhere.
+
+    MEASURED 2026-11-24 with the project's own Turner tables:
+
+        plain complement (the documented contract)  ΔG = -43.80, no mismatches
+        reverse complement (what the code passed)   ΔG = +31.10, mismatches
+
+    Both figures match the roadmap row exactly. -43.80 is the *perfect*
+    duplex; a real off-target window carries mismatches, so the point of the
+    fix is that ΔG now varies per site.
+    """
+
+    def test_a_real_target_window_gives_a_negative_varying_dg(self, tmp_path: Path) -> None:
+        import json
+
+        from src.stage5_biophysics.delta_g_calculator import run as delta_g_run
+
+        guide = "GCAACCAUAGCCUCGGCCGC"
+        comp = {"A": "U", "U": "A", "G": "C", "C": "G"}
+        perfect = "".join(comp[b] for b in reversed(guide))
+        # one perfect site and one with the last four bases swapped out
+        mutated = perfect[:-4] + "".join(comp[b] for b in perfect[-4:])
+
+        sites = []
+        for i, window in enumerate((perfect, mutated)):
+            sites.append({
+                "gene": f"G{i}", "transcript_id": f"ENST0000000000{i}",
+                "region": {"chrom": "chr1", "start": 100 + i, "end": 120 + i, "strand": "+"},
+                "seed_match_type": "perfect", "mismatches": 0, "alignment_score": 10.0,
+                "tx_start": 0, "tx_end": 20, "target_window": window,
+                "site_id": f"G{i}:ENST0000000000{i}:chr1:{100 + i}",
+            })
+        off = tmp_path / "offtargets.json"
+        off.write_text(json.dumps({"offtarget_sites": sites}), encoding="utf-8")
+        out = tmp_path / "stage5_deltag.json"
+
+        delta_g_run(
+            offtargets_path=str(off),
+            sarna_sequence=guide,
+            turner_dir="data/4_Biyofizik_Yapısal/Turner_Rules",
+            dg_strong=-30.0,
+            dg_moderate=-25.0,
+            output_path=str(out),
+            log_path=str(tmp_path / "dg.log"),
+        )
+
+        res = json.loads(out.read_text(encoding="utf-8"))["deltag_results"]
+        dgs = [r["delta_g"] for r in res.values()]
+        assert all(d < 0 for d in dgs), f"ΔG must be negative, got {dgs}"
+        assert len(set(dgs)) == len(dgs), f"ΔG must vary per site, got {dgs}"

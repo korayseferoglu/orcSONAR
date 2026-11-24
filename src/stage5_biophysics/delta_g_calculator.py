@@ -73,29 +73,50 @@ def run(
     deltag_results: dict[str, Any] = {}
     for s in sites:
         site_id = s["site_id"]
+        window = s.get("target_window")
         try:
-            if calc is not None:
-                # Use reverse complement of saRNA as target (antiparallel duplex)
-                comp = {"A": "U", "U": "A", "G": "C", "C": "G", "N": "N"}
-                target = "".join(comp.get(b, "N") for b in reversed(sarna_rna))
+            if calc is None:
+                dg = None
+                has_mm = None
+            elif not window:
+                # No target to bind to is not a measurement (invariant 2).
+                # Pre-C3 runs have no target_window at all.
+                logger.warning(
+                    f"delta_g_calculator: {site_id} has no target_window — "
+                    f"ΔG is unknown, not neutral"
+                )
+                dg = None
+                has_mm = None
+            else:
+                # The OFF-TARGET window, not the saRNA's own complement. The
+                # old code built `revcomp(saRNA)` and used it for every site,
+                # so one identical ΔG covered a whole run (roadmap C3).
+                #
+                # `calculate_duplex_dg` documents its contract as "target:
+                # Complementary strand 3'→5' relative to sarna (same index
+                # alignment), target[i] is paired with sarna[i]". A window
+                # read 5'→3' therefore has to be REVERSED to be index-aligned
+                # — it must not also be complemented, which is what the stray
+                # `reversed()` on top of a complement amounted to. Measured:
+                # the documented orientation gives -43.80 on a perfect
+                # duplex, the old one +31.10 with 18/20 "mismatches".
+                target = window.upper().replace("T", "U")[::-1]
                 result = calc.calculate_duplex_dg(sarna_rna, target)
                 dg = result.delta_g
                 has_mm = result.has_mismatches
-            else:
-                dg = _DG_NEUTRAL
-                has_mm = False
         except Exception as exc:
             logger.debug(f"delta_g_calculator: ΔG failed for {site_id}: {exc}")
-            dg = _DG_NEUTRAL
-            has_mm = False
+            dg = None
+            has_mm = None
 
-        risk = _dg_to_risk_score(dg, dg_strong, dg_moderate)
+        risk = None if dg is None else _dg_to_risk_score(dg, dg_strong, dg_moderate)
         deltag_results[site_id] = {
-            "delta_g": round(dg, 4),
+            "delta_g": None if dg is None else round(dg, 4),
             "has_mismatches": has_mm,
             "risk_score": risk,
         }
-        logger.debug(f"delta_g_calculator: {site_id} → ΔG={dg:.2f} risk={risk:.3f}")
+        shown = "ÖLÇÜLMEDİ" if dg is None else f"ΔG={dg:.2f} risk={risk:.3f}"
+        logger.debug(f"delta_g_calculator: {site_id} → {shown}")
 
     payload: dict[str, Any] = {"deltag_results": deltag_results}
     out = Path(output_path)
