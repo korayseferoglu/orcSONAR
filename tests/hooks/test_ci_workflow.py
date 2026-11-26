@@ -16,6 +16,7 @@ that would quietly turn CI into one or the other:
 
 from __future__ import annotations
 
+import re
 import sys
 from pathlib import Path
 from typing import Any
@@ -195,3 +196,54 @@ def test_there_is_no_coverage_floor_yet(workflow: dict[str, Any]) -> None:
     """
     body = WORKFLOW.read_text(encoding="utf-8")
     assert "--cov-fail-under" not in body
+
+
+# ---------------------------------------------------------------------------
+# Reproducibility of the runner itself (roadmap H16)
+# ---------------------------------------------------------------------------
+
+_FLOATING_RUNNERS = {"ubuntu-latest", "macos-latest", "windows-latest"}
+
+
+def test_the_runner_image_is_not_a_floating_tag(workflow: dict[str, Any]) -> None:
+    """H6's whole rule is that CI must not go red on an unchanged tree.
+
+    `ubuntu-latest` breaks it by construction: the image moves underneath the
+    workflow. It is not hypothetical — the label moved from 24.04 to 26.04
+    during this project's life, and the source build of hic-straw plus the apt
+    packages it needs are exactly the kind of thing that changes with it.
+    """
+    runs_on = workflow["jobs"]["gate"]["runs-on"]
+    assert runs_on not in _FLOATING_RUNNERS, (
+        f"runs-on: {runs_on} is a floating tag; pin the image version"
+    )
+
+
+def test_every_action_is_pinned_to_a_commit_sha(workflow: dict[str, Any]) -> None:
+    """A tag is mutable; a commit SHA is not.
+
+    `ruff==0.16.7` in the dev extra is pointless if the CI enforcing it can be
+    re-pointed by whoever owns the action's tag. Each `uses:` therefore carries
+    a 40-hex SHA, with the human-readable version in a trailing comment.
+    """
+    bad: list[str] = []
+    for step in steps(workflow):
+        uses = step.get("uses")
+        if not uses:
+            continue
+        ref = uses.split("@", 1)[1] if "@" in uses else ""
+        if not re.fullmatch(r"[0-9a-f]{40}", ref):
+            bad.append(uses)
+    assert not bad, f"not SHA-pinned: {bad}"
+
+
+def test_each_pinned_action_names_its_version_in_a_comment() -> None:
+    """A bare SHA is unreadable, and unreadable pins get replaced by tags.
+
+    The comment is what makes the pin maintainable, so it is part of the
+    contract rather than a courtesy.
+    """
+    text = WORKFLOW.read_text(encoding="utf-8")
+    for line in text.splitlines():
+        if "uses:" in line and "@" in line:
+            assert "#" in line.split("@", 1)[1], f"no version comment: {line.strip()}"
