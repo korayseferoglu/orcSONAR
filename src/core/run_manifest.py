@@ -338,6 +338,12 @@ def stochastic_components(repo_root: Path) -> dict[str, Any]:
     Returns:
         The claim and the command that supports it.
     """
+    # This module is excluded from its own probe: it has to spell the patterns
+    # out in order to search for them, the same reason the single-copy gate
+    # exempts its own registry and the acceptance scripts name the values they
+    # measure. Without the exclusion the probe matched this file and reported
+    # randomness that does not exist — and it only did so once the file was
+    # tracked, because `git grep` ignores untracked files (roadmap H18).
     probe = _git(
         [
             "grep",
@@ -345,6 +351,7 @@ def stochastic_components(repo_root: Path) -> dict[str, Any]:
             r"\brandom\b|np\.random|numpy\.random|secrets\.|shuffle|sample\(",
             "--",
             "src",
+            ":!src/core/run_manifest.py",
         ],
         repo_root,
     )
