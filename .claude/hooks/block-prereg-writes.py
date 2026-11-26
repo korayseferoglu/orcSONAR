@@ -33,13 +33,13 @@ path = target_path(payload)
 if path:
     root = _prereg.project_root(PROJECT_ROOT)
     if _prereg.is_locked_target(path, root):
-        committed = _prereg.git_committed(path, root)
-        if _prereg.refuses(locked=True, committed=committed):
+        a12 = _prereg.a12_closed(root)
+        if _prereg.refuses(locked=True, a12=a12):
             why = (
-                "it is committed — invariant 6 makes it read-only forever"
-                if committed
+                "roadmap A12 is closed — invariant 6 makes it read-only forever"
+                if a12
                 else (
-                    "its git state could not be read, and a lock that cannot tell\n"
+                    "A12's status could not be read, and a lock that cannot tell\n"
                     "must refuse: ÖLÇÜLMEDİ is not permission"
                 )
             )

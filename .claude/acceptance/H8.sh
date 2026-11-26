@@ -60,6 +60,20 @@ git -C "$REPO" config user.email "t@example.com"
 git -C "$REPO" config user.name "t"
 printf '# on kayit\n' >"$REPO/docs/PRE_REGISTRATION.md"
 
+# Kilidin anahtarı `A12`'nin durumu, dosyanın commit'li olması DEĞİL (H19).
+# Bu fixture ikisini AYIRT ETMEK zorunda: ilk hali dosyayı "A12" mesajıyla
+# commit'liyordu, o yüzden "herhangi bir commit" ve "A12 kapandı" tasarımları
+# kapıya aynı görünüyordu ve gerçek boşluk yeşil geçti.
+roadmap() {  # roadmap <A12 durumu>
+    {
+        printf '### FAZ A — On kayit\n\n'
+        printf '| id | is | bagimlilik | kabul kriteri | durum |\n'
+        printf '|---|---|---|---|---|\n'
+        printf '| **A12** | on kaydi commitle | — | kilitli | %s |\n' "$1"
+    } >"$REPO/SCIENTIFIC_ROADMAP.md"
+}
+roadmap TODO
+
 probe() {  # probe <dosya> -> çıkış kodu, stderr $PROBE_ERR'de
     PROBE_ERR="$(printf '{"tool_name":"Edit","cwd":"%s","tool_input":{"file_path":"%s"}}' \
         "$REPO" "$1" | CLAUDE_PROJECT_DIR="$REPO" "$PY" -I "$HOOK" 2>&1 >/dev/null)"
@@ -72,15 +86,30 @@ probe "$REPO/docs/PRE_REGISTRATION.md"
 [ $? -eq 0 ] || fail "A12 öncesi taslağa edit engellendi — kilit henüz kapanmadı, yazım serbest olmalı"
 
 git -C "$REPO" add -A
-git -C "$REPO" commit -qm "A12"
+git -C "$REPO" commit -qm "draft"
 
-# -------------------------------------------------- 2  commit'li dosya kilitli
-echo "# 2  commit'lenmiş dosya"
+# --------------------------- 3b  commit'li AMA A12 açık → yazım hâlâ serbest
+echo "# 3b  commit'li taslak, A12 açık"
 probe "$REPO/docs/PRE_REGISTRATION.md"
 code=$?
-[ $code -eq 2 ] || fail "commit'lenmiş ön kayda edit REDDEDİLMEDİ (çıkış $code, beklenen 2) — değişmez 6 yaptırımsız"
+[ $code -eq 0 ] || fail "A12 açıkken commit'li taslağa edit engellendi (çıkış $code) — bu FAZ A'yı bloke eder (H19)"
+
+# -------------------------------------------------- 2  A12 kapandı → kilitli
+echo "# 2  A12 kapandı"
+roadmap '**DONE**'
+probe "$REPO/docs/PRE_REGISTRATION.md"
+code=$?
+[ $code -eq 2 ] || fail "A12 kapalıyken ön kayda edit REDDEDİLMEDİ (çıkış $code, beklenen 2) — değişmez 6 yaptırımsız"
 printf '%s' "$PROBE_ERR" | grep -q "PRE_REGISTRATION_v2.md" \
     || fail "red mesajı tek yasal yolu (v2) adlandırmıyor"
+
+# --------------------------------- 2b  A12 satırı yok → bilinmiyor → reddet
+echo "# 2b  A12 satırı okunamıyor"
+rm -f "$REPO/SCIENTIFIC_ROADMAP.md"
+probe "$REPO/docs/PRE_REGISTRATION.md"
+code=$?
+[ $code -eq 2 ] || fail "A12 durumu okunamazken edit geçti (çıkış $code) — bilinmiyor izin değildir"
+roadmap '**DONE**'
 
 # ------------------------------------------------------- 4  v2 yolu açık kalmalı
 echo "# 4  v2 yolu"

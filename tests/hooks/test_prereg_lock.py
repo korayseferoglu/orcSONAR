@@ -48,17 +48,34 @@ def run_hook(payload: dict[str, object], project_dir: Path | None = None) -> sub
     )
 
 
-def make_repo(tmp_path: Path, *, commit: bool) -> Path:
-    """A repo with docs/PRE_REGISTRATION.md, committed or merely drafted."""
+ROADMAP_HEAD = (
+    "### FAZ A — Ön kayıt\n\n"
+    "| id | iş | bağımlılık | kabul kriteri | durum |\n"
+    "|---|---|---|---|---|\n"
+)
+
+
+def make_repo(
+    tmp_path: Path, *, commit: bool, a12: str | None = "TODO"
+) -> Path:
+    """A repo with the draft, optionally committed, with A12 in a given state.
+
+    `a12` is what decides the lock now, not whether the file has a commit
+    (roadmap H19). `None` omits the row entirely, which is the unreadable case.
+    """
     repo = tmp_path / "repo"
     (repo / "docs").mkdir(parents=True)
     subprocess.run(["git", "init", "-q"], cwd=repo, check=True)
     subprocess.run(["git", "config", "user.email", "t@example.com"], cwd=repo, check=True)
     subprocess.run(["git", "config", "user.name", "t"], cwd=repo, check=True)
     (repo / "docs" / "PRE_REGISTRATION.md").write_text("# ön kayıt\n", encoding="utf-8")
+    roadmap = ROADMAP_HEAD
+    if a12 is not None:
+        roadmap += f"| **A12** | ön kaydı commit'le | — | kilitli | {a12} |\n"
+    (repo / "SCIENTIFIC_ROADMAP.md").write_text(roadmap, encoding="utf-8")
     if commit:
         subprocess.run(["git", "add", "-A"], cwd=repo, check=True)
-        subprocess.run(["git", "commit", "-qm", "A12"], cwd=repo, check=True)
+        subprocess.run(["git", "commit", "-qm", "draft"], cwd=repo, check=True)
     return repo
 
 
@@ -82,30 +99,35 @@ def test_only_the_locked_file_is_in_scope(tmp_path: Path, relative: str, expecte
     assert _prereg.is_locked_target(str(tmp_path / relative), str(tmp_path)) is expected
 
 
-def test_a_committed_pre_registration_is_refused() -> None:
-    """The rule itself: after the A12 commit the file is read-only."""
-    assert _prereg.refuses(locked=True, committed=True)
+def test_a_closed_a12_is_refused() -> None:
+    """The rule itself: once A12 is closed the file is read-only."""
+    assert _prereg.refuses(locked=True, a12=True)
 
 
-def test_an_uncommitted_draft_is_allowed() -> None:
-    """Before A12 the file is still being written; the lock has not closed."""
-    assert not _prereg.refuses(locked=True, committed=False)
+def test_an_open_a12_is_allowed() -> None:
+    """While A12 is open the plan is still being written.
+
+    This is the case the first implementation got wrong: it keyed on the file
+    having any commit, so writing §1 and committing it locked the document
+    while A12 was still TODO, and A2-A11 became unwritable (H19).
+    """
+    assert not _prereg.refuses(locked=True, a12=False)
 
 
-def test_an_unreadable_git_state_is_refused() -> None:
+def test_an_unreadable_status_is_refused() -> None:
     """A lock that cannot tell must refuse, not wave through.
 
     This is the opposite direction from `pre-register`'s *reader*, which
     reports ÖLÇÜLMEDİ and touches nothing. Here the question is whether to
     permit a write, and "I could not tell" is not permission.
     """
-    assert _prereg.refuses(locked=True, committed=None)
+    assert _prereg.refuses(locked=True, a12=None)
 
 
 def test_an_unrelated_file_is_never_refused() -> None:
-    """Whatever git says, a file outside the lock is not this hook's business."""
-    for committed in (True, False, None):
-        assert not _prereg.refuses(locked=False, committed=committed)
+    """Whatever the roadmap says, a file outside the lock is not in scope."""
+    for a12 in (True, False, None):
+        assert not _prereg.refuses(locked=False, a12=a12)
 
 
 # --------------------------------------------------------------------------
@@ -113,9 +135,9 @@ def test_an_unrelated_file_is_never_refused() -> None:
 # --------------------------------------------------------------------------
 
 
-def test_it_blocks_an_edit_to_the_committed_file(tmp_path: Path) -> None:
+def test_it_blocks_an_edit_once_a12_is_closed(tmp_path: Path) -> None:
     """Exit 2 is how a PreToolUse hook refuses a call."""
-    repo = make_repo(tmp_path, commit=True)
+    repo = make_repo(tmp_path, commit=True, a12="**DONE**")
     proc = run_hook(
         {
             "tool_name": "Edit",
@@ -130,7 +152,7 @@ def test_it_blocks_an_edit_to_the_committed_file(tmp_path: Path) -> None:
 
 def test_it_allows_an_edit_to_an_uncommitted_draft(tmp_path: Path) -> None:
     """A12 has not happened yet; the author is still writing the thing."""
-    repo = make_repo(tmp_path, commit=False)
+    repo = make_repo(tmp_path, commit=False, a12="TODO")
     proc = run_hook(
         {
             "tool_name": "Edit",
@@ -140,6 +162,43 @@ def test_it_allows_an_edit_to_an_uncommitted_draft(tmp_path: Path) -> None:
         project_dir=repo,
     )
     assert proc.returncode == 0, proc.stderr
+
+
+def test_a_committed_draft_stays_editable_while_a12_is_open(
+    tmp_path: Path,
+) -> None:
+    """The discrimination the first version could not make (roadmap H19).
+
+    Invariant 4 says uncommitted work does not exist, so §1 has to be committed
+    as soon as it is written — and the first lock keyed on "the file has a
+    commit", which turned that commit into the lock and left A2-A11 unwritable.
+    H8's own gate could not see it either: its fixture committed with the
+    message "A12", so "any commit" and "A12 is closed" looked identical.
+    """
+    repo = make_repo(tmp_path, commit=True, a12="TODO")
+    proc = run_hook(
+        {
+            "tool_name": "Edit",
+            "cwd": str(repo),
+            "tool_input": {"file_path": str(repo / "docs" / "PRE_REGISTRATION.md")},
+        },
+        project_dir=repo,
+    )
+    assert proc.returncode == 0, proc.stdout + proc.stderr
+
+
+def test_a_missing_a12_row_refuses(tmp_path: Path) -> None:
+    """No row is unknown, not open — and unknown refuses."""
+    repo = make_repo(tmp_path, commit=True, a12=None)
+    proc = run_hook(
+        {
+            "tool_name": "Edit",
+            "cwd": str(repo),
+            "tool_input": {"file_path": str(repo / "docs" / "PRE_REGISTRATION.md")},
+        },
+        project_dir=repo,
+    )
+    assert proc.returncode == 2, proc.stdout + proc.stderr
 
 
 def test_it_allows_the_v2_route(tmp_path: Path) -> None:

@@ -106,17 +106,54 @@ def git_committed(path: str, repo: str) -> bool | None:
     return bool(log.stdout.strip())
 
 
-def refuses(*, locked: bool, committed: bool | None) -> bool:
+def a12_closed(repo: str) -> bool | None:
+    """Whether roadmap item ``A12`` — the commit that locks the plan — is closed.
+
+    This, not "the file has a commit", is what invariant 6 turns on. `H8`'s own
+    row says *"refuse if A12's commit exists"*, and the first implementation
+    read that as any commit touching the file. Measured consequence: writing §1
+    and committing it locked the document while `A12` was still `TODO`, which
+    made `A2`–`A11` unwritable and set invariant 4 ("uncommitted is nothing")
+    against invariant 6 (roadmap `H19`).
+
+    The roadmap is the authority for what is done, so it is the thing asked.
+
+    Args:
+        repo: Repository root.
+
+    Returns:
+        ``True`` when `A12` is closed, ``False`` when it is certainly open,
+        ``None`` when the roadmap could not be read.
+    """
+    import sys as _sys
+
+    _sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    try:
+        import _status
+    except ImportError:  # pragma: no cover - defensive
+        return None
+    try:
+        with open(os.path.join(repo, "SCIENTIFIC_ROADMAP.md"), encoding="utf-8") as fh:
+            text = fh.read()
+    except OSError:
+        return None
+    for item in _status.parse_roadmap(text):
+        if item.id == "A12":
+            return _status.is_done(item.status)
+    return None  # the row is gone: that is unknown, not open
+
+
+def refuses(*, locked: bool, a12: bool | None) -> bool:
     """Whether the write must be refused.
 
     Args:
         locked: Whether the target is the locked pre-registration.
-        committed: Result of :func:`git_committed`, or ``None`` if unknown.
+        a12: Result of :func:`a12_closed`, or ``None`` if unknown.
 
     Returns:
         ``True`` to refuse.
 
-    An unknown git state **refuses**. This is the opposite choice from the
+    An unknown state **refuses**. This is the opposite choice from the
     `pre-register` reader, which reports ÖLÇÜLMEDİ and touches nothing, and the
     difference is which way each one fails: a reader that guesses wrong prints
     a wrong line, while a lock that guesses wrong lets the one edit through
@@ -124,4 +161,4 @@ def refuses(*, locked: bool, committed: bool | None) -> bool:
     """
     if not locked:
         return False
-    return committed is not False
+    return a12 is not False
