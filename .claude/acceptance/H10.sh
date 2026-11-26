@@ -23,6 +23,9 @@ cd "$ROOT" || exit 1
 
 fail() { echo "GEÇMEDİ — $1"; exit 1; }
 
+# shellcheck source=_lib.sh
+. "$(dirname "${BASH_SOURCE[0]}")/_lib.sh"
+
 PY=""
 for cand in "${PYTHON:-}" python3 python; do
     [ -n "$cand" ] || continue
@@ -30,6 +33,8 @@ for cand in "${PYTHON:-}" python3 python; do
 done
 [ -n "$PY" ] || fail "pytest+pyyaml içeren yorumlayıcı bulunamadı; PYTHON=... ile ver"
 echo "# yorumlayıcı: $PY"
+
+warn_untracked src results || true
 
 echo "# 1-2-4  her koşu dizininde tam bir manifest"
 "$PY" -I - <<'INNER' || fail "manifest denetimi geçmedi"

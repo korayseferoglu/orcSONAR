@@ -21,6 +21,9 @@ cd "$ROOT" || exit 1
 
 fail() { echo "GEÇMEDİ — $1"; exit 1; }
 
+# shellcheck source=_lib.sh
+. "$(dirname "${BASH_SOURCE[0]}")/_lib.sh"
+
 PY=""
 for cand in "${PYTHON:-}" python3 python; do
     [ -n "$cand" ] || continue
@@ -28,6 +31,8 @@ for cand in "${PYTHON:-}" python3 python; do
 done
 [ -n "$PY" ] || fail "pytest+pyyaml içeren yorumlayıcı bulunamadı; PYTHON=... ile ver"
 echo "# yorumlayıcı: $PY"
+
+warn_untracked . || true
 
 # ------------------------------------------------- 1  otorite tablosu yazılı
 echo "# 1  otorite tablosu id kolonlu ve kayıtla aynı"
