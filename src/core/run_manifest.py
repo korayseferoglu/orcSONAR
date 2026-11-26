@@ -237,9 +237,12 @@ def external_data(repo_root: Path) -> dict[str, Any]:
     """
     path = repo_root / "data" / "external" / "manifest.json"
     try:
-        return json.loads(path.read_text(encoding="utf-8"))
+        loaded = json.loads(path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError) as exc:
         return {"unreadable": str(exc)}
+    if not isinstance(loaded, dict):
+        return {"unreadable": f"expected a mapping, got {type(loaded).__name__}"}
+    return loaded
 
 
 def output_inventory(run_dir: Path) -> tuple[dict[str, Any], list[float]]:

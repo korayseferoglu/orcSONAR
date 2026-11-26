@@ -97,7 +97,19 @@ def parse_roadmap(text: str) -> list[Item]:
         raw_deps = cells[1] if len(cells) > 1 else ""
         deps = [] if raw_deps in _NONE_CELL else _ID.findall(raw_deps)
         last = cells[-1].strip("* ").strip() if cells else ""
-        status = last if _STATUS.match(last) else "—"
+        # An unrecognised cell keeps its text behind a `?`. It used to become
+        # `—`, which made a malformed status indistinguishable from a row that
+        # has none on purpose — and since the launch line counted only `DONE`
+        # and `TODO`, the item then vanished entirely. A bare `BLOCKED` does
+        # exactly this: the convention is `BLOCKED(<reason>)`, because a
+        # blocked item has to say what it waits for, so the bare word is
+        # malformed and must be loud rather than silently dropped (`H11`).
+        if _STATUS.match(last):
+            status = last
+        elif last in _NONE_CELL:
+            status = "—"
+        else:
+            status = f"?{last}"
         # Five-column tables are work · deps · acceptance · status; FAZ G's
         # four-column one drops the acceptance cell rather than leaving it empty.
         criterion = cells[2] if len(cells) >= 4 else ""
@@ -175,16 +187,61 @@ def phase_text(items: list[Item], current: Item | None) -> str:
         items: Parsed roadmap items.
         current: The item that will be worked next, or ``None``.
 
+    The breakdown accounts for **every** item, and that is the whole point.
+    This line used to print ``len(in_phase)`` as the total while counting only
+    ``DONE`` and ``TODO``, so anything in a third state silently went missing
+    from the one place every session looks first. It happened twice: a `DOING`
+    item disappeared in `H4`, and in `H6b` a **`BLOCKED`** item did — the one
+    item waiting on a user decision, which by definition never moves on its
+    own, became invisible. The counts are therefore derived by partitioning the
+    phase, never by summing two hand-picked states.
+
+    Args:
+        items: Parsed roadmap items.
+        current: The item that will be worked next, or ``None``.
+
     Returns:
-        A line such as ``FAZ 0 — Harness · 13 madde: 3 DONE, 10 TODO``.
+        A line such as ``FAZ 0 — Harness · 13 madde: 3 DONE, 9 TODO, 1 BLOCKED``.
     """
     if current is None:
         return "sıradaki madde yok — her bağımlılığı karşılanmış madde kapandı"
     phase = current.phase or "faz başlığı bulunamadı"
     in_phase = [item for item in items if item.phase == current.phase]
-    done = sum(1 for item in in_phase if is_done(item.status))
-    todo = sum(1 for item in in_phase if item.status == "TODO")
-    return f"{phase} · {len(in_phase)} madde: {done} DONE, {todo} TODO"
+    return f"{phase} · {len(in_phase)} madde: {status_breakdown(in_phase)}"
+
+
+def status_breakdown(in_phase: list[Item]) -> str:
+    """Count every item by status so none can vanish from the total.
+
+    Args:
+        in_phase: The items belonging to one phase.
+
+    Returns:
+        A comma-separated breakdown whose counts sum to ``len(in_phase)``.
+    """
+    counts: dict[str, int] = {}
+    for item in in_phase:
+        if is_done(item.status):
+            label = "DONE"
+        elif item.status == "TODO":
+            label = "TODO"
+        elif not item.status or item.status in {"—", "-"}:
+            # `E6` carries "—" because the row says "(madde değil)". Hiding it
+            # would be the bug this function exists to prevent, so it is
+            # labelled rather than dropped.
+            label = "durumsuz"
+        else:
+            label = item.status
+        counts[label] = counts.get(label, 0) + 1
+
+    order = sorted(
+        counts,
+        key=lambda label: (
+            0 if label == "DONE" else 1 if label == "TODO" else 2,
+            label,
+        ),
+    )
+    return ", ".join(f"{counts[label]} {label}" for label in order)
 
 
 def next_text(items: list[Item]) -> list[str]:

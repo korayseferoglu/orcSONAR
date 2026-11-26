@@ -356,3 +356,95 @@ def test_hook_exits_zero_on_a_garbage_payload() -> None:
     proc = _run_hook("not json at all")
     assert proc.returncode == 0, proc.stderr
     assert proc.stdout.strip(), "a broken payload still deserves a status line"
+
+
+# ---------------------------------------------------------------------------
+# The phase breakdown must account for every item (roadmap H11)
+# ---------------------------------------------------------------------------
+
+_THIRD_STATE = """## FAZ X — Deneme
+
+| id | iş | bağımlılık | kabul kriteri | durum |
+|---|---|---|---|---|
+| **X1** | bir | — | k | **DONE** |
+| **X2** | iki | — | k | TODO |
+| **X3** | üç | — | k | BLOCKED(kullanıcı kararı) |
+| **X4** | dört | — | k | DOING |
+"""
+
+
+def test_the_breakdown_sums_to_the_total(items: list[_status.Item]) -> None:
+    """Every item is in exactly one bucket, in every phase.
+
+    The old line printed `len(in_phase)` as the total while counting only
+    `DONE` and `TODO`, so a third state went missing without the arithmetic
+    looking wrong. Deriving the counts by partition makes that impossible.
+    """
+    for phase in {item.phase for item in items}:
+        in_phase = [item for item in items if item.phase == phase]
+        breakdown = _status.status_breakdown(in_phase)
+        counted = sum(int(part.split()[0]) for part in breakdown.split(", "))
+        assert counted == len(in_phase), f"{phase}: {breakdown}"
+
+
+def test_a_blocked_item_is_visible() -> None:
+    """The case that actually bit: a BLOCKED item vanished from the launch line.
+
+    It is the one state that never advances on its own — it is waiting on a
+    person — so losing it loses the only item nobody will be reminded about.
+    """
+    parsed = _status.parse_roadmap(_THIRD_STATE)
+    breakdown = _status.status_breakdown(parsed)
+    assert "1 BLOCKED(kullanıcı kararı)" in breakdown
+    assert "1 DOING" in breakdown
+    assert "1 DONE" in breakdown
+    assert "1 TODO" in breakdown
+
+
+def test_a_malformed_status_is_loud_not_silently_blank() -> None:
+    """A bare `BLOCKED` is malformed, and used to disappear.
+
+    The convention is `BLOCKED(<reason>)` — a blocked item must say what it
+    waits for. The bare word matched nothing, became `—`, and then fell out of
+    a line that counted only DONE and TODO. Two defects stacked: the parser
+    erased the text, and the counter dropped the bucket. It now keeps the text
+    behind a `?` so the cell reads as broken rather than empty.
+    """
+    parsed = _status.parse_roadmap(
+        "### FAZ Y — Deneme\n\n"
+        "| id | iş | bağımlılık | kabul kriteri | durum |\n"
+        "|---|---|---|---|---|\n"
+        "| **Y1** | bir | — | k | BLOCKED |\n"
+    )
+    assert [item.status for item in parsed] == ["?BLOCKED"]
+    assert "1 ?BLOCKED" in _status.status_breakdown(parsed)
+
+
+def test_a_row_with_no_status_cell_stays_dash() -> None:
+    """An intentionally statusless row must stay distinguishable from a typo."""
+    parsed = _status.parse_roadmap(
+        "### FAZ Z — Deneme\n\n"
+        "| id | iş | bağımlılık | durum |\n"
+        "|---|---|---|---|\n"
+        "| **Z1** | *(madde değil)* not | — | — |\n"
+    )
+    assert [item.status for item in parsed] == ["—"]
+
+
+def test_done_comes_first_then_todo_then_the_rest() -> None:
+    """A stable order, so the line reads the same way every session."""
+    parsed = _status.parse_roadmap(_THIRD_STATE)
+    breakdown = _status.status_breakdown(parsed)
+    assert breakdown.startswith("1 DONE, 1 TODO")
+
+
+def test_a_statusless_row_is_labelled_not_hidden(
+    items: list[_status.Item],
+) -> None:
+    """`E6` carries "—" because its row says "(madde değil)".
+
+    Dropping it would be the very bug this function prevents, so it is named.
+    """
+    faz_g = [item for item in items if item.phase and "FAZ G" in item.phase]
+    assert faz_g, "fixture'da FAZ G yok"
+    assert "durumsuz" in _status.status_breakdown(faz_g)

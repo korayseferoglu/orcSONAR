@@ -76,6 +76,36 @@
             "command": "\"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/ruff-check-src.py\"",
             "timeout": 40,
             "statusMessage": "ruff check"
+          },
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/mypy-check-src.py\"",
+            "timeout": 95,
+            "statusMessage": "mypy (bilgilendirici)"
+          }
+        ]
+      }
+    ],
+    "FileChanged": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/config-key-wired.py\"",
+            "timeout": 60,
+            "statusMessage": "Checking config keys are wired"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/stop-summary.py\"",
+            "timeout": 20,
+            "statusMessage": "Summarising what is left uncommitted"
           }
         ]
       }
