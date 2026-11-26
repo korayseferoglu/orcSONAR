@@ -75,3 +75,7 @@ CLAUDE.local.md
 # OS
 .DS_Store
 Thumbs.db
+
+# Roadmap H7: the suite receipt is local evidence about this machine, not
+# a project artifact. Committing it would let one machine vouch for another.
+reports/last-suite.json
