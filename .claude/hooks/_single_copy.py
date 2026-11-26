@@ -90,6 +90,29 @@ class CarveOut:
 
 
 @dataclass(frozen=True)
+class VerifiedCopy:
+    """A place allowed to repeat a numeric fact *because* the value is checked.
+
+    The rule in invariant 2's table is "do not copy, point at the authority".
+    Its reason is that copies drift — and this repo has the scar: two docstrings
+    still say "~250 genes" for a set of 183. A copy the gate recomputes from the
+    authority on every run cannot drift silently, so it satisfies the reason
+    while keeping a number a reader of the README actually wants. Deleting the
+    number would satisfy the letter by destroying information; this does not.
+
+    Attributes:
+        path: Repository-relative file that may restate the value.
+        pattern: Regex with one or more capture groups, each an integer that
+            must equal the authority's current value.
+        value_source: Name of the resolver that reads the authority.
+    """
+
+    path: str
+    pattern: re.Pattern[str]
+    value_source: str
+
+
+@dataclass(frozen=True)
 class Fact:
     """A canonical fact, its authority, and how to spot it being restated.
 
@@ -126,6 +149,7 @@ class Fact:
     pointer_tokens: tuple[str, ...] = ()
     scope: tuple[str, ...] = ()
     carve_outs: tuple[CarveOut, ...] = ()
+    verified_copies: tuple[VerifiedCopy, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -179,6 +203,106 @@ HISTORY_TOKENS: tuple[str, ...] = (
 _TEXT_SUFFIXES = {".md", ".yaml", ".yml", ".toml", ".cfg", ".txt", ".sh"}
 
 
+def _assigned_value(path: Path, name: str) -> Any:
+    """Read a module-level assignment without importing the module.
+
+    `ast` rather than an import on purpose: the gate runs in CI where `data/`
+    is absent, and a module that touched a data file at import time would make
+    the gate's own result depend on data availability.
+
+    Args:
+        path: Python file to parse.
+        name: Module-level variable name.
+
+    Returns:
+        The literal value assigned to ``name``.
+
+    Raises:
+        ValueError: If the name is missing or is not a literal.
+    """
+    try:
+        tree = ast.parse(path.read_text(encoding="utf-8"))
+    except (OSError, SyntaxError) as exc:
+        raise ValueError(f"{path} unparsable: {exc}") from exc
+    for node in tree.body:
+        targets = (
+            node.targets
+            if isinstance(node, ast.Assign)
+            else [node.target]
+            if isinstance(node, ast.AnnAssign)
+            else []
+        )
+        for target in targets:
+            if isinstance(target, ast.Name) and target.id == name:
+                value = node.value
+                if value is None:
+                    continue
+                try:
+                    return ast.literal_eval(value)
+                except (ValueError, TypeError) as exc:
+                    raise ValueError(f"{path}:{name} is not a literal") from exc
+    raise ValueError(f"{path} defines no module-level {name!r}")
+
+
+#: Which file answers for each numeric fact. One entry per resolver, and the
+#: resolver returns the tuple of integers a verified copy must match.
+_VALUE_SOURCES: dict[str, tuple[str, ...]] = {
+    "background_gene_count": ("src/stage2_offtarget_scan/transcriptome_fetcher.py",),
+    "promoter_window": ("config/config.yaml",),
+    "seed_positions": ("src/stage2_offtarget_scan/seed_aligner.py", "config/config.yaml"),
+    "seed_slice": ("src/stage2_offtarget_scan/seed_aligner.py", "config/config.yaml"),
+    "dg_thresholds": ("config/config.yaml",),
+}
+
+
+def resolve_value(name: str, root: Path) -> tuple[int, ...]:
+    """Compute a canonical numeric fact from its authority.
+
+    Args:
+        name: Resolver name, a key of ``_VALUE_SOURCES``.
+        root: Repository root.
+
+    Returns:
+        The integers a verified copy of this fact must state, in order.
+
+    Raises:
+        ValueError: If the resolver is unknown or its source cannot be read.
+    """
+    import yaml
+
+    def config() -> dict[str, Any]:
+        text = (root / "config/config.yaml").read_text(encoding="utf-8")
+        loaded = yaml.safe_load(text)
+        if not isinstance(loaded, dict):
+            raise ValueError("config/config.yaml is not a mapping")
+        return loaded
+
+    if name == "background_gene_count":
+        genes = _assigned_value(
+            root / "src/stage2_offtarget_scan/transcriptome_fetcher.py",
+            "_BACKGROUND_GENES",
+        )
+        return (len(genes),)
+    if name == "promoter_window":
+        cfg = config()
+        return (int(cfg["promoter_upstream"]), int(cfg["promoter_downstream"]))
+    if name in {"seed_positions", "seed_slice"}:
+        start = int(
+            _assigned_value(
+                root / "src/stage2_offtarget_scan/seed_aligner.py", "_SEED_START"
+            )
+        )
+        length = int(config()["seed_length"])
+        if name == "seed_positions":
+            # 1-based inclusive, as rule 10 words it.
+            return (start + 1, start + length)
+        return (start, start + length)  # the Python slice bounds
+    if name == "dg_thresholds":
+        cfg = config()
+        return (int(cfg["delta_g_strong"]), int(cfg["delta_g_moderate"]))
+    raise ValueError(f"unknown value_source {name!r}")
+
+
 def load_registry(raw: dict[str, Any]) -> list[Fact]:
     """Build the fact list from the parsed ``authority.yaml``.
 
@@ -219,6 +343,27 @@ def load_registry(raw: dict[str, Any]) -> list[Fact]:
                     f"authority.yaml: carve-out {carve.path!r} names no roadmap "
                     "item — an exemption nobody will ever remove is a deletion"
                 )
+        verified: list[VerifiedCopy] = []
+        for item in entry.get("verified_copies", []) or []:
+            if item.get("value_source") not in _VALUE_SOURCES:
+                raise ValueError(
+                    f"authority.yaml: {entry['id']!r} verified copy "
+                    f"{item.get('path')!r} names unknown value_source "
+                    f"{item.get('value_source')!r}"
+                )
+            compiled = re.compile(item["pattern"])
+            if compiled.groups < 1:
+                raise ValueError(
+                    f"authority.yaml: verified copy {item['path']!r} has no "
+                    "capture group — nothing to compare against the authority"
+                )
+            verified.append(
+                VerifiedCopy(
+                    path=item["path"],
+                    pattern=compiled,
+                    value_source=item["value_source"],
+                )
+            )
         facts.append(
             Fact(
                 id=entry["id"],
@@ -232,6 +377,7 @@ def load_registry(raw: dict[str, Any]) -> list[Fact]:
                 pointer_tokens=tuple(entry.get("pointer_tokens", []) or []),
                 scope=tuple(entry.get("scope", []) or []),
                 carve_outs=carve_outs,
+                verified_copies=tuple(verified),
             )
         )
     return facts
@@ -312,6 +458,9 @@ def _is_exempt_path(rel: str, fact: Fact) -> str:
     for site in fact.definition_sites:
         if rel == site or rel.startswith(site):
             return "definition site"
+    # Verified copies are deliberately NOT exempt at file level: that would
+    # excuse every other statement of the same fact in the file. Only the line
+    # whose value the gate actually checks is excused — see `_line_is_verified`.
     for carve in fact.carve_outs:
         if rel == carve.path or rel.startswith(carve.path):
             return f"carve-out → {carve.roadmap}"
@@ -353,6 +502,112 @@ def line_states_fact(line: str, fact: Fact, context: str = "") -> bool:
         if token.lower() in neighbourhood:
             return False
     return True
+
+
+def stale_carve_outs(
+    facts: list[Fact], status_by_id: dict[str, str], is_done: Any
+) -> list[str]:
+    """Carve-outs that have stopped meaning anything.
+
+    Two ways, and both must be loud. A carve-out can name an item the roadmap
+    never defines — nobody will ever close ``H99``. Or it can outlive its item:
+    once that item is ``DONE`` the duplicate was supposed to go with it, so a
+    carve-out still pointing there is an exemption whose removal date passed.
+
+    Args:
+        facts: Registered facts.
+        status_by_id: Lower-cased roadmap item id to status cell.
+        is_done: Predicate deciding whether a status counts as finished.
+
+    Returns:
+        Sorted, de-duplicated descriptions.
+    """
+    problems: list[str] = []
+    for fact in facts:
+        for carve in fact.carve_outs:
+            key = carve.roadmap.lower()
+            if key not in status_by_id:
+                problems.append(
+                    f"{carve.roadmap} ({carve.path}) — yol haritasında böyle bir "
+                    "madde yok"
+                )
+            elif is_done(status_by_id[key]):
+                problems.append(
+                    f"{carve.roadmap} ({carve.path}) — madde KAPANDI, kopya onunla "
+                    "birlikte gitmeliydi"
+                )
+    return sorted(set(problems))
+
+
+def _line_is_verified(rel: str, line: str, fact: Fact) -> bool:
+    """Whether this exact line is a declared, value-checked copy.
+
+    Args:
+        rel: Repository-relative path.
+        line: The line's text.
+        fact: The fact being checked.
+
+    Returns:
+        True when a verified-copy pattern for this path matches this line.
+    """
+    return any(
+        verified.path == rel and verified.pattern.search(line)
+        for verified in fact.verified_copies
+    )
+
+
+def check_verified_copies(root: Path, facts: list[Fact]) -> tuple[list[str], int]:
+    """Confirm every declared verified copy still states the authority's value.
+
+    Two failures are possible and both matter. A copy whose number no longer
+    matches the authority is the drift the rule exists to stop. A copy whose
+    pattern matches nothing any more is a **stale declaration**: the document
+    stopped stating the fact, so the entry is now an exemption guarding
+    nothing, and the next real duplicate in that file would pass unseen.
+
+    Args:
+        root: Repository root.
+        facts: Registered facts.
+
+    Returns:
+        A ``(problems, checked)`` pair.
+    """
+    problems: list[str] = []
+    checked = 0
+    for fact in facts:
+        for verified in fact.verified_copies:
+            path = root / verified.path
+            try:
+                text = path.read_text(encoding="utf-8")
+            except (OSError, UnicodeDecodeError) as exc:
+                problems.append(f"{verified.path}: okunamadı ({exc})")
+                continue
+            try:
+                expected = resolve_value(verified.value_source, root)
+            except (ValueError, KeyError, OSError) as exc:
+                problems.append(
+                    f"{verified.path}: otorite değeri çözümlenemedi "
+                    f"({verified.value_source}): {exc}"
+                )
+                continue
+            matches = list(verified.pattern.finditer(text))
+            if not matches:
+                problems.append(
+                    f"{verified.path}: doğrulanmış kopya beyanı BAYAT — deseni "
+                    f"({verified.pattern.pattern}) artık hiçbir satırla eşleşmiyor, "
+                    "yani muafiyet hiçbir şeyi korumuyor"
+                )
+                continue
+            for match in matches:
+                checked += 1
+                stated = tuple(int(g) for g in match.groups() if g is not None)
+                if stated != expected:
+                    line = text[: match.start()].count("\n") + 1
+                    problems.append(
+                        f"{verified.path}:{line}: {stated} yazıyor, otorite "
+                        f"({verified.value_source}) {expected} diyor"
+                    )
+    return problems, checked
 
 
 def scan(
@@ -404,7 +659,9 @@ def scan(
                     if j != index
                     and abs(entries[j][0] - number) <= DISCLAIMER_RADIUS
                 ]
-                if line_states_fact(line, fact, context="\n".join(near)):
+                if line_states_fact(
+                    line, fact, context="\n".join(near)
+                ) and not _line_is_verified(rel, line, fact):
                     violations.append(
                         Violation(
                             fact_id=fact.id,
@@ -460,6 +717,9 @@ class Report:
         table_mismatch: Ids that differ between the table and the registry.
         dangling_carve_outs: Carve-outs naming a roadmap item that does not
             exist, which would make them permanent by accident.
+        value_problems: Verified copies that disagree with the authority or
+            whose declaration has gone stale.
+        values_checked: How many restated numbers were compared.
     """
 
     violations: list[Violation] = field(default_factory=list)
@@ -468,6 +728,8 @@ class Report:
     carve_out_count: int = 0
     table_mismatch: list[str] = field(default_factory=list)
     dangling_carve_outs: list[str] = field(default_factory=list)
+    value_problems: list[str] = field(default_factory=list)
+    values_checked: int = 0
 
     @property
     def ok(self) -> bool:
@@ -475,10 +737,12 @@ class Report:
 
         Returns:
             True when nothing states a foreign fact, the table agrees with the
-            registry, and every carve-out names a real roadmap item.
+            registry, every carve-out names a real roadmap item, and every
+            verified copy still matches the authority.
         """
         return (
             not self.violations
             and not self.table_mismatch
             and not self.dangling_carve_outs
+            and not self.value_problems
         )

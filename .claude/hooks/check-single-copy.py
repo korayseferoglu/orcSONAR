@@ -21,8 +21,10 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from _single_copy import (  # noqa: E402
     Report,
     authority_table_ids,
+    check_verified_copies,
     load_registry,
     scan,
+    stale_carve_outs,
 )
 
 REGISTRY = ".claude/authority.yaml"
@@ -101,23 +103,16 @@ def build_report(root: Path) -> Report:
     import _status
 
     try:
-        known = {
-            item.id.lower()
-            for item in _status.parse_roadmap(
-                (root / "SCIENTIFIC_ROADMAP.md").read_text(encoding="utf-8")
-            )
-        }
+        roadmap_items = _status.parse_roadmap(
+            (root / "SCIENTIFIC_ROADMAP.md").read_text(encoding="utf-8")
+        )
     except OSError as exc:
         raise RuntimeError(f"SCIENTIFIC_ROADMAP.md unreadable: {exc}") from exc
 
-    dangling = sorted(
-        {
-            f"{carve.roadmap} ({carve.path})"
-            for fact in facts
-            for carve in fact.carve_outs
-            if carve.roadmap.lower() not in known
-        }
-    )
+    status_by_id = {item.id.lower(): item.status for item in roadmap_items}
+    dangling = stale_carve_outs(facts, status_by_id, _status.is_done)
+
+    value_problems, values_checked = check_verified_copies(root, facts)
 
     return Report(
         violations=violations,
@@ -126,6 +121,8 @@ def build_report(root: Path) -> Report:
         carve_out_count=sum(len(f.carve_outs) for f in facts),
         table_mismatch=mismatch,
         dangling_carve_outs=dangling,
+        value_problems=value_problems,
+        values_checked=values_checked,
     )
 
 
@@ -155,12 +152,16 @@ def main() -> int:
             "kimsenin kapatmayacağı bir muafiyet sessiz bir silmedir"
         )
 
+    for problem in report.value_problems:
+        print(f"  HATA doğrulanmış kopya: {problem}")
+
     for v in report.violations:
         print(f"  HATA [{v.fact_id}] {v.path}:{v.line}  {v.text}")
 
     print()
     print(f"# kapsam: {len(report.skipped)} muafiyet tipi, "
-          f"{report.carve_out_count} gerekçeli carve-out")
+          f"{report.carve_out_count} gerekçeli carve-out, "
+          f"{report.values_checked} doğrulanmış sayı")
     for reason, count in sorted(report.skipped.items(), key=lambda kv: -kv[1]):
         print(f"#   {count:4d} dosya · {reason}")
     for fact_id, reason in report.unmeasured.items():
@@ -168,8 +169,25 @@ def main() -> int:
 
     if not report.ok:
         print()
-        print(f"GEÇMEDİ — {len(report.violations)} satır otoritesi olmadığı bir "
-              "gerçeği ifade ediyor")
+        causes = []
+        if report.violations:
+            causes.append(
+                f"{len(report.violations)} satır otoritesi olmadığı bir gerçeği "
+                "ifade ediyor"
+            )
+        if report.value_problems:
+            causes.append(
+                f"{len(report.value_problems)} doğrulanmış kopya otoriteyle "
+                "uyuşmuyor ya da beyanı bayatlamış"
+            )
+        if report.table_mismatch:
+            causes.append("otorite tablosu ile kayıt uyuşmuyor")
+        if report.dangling_carve_outs:
+            causes.append(
+                f"{len(report.dangling_carve_outs)} carve-out var olmayan bir "
+                "maddeyi gösteriyor"
+            )
+        print(f"GEÇMEDİ — {'; '.join(causes)}")
         return 1
 
     print()

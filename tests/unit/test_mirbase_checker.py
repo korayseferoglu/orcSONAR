@@ -50,7 +50,9 @@ FASTA_TOO_SHORT = textwrap.dedent("""\
 
 FASTA_EMPTY = ""
 
-# saRNA whose seed (pos 1-8, 0-indexed [1:8]) = "AGCUUAU"
+# saRNA whose seed (rule 10's slice) is "AGCUUAU". The slice itself is
+# not restated here: the version of this comment removed in H9c said
+# "pos 1-8", which was already wrong.
 # hsa-miR-21-5p seq = UAGCUUAUCAGACUGAUGUUGA → seed = AGCUUAU  (perfect 7/7)
 SARNA_PERFECT_MATCH = "UAGCUUAUCAGACUGAUGUUGA"
 
@@ -258,7 +260,7 @@ class TestRealMirbase:
     def test_mir21_seed_known_value(self):
         entries = _parse_mirbase(MIRBASE_PATH)
         mir21 = next(e for e in entries if e.mirna_id == "hsa-miR-21-5p")
-        # hsa-miR-21-5p = UAGCUUAUCAGACUGAUGUUGA → seed [1:8] = AGCUUAU
+        # hsa-miR-21-5p = UAGCUUAUCAGACUGAUGUUGA → its seed is AGCUUAU
         assert mir21.seed == "AGCUUAU"
 
     def test_perfect_match_against_real_data(self):

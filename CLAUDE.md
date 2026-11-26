@@ -47,8 +47,8 @@ The other three runs under `results/` (VEGFA_K562, CEBPA_HepG2, MYC_K562) predat
 and still carry two-part ids; re-run them before comparing against VEGFA_HeLa.
 
 ## Pipeline Stages (Dependency Order)
-1 Genomic map (TSS from EPDnew + FANTOM5, transcript models → promoter window −1000 /
-+200) → 2 Off-target scan (7-nt seed at positions 2-8 + miRBase + RepeatMasker) →
+1 Genomic map (TSS from EPDnew + FANTOM5, transcript models → promoter window
+−1000 / +200) → 2 Off-target scan (7-nt seed at positions 2-8 + miRBase + RepeatMasker) →
 3 Variant/toxicity, 4 Epigenetic/topology, 5 Biophysics, 6 Execution/safety (these four
 in parallel, all depending on `stage2_offtargets.json`) → 7 Scoring over the four merged
 domain files → risk class → JSON/HTML report.

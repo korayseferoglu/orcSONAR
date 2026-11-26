@@ -19,7 +19,11 @@ from loguru import logger
 
 from src.core.models import MirbaseOverlap, MirbaseResult, MirnaEntry
 
-# Seed region: positions 2-8 (1-indexed) = [1:8] (0-indexed), length 7
+# Seed region semantics are rule 10's (`.claude/rules/10-koordinatlar.md`);
+# the slice is not restated here. ⚠️ `_SEED_LENGTH` is a second, live copy of
+# `config.seed_length` — change the config and this module keeps the old
+# width, so miRBase overlap would be computed against a different seed than
+# the scan used. Roadmap `B14`.
 _SEED_START = 1
 _SEED_LENGTH = 7
 

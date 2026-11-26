@@ -1,6 +1,7 @@
 """Unknown-signal handling in the Stage 4 merge (roadmap B2, AUDIT.md Bulgu-10).
 
-`encode_reader` substituted `_NEUTRAL_SIGNAL = 0.0` whenever a BigWig read
+`encode_reader` used to substitute a numeric neutral signal whenever a
+BigWig read
 failed or a cell line had no accession for a mark, and six modules reach that
 constant. For every one of those sources less signal means lower risk, so a
 dead source did not produce a neutral site — it produced one that scores

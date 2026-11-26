@@ -225,7 +225,10 @@ class TestScanCosmicRealVcf:
         assert results[1].region == REGION_KNOWN
 
     def test_chr_prefix_stripped_correctly(self) -> None:
-        """Region with chr-prefix must still hit the correct VCF contigs."""
+        """A chr-prefixed chrom must still hit the right contigs.
+
+        Which sources carry the prefix is `docs/DATA_SOURCES.md`'s to say.
+        """
         region_chrprefixed = GenomicRegion(chrom="chr1", start=65790, end=65810)
         results = scan_cosmic([region_chrprefixed], COSMIC_VCF)
         assert results[0].mutation_count == 1

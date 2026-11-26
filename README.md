@@ -287,8 +287,9 @@ results/VEGFA_HeLa/
 ├── stage1_tss.json               # TSS coordinates (EPDnew + FANTOM5)
 ├── stage1_transcripts.json       # transcript models (Ensembl + RefSeq)
 ├── stage1_promoter.json          # promoter window (−1000 / +200)
-├── stage2_seed_hits.json         # seed-alignment hits (curated 183-gene
-│                                 #   background set; full GENCODE scan planned)
+├── stage2_seed_hits.json         # seed-alignment hits
+│                                 #   (curated 183-gene background set;
+│                                 #    full GENCODE scan planned)
 ├── stage2_mirbase.json           # miRNA overlap
 ├── stage2_repeats.json           # RepeatMasker annotation
 ├── stage2_offtargets.json        # merged off-target sites

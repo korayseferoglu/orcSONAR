@@ -98,7 +98,7 @@ class TestReverseComplement:
 
 class TestExtractSeed:
     def test_default_positions(self) -> None:
-        # positions 2-8 (1-indexed) = sarna[1:8] (0-indexed)
+        # the default slice is rule 10's; the assertion below spells it out
         seed = _extract_seed(SARNA)
         assert seed == SARNA[1:8]
         assert len(seed) == 7

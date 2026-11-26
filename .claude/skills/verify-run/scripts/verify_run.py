@@ -117,9 +117,10 @@ SATURATED_FAIL_PCT = 50.0  # past half the sites, the metric ranks nothing
 # --------------------------------------------------------------------------
 # TWO sentinels, in two different spaces (AUDIT.md Bulgu-10).
 #
-# CLAUDE.md documents graceful degradation as "source failed -> neutral 0.5",
-# and `epigenetic_merger.py:12` does define `_NEUTRAL = 0.5`. That constant is
-# never read: grep across the repo finds its own definition and nothing else.
+# CLAUDE.md documents graceful degradation as a neutral score-space value, and
+# one merger does define such a constant while never reading it. The value, the
+# module and why writing it would not have fixed anything are invariant 2's
+# (`.claude/rules/00-degismezler.md`) and are not restated here.
 #
 # Production used to substitute `_NEUTRAL_SIGNAL = 0.0` in RAW-SIGNAL space,
 # reached from six modules (ATAC, the three histone marks, GRO-seq, Ago2, RBP).

@@ -8,7 +8,8 @@ from loguru import logger
 from src.core.models import GenomicRegion, M6AResult, M6ASite
 from src.core.site_keys import site_ids_and_regions
 
-# Column indices in the m6A BED file (0-based)
+# Column indices into the m6A BED record. The format's column layout and
+# coordinate base are `docs/DATA_SOURCES.md`'s to state, not this file's.
 _COL_CHROM = 0
 _COL_START = 1
 _COL_END = 2

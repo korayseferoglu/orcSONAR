@@ -43,13 +43,6 @@ facts:
     # kopyası sayılmaz.
     co_patterns:
       - '\b(?:ENCODE|COSMIC|gnomAD|ClinVar|4DN|UCSC|Ensembl|phyloP|phastCons|circAtlas|RMBase|m6A-Atlas|miRBase|EPDnew|FANTOM5|CCLE|DepMap|GENCODE|RefSeq|RepeatMasker|SHAPE|Turner|hicstraw|BigWig|BED|VCF)\b'
-    carve_outs:
-      - path: src/stage5_biophysics/m6a_mapper.py
-        roadmap: H9c
-        reason: "m6A BED kolon tabanını yerel olarak tekrar ediyor (satır 11)"
-      - path: tests/unit/test_cosmic_scanner.py
-        roadmap: H9c
-        reason: "test docstring'i chr-prefix davranışını VCF ile birlikte anıyor (satır 228)"
 
   - id: koordinat_semantigi
     gercek: "strand semantiği, seed dilimi, işaret/birim kuralları, bugünkü arama uzayı"
@@ -62,28 +55,23 @@ facts:
       - 'pozisyon(?:lar[ıi])?\s*2\s*[-–]\s*8'
       - 'positions?\s*2\s*[-–]\s*8'
       - '[-−]\s?1000\s*/\s*\+?\s?200'
-    carve_outs:
-      - path: CLAUDE.md
-        roadmap: H9c
-        reason: "boru hattı özetinde seed 2-8 ve promoter penceresi (satır 51)"
+    # `_SEED_START` bu dosyada tanımlı; seed dilimini kendi modülünde anmak
+    # tanım, kopya değil.
+    definition_sites:
+      - src/stage2_offtarget_scan/seed_aligner.py
+    verified_copies:
       - path: README.md
-        roadmap: H9c
-        reason: "yayın yüzü: promoter penceresi iki yerde (satır 97, 289)"
+        pattern: '[−-](\d+)\s*/\s*\+(\d+)'
+        value_source: promoter_window
       - path: docs/DATA_SOURCES.md
-        roadmap: H9c
-        reason: "başka bir gerçeğin otoritesi, ama promoter penceresini de yazıyor (satır 206)"
-      - path: src/stage2_offtarget_scan/mirbase_checker.py
-        roadmap: H9c
-        reason: "seed dilimini yerel yorumda tekrar ediyor (satır 22)"
-      - path: src/stage2_offtarget_scan/seed_aligner.py
-        roadmap: H9c
-        reason: "modül docstring'i seed dilimini tekrar ediyor (satır 4)"
-      - path: tests/unit/test_mirbase_checker.py
-        roadmap: H9c
-        reason: "test yorumları seed dilimini tekrar ediyor (satır 53, 261)"
-      - path: tests/unit/test_seed_aligner.py
-        roadmap: H9c
-        reason: "test yorumu seed dilimini tekrar ediyor (satır 101)"
+        pattern: '[−-](\d+)\s*/\s*\+(\d+)'
+        value_source: promoter_window
+      - path: CLAUDE.md
+        pattern: '[−-](\d+)\s*/\s*\+(\d+)'
+        value_source: promoter_window
+      - path: CLAUDE.md
+        pattern: 'positions (\d+)-(\d+)'
+        value_source: seed_positions
 
   - id: skor_formulu
     gercek: "skor formülü, ağırlıkları, cell_modifier sabitleri, risk sınıfı eşikleri, satürasyon sabitleri"
@@ -113,20 +101,11 @@ facts:
       - '_NEUTRAL\b'
       - 'UNKNOWN_SIGNAL'
     carve_outs:
-      - path: .claude/skills/verify-run/
-        roadmap: H9c
-        reason: >-
-          Sentinel kuralını tekrar ediyor ve `orcsonar-data-sources` gibi
-          kendini "özet" olarak ilan etmiyor — muafiyet dayanağı yok
-          (scripts/verify_run.py:121)
       - path: src/stage5_biophysics/delta_g_calculator.py
         roadmap: B13
         reason: >-
           `_DG_NEUTRAL = -15.0  # kcal/mol neutral fallback` (satır 14) — ölü
           sabit ve ΔG uzayında yasak bir sayısal fallback; `B13` siliyor
-      - path: tests/unit/test_epigenetic_merger.py
-        roadmap: H9c
-        reason: "modül docstring'i eski sentinel'i anlatıyor (satır 3)"
 
   - id: hucre_hatlari
     gercek: "desteklenen hücre hatları ve accession'ları"
@@ -166,19 +145,20 @@ facts:
     patterns:
       - '\b183[ -]?(?:gen|gene|genes|genlik)'
       - '[~≈]\s*250\s*(?:gen|gene|genes)'
-    carve_outs:
+    # Doğrulanmış kopyalar: sayı kalıyor, ama kapı onu her koşuda
+    # `len(_BACKGROUND_GENES)`'ten yeniden hesaplayıp karşılaştırıyor. Sayıyı
+    # silmek okuyucudan bilgi alırdı; denetlenen bir kopya sessizce
+    # yanlışlaşamaz — bu dosyanın kuralının asıl gerekçesi de bu.
+    verified_copies:
       - path: README.md
-        roadmap: H9c
-        reason: "yayın yüzü: 183 sayısı üç yerde (satır 50, 101, 290)"
+        pattern: '(\d+)-gene background'
+        value_source: background_gene_count
       - path: docs/DATA_SOURCES.md
-        roadmap: H9c
-        reason: "başka bir gerçeğin otoritesi, ama arama uzayı boyutunu da yazıyor (satır 209)"
-      - path: src/stage2_offtarget_scan/seed_aligner.py
-        roadmap: H9c
-        reason: "`R12a` kapsam metriğinin yorumu sayıyı tekrar ediyor (satır 438)"
+        pattern: '(\d+)-gene background'
+        value_source: background_gene_count
       - path: CLAUDE.md
-        roadmap: H9c
-        reason: "durum tablosu 183'ü tekrar ediyor (satır 68)"
+        pattern: '(\d+)-gene background'
+        value_source: background_gene_count
 
   - id: is_sirasi
     gercek: "ne yapılacak ve hangi sırayla"

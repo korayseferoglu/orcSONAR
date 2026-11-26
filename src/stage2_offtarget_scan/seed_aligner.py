@@ -435,7 +435,10 @@ def run(
     payload = {
         "sites": [s.model_dump() for s in sites],
         "sequence_scores": seq_scores,
-        # How much of the declared 183-gene background was actually searched.
+        # How much of the declared background set was actually searched. Its
+        # size is `len(_BACKGROUND_GENES)` in `transcriptome_fetcher` and is
+        # not restated here — two docstrings that did restate it still say
+        # "~250" for a set of 183.
         # A run that does not carry this cannot be compared with another one
         # (roadmap R12a); the 2026-11-19 run searched 12% and said nothing.
         "background_coverage": bg_coverage,
