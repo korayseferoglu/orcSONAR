@@ -378,6 +378,15 @@ class TestDeltaGUsesTheRealTargetPerSite:
     fix is that ΔG now varies per site.
     """
 
+    # Needs the real Turner tables, like every other measuring test in this
+    # file. Without them `TurnerCalculator` loads no stacking energies, so ΔG
+    # collapses to initiation plus mismatch penalties and comes out POSITIVE
+    # (+4.10 and +10.10 measured) — the assertion below then fails for a
+    # reason that has nothing to do with the code under test. `data/` is not
+    # in the repository, so CI is exactly where that happens, and it did:
+    # run 45885597461 was red on this line while the full suite was green
+    # locally.
+    @pytest.mark.skipif(not TURNER_FILES_PRESENT, reason="Turner data files absent")
     def test_a_real_target_window_gives_a_negative_varying_dg(self, tmp_path: Path) -> None:
         import json
 
