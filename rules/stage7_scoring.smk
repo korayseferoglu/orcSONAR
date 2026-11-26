@@ -99,3 +99,33 @@ rule generate_report:
             html_output=output.html_report,
             log_path=log[0],
         )
+
+
+rule run_manifest:
+    """Provenance record for a finished run (roadmap H10).
+
+    Depends on the final report so a manifest can only appear next to a run
+    that exists. It deliberately does NOT claim which commit produced the
+    outputs — that is unknowable after the fact — and instead records a
+    checkable verdict on whether the current commit could even be the
+    producer. For the runs that predate this rule the honest answer is "no",
+    and `src/core/run_manifest.py` explains why that is the useful answer
+    rather than a gap to paper over.
+    """
+    input:
+        json_report = RESULTS_DIR + "/{gene}_{cell_line}/final_report.json",
+    output:
+        RESULTS_DIR + "/{gene}_{cell_line}/manifest.json",
+    log:
+        "logs/{gene}_{cell_line}/run_manifest.log",
+    params:
+        run_dir   = lambda wc: RESULTS_DIR + f"/{wc.gene}_{wc.cell_line}",
+        repo_root = workflow.basedir,
+    run:
+        from src.core import manifest_writer
+        manifest_writer.run(
+            run_dir=params.run_dir,
+            repo_root=params.repo_root,
+            output_path=output[0],
+            log_path=log[0],
+        )

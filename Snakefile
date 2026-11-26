@@ -36,4 +36,12 @@ rule all:
             RESULTS_DIR + "/{gene}_{cell_line}/final_report.html",
             gene=GENE,
             cell_line=CELL_LINE,
+        ),
+        # Roadmap H10. In `all` on purpose: a run without provenance is an
+        # orphan, and making the manifest optional is how it stops being
+        # written.
+        expand(
+            RESULTS_DIR + "/{gene}_{cell_line}/manifest.json",
+            gene=GENE,
+            cell_line=CELL_LINE,
         )
