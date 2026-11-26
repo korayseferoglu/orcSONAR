@@ -67,6 +67,16 @@ jobs:
         # suite should say which 7% in its own log.
         run: python -m pytest -q -rs
 
+      - name: single-copy gate (blocking)
+        # Roadmap H9. A canonical fact stated outside its authority starts to
+        # drift, and the copy that drifts is the one that stops protecting
+        # anything: a wrong `0.5` had reached five files here and one of them
+        # had quietly disabled a QA gate.
+        #
+        # Blocking on purpose, and it needs no install: the gate is stdlib
+        # plus pyyaml, which the dev extra already pins.
+        run: python .claude/hooks/check-single-copy.py
+
       - name: mypy (informational)
         continue-on-error: true
         run: python -m mypy src/

@@ -71,13 +71,26 @@ Geçerken başka bir bulgu düzeltilmez. Fark ettiğin şeyi yol haritasına yaz
 Bir gerçeği **tek** yerde tut. İkinci kopya kaymaya başlar — yanlış `0.5` değeri beş
 dosyaya yayılmıştı ve biri QA kapısını işlevsiz bırakmıştı.
 
-| gerçek | otorite |
-|---|---|
-| kaynak başına chr-prefix, kolon düzeni, endpoint, **format başına koordinat tabanı** | `docs/DATA_SOURCES.md` — tek otorite. `orcsonar-data-sources` skill'i onun **ilan edilmiş yüklenebilir özeti**: yeni iddia eklemez, yalnız tekrar eder |
-| strand semantiği, seed dilimi, işaret/birim kuralları, bugünkü arama uzayı | `.claude/rules/10-koordinatlar.md` |
-| skor formülü ve bilinen sapmaları | `.claude/rules/20-skor-degismezleri.md` |
-| fallback sentineli | bu dosya, değişmez 2 |
-| desteklenen hücre hatları ve accession'ları | `config/cell_lines.yaml` |
-| ne yapılacak ve hangi sırayla | `SCIENTIFIC_ROADMAP.md` |
+| id | gerçek | otorite |
+|---|---|---|
+| `kaynak_detaylari` | kaynak başına chr-prefix, kolon düzeni, endpoint, **format başına koordinat tabanı** | `docs/DATA_SOURCES.md` — tek otorite. `orcsonar-data-sources` skill'i onun **ilan edilmiş yüklenebilir özeti**: yeni iddia eklemez, yalnız tekrar eder |
+| `koordinat_semantigi` | strand semantiği, seed dilimi, işaret/birim kuralları, bugünkü arama uzayı | `.claude/rules/10-koordinatlar.md` |
+| `skor_formulu` | skor formülü, ağırlıkları, `cell_modifier` sabitleri, risk sınıfı eşikleri, satürasyon sabitleri | `.claude/rules/20-skor-degismezleri.md` |
+| `fallback_sentineli` | fallback sentineli | bu dosya, değişmez 2 |
+| `hucre_hatlari` | desteklenen hücre hatları ve accession'ları | `config/cell_lines.yaml` |
+| `dg_esikleri` | ΔG eşikleri (`delta_g_strong` / `delta_g_moderate`) | `config/config.yaml` |
+| `fon_kumesi_boyutu` | off-target arama uzayının bugünkü boyutu | `src/stage2_offtarget_scan/transcriptome_fetcher.py` (`_BACKGROUND_GENES` tanımı) |
+| `is_sirasi` | ne yapılacak ve hangi sırayla | `SCIENTIFIC_ROADMAP.md` |
 
 Yeni bir yere kopyalama. Gerekiyorsa otoriteye işaret et.
+
+Son üç satır `H9`'da eklendi: `dg_esikleri`, `fon_kumesi_boyutu` ve `skor_formulu`'nun
+genişletilmiş hali daha önce **hiçbir otoriteye bağlı değildi**, ve otoritesi olmayan
+bir gerçek için kapı bir ihlali sınıflandıramaz. Bir değer için otorite, onun **tek
+tanım yeri**dir (config anahtarı ya da sabitin kendisi); prose o sayıyı tekrar etmez,
+oraya işaret eder.
+
+**Bu tablonun makine-okunur hali `.claude/authority.yaml`.** İkisi bir gerçeğin iki
+gösterimi olduğu için kapı (`.claude/hooks/check-single-copy.py`) onları birbirine
+karşı da kontrol eder: yalnız birinde olan bir `id` kapıyı kırmızıya düşürür. Tek-kopya
+kuralının kaydın kendisine uygulanması.

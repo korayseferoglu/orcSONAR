@@ -1,0 +1,191 @@
+# Tek-kopya kaydı — yol haritası H9.
+#
+# `.claude/rules/00-degismezler.md`'deki "Kanonik gerçekler nerede yazılı"
+# tablosunun makine-okunur hali. İkisi bir gerçeğin iki gösterimi, o yüzden
+# kapı onları BİRBİRİNE KARŞI da kontrol eder: tek-kopya kuralının kaydın
+# kendisine uygulanması. Tabloya satır ekleyip buraya eklememek (ya da tersi)
+# kapıyı kırmızıya düşürür.
+#
+# Alanlar:
+#   id                 tablodaki id kolonuyla aynı
+#   gercek             tablonun "gerçek" hücresinin özü
+#   otorite            tek otorite, depo köküne göre yol
+#   patterns           bir satırın gerçeği İFADE ETTİĞİNİ gösteren regex'ler.
+#                      BOŞ bırakmak "bu gerçek makineyle ölçülemiyor" demektir
+#                      ve `unmeasured_reason` zorunlu olur — kapı kapsamadığı
+#                      yeri sessizce geçmek yerine sayarak bildirir.
+#   declared_summaries otoritenin ilan edilmiş özeti olduğu için tekrar etme
+#                      hakkı olan yollar
+#   pointer_tokens     satırı "gerçeği söylüyor" değil "otoriteye işaret
+#                      ediyor" yapan dizgiler
+#   carve_outs         bugün açık olan kopyalar; her biri onu KALDIRACAK yol
+#                      haritası maddesini adlandırmak ZORUNDA, yoksa muafiyet
+#                      sessiz bir silme olur
+version: 1
+
+facts:
+  - id: kaynak_detaylari
+    gercek: "kaynak başına chr-prefix, kolon düzeni, endpoint, format başına koordinat tabanı"
+    otorite: docs/DATA_SOURCES.md
+    declared_summaries:
+      - .claude/skills/orcsonar-data-sources/
+    pointer_tokens:
+      - DATA_SOURCES
+      - orcsonar-data-sources
+    patterns:
+      - 'chr[ -]?(?:prefix|öneki|önek)'
+      - '(?:0|1)[ -]?(?:tabanlı|based)'
+    # Eş-koşul: satır bir KAYNAK ADI da içermeli. Bu olmadan desen her
+    # `Args:` docstring'ini yakalıyordu ("region: Genomic interval
+    # (chr-prefixed, hg38)") — o bir fonksiyonun kendi arayüz sözleşmesi,
+    # "hangi kaynak chr istiyor" gerçeği değil. Kaynak adları burada bir
+    # DEDEKTÖR SÖZLÜĞÜ; bir iddia değil, o yüzden kaynak listesinin ikinci
+    # kopyası sayılmaz.
+    co_patterns:
+      - '\b(?:ENCODE|COSMIC|gnomAD|ClinVar|4DN|UCSC|Ensembl|phyloP|phastCons|circAtlas|RMBase|m6A-Atlas|miRBase|EPDnew|FANTOM5|CCLE|DepMap|GENCODE|RefSeq|RepeatMasker|SHAPE|Turner|hicstraw|BigWig|BED|VCF)\b'
+    carve_outs:
+      - path: src/stage5_biophysics/m6a_mapper.py
+        roadmap: H9c
+        reason: "m6A BED kolon tabanını yerel olarak tekrar ediyor (satır 11)"
+      - path: tests/unit/test_cosmic_scanner.py
+        roadmap: H9c
+        reason: "test docstring'i chr-prefix davranışını VCF ile birlikte anıyor (satır 228)"
+
+  - id: koordinat_semantigi
+    gercek: "strand semantiği, seed dilimi, işaret/birim kuralları, bugünkü arama uzayı"
+    otorite: .claude/rules/10-koordinatlar.md
+    pointer_tokens:
+      - 10-koordinatlar
+      - kural 10
+    patterns:
+      - '\[1:8\]'
+      - 'pozisyon(?:lar[ıi])?\s*2\s*[-–]\s*8'
+      - 'positions?\s*2\s*[-–]\s*8'
+      - '[-−]\s?1000\s*/\s*\+?\s?200'
+    carve_outs:
+      - path: CLAUDE.md
+        roadmap: H9c
+        reason: "boru hattı özetinde seed 2-8 ve promoter penceresi (satır 51)"
+      - path: README.md
+        roadmap: H9c
+        reason: "yayın yüzü: promoter penceresi iki yerde (satır 97, 289)"
+      - path: docs/DATA_SOURCES.md
+        roadmap: H9c
+        reason: "başka bir gerçeğin otoritesi, ama promoter penceresini de yazıyor (satır 206)"
+      - path: src/stage2_offtarget_scan/mirbase_checker.py
+        roadmap: H9c
+        reason: "seed dilimini yerel yorumda tekrar ediyor (satır 22)"
+      - path: src/stage2_offtarget_scan/seed_aligner.py
+        roadmap: H9c
+        reason: "modül docstring'i seed dilimini tekrar ediyor (satır 4)"
+      - path: tests/unit/test_mirbase_checker.py
+        roadmap: H9c
+        reason: "test yorumları seed dilimini tekrar ediyor (satır 53, 261)"
+      - path: tests/unit/test_seed_aligner.py
+        roadmap: H9c
+        reason: "test yorumu seed dilimini tekrar ediyor (satır 101)"
+
+  - id: skor_formulu
+    gercek: "skor formülü, ağırlıkları, cell_modifier sabitleri, risk sınıfı eşikleri, satürasyon sabitleri"
+    otorite: .claude/rules/20-skor-degismezleri.md
+    pointer_tokens:
+      - 20-skor-degismezleri
+      - kural 20
+      - rule 20
+    patterns:
+      - '0\.40.*0\.20'
+      - '1\.40\s*[×x*]'
+      - '0\.30\s*\+\s*1\.40'
+
+  - id: fallback_sentineli
+    gercek: "fallback sentineli — veri yokluğu sayı değil açık bir bilinmiyor döner"
+    otorite: .claude/rules/00-degismezler.md
+    pointer_tokens:
+      - 00-degismezler
+      - değişmez 2
+      - invariant 2
+    # `UNKNOWN_SIGNAL` sabiti burada TANIMLI; kendi modülünün docstring'inde
+    # adını anması tanım, kopya değil.
+    definition_sites:
+      - src/stage4_epigenetic/encode_reader.py
+    patterns:
+      - '_NEUTRAL_SIGNAL'
+      - '_NEUTRAL\b'
+      - 'UNKNOWN_SIGNAL'
+    carve_outs:
+      - path: .claude/skills/verify-run/
+        roadmap: H9c
+        reason: >-
+          Sentinel kuralını tekrar ediyor ve `orcsonar-data-sources` gibi
+          kendini "özet" olarak ilan etmiyor — muafiyet dayanağı yok
+          (scripts/verify_run.py:121)
+      - path: src/stage5_biophysics/delta_g_calculator.py
+        roadmap: B13
+        reason: >-
+          `_DG_NEUTRAL = -15.0  # kcal/mol neutral fallback` (satır 14) — ölü
+          sabit ve ΔG uzayında yasak bir sayısal fallback; `B13` siliyor
+      - path: tests/unit/test_epigenetic_merger.py
+        roadmap: H9c
+        reason: "modül docstring'i eski sentinel'i anlatıyor (satır 3)"
+
+  - id: hucre_hatlari
+    gercek: "desteklenen hücre hatları ve accession'ları"
+    otorite: config/cell_lines.yaml
+    pointer_tokens:
+      - cell_lines.yaml
+      - ccle_depmap_ids.yaml
+    # İKİ ya da daha fazla accession aynı satırda = sayım/liste. Tek bir
+    # accession neredeyse her zaman bir docstring örneğidir ("e.g.
+    # ``ENCFF492CEJ``"), ve bir örnek hücre hattı listesini tekrar etmez.
+    patterns:
+      - '(?:ENCFF|ENCSR)[0-9A-Z]{6,}[,;\s]{1,3}(?:ENCFF|ENCSR)[0-9A-Z]{6,}'
+
+  - id: dg_esikleri
+    gercek: "ΔG eşikleri (delta_g_strong / delta_g_moderate)"
+    otorite: config/config.yaml
+    pointer_tokens:
+      - config.yaml
+      - config/config
+    patterns:
+      - 'delta_g_(?:strong|moderate)\s*[:=]'
+      - 'ΔG.{0,24}[-−]\s?30'
+    carve_outs:
+      - path: src/scoring/domain_scores.py
+        roadmap: B8
+        reason: "ölü modül; silinince gider (satır 211)"
+      - path: tests/unit/test_scoring.py
+        roadmap: B8
+        reason: "ölü modülün testi; `B8` ile birlikte gider (satır 423)"
+
+  - id: fon_kumesi_boyutu
+    gercek: "off-target arama uzayının bugünkü boyutu (_BACKGROUND_GENES tanımı)"
+    otorite: src/stage2_offtarget_scan/transcriptome_fetcher.py
+    pointer_tokens:
+      - _BACKGROUND_GENES
+      - transcriptome_fetcher
+    patterns:
+      - '\b183[ -]?(?:gen|gene|genes|genlik)'
+      - '[~≈]\s*250\s*(?:gen|gene|genes)'
+    carve_outs:
+      - path: README.md
+        roadmap: H9c
+        reason: "yayın yüzü: 183 sayısı üç yerde (satır 50, 101, 290)"
+      - path: docs/DATA_SOURCES.md
+        roadmap: H9c
+        reason: "başka bir gerçeğin otoritesi, ama arama uzayı boyutunu da yazıyor (satır 209)"
+      - path: src/stage2_offtarget_scan/seed_aligner.py
+        roadmap: H9c
+        reason: "`R12a` kapsam metriğinin yorumu sayıyı tekrar ediyor (satır 438)"
+      - path: CLAUDE.md
+        roadmap: H9c
+        reason: "durum tablosu 183'ü tekrar ediyor (satır 68)"
+
+  - id: is_sirasi
+    gercek: "ne yapılacak ve hangi sırayla"
+    otorite: SCIENTIFIC_ROADMAP.md
+    patterns: []
+    unmeasured_reason: >-
+      Bir sıralama iddiası greplenebilir bir dizgi değil; dahası bu gerçeğin
+      bilinen tek sapması otoritenin KENDİ içinde (satır konumu ile satır-içi
+      prose çelişiyor) ve onu `H9b` ele alıyor. Burada ölçmeye kalkmak kapıyı
+      yanlış pozitife boğar.
