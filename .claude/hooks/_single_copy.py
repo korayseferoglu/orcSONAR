@@ -55,6 +55,10 @@ POLICY_EXEMPT: dict[str, str] = {
         "measure it"
     ),
     ".claude/hooks/_single_copy.py": "this file: the gate names the facts it scans",
+    "tests/hooks/test_single_copy.py": (
+        "the gate's own tests must quote the sentences they detect, for the "
+        "same reason the acceptance scripts must name the value they measure"
+    ),
     ".claude/agents/": (
         "a subagent does not inherit CLAUDE.md or `.claude/rules/*` — the glob "
         "that loads a rule file never fires for it, so an agent brief that "

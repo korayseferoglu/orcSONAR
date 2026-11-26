@@ -35,6 +35,11 @@ def tracked_files(root: Path) -> list[str]:
     Using the git index rather than a filesystem walk keeps generated and
     ignored trees out without a second ignore list to drift.
 
+    One consequence worth knowing: an **uncommitted** new file is not scanned,
+    so a local run can be green while CI — which checks the committed tree —
+    is red. That is the safe direction, and it is exactly how this gate caught
+    a duplicate in its own test file the moment that file landed.
+
     Args:
         root: Repository root.
 

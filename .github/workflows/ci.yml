@@ -77,6 +77,14 @@ jobs:
         # plus pyyaml, which the dev extra already pins.
         run: python .claude/hooks/check-single-copy.py
 
+      - name: roadmap order gate (blocking)
+        # Roadmap H9b. Order is read from file position alone; a row whose
+        # prose claims a different order writes "what comes next" twice in the
+        # same authority file, and the copy the machine reads wins silently.
+        # That happened on 2026-11-26: H7's row pointed at H9 while next-fix
+        # returned H7.
+        run: bash .claude/acceptance/H9b.sh
+
       - name: mypy (informational)
         continue-on-error: true
         run: python -m mypy src/
