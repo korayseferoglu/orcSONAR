@@ -46,7 +46,14 @@ biology wrong.
 - **Supported cell lines:** `config/cell_lines.yaml` is the authority — read it. Data
   wired to the wrong line, or a cell line silently falling through to a default, is a
   finding.
-- `data/` and `results/` are **read-only** and you have no write tools regardless.
+- `data/` and `results/` are **read-only**, and so is `src/` for you. Be precise
+  about why, because this line used to claim you had no write tools at all and
+  that was simply false: you do have `Write`, scoped to `reports/` by the
+  instruction below. What actually stops you is enforcement, not description —
+  `PreToolUse` hooks refuse writes under `data/` and `results/`, and
+  `block-agent-src-writes.py` refuses a write under `src/` from any agent that
+  is not a declared implementer. A brief is not a permission system; if you
+  ever find yourself able to edit source, that is a finding about the harness.
 
 ## Pipeline shape
 

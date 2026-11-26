@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "written_at": "2026-11-26T21:41:53.462832+00:00",
+  "guide": "GCAACCAUAGCCUCGGCCGC",
+  "seed": "CAACCAU",
+  "seed_match_target": "AUGGUUG",
+  "seed_positions_1_based_inclusive": [
+    2,
+    8
+  ],
+  "background": {
+    "transcripts_returned": 182,
+    "sequences_returned": 182,
+    "sequences_non_empty": 182,
+    "excluded_gene": "VEGFA",
+    "cell_line": "HeLa",
+    "total_nucleotides": 782029,
+    "resolution_coverage": {
+      "requested": 182,
+      "resolved": 182,
+      "fraction": 1.0
+    }
+  },
+  "units": {
+    "transcripts": {
+      "observed": 29,
+      "null_size": 16384,
+      "null_mean": 34.312,
+      "null_median": 33.0,
+      "null_max": 123,
+      "percentile_of_observed": 42.7429,
+      "p_empirical_ge": 0.572571,
+      "interpretation_is_not_here": "No threshold or verdict is computed. Picking a cutoff after seeing this distribution is what invariant 7 forbids; the cutoff belongs in docs/PRE_REGISTRATION.md (roadmap A12)."
+    },
+    "occurrences": {
+      "observed": 40,
+      "null_size": 16384,
+      "null_mean": 47.6646,
+      "null_median": 41.0,
+      "null_max": 1601,
+      "percentile_of_observed": 47.9309,
+      "p_empirical_ge": 0.520691,
+      "interpretation_is_not_here": "No threshold or verdict is computed. Picking a cutoff after seeing this distribution is what invariant 7 forbids; the cutoff belongs in docs/PRE_REGISTRATION.md (roadmap A12)."
+    }
+  },
+  "primary_unit": "occurrences",
+  "primary_unit_reason": "occurrences is the count a hit list is compared against: one transcript can carry several match positions, and each is a candidate site",
+  "at": "2026-11-26T21:41:53.462832+00:00",
+  "observed": 40,
+  "expected": 47.6646,
+  "p_value": 0.520691
+}

@@ -39,6 +39,12 @@
             "command": "\"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/block-prereg-writes.py\"",
             "timeout": 10,
             "statusMessage": "Checking the pre-registration lock"
+          },
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/block-agent-src-writes.py\"",
+            "timeout": 10,
+            "statusMessage": "Checking a subagent is not writing src/"
           }
         ]
       }

@@ -448,3 +448,67 @@ def test_a_statusless_row_is_labelled_not_hidden(
     faz_g = [item for item in items if item.phase and "FAZ G" in item.phase]
     assert faz_g, "fixture'da FAZ G yok"
     assert "durumsuz" in _status.status_breakdown(faz_g)
+
+
+# ---------------------------------------------------------------------------
+# The instructions-loaded log has to be read, not just written (roadmap H13)
+# ---------------------------------------------------------------------------
+
+_LOG = (
+    '{"at": "2026-11-26T17:35:22+00:00", '
+    '"file_path": "/repo/.claude/rules/00-degismezler.md"}\n'
+    '{"at": "2026-11-26T18:58:01+00:00", '
+    '"file_path": "/repo/.claude/rules/20-skor-degismezleri.md"}\n'
+)
+
+
+def test_a_rule_that_never_loaded_is_loud() -> None:
+    """The dead-instrument case, and the only one worth interrupting for.
+
+    A `paths:` glob that never fires means the rule's content has never been in
+    context, while the roadmap records the rule as installed. H4 wrote this log
+    precisely so that gap is observable; reporting it is what makes the log an
+    instrument rather than a file.
+    """
+    text = _status.instructions_text(
+        _LOG,
+        ["00-degismezler.md", "10-koordinatlar.md", "20-skor-degismezleri.md"],
+    )
+    assert "2/3" in text
+    assert "10-koordinatlar.md" in text
+    assert "HİÇ yüklenmeyen" in text
+
+
+def test_all_rules_loaded_reports_the_count_and_the_last_time() -> None:
+    """The quiet case still says how much it checked."""
+    text = _status.instructions_text(
+        _LOG, ["00-degismezler.md", "20-skor-degismezleri.md"]
+    )
+    assert "2/2" in text
+    assert "HİÇ yüklenmeyen" not in text
+    assert "2026-11-26" in text
+
+
+def test_an_unreadable_log_says_so_rather_than_claiming_nothing_loaded() -> None:
+    """Invariant 2's direction: cannot measure is not the same as measured zero.
+
+    Reporting "0/3 loaded" for a missing log would raise a false alarm every
+    time the file is absent, and an alarm that cries wolf gets ignored — which
+    is how the real dead instrument would then slip past.
+    """
+    text = _status.instructions_text(None, ["00-degismezler.md"])
+    assert "okunamadı" in text
+    assert "0/" not in text
+
+
+def test_a_corrupt_line_is_skipped_not_fatal() -> None:
+    """One bad line must not blind the whole summary."""
+    text = _status.instructions_text(
+        "not json\n" + _LOG, ["00-degismezler.md", "20-skor-degismezleri.md"]
+    )
+    assert "2/2" in text
+
+
+def test_no_rule_files_is_reported_as_such() -> None:
+    """An empty rules directory is a finding, not a pass."""
+    assert "kural dosyası yok" in _status.instructions_text(_LOG, [])

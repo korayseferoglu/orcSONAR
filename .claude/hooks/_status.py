@@ -416,3 +416,59 @@ def render(header: str, rows: list[tuple[str, list[str]]], footer: str = "") -> 
     if footer:
         out += ["", footer]
     return "\n".join(out)
+
+
+def instructions_text(log_text: str | None, rule_names: list[str]) -> str:
+    """One line on which rule files have actually reached the model.
+
+    A rule with a ``paths:`` glob is an instrument, and an instrument nobody
+    reads is dead: ``log-instructions-loaded.py`` exists (``H4``) precisely
+    because a glob that never fires is indistinguishable from a rule that was
+    obeyed. Writing the log was half the job; this is the half that reads it
+    (``H13``, inherited from ``H4``).
+
+    The loud case is a rule file that has **never** loaded. That means its glob
+    never matched anything anyone edited, so its content has never been in
+    context — while the roadmap happily records the rule as installed.
+
+    Args:
+        log_text: Contents of ``.claude/instructions-loaded.log``, or None when
+            it could not be read.
+        rule_names: File names expected under ``.claude/rules/``.
+
+    Returns:
+        A single status line.
+    """
+    if log_text is None:
+        # Cannot read is not the same as nothing loaded (invariant 2).
+        return "log okunamadı — hangi kuralın yüklendiği bilinmiyor"
+
+    import json as _json
+
+    seen: dict[str, str] = {}
+    for line in log_text.splitlines():
+        line = line.strip()
+        if not line:
+            continue
+        try:
+            record = _json.loads(line)
+        except ValueError:
+            continue
+        name = str(record.get("file_path", "")).rsplit("/", 1)[-1]
+        when = str(record.get("at", ""))
+        if name and (name not in seen or when > seen[name]):
+            seen[name] = when
+
+    if not rule_names:
+        return "`.claude/rules/` altında kural dosyası yok"
+
+    missing = sorted(name for name in rule_names if name not in seen)
+    loaded = len(rule_names) - len(missing)
+    head = f"{loaded}/{len(rule_names)} kural yüklendi"
+    if missing:
+        return (
+            f"{head} · ⚠️ HİÇ yüklenmeyen: {', '.join(missing)} — glob'u hiç "
+            "eşleşmedi, yani içeriği hiç bağlama girmedi"
+        )
+    newest = max((seen[n] for n in rule_names if n in seen), default="")
+    return f"{head} · en son {newest[:16].replace('T', ' ')}" if newest else head

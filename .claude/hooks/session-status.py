@@ -124,6 +124,28 @@ def null_gate() -> tuple[str | None, dict | None]:
     return os.path.relpath(newest, PROJECT_ROOT), payload
 
 
+
+def rule_files() -> list[str]:
+    """File names under `.claude/rules/`, or an empty list if unreadable."""
+    rules_dir = os.path.join(PROJECT_ROOT, ".claude", "rules")
+    try:
+        return sorted(n for n in os.listdir(rules_dir) if n.endswith(".md"))
+    except OSError:
+        return []
+
+
+def instructions_log() -> str | None:
+    """Contents of the instructions-loaded log, or None when unreadable."""
+    try:
+        with open(
+            os.path.join(PROJECT_ROOT, ".claude", "instructions-loaded.log"),
+            encoding="utf-8",
+        ) as handle:
+            return handle.read()
+    except OSError:
+        return None
+
+
 def main() -> str:
     """Gather every measurement and lay out the status block."""
     payload = read_payload()
@@ -181,6 +203,7 @@ def main() -> str:
         ("ruff", [_status.ruff_text(found=ruff_found, returncode=ruff_code, output=ruff_out)]),
         ("mypy", [_status.mypy_text(found=mypy_found, returncode=mypy_code, output=mypy_out)]),
         ("null kapısı", [_status.null_gate_text(path=gate_path, payload=gate_payload)]),
+        ("kural yükü", [_status.instructions_text(instructions_log(), rule_files())]),
     ]
     return _status.render(header, rows, FOOTER)
 
