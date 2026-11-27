@@ -45,7 +45,7 @@ def tmp_config_yaml(tmp_path: Path) -> Path:
 
 
 # ---------------------------------------------------------------------------
-# Suite receipt for the commit gate (roadmap H7)
+# Suite receipt for the commit gate (roadmap H7, amended by H20)
 # ---------------------------------------------------------------------------
 #
 # The commit gate must measure **freshness**, not run the suite: the full run
@@ -55,6 +55,12 @@ def tmp_config_yaml(tmp_path: Path) -> Path:
 # `src/` files as measured, because `--cov=src` instruments the package whether
 # the tests import it or not. So the suite writes its own receipt instead of
 # the gate guessing from a side effect.
+#
+# H20: this used to write **one** record, so a narrowed run — which is what
+# every acceptance script does — erased the whole-suite evidence and refused
+# the next commit. The schema and the merge rule now live in
+# `.claude/hooks/_receipt.py`, shared with the gate that reads them, because a
+# schema known in two places drifts (H9).
 
 
 def pytest_sessionfinish(session, exitstatus) -> None:  # type: ignore[no-untyped-def]
@@ -62,13 +68,16 @@ def pytest_sessionfinish(session, exitstatus) -> None:  # type: ignore[no-untype
 
     `selected` matters as much as `exitstatus`: a green run of one test file is
     not evidence about the suite, and without recording the invocation's scope
-    the gate could be satisfied by the fastest test in the repository.
+    the gate could be satisfied by the fastest test in the repository. A
+    narrowed run does not *destroy* evidence either, so the previously recorded
+    whole-suite run is carried forward rather than overwritten.
 
     Args:
         session: The pytest session.
         exitstatus: Process exit status pytest will return.
     """
     import json
+    import sys as _sys
     import time
     from pathlib import Path as _Path
 
@@ -89,7 +98,7 @@ def pytest_sessionfinish(session, exitstatus) -> None:  # type: ignore[no-untype
         ):
             whole_suite = False
 
-        receipt = {
+        current = {
             "at": time.time(),
             "exitstatus": int(exitstatus),
             "whole_suite": whole_suite,
@@ -97,7 +106,17 @@ def pytest_sessionfinish(session, exitstatus) -> None:  # type: ignore[no-untype
             "collected": getattr(session, "testscollected", None),
             "failed": getattr(session, "testsfailed", None),
         }
-        out = root / "reports" / "last-suite.json"
+
+        _sys.path.insert(0, str(root / ".claude" / "hooks"))
+        import _receipt
+
+        out = _receipt.receipt_path(root)
+        try:
+            previous = json.loads(out.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            previous = None
+        receipt = _receipt.merge(previous, current)
+
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text(json.dumps(receipt, indent=2) + "\n", encoding="utf-8")
     except Exception:  # noqa: BLE001
