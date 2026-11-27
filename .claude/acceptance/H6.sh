@@ -5,7 +5,17 @@
 #   1  workflow'un kararları (pin'ler, kapsam, ne bloke eder) testlerle kilitli
 #   2  ruff — workflow'un koştuğu kapsamda, bloke edici
 #   3  pytest — tam takım, workflow'un koştuğu gibi
-#   4  mypy — koşuyor ve bir sayı veriyor (bilgilendirici, bloke etmez)
+#   4  tek-kopya kapısı — CI'ın bloke edici adımı (H9)
+#   5  yol haritası sıra kapısı — CI'ın bloke edici adımı (H9b)
+#   6  mypy — koşuyor ve bir sayı veriyor (bilgilendirici, bloke etmez)
+#
+# 4 ve 5 `H21`'de eklendi. Bu betik CI'ın YEREL AYNASI: amacı "CI bunu
+# reddeder miydi?" sorusunu push etmeden cevaplamak. Cevaplayamıyordu —
+# o iki kapı workflow'a sonradan eklenmişti ve ayna takip etmemişti, ve
+# 2026-11-27'de iki commit yerelde yeşilken CI'da kırmızıya düştü.
+# `tests/hooks/test_ci_workflow.py::test_the_local_gate_runs_every_blocking_ci_step`
+# artık workflow'un bloke edici adımlarını bu dosyayla KARŞILAŞTIRIYOR, yani
+# CI'a yeni bir kapı eklemek ayna onu da koşana kadar kırmızı kalıyor.
 #
 # ⚠️ Ölçmediği: GitHub Actions'da ilk koşunun yeşil olması ve main için
 # "required status check" olarak işaretlenmesi. İkisi de ağ + repo ayarı
@@ -49,10 +59,31 @@ echo "# 2  ruff — $SCOPE"
 echo "# 3  pytest — tam takım"
 "$PY" -m pytest -q -rs -o addopts="" || fail "tam takım yeşil değil — CI bloke ederdi"
 
-# --------------------------------------------------------------- 4  mypy
+# ----------------------------------------------------- 4  tek-kopya kapısı
+# CI'ın bloke edici adımı, ve bugünkü yerel-yeşil/CI-kırmızı vakalarından
+# birinin sebebi (B18): bir yorum fallback sentinelinin değerini tekrar
+# ediyordu. Kapı stdlib + pyyaml, kurulum gerektirmiyor.
+# Her komut TEK kez yazılıyor ve hata mesajı o değişkeni gösteriyor: yolu
+# ikinci kez yazmak, aynanın kapsamını ölçen testin bir YARDIM METNİYLE
+# tatmin edilmesine yol açıyordu — `H21`'in kapısı bunu yakaladı.
+SINGLE_COPY=".claude/hooks/check-single-copy.py"
+ORDER_GATE=".claude/acceptance/H9b.sh"
+
+echo "# 4  tek-kopya kapısı"
+"$PY" "$SINGLE_COPY" >/dev/null \
+    || fail "tek-kopya kapısı reddetti — CI bloke ederdi (ayrıntı: $PY $SINGLE_COPY)"
+echo "  geçti"
+
+# --------------------------------------------- 5  yol haritası sıra kapısı
+echo "# 5  yol haritası sıra kapısı"
+PYTHON="$PY" bash "$ORDER_GATE" >/dev/null \
+    || fail "yol haritası sıra kapısı reddetti — CI bloke ederdi (ayrıntı: bash $ORDER_GATE)"
+echo "  geçti"
+
+# --------------------------------------------------------------- 6  mypy
 # Bilgilendirici: hata sayısı kapıyı düşürmez, ama mypy'nin hiç koşmaması
 # düşürür — koşmayan bir araç, sessizce temiz görünür (değişmez 2).
-echo "# 4  mypy — bilgilendirici"
+echo "# 6  mypy — bilgilendirici"
 MYPY_OUT="$("$PY" -m mypy src/ 2>&1)"
 MYPY_CODE=$?
 if [ $MYPY_CODE -ge 2 ] && ! printf '%s' "$MYPY_OUT" | grep -qE "Found [0-9]+ error"; then
@@ -61,5 +92,7 @@ fi
 printf '%s\n' "$MYPY_OUT" | tail -1
 
 echo
-echo "GEÇTİ — CI kurulu, kararları kilitli, ruff + pytest + mypy yerelde koştu"
+echo "GEÇTİ — CI kurulu, kararları kilitli, ve CI'ın BLOKE EDİCİ adımlarının"
+echo "        hepsi yerelde koştu: ruff + pytest + tek-kopya + sıra kapısı"
+echo "        (+ bilgilendirici mypy)"
 echo "ÖLÇÜLMEDİ — Actions'da yeşil koşu ve 'required' işareti: H6b (beyan)"

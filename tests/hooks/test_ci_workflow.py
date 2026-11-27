@@ -247,3 +247,90 @@ def test_each_pinned_action_names_its_version_in_a_comment() -> None:
     for line in text.splitlines():
         if "uses:" in line and "@" in line:
             assert "#" in line.split("@", 1)[1], f"no version comment: {line.strip()}"
+
+
+# ---------------------------------------------------------------------------
+# H21 — the local gate must mirror every blocking step CI has
+# ---------------------------------------------------------------------------
+
+#: `H6.sh` is the local mirror of CI. It exists so a session can answer "would
+#: CI refuse this?" without pushing. It stopped being able to: `single-copy
+#: gate` and `roadmap order gate` were added to the workflow later and the
+#: mirror never followed, so on 2026-11-27 two commits went red in CI while
+#: the worktree was green locally — B18 on the single-copy gate, B17 on ruff
+#: run over a narrower scope than CI's.
+#:
+#: Maps the workflow's blocking step name to a substring that must appear in
+#: `H6.sh`, which is what proves the mirror actually runs it.
+LOCAL_MIRROR = ROOT / ".claude" / "acceptance" / "H6.sh"
+
+_MIRROR_EVIDENCE = {
+    "ruff (blocking)": "ruff check",
+    "pytest (blocking)": "-m pytest",
+    "single-copy gate (blocking)": "check-single-copy.py",
+    "roadmap order gate (blocking)": "H9b.sh",
+}
+
+
+def blocking_steps(workflow: dict[str, Any]) -> list[str]:
+    """Every step of the `gate` job that can fail the run.
+
+    A step blocks unless it opts out with `continue-on-error`. Reading it this
+    way rather than from a hardcoded list is the point: a new gate added to
+    the workflow shows up here without anyone remembering to list it.
+    """
+    steps = workflow["jobs"]["gate"]["steps"]
+    return [
+        step["name"]
+        for step in steps
+        if step.get("name")
+        and not step.get("continue-on-error")
+        and "run" in step
+    ]
+
+
+def test_the_local_gate_runs_every_blocking_ci_step(workflow: dict[str, Any]) -> None:
+    """Adding a gate to CI stays red until H6.sh runs it too.
+
+    Setup steps (checkout, install, apt) are excluded by name: they are not
+    checks, and a local run does not reproduce them. Everything else that can
+    fail the job has to be reachable from one local command.
+    """
+    setup = {"Checkout", "Set up Python", "Install"}
+    # Comments are stripped first. A mirror that merely *mentions* a gate in a
+    # comment would otherwise satisfy this check while running nothing — the
+    # same shape as a config key with no production caller (invariant 3).
+    mirror = "\n".join(
+        line
+        for line in LOCAL_MIRROR.read_text(encoding="utf-8").splitlines()
+        if not line.lstrip().startswith("#")
+    )
+    missing: list[str] = []
+    for name in blocking_steps(workflow):
+        if name in setup or name.startswith("System libraries"):
+            continue
+        evidence = _MIRROR_EVIDENCE.get(name)
+        if evidence is None:
+            missing.append(
+                f"{name!r} is a blocking CI step with no entry in "
+                f"_MIRROR_EVIDENCE — add it, and teach H6.sh to run it"
+            )
+        elif evidence not in mirror:
+            missing.append(f"{name!r} is not run by H6.sh (looked for {evidence!r})")
+    assert not missing, "the local mirror has fallen behind CI: " + "; ".join(missing)
+
+
+def test_the_mirror_map_has_no_stale_entries(workflow: dict[str, Any]) -> None:
+    """A mapping that outlives its step would make the check look thorough."""
+    names = set(blocking_steps(workflow))
+    stale = set(_MIRROR_EVIDENCE) - names
+    assert not stale, f"_MIRROR_EVIDENCE names steps the workflow no longer has: {stale}"
+
+
+def test_blocking_is_read_from_the_workflow_not_assumed(
+    workflow: dict[str, Any]
+) -> None:
+    """The control: `continue-on-error` is what distinguishes the two kinds."""
+    blocking = blocking_steps(workflow)
+    assert "mypy (informational)" not in blocking
+    assert "ruff (blocking)" in blocking
