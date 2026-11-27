@@ -76,9 +76,74 @@ kontrol kümesi — ve kaç tekrar. Null yoksa hipotez test edilemez.>
 
 ## 6. Örneklem ve veri
 
-- Kapsam: <gen, hücre hattı, kaç site>
-- Dışlama kuralları: <önceden, veriyi görmeden>
-- Veri sürümleri: <kaynak + sürüm/accession; hepsi hg38>
+### 6.1 Gerçek referans seti — kilitlenen accession'lar
+
+Aşağıdaki her sayı **2026-11-27'de GEO SOFT kayıtlarından sayıldı**, yayından
+ya da yol haritasından alıntılanmadı. Sebebi somut: yol haritası `GSE5814`'ü
+*"68 örnek, HeLa"* diye tarif ediyordu; ölçüm 67 HeLa **artı bir HT29**
+örneği ve **üç ayrı platform** gösterdi. Kilitlenen bir belgeye alıntı
+girmez.
+
+| accession | örnek | platform(lar) | hücre hattı | PMID | tasarım |
+|---|---|---|---|---|---|
+| `GSE5814` | 68 | GPL3992 (47), GPL2029 (20), GPL3991 (1) | 67 HeLa + 1 HT29 | 16682560 | **Ana set.** `193-MAPK14` guide'ının **1-19. pozisyonlarında tek nükleotid mutantları** (pozisyon başına bir kol) + mutasyonsuz hali; ayrıca `Luc`, `PLK1-319`, `1721-PLK-772` |
+| `GSE5769` | 61 | GPL3992 (38), GPL3991 (23) | 61 HeLa | 16682562 | **Yedi ayrı ebeveyn dizi** (`PIK3CA-2629`, `MPHOSPH1-2692`, `SOS1-1582`, `PRKCE-1295`, `VHL-2651`, `VHL-2652`, `193-MAPK14`), her biri **modifiye edilmemiş** ve **AS_pos2_modified** halinde, `a`/`b` tekrarıyla |
+| `GSE5291` | 18 | GPL3992 | 18 HeLa | 16965178 | `SOD1` tek-nükleotid ayrımı (tek nükleotidle farklılaşan dizi çiftleri) |
+| `GSE41924` | 3 | GPL6947 | ⚠️ örnek başlıklarında yazılı değil — `A2b` doğrulayacak | 24145823 | `GAPDH` siRNA + negatif kontrol + transfeksiyon kontrolü |
+| `GSE44256` | 4 | GPL9115 (**RNA-seq**) | HeLa-d1EGFP | 23475073 | `EGFP` siRNA + `EGFP100`/`EGFPFL` **pro-siRNA** + NC |
+| `GSE44105` | 6 | GPL6244 | HeLa-d1EGFP | 23475073 | `LMNA` siRNA + `LMNA` pro-siRNA, iki tekrar + NC |
+| `GSE278438` | 7 | GPL20844 | 7 HeLa | 41467115 | `siVIM-270`, DNA/FA/MOE kimyaları |
+| `GSE278439` | 4 | GPL20844 | 4 HeLa | 41467115 | `siVIM-270`, Fluoro/OMe kimyaları |
+
+Toplam **171 örnek**. Ama genelleme birimi örnek değil **dupleks dizisi**, ve
+ikisi arasındaki fark bu setin en önemli özelliği:
+
+### 6.2 Bağımsız dizi sayısı: ~14, ve üç kol tipi tabandan dışlanıyor
+
+Ölçülen ayrık **ebeveyn dizi** sayısı **yaklaşık 14**: `MAPK14-193`,
+`PLK1-319`, `PLK-772`, `Luc`, `PIK3CA-2629`, `MPHOSPH1-2692`, `SOS1-1582`,
+`PRKCE-1295`, `VHL-2651`, `VHL-2652`, `SOD1` (iki varyant), `GAPDH`, `EGFP`,
+`LMNA`, `VIM-270`. 171 örnek bunların kolları, tekrarları ve kimyasal
+varyantları.
+
+Üç kol tipi, ölçülmüş gerekçeyle, **birincil değerlendirmenin dışında**:
+
+1. **Tek nükleotid mutant kardeşleri — sızıntı.** `GSE5814`'ün 19 kolu *tek
+   bir* ebeveynin (`193-MAPK14`) birer nükleotid farklı halleri. Kol düzeyinde
+   leave-one-out yapmak, tutulan kolun dizisinin **19'da 18'ini** eğitimde
+   bırakır. Bu yüzden CV birimi **ebeveyn dizi**, kol değil (şema §7'de).
+   ⚠️ Bu kolların *2-8 dışındaki* pozisyonlardaki mutantları aynı seed'i
+   taşır ve dupleksin 3' yarısını değiştirir — yani kendi başına değerli bir
+   soru, ama birincil metrik için fold değil (§10).
+2. **Aynı diziyi taşıyan kimyasal varyantlar — tavan.** `GSE5769`'un
+   `AS_pos2_modified` kolları ve `GSE278438`/`GSE278439`'un tüm kimyaları,
+   modifiye edilmemiş kardeşiyle **aynı seed dizisini** taşır. Dizi-tabanlı
+   bir tahmin edici ikisine **birebir aynı** öngörüyü verir, ölçülen sonuç ise
+   farklıdır; bu kollar fold olamaz ve birincil metrikte ulaşılabilir tavanı
+   **düşürür**. (Bir termodinamik ölçüt için ise tam tersine en bilgili
+   kollardır — §10.)
+3. **pro-siRNA / esiRNA havuzları — tek seed yok.** `GSE44256` ve
+   `GSE44105`'in pro-siRNA kolları enzimatik olarak üretilmiş heterojen
+   havuzlar; tanımı gereği tek bir 2-8 seed'i yoktur, dolayısıyla bu modelin
+   öngörebileceği bir nesne değildir.
+
+### 6.3 Kapsam, dışlama ve sürümler
+
+- **Kapsam:** değerlendirme evreni, HeLa'da ölçülebilir düzeyde eksprese
+  edilen genler (filtre tanımı ve eşiği aşağıda, `A8`); birim **gen**, site
+  değil (koordinat körlüğü İddia 1'i etkilemez — `.claude/rules/10-koordinatlar.md`).
+- **Dışlama kuralları (veriyi görmeden):** §6.2'nin üç kol tipi; hedef genin
+  kendisi ve bilinen doğrudan alt akışı (`A9`); HeLa'da eksprese edilmeyen
+  genler (`A8`).
+- **Veri sürümleri:** annotasyon **Ensembl 115**, pinlenmiş arşiv host'undan
+  (`src/core/ensembl_release.py` otorite; sürüm her koşunun manifest'inde ve
+  her önbellek anahtarında). İfade verisi DepMap 24Q2'ye eşlenmiş CCLE
+  (`config/ccle_depmap_ids.yaml`, otoritesi `data/external/depmap/`). Tüm
+  genomik koordinatlar hg38.
+- ⚠️ **Dış geçerlilik, tekrar:** bu accession'ların hepsi **siRNA**.
+  saRNA/RNAa'ya özgü bir referans seti bu büyüklükte yok (üç veri seti, toplam
+  üç dupleks — `E7`), ve onlar birincil metriğe girmez, ayrı bir dış kontrol
+  olarak raporlanır.
 
 ## 7. Analiz planı
 
