@@ -210,10 +210,238 @@ türetilmiş, ve eğitim verisi **`GSE5291` ve `GSE5769`** — yani bu projenin
 kilitlediği setin ikisi. Dolayısıyla `−0.3` bu proje için **bağımsız bir eşik
 değil**; ızgarada ilan edilmiş bir hücre olarak durur, gerekçe olarak değil.
 
-### 4.4 Karar kuralı
+### 4.4 Karar kuralı — bir geçerlilik ön koşulu ve dört sonuç
 
-Başarı eşiği `A6a`'da sayıyla yazılı (aynı bölüm). Eşiğin altı kalırsa sonuç
-**negatif olarak** raporlanır; planı §9'da (`A15`).
+🔴 **Yol haritası `A6a` satırı bu kuralı İKİ sonuçlu yazıyordu** — *"PR-AUC
+her üç tabanı da aşmalı; aşmazsa sonuç negatif olarak raporlanır"* — ve o
+hali hem çıkarım olarak geçersiz hem de bu projenin bugünkü kodunda
+**yanlış bir negatif üretmeye açık**. İkisi de ölçüldü; düzeltilmiş hali
+aşağıda, ve nerede neden saptığı her alt bölümde yazılı.
+
+#### 4.4.1 Marj `m` — ölçülmüş, modelden bağımsız, modeli görmeden sabitlendi
+
+Marj, "aşmak" ile "aşmış görünmek"i ayıran sayı. Değeri **modelin hiçbir
+çıktısı görülmeden**, yalnız referans setinin etiketleri ve **dizi bilgisi
+taşımayan** iki tahmin edici üzerinden ölçüldü:
+
+- **B4** = `log10(INTENSITY1)`, §7.5'in dördüncü tabanı (mock kanalı ifadesi),
+- **VAR** = aynı probun mock yoğunluğunun **diğer array'lerdeki yayılımı**
+  (genin ifade oynaklığı) — etiketten de, diziden de bağımsız.
+
+İkisi de aynı ucuzlukta ve aynı ölçüde bilgisiz. 20 ayrık seed heptamerinde
+(her seed için bir array; `GSE5814` + `GSE5769`, §6.2'nin birimi) eşleşmiş
+AP farkı:
+
+| nicelik | ölçüm |
+|---|---|
+| medyan \|AP(B4) − AP(VAR)\| | **0,0162** |
+| sd(AP(B4) − AP(VAR)) | 0,0209 |
+| iki **rastgele** sıralama arasındaki sd — saf örnekleme tabanı | 0,0028 |
+| medyan taban oranı **0,0540** | 20 array; §2'nin ölçtüğü %2,16-%9,26 aralığında |
+
+Karar: marj `m` = **0,020** AP — ölçülen 0,0162'nin ikinci ondalığa yukarı
+yuvarlanmış hali. Gerekçe tek cümlede: **iki rastgele ucuz kovaryat arasındaki
+tipik farktan küçük bir üstünlük, hangi ucuz tabanı seçtiğinizin gürültüsü
+içindedir** ve hiçbir şey göstermez. Medyan taban oranında bu, lift
+biriminde **0,37**'ye karşılık geliyor.
+
+⚠️ **Yuvarlamanın yönü ilan edilmiştir.** Yukarı yuvarlamak `GEÇTİ` çıtasını
+**yükseltir** ve eşdeğerlik iddiasını **kolaylaştırır**. Değişmez 7'nin
+yasakladığı yön pozitif sonuç aramaktır; bu yuvarlama o yönün tersine
+çalıştığı için serbest, ve ters yönde bir yuvarlama (aşağı) **yapılmayacaktır**.
+
+İhtiyatlı `σ̂_d` = **0,0395** — modelden bağımsız çiftlerin ölçülen en
+büyük sd'si. Güç hesapları (§4.4.6) bu değerle yapılıyor; daha küçük bir
+`σ̂_d` seçmek gücü kâğıt üzerinde şişirmek olurdu.
+
+🔬 **Aynı ölçümün yan ürünü, ve `A5b` olarak açık bırakıldı:** hiçbir dizi
+bilgisi kullanmayan **üçüncü** bir ucuz tahmin edici — probun diğer
+array'lerdeki medyan \|VALUE\|'su, yani "bu prob genel olarak ne kadar oynar" —
+20 seed'in **20'sinde de** B4'ü aşıyor ve medyan lift'i **2,19** (B4'ün medyan
+lift'i yalnız **1,18**, ve 20 seed'in 16'sında rastgelenin üstünde). Yani
+§7.5'in taban envanterinin dışında, ondan **iki kat güçlü** ve tamamen
+dizi-bağımsız bir çıta ölçüldü. Bu bölüm onu taban **yapmıyor** (tabanlar
+§7.5'in, yani `A5`'in işi; değişmez 8); yol haritasına `A5b` olarak yazıldı ve
+`A12` ona bağlandı, çünkü kilitten sonra eklenemez.
+
+#### 4.4.2 Geçerlilik ön koşulu: **GEÇERSİZ** (yozlaşmış sıralama)
+
+🔴 **Bu ön koşul, iki sonuçlu kuralın bu projede ürettiği yanlış negatifi
+kapatıyor, ve gerekçesi bir aritmetik kimlik.** Sabit bir tahminci için
+ortalama kesinlik **taban oranına eşittir**, yani
+
+```
+AP = π   ve   lift = 1,0000   (her taban oranında, tam olarak)
+```
+
+Bu bir ölçüm değil, kimlik: sıralamayı skor değil **bağlantı kırma** belirler.
+Dolayısıyla sabit bir skorla koşulan bir değerlendirme `lift = 1,00` verir, ve
+iki sonuçlu bir kural bunu **"negatif sonuç"** diye raporlar — oysa doğru
+cümle *"enstrüman sıralama üretmedi"*. Değişmez 7 negatif sonucu yayın yolu
+olan bir sonuç yaptığı için bu, sessizce yayınlanabilecek bir yanlıştır.
+
+⚠️ **Ve bugün tam bu durumdayız.** `.claude/rules/20-skor-degismezleri.md`
+ölçülmüş olgu olarak şunu yazıyor: §1'in mekanizmasını ölçen kanal
+(`sequence_specificity`) **41/41 sitede 1.0**, çünkü `_clamp` 12 ayrık ham
+değeri eziyor. Yani bu ön koşul yazılmadan kilitlenen bir ön kayıt, *ölçüm
+yapmayan* bir planı kilitlemiş olurdu — `pre-register` skill'inin kelimesi
+kelimesine uyardığı şey.
+
+**Ön koşul, sayıyla.** Bir tahmin ediciye §2'nin metriği uygulanabilmesi için,
+değerlendirilen **her** array'de bağlantı grupları içindeki sıralama
+belirsizliğinin AP'yi oynatabileceği aralık marjın yarısını geçmemeli:
+
+```
+AP_en_iyi − AP_en_kötü  ≤  m/2 = 0,010
+```
+
+(`AP_en_kötü`: her bağlantı grubunun içinde pozitifler **sona**;
+`AP_en_iyi`: başa.) Ön koşul **iki ayrı yerde** uygulanır:
+
+1. **Değerlendirilen sıralama** (nihai risk skoru) için — sağlanmazsa sonuç
+   `GEÇERSİZ`, ve §9'un negatif sonuç yolu **kullanılmaz**.
+2. **Sıfırdan farklı ağırlıkla skora giren her kanal** için ayrı ayrı. Sabit
+   bir kanal nominal ağırlığını taşımaya devam ederse ağırlıklı toplamın
+   yorumu yanlışlaşır; özellikle §1'in hipotezi seed-aracılı susturma
+   hakkında olduğu için, `sequence_specificity` sabitken alınan bir `GEÇTİ`
+   **hipoteze atfedilemez**. Böyle bir kanalın ya çözünürlüğü düzeltilir
+   (`C1`) ya da ağırlığı **ilan edilerek sıfırlanır** ve §2'nin metriği onsuz
+   yeniden hesaplanır. Üçüncü bir seçenek yok.
+
+🔬 **Ölçülmüş çözünürlük talebi — `C1` ve `A10` için bir sayı.** Aynı 20
+array'de, mock yoğunluğu kovaryatı `k` kademeye nicelenerek bağlantı açıklığı
+ölçüldü:
+
+| kademe | medyan açıklık | en kötü array | m/2 = 0,010 altında? |
+|---|---|---|---|
+| 1 (sabit) | 0,9725 | 0,9881 | hayır |
+| 12 (bugünkü ham seed skoru) | 0,0316 | 0,0518 | **hayır** |
+| 50 | 0,0073 | 0,0199 | hayır |
+| 100 | 0,0040 | 0,0155 | hayır |
+| 250 | 0,0017 | 0,0106 | hayır |
+| 500 | 0,0009 | 0,0060 | **evet** |
+
+Yani `_clamp`'i kaldırmak **yetmez**: `_clamp` öncesindeki 12 ayrık değer de
+bu ön koşulu geçmiyor, ve açıklığı (0,0518) marjın **iki buçuk katı**.
+`A10`'un ön kaydedeceği haritalama ve `C1`'in uygulaması, değerlendirme
+evreninde ≥ **500** ayrık değer üretmek zorunda. Bu sayı ölçülmüştür, bir
+tercih değildir; `C1`'in bugünkü kabul kriteri ("41/41 sabit değil") bu
+eşiğin çok altındaydı ve yol haritasında düzeltildi.
+
+#### 4.4.3 Kontrast ve test
+
+Her ayrık seed heptameri `i` ve her taban `b` için eşleşmiş fark:
+
+```
+d_i^b  =  AP_model(i) − AP_b(i)
+```
+
+- **Test:** tek-yanlı **eşleşmiş Wilcoxon işaretli sıra** testi, `d_i^b − m`
+  üzerinde, `α = 0,05`. Yani sınanan şey "sıfırdan büyük" değil,
+  **"marjdan büyük"** — eşik testin içinde, sonradan bakılan bir sayı değil.
+  Birim seed olduğu için test §7.1'in foldlarıyla aynı birimde; sınıflandırıcı
+  karşılaştırmasında eşleşmiş sıralı test Demšar 2006'nın önerdiği ölçüt.
+  `n ≤ 25` için null dağılımı **tam** hesaplanır (normal yaklaşım bu örneklem
+  büyüklüğünde yetersiz).
+- **Çoklu taban için α DÜZELTİLMEZ, ve bu bir ihmal değil.** Gereklilik
+  **kesişimsel**: dört tabanın **hepsi** aşılmalı. Böyle bir kural bir
+  kesişim-birleşim testidir ve boyutu `α`'yı **aşamaz** (Berger 1982), yani
+  düzeltme gereksiz. Ters yönü de yazılı: FDA'nın 2022 çok-uç-noktalı
+  kılavuzu kelimesi kelimesine *"increasing α for each co-primary endpoint is
+  not acceptable"* diyor — yani eş-birincil uç noktalarda α'yı **büyütmek**
+  yasak, ve bu bölüm onu yapmıyor.
+- **Güven aralığı:** medyan `d` için **BCa bootstrap**, 10.000 yeniden
+  örnekleme, birim **seed** (array içi yeniden örnekleme gen düzeyinde
+  kümelenmiş bootstrap). Aralık her tabanda raporlanır, sonuç ne olursa olsun.
+
+#### 4.4.4 Dört sonuç
+
+Ön koşul (§4.4.2) sağlanmazsa tek sonuç **`GEÇERSİZ`**'dir ve aşağıdakilerin
+hiçbiri okunmaz. Sağlanırsa, **her taban için** aralık hesaplanır ve verdi
+şöyle okunur:
+
+| sonuç | koşul | ne iddia edilir |
+|---|---|---|
+| **`GEÇTİ`** | dört tabanın **hepsinde** `d − m` için tek-yanlı Wilcoxon `p < 0,05` | orcSONAR her ucuz tabanı pratik olarak anlamlı bir farkla aşıyor |
+| **`EŞDEĞER`** | en az bir tabanda iki-yanlı %95 GA tamamen `(−m, +m)` içinde | o tabana karşı **pratik eşdeğerlik** — pozitif, yayınlanabilir bir iddia |
+| **`DAHA KÖTÜ`** | en az bir tabanda GA tamamen `−m`'in altında | orcSONAR o ucuz tabandan kötü |
+| **`SONUÇSUZ`** | kalan her şey (GA bir sınırı kesiyor) | **hiçbir yönde iddia yok**; ulaşılan GA genişliği raporlanır |
+
+**Öncelik, belirsizlik bırakmadan.** `GEÇTİ` dört tabanın **hepsini** ister;
+biri bile sağlanmazsa `GEÇTİ` yoktur. Kalan durumda birden fazla sonuç aynı
+anda uygulanabilir (bir tabanda `DAHA KÖTÜ`, başkasında `EŞDEĞER`), ve o zaman
+raporlanan verdi **en olumsuz uygulanabilir** olandır:
+`DAHA KÖTÜ` > `EŞDEĞER` > `SONUÇSUZ` > `GEÇTİ`. Sonuç ne olursa olsun dört
+tabanın **dördünün** aralığı da raporlanır; verdi bir özet, veri değil.
+
+🔴 **`EŞDEĞER` ve `SONUÇSUZ`'un ayrı olması bu bölümün asıl düzeltmesi.**
+Başarısız bir üstünlük testi negatif sonuç **üretmez**: Benavoli, Corani,
+Demšar & Zaffalon 2017 (*JMLR* 18(77)) kelimesi kelimesine *"NHST cannot
+provide evidence in favour of the null hypothesis… When NHST does not reject
+the null hypothesis, no conclusion can be made."* Negatif bir sonucun
+söylenebilir hale gelmesi için **eşdeğerlik** (pratik eşdeğerlik bölgesi,
+*rope*) yönünde bir test gerekir, ve o testin eşiği de `m`. `A6a` satırının
+"aşmazsa negatif raporla" cümlesi bu ayrımı yapmıyordu; §9'un (`A15`)
+yayın yolu **`EŞDEĞER` ve `DAHA KÖTÜ`** içindir, `SONUÇSUZ` için değildir —
+`SONUÇSUZ` bir sonuç değil, yetersiz bilgidir ve öyle raporlanır.
+
+#### 4.4.5 Tabakalar: raporlanan tanı + bağlayıcı yön koşulu
+
+`A6a` satırı birincil metriğin **uzunluk tabakaları içinde de** her tabanı
+aşmasını istiyordu. 4 taban × 3 tabaka = **12 kesişimsel koşul**, ve bunun
+gücü ölçüldü: tabaka içi `n ≈ 43/3 ≈ 14`'te tek testin gücü **0,538**, on iki
+koşulun birleşik gücü (bağımsızlık varsayımıyla, yani bir **alt sınır**)
+**0,0006**. Testler pozitif korele olduğu için gerçek değer bundan yüksek, ama
+iki mertebe yüksek değil. **Gücü %0,06 olan bir geçme koşulunu sonucu
+belirleyen şey model değil örneklem büyüklüğüdür** — ve böyle bir koşul
+konulursa sonuç neredeyse kesin olarak `SONUÇSUZ` çıkar, yani kural
+yanlışlanamaz hale gelir.
+
+O yüzden tabakalar şöyle bağlanıyor:
+
+- **Raporlanır:** birincil metrik, dört tabanın hepsine karşı, uzunluk ve
+  ifade-şiddeti tabakalarının her birinde, güven aralıklarıyla (§7.4'ün
+  zorunluluğu aynen duruyor).
+- **Bağlayıcı olan koşul YÖN:** hiçbir tabakada, hiçbir tabana karşı
+  medyan `d`'nin **nokta tahmini negatif olamaz**. Negatifse verdi
+  `SONUÇSUZ`'a düşer ve o tabaka **adıyla** raporlanır — havuzlanmış bir
+  kazanımın bir tabakadaki kayıptan geldiği durumu yakalayan şey bu.
+- ⚠️ **Bu, `A6a` satırının istediğinden ZAYIF, ve sebebi yazılı:** ölçülmüş
+  güç, kolaylık değil. Tabaka-içi testleri geçme koşulu yapmak için gereken
+  örneklem bu veri setinde yok (§6.2'nin envanteri ≈43 seed), ve bunu
+  kilitten sonra farketmek sapma günlüğü maddesi olurdu.
+
+#### 4.4.6 Güç, önceden ilan edilmiş
+
+Tek-yanlı eşleşmiş Wilcoxon, `α = 0,05`, gerçek fark `δ = m = 0,020`,
+`σ̂_d = 0,0395`, tam null dağılımı, 4000 tekrar:
+
+| n | ne | güç |
+|---|---|---|
+| 43 | tüm seed'ler, tabanlar 1-3 (§6.2) | **0,935** |
+| 25 | dördüncü taban (`GSE5291` hesaplanamıyor, §7.5) | **0,779** |
+| 14 | tabaka içi (≈43/3) | **0,538** |
+
+- Dört tabanın **birleşik** gücü, bağımsızlık varsayımıyla (alt sınır):
+  `0,935⁴ ≈ 0,76`. Testler aynı model ve aynı seed'ler üzerinde olduğu için
+  pozitif korele, yani gerçek değer bunun üstünde.
+- ⚠️ **Dördüncü taban yetersiz güçlüdür ve bu ilan edilmiştir:** 0,779 < 0,80.
+  Çözüm olarak marj **büyütülmeyecek** — marjı `σ̂_d`'yi gördükten sonra
+  büyütmek gücü kâğıt üzerinde düzeltir ve eşdeğerlik iddiasını kolaylaştırır,
+  yani değişmez 7'nin yasakladığı hamlenin eşdeğerlik yönündeki hali. Yoğunluğu
+  başka serilerden ithal etmek de §7.5'te zaten reddedildi. Dördüncü tabanın
+  sonucu **ulaşılan gücüyle birlikte** raporlanır.
+- ⚠️ `σ̂_d` 20 seed üzerinden kestirildi, 43 üzerinden değil; nokta
+  kestirimdir ve güç tablosu ona koşulludur. Bu da ilan edilmiştir.
+
+#### 4.4.7 Bu bölümün ölçümünün kaydı
+
+Marj, `σ̂_d`, çözünürlük tablosu ve güç tablosunun hepsi
+**`reports/a6a-marj-2026-11-27/`** altında: ölçüm betiği, çıktı JSON'ları ve
+hangi 20 array'in hangi seed'i temsil ettiği. `A12`'nin kilidi bu dizine atıf
+yapar; kapı (`.claude/acceptance/A6a.sh`) güç tablosunu **her koşuda tam
+Wilcoxon null dağılımından yeniden simüle eder** ve bu bölümdeki sayılardan
+saparsa kırmızıya düşer, yani metin ölçümden sessizce ayrılamaz.
 
 ## 5. Null modeli
 

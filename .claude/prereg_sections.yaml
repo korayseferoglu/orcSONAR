@@ -65,12 +65,13 @@ sections:
       section.
   7:
     title: Analiz planı
-    owners: [A4, A5, A7, A10]
+    owners: [A4, A5, A5b, A7, A10]
     note: >-
       A4 the cross-validation scheme (its metric goes in §2 and its secondary
-      metrics in §3), A5 the three baselines, A7 the P_silence / Impact split, A10 the mapping
-      that replaces `_clamp`. All of them are analysis decisions that change
-      the numbers and so cannot be taken after seeing them.
+      metrics in §3), A5 the baselines, A5b the fifth baseline candidate that
+      A6a's own measurement turned up, A7 the P_silence / Impact split, A10 the
+      mapping that replaces `_clamp`. All of them are analysis decisions that
+      change the numbers and so cannot be taken after seeing them.
   8:
     title: Durdurma kuralı
     owners: [A14]
