@@ -88,3 +88,6 @@ reports/a6a-marj-2026-11-27/geo-onbellek/
 # A5b ölçümünün GEO önbelleği (array + platform tabloları): yeniden
 # indirilebilir, ~90 MB.
 reports/a5b-besinci-taban-2026-11-27/geo-onbellek/
+
+# A8 ölçümünün GEO önbelleği.
+reports/a8-filtre-2026-11-27/geo-onbellek/

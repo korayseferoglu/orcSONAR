@@ -29,6 +29,20 @@
       "used_by": [
         "A5b"
       ]
+    },
+    {
+      "name": "depmap/OmicsProfiles_24Q2.csv",
+      "source": "https://ndownloader.figshare.com/files/46500358",
+      "doi": "10.25452/figshare.plus.25880521.v1",
+      "release": "DepMap 24Q2 Public",
+      "downloaded": "2026-11-27",
+      "bytes": 214983,
+      "sha256": "e0125eebaca48c4f084218e372ca2da70a2de3ab3f6756462f3daecc258ea4aa",
+      "licence": "CC BY 4.0",
+      "note": "Authority for one narrow claim in pre-registration 6.4 (A8): whether an external CCLE expression filter is even available for HeLa. It is — ACH-001086 carries an RNA profile, PR-pI7d1A, unstranded, source BROAD. That matters because 6.4 refuses the external filter as the primary universe on construct grounds (the label is defined on the array), and a refusal must not be mistaken for unavailability. 3961 profiles; a small index file, unlike the 460 MB expression matrix it indexes.",
+      "used_by": [
+        "A8"
+      ]
     }
   ]
 }

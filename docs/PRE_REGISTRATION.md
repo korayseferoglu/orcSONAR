@@ -610,7 +610,8 @@ gürültülü, yani §2'nin medyanı onların bulunduğu yerde daha oynak.
 ### 6.3 Kapsam, dışlama ve sürümler
 
 - **Kapsam:** değerlendirme evreni, HeLa'da ölçülebilir düzeyde eksprese
-  edilen genler (filtre tanımı ve eşiği `A8`'de); birim **gen**, site
+  edilen genler; filtrenin tanımı, eşiği ve ölçülmüş bedeli **§6.4**'te
+  (`A8`); birim **gen**, site
   değil (koordinat körlüğü İddia 1'i etkilemez — `.claude/rules/10-koordinatlar.md`).
 - **Dışlama kuralları (veriyi görmeden):** §6.2'nin üç kol tipi; hedef genin
   kendisi ve bilinen doğrudan alt akışı (`A9`); HeLa'da eksprese edilmeyen
@@ -625,6 +626,109 @@ gürültülü, yani §2'nin medyanı onların bulunduğu yerde daha oynak.
   saRNA/RNAa'ya özgü bir referans seti bu büyüklükte yok (üç veri seti, toplam
   üç dupleks — `E7`), ve onlar birincil metriğe girmez, ayrı bir dış kontrol
   olarak raporlanır.
+
+### 6.4 Tespit edilebilirlik filtresi — tanım, eşik ve ölçülmüş bedeli
+
+İfade edilmeyen bir gen aşağı regüle olamaz; evrende bırakılırsa garantili bir
+negatif olarak taban oranını düşürür ve `lift`'i mekanik olarak şişirir. Filtre
+bu yüzden ön kayıtlıdır, ve sonradan eklenmesi §4.3'ün yasakladığı hamlenin
+evren tarafındaki hali olurdu.
+
+**Birincil filtre, array-içsel:** bir prob evrende ise, o array'de
+`LOGINTENSITY ≥ −1`. Jackson ve ark.'nın kendi yayınlanmış filtresi,
+kelimesi kelimesine *"expressed at significant levels (log 10 intensity ≥ −1,
+∼1 copy/cell)"*. Her array için ayrı ayrı uygulanır.
+
+#### 6.4.1 Neden array-içsel, ve neden CCLE DEĞİL — bu bir *yapı* kararı
+
+Yol haritası `A8` satırı evreni *"CCLE elde"* tarif ediyordu. **Reddedildi, ama
+ulaşılamadığı için değil:** ölçüldü, HeLa'nın DepMap 24Q2'de RNA profili
+**var** (`ACH-001086` → profil `PR-pI7d1A`, unstranded, kaynak BROAD;
+otoritesi `data/external/depmap/OmicsProfiles_24Q2.csv`, manifest'te
+checksum'ıyla). Yani seçenek mevcut ve yine de birincil olmuyor.
+
+Sebep şu: **etiket array üzerinde tanımlı** (§4.1, `PVALUE` prob başına hata
+modelinden geliyor). Evreni başka bir enstrümandan almak iki yönlü bir yapı
+hatası üretir:
+
+- array'in **hiç ölçmediği** genler evrene girer. Bunlar etiketlenemez, yani
+  **garantili negatif** olurlar: taban oranını düşürür, `lift`'i yükseltirler.
+  Bu, modeli iyi gösteren yöndür.
+- array'in ölçtüğü **ve aşağı çağırdığı** genler, RNA-seq'te eşiği
+  geçmiyorlarsa evrenden çıkar: **gerçek pozitifler silinir**.
+
+Evren ile etiketin aynı enstrümandan gelmesi bir kolaylık değil, ölçülen
+niceliğin tanımının parçası. ⚠️ **Ve bu, CCLE'nin modelde kullanılmasına engel
+değil:** iki ayrı evren var ve ikisi de burada adlandırılıyor —
+*değerlendirme evreni* array-içsel (bu bölüm), *tahmin edicinin girdisi* ise
+CCLE HeLa ifadesi (hücre-hattı kanalı, §7.6'nın `P_silence`'ı). Tahmin edici
+herhangi bir kovaryat kullanabilir; eşleşmek zorunda olan şey **evren ile
+etiket**. CCLE tabanlı bir evren tanımı, §6.4.3'ün ızgarasının yanında **ilan
+edilmiş bir duyarlılık analizi** olarak raporlanabilir ve §10'un kuralıyla
+keşifsel etiketlenir; birincil olarak **asla**.
+
+#### 6.4.2 Filtrenin ölçülmüş bedeli — bedava değil
+
+Dokuz array'de, üç seride ölçüldü (2026-11-27,
+`reports/a8-filtre-2026-11-27/`):
+
+| nicelik | filtre öncesi | filtre sonrası |
+|---|---|---|
+| medyan prob sayısı | 23.441 | **11.009** |
+| medyan taban oranı | 0,0284 | **0,0543** |
+
+Yani filtre evreni **yarıya indiriyor** ve taban oranını **iki katına**
+çıkarıyor. Ve bedeli var: eşik **pozitiflerin %8,7'sini atıyor** (medyan;
+aralık **%4,6-12,8**). Bu sayı burada yazılı çünkü atılan pozitifler
+PR-AUC'nin tavanını düşürür ve o düşüşün sebebi model kalitesi değil, evren
+tanımıdır.
+
+📌 Ölçüm §6.3'ün ilan ettiği bağımlılığın **yönünü de doğruluyor**: filtre
+`LOGINTENSITY` üzerinde tanımlı olduğu için aşağı regüle olmuş genleri daha
+kolay **dışlıyor** — yani hata yönü pozitif *silmek*, pozitif *uydurmak*
+değil. İhtiyatlı yön.
+
+#### 6.4.3 İlan edilmiş eşik ızgarası — birincil asla yeniden atanmaz
+
+Tam ızgara her zaman raporlanır. **Birincil hücre `−1`'dir ve ızgara
+görüldükten sonra yeniden atanmaz** (§4.3'ün kuralı, evren tarafında):
+
+| eşik | medyan n | medyan taban | atılan pozitif |
+|---|---|---|---|
+| −2,00 | 22.555 | 0,0290 | %0,0 |
+| −1,50 | 16.449 | 0,0404 | %0,3 |
+| −1,25 | 13.156 | 0,0483 | %2,3 |
+| **−1,00 (birincil)** | **11.009** | **0,0543** | **%8,7** |
+| −0,75 | 9.174 | 0,0559 | %21,0 |
+| −0,50 | 7.410 | 0,0608 | %31,5 |
+| 0,00 | 4.239 | 0,0661 | %60,0 |
+
+⚠️ Izgara şunu gösteriyor: `−1,25`'te pozitif kaybı **%2,3**'e düşüyor, yani
+daha gevşek bir eşik neredeyse hiç pozitif atmıyor. `−1` yine de birincil,
+çünkü **kaynak makalelerin kendi filtresi** ve karşılaştırılabilirlik
+§4.1'in gerekçesiyle aynı. Bu tercih burada yazılı, ızgara da yazılı; ikisi
+birden olmadan seçim denetlenemez olurdu.
+
+#### 6.4.4 `QUALITY` kolonu: olmayan bir bayrak "kalitesiz" sayılmaz
+
+🔬 **Ölçülmüş tuzak (`A5b`, 2026-11-27):** `GSE5291`'in array tablosunda
+**`QUALITY` kolonu hiç yok** (ölçülen 3 array'in 3'ünde de;
+`GSE5814`/`GSE5769`'da var). Kolonun yokluğunu "kalitesiz" sayan bir filtre,
+kilitlenen setin **en güçlü serisini** — ≈43 ayrık seed'in **18'ini** —
+tamamen silerdi.
+
+**Kural:** `QUALITY == 1` filtresi, kolon **var olan** array'lerde uygulanır.
+Kolonun yokluğu *bilinmeyen kalite*dir, kötü kalite değil, ve evren kimsenin
+sahip olmadığı veri yüzünden daraltılmaz (değişmez 2'nin yönü).
+
+🔬 **Ve bu kuralın bedeli ölçüldü — büyüklüğüyle VE işaretiyle.** Kolonu olan
+altı array'de kolon **yok sayılarak** modelden bağımsız bir tahmin edicinin
+(mock kanalı, §7.5'in dördüncü tabanı) lift'i yeniden hesaplandı: medyan sapma
+**−0,79%**, en büyüğü **−4,88%**, ve dördünde sapma **sıfır** (o array'lerde
+kolon hiçbir probu elemiyor). İşaret **negatif**: kolonu olmayan bir seri
+lift'i **aşağı** yönde sapıyor, yani `GSE5291` bu yüzden avantajlı **değil**.
+Sapma %5 ile sınırlı ve ihtiyatlı yönde; seri başına raporlanır.
+
 
 ## 7. Analiz planı
 
