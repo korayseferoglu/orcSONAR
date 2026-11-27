@@ -66,13 +66,71 @@ Dayanak, ve sınırı:
 
 ## 2. Birincil metrik
 
-<Tek metrik. Birden fazla yazmak, sonradan geçeni seçmek demektir.>
+**Dupleks başına PR-AUC'nin, ayrık seed'ler üzerinden medyanı.** Her hücre
+yanında **kendi taban oranıyla** ve **`lift = PR-AUC / taban`** olarak
+raporlanır.
 
-Nasıl hesaplanacağı: <formül ya da fonksiyon adı, belirsizlik bırakmadan>
+Nasıl hesaplanacağı, belirsizlik bırakmadan:
+
+1. Her ayrık seed heptameri için (§6.2'nin birimi), o seed'i taşıyan
+   dupleksin array'inde: etiket §4.1, evren §6.3.
+2. Tahmin edici o array'in evrenindeki her geni sıralar; PR-AUC o sıralama ve
+   o etiket üzerinden hesaplanır (`sklearn.metrics.average_precision_score`,
+   yani **AP**; kesme noktası yok, eğri altı alanı interpolasyonsuz).
+3. O hücrenin **tabanı** = o array'in pozitif oranı. `lift` = PR-AUC / taban.
+4. Birincil sayı: bu PR-AUC'lerin **ayrık seed'ler üzerindeki medyanı**;
+   yanında medyan taban oranı ve medyan lift.
+
+🔴 **Neden havuzlanmış DEĞİL — ölçülmüş gerekçe.** §6.3'ün evreninde, dokuz
+array'de taban oranı **%2,16 … %9,26** arasında değişiyor (**4,3 kat**,
+medyan **%3,57**; ölçüm 2026-11-27). Havuzlanmış bir PR-AUC'nin "şans
+düzeyi" bu oranların ağırlıklı ortalaması olur, yani **tek bir sayı olarak
+yorumlanamaz**: aynı PR-AUC değeri bir duplekste şans düzeyi, başkasında üç
+kat üstü olabilir. Üstelik **dupleks başına pozitif sayısı alanın tahmin
+ettiği niceliğin kendisidir** (siSPOTR doğrulamasını
+`Spearman(POTS, gözlenen off-target sayısı)` ile yapıyor), yani array'leri
+havuzlamak bağımlı değişkeni siler.
+
+⚠️ **`lift` neden zorunlu:** etiket eşiğini gevşetmek taban oranını ve
+PR-AUC'yi **birlikte** yükseltir — ölçülmüş: eşik `−1.0`'dan `−0.1`'e
+gevşetilince taban ~%1'den ~%36'ya çıkıyor. Yani çıplak bir PR-AUC artışı
+model iyileşmesinden de, eşik gevşemesinden de gelebilir; `lift` ikisini
+ayırır. Bu, "ölü kanalı telafi etmek için eşik indirme" hamlesini (değişmez 7)
+görünür tutan mekanizma.
+
+⚠️ **Alanın olağan karşılaştırması bu değil, ve bu açıkça yazılı.** RIsearch2
+(PMID 28108657) kelimesi kelimesine: *"**In the literature there seems to be
+no standard method** to evaluate the overall off-target effect based on
+expression estimates before and after siRNA transfection, such as to evaluate
+the power of prediction methods."* Alan Spearman (siSPOTR), KS `D`
+(SeedMatchR) ve top-*n*'in medyan log2FC'si (RIsearch2, MIRZA-G) kullanıyor;
+hiçbiri gen-başına ikili etiketle bir AUC raporlamıyor. PR-AUC burada
+**bu projenin ürünü bir sıralama olduğu için** birincil — ama §3'ün üç
+ikincil metriği **zorunludur**, seçenek değil, çünkü hakemin karşılaştırma
+isteyeceği yer orası.
 
 ## 3. İkincil metrikler
 
-<Varsa listele. Birincil olanla yer değiştiremezler.>
+Dördü de **zorunlu** — raporlanmaması bir seçim değil, eksiklik. Hiçbiri
+birincil ile yer değiştiremez (§4.3'ün kuralı buraya da geçerli).
+
+1. **Spearman ρ**, dupleks düzeyinde: tahmin edilen off-target potansiyeli ile
+   **gözlenen off-target sayısı** arasında, ayrık seed'ler üzerinden.
+   siSPOTR'ın (PMID 22941647) doğrulama biçimi, ve §2'nin işaret ettiği
+   nokta: dupleks başına pozitif sayısı alanın asıl bağımlı değişkeni.
+2. **Tek-yanlı Kolmogorov–Smirnov `D`**, seed-eşleşmeli genlerin log2FC
+   dağılımı ile eşleşmeyenlerin dağılımı arasında. SeedMatchR'ın
+   (PMID 38192001) biçimi. ⚠️ **`D` bir etki büyüklüğü olarak raporlanır,
+   p-değeri olarak DEĞİL:** TargetScan'in uyarısı (PMID 26267216) — n ≈ 18.000
+   mRNA'da KS p-değerleri *"highly significant p values for very slight
+   differences"* veriyor, yani p burada bilgi taşımıyor.
+3. **Top-*n* tahminlerin medyan log2FC'si**, `1 ≤ n ≤ 300` eğrisi olarak.
+   RIsearch2 ve MIRZA-G'nin (PMID 25628353) biçimi; eşiksiz olduğu için
+   §4.1'in etiket kararından bağımsız bir okuma verir.
+4. **ROC-AUC**, dupleks başına. ⚠️ Raporlanır ama **karşılaştırma ölçütü
+   değildir**: bu sınıf dengesizliğinde (taban %2-9) ROC-AUC iyimser, ve
+   literatürde standart değil. Buraya yazılmasının tek sebebi, yazılmazsa
+   sonradan "daha iyi görünen metrik" olarak eklenebilmesi.
 
 ## 4. Eşikler ve karar kuralı
 
@@ -298,8 +356,85 @@ MIRZA-G yalnız o serinin ayrık-seed kollarını kullandı.
 
 ## 7. Analiz planı
 
-<Hangi adımlar, hangi sırayla. Burada yazılmayan bir analiz keşifseldir ve
-yayında öyle etiketlenir.>
+Burada yazılmayan bir analiz keşifseldir ve yayında öyle etiketlenir (§10).
+
+### 7.1 Çapraz doğrulama — birim **ayrık seed heptameri**
+
+**Leave-one-seed-out.** Her fold bir ayrık 2-8 seed heptameri; §6.2'nin
+envanterine göre **≈43 fold**, 39'u 2006'nın üç serisinden.
+
+🔴 **Neden kol ya da dupleks düzeyinde DEĞİL — sızıntı.** `GSE5814`'ün 19
+pozisyon mutantı tek bir ebeveynin birer nükleotid farklı halleri, ve seed
+2-8 olduğu için **1. ve 9-19. pozisyon mutantları yabani-tip seed'i aynen
+taşır**. Kol düzeyinde bir fold, tutulan kolun seed'ini eğitimde bırakır ve
+dizi-tabanlı bir tahmin edici o fold'da **aynı öngörüyü** üretir — yani
+performans ölçülmez, hatırlanır. Bu bizim çıkarımımız değil, alanın yaptığı:
+siSPOTR `GSE5814`'ü kendi eğitim setinden **tam bu sebeple** çıkardı
+(*"77 of the experiments tested siRNAs with the same seed sequence"*), MIRZA-G
+ise yalnız o serinin ayrık-seed kollarını kullandı.
+
+Kural, tek cümlede: **aynı seed heptamerini taşıyan hiçbir kol eğitim ve test
+bölümlerinde birlikte bulunamaz.** §6.2'nin dışladığı üç kol tipi (kimyasal
+varyantlar, havuzlar, seed'i değişmeyen mutantlar) hiçbir fold'da pozitif
+örnek olarak sayılmaz.
+
+### 7.2 Değerlendirme kümesinin devralınan iki filtresi
+
+siSPOTR'ın ve RIsearch2'nin ortak kullandığı iki filtre **ön kayıtlı olarak**
+devralınıyor, çünkü ikisi de sonucu gördükten sonra eklenirse ayarlama olur:
+
+- **İplik yanlılığı:** guide ipliğin baskın yüklendiği dupleksler. ⚠️ Bu
+  filtre `A1`'in "her iki iplik" kararıyla gerilim içinde ve gerilim burada
+  **yazılı**: filtre yalnız *ölçüm gürültüsünü* azaltmak için var, modelin
+  kapsamını daraltmak için değil; pasajer-baskın dupleksler **dışlanmaz**,
+  ayrı bir alt küme olarak raporlanır (§10).
+- **Hedef-üstü susturma > %85:** dupleksin kendi hedefini gerçekten
+  susturduğu array'ler. Hedefin kendi probundan hesaplanır. ⚠️ Bir dupleksin
+  hedef probu array'de yoksa o dupleks **dışlanır ve sayısı raporlanır** —
+  sessizce düşmez.
+
+### 7.3 Birincil ve ikincil kümelerin ayrımı
+
+- **Birincil küme: 2006'nın üç Rosetta serisi** (`GSE5814`, `GSE5769`,
+  `GSE5291`). Tek ölçek, tek hata modeli, prob-başına `PVALUE`, ve §4.1'in
+  ölçütü doğrudan hesaplanabilir.
+- **İlan edilmiş dış replikasyon: beş modern seri** (`GSE41924`, `GSE44256`,
+  `GSE44105`, `GSE278438`, `GSE278439`). **Seri başına** raporlanır,
+  birincil metriğe **havuzlanmaz**.
+- **Gerekçe, ve maliyeti:** MAQC-I (PMID 16964229) log-oran **sıralamalarının**
+  platformlar arası karşılaştırılabilir olduğunu, **büyüklüklerinin**
+  olmadığını buluyor (*"which can lead to over- or underestimates of log
+  ratios and fold changes"*; sıralama korelasyonu minimum R = 0,69). SEQC
+  (PMID 25150838) aynı yönde: *"relative expression are accurate and
+  reproducible … In contrast, RNA-seq and microarrays **do not provide
+  accurate absolute measurements**"*. Beş modern seri ≈43 seed'in yalnız
+  ~4'ünü (%9) getiriyor ama karşılaştırılabilirlik riskinin tamamını
+  taşıyor. ⚠️ **Bu ayrımın tartışılabilir olduğu da yazılı:** 2025 tarihli,
+  dört platformlu bir replikasyonun tek platformdaki 39 seed'den daha
+  inandırıcı olduğu savunulabilir; o yüzden dışlanmıyor, **ayrı
+  raporlanıyor**.
+
+### 7.4 Zorunlu tabanlar ve tabakalar
+
+`A5` üç tabanı tanımlıyor (aynı bölüm). Buna ek olarak, `A4`'ün bağladığı
+iki zorunluluk:
+
+- Birincil metrik **hem uzunluk hem ifade-şiddeti tabakaları içinde**
+  raporlanır. Gerekçe ölçülmüş: pozitiflerin medyan `LOGINTENSITY`'si
+  **−0,08 … −0,36**, tüm probların medyanı **−0,78 … −1,12** — yani
+  pozitiflik tespit edilebilirlikle korelasyonlu, ve uzunluk/ifade ile
+  korelasyonlu **herhangi** bir tahmin edici tek başına şans üstü skorlar.
+  Bu, denetimin bulduğu hit-sayısı ↔ cDNA uzunluğu `r = 0,349`
+  korelasyonunun mekanizması.
+- ⚠️ **Tabakalama yeterli değil, ve bu da yazılı:** TargetScan aynı
+  karıştırıcıyı *tam bu derlemede* ölçtü ve 3′UTR uzunluğu ile AU içeriğinin
+  mikroarray kat-değişimiyle korelasyonunun **yayın-özgü bir yönde**
+  olduğunu buldu (*"the extent and direction of the correlation … differed
+  when comparing to datasets from other publications"*); çözümleri
+  **yayın başına PLSR çıkarımı** oldu. Bu projede PLSR **uygulanmıyor**;
+  bunun yerine tabaka içi raporlama yapılıyor ve **bu sınır burada
+  beyan ediliyor**, sonradan "biz de PLSR yapmalıydık" demek bir sapma
+  günlüğü maddesi olur, sessiz bir düzeltme değil.
 
 ## 8. Durdurma kuralı
 
