@@ -196,6 +196,62 @@ AUAU
 UUUU
 ```
 
+**What a hit is measured against** (roadmap `B11c`). Four of the six motifs
+are 4 nt, so chance matters: for a uniform-composition sequence of this
+project's duplex length the expected hit count is **~0,5642** across both
+strands, computed in closed form (`_chance_hits`), and with the
+"two hits means HIGH" rule a **random** 20-mer is called `HIGH` **12,7 %** of
+the time and non-`SAFE` **35,8 %** of the time (measured over 2000 random
+sequences). `ImmuneResult` therefore reports `chance_hits` beside the verdict,
+so the number a reader sees is not floating free. ⚠️ A
+**composition-matched** null was tried and **refused by measurement**: a
+mononucleotide shuffle preserves uridine content, and the motifs are largely
+a U-richness detector, so the shuffled null tracks the observation almost
+exactly (U fraction 0.8 → observed 8.08, shuffled null 7.99) — it cancels the
+very quantity Goodchild et al. 2009 found to correlate with activity.
+
+**Provenance, per line** (roadmap `B11c`; verified first-hand through NCBI
+E-utilities, 2026-11-27). This table exists because the file itself carries
+only a two-line header, so until now no line had a source — and four of the
+six still do not:
+
+| motif | primary source | note |
+|---|---|---|
+| `UGUGU` | Judge AD, Sood V, Shaw JR *et al.*, *Nat Biotechnol* 2005;23(4):457-62, **PMID 15778705**, DOI 10.1038/nbt1081 | ⚠️ The motif appears in the paper's **body**, not its abstract; the attribution is widely repeated in reviews and is recorded here with that limit. |
+| `GUUGUGU` | **none** — it contains `UGUGU` and is GU-rich | A longer variant, not a separately published motif. Consistent with the field's GU-rich rule, but it is not an independent source. |
+| `UUGU` | **none found** | U-rich 4-mer. No primary motif paper names it. |
+| `UUAU` | **none found** | AU-rich 4-mer. No primary motif paper names it. |
+| `AUAU` | **none found** | AU-rich 4-mer. No primary motif paper names it. |
+| `UUUU` | **none found** | U-rich 4-mer. No primary motif paper names it. |
+
+⚠️ **Two findings recorded with the table rather than silently fixed.**
+
+1. The four unsourced entries are best read as crude proxies for
+   **U/AU-richness**, and the field's own measured correlate is
+   compositional rather than a set of short fixed motifs: Goodchild A,
+   Nopper N, King A *et al.*, *BMC Immunol* 2009;10:40, **PMID 19630977**,
+   report verbatim *"There was a significant correlation between the U count
+   of the U-rich strand and the immunostimulatory activity of the duplex"*
+   and *"…single-stranded, U-rich RNA species activate TLR7/8."* That is why
+   `ImmuneResult` now carries `u_count` and `u_fraction` beside the motif
+   hits — the correlate the literature actually measured.
+2. A motif that **is** published is **missing** from the list:
+   `GUCCUUCAA` (Hornung V, Guenthner-Biller M, Bourquin C *et al.*,
+   *Nat Med* 2005;11(3):263-70, **PMID 15723075**, DOI 10.1038/nm1191).
+   Adding it would change `data/`, which is read-only (invariant 1), so it
+   is a separate decision and not made here.
+
+⚠️ And the motif-matching model is known to be incomplete: Jurk M, Chikh G,
+Schulte B *et al.*, *Nucleic Acid Ther* 2011;21(3):201-14, **PMID 21749297**,
+report that *"almost all tested siRNAs with a phosphodiester backbone
+actively stimulated cytokine production in human peripheral blood immune
+cells, but not all of them did contain previously described"* motifs, and
+identify *"a new immunostimulatory, non-uridine-rich TLR7 motif that is
+present in many published siRNAs"*. So a near-universal base rate and motifs
+outside any such list are both documented; the channel's categorical verdict
+is reported with its measured chance rate for that reason, and §10.1 of the
+pre-registration carries it as `validated: false`.
+
 ---
 
 ## 5. Pipeline stages

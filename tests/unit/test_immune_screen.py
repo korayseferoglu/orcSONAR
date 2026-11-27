@@ -357,3 +357,95 @@ class TestScreenImmuneMotifs:
         result = screen_immune_motifs("UGUUGUGUGUUUU", real_path)
         assert result.total_hits >= 1
         assert result.risk_level in ("LOW", "HIGH")
+
+
+# ---------------------------------------------------------------------------
+# B11c — the verdict is reported with its measured chance rate, and with the
+#        correlate the literature actually measured
+# ---------------------------------------------------------------------------
+
+
+class TestTheVerdictCarriesItsChanceRate:
+    """Roadmap B11c, and the row's own proposal was refuted by measurement.
+
+    The row proposed a **composition-matched** empirical null: shuffle the
+    sequence, count motif hits, report a percentile. Measured first, and it
+    does not work — the null tracks the observation almost exactly, because
+    the motifs *are* largely a U-richness detector:
+
+        U fraction  observed   mononucleotide-shuffle null
+             0.0       0.64              0.64
+             0.6       3.28              3.18
+             0.8       8.08              7.99
+             1.0      17.00             17.00
+
+    So the empirical p would sit near 0.5 for essentially every sequence and
+    the channel would flag nothing, ever — the null cancels precisely the
+    quantity Goodchild et al. 2009 (PMID 19630977) found to correlate with
+    activity: *"a significant correlation between the U count of the U-rich
+    strand and the immunostimulatory activity of the duplex"*.
+
+    What is reported instead: (a) `u_count` / `u_fraction`, the field's own
+    measured correlate, and (b) `chance_hits`, the expected hit count for a
+    uniform-composition sequence of the same length — computed analytically,
+    so a reader can see that "2 hits" sits against an expectation of ~0.56
+    rather than against nothing.
+    """
+
+    def test_u_count_and_fraction_are_reported(self, tmp_path: Path) -> None:
+        f = _write_motif_file(tmp_path)
+        result = screen_immune_motifs("UUUUAAAACCCCGGGG", f)
+        assert result.u_count == 4
+        assert result.u_fraction == pytest.approx(4 / 16)
+
+    def test_u_count_counts_t_as_u(self, tmp_path: Path) -> None:
+        """DNA input is normalised before counting, like every other path."""
+        f = _write_motif_file(tmp_path)
+        assert screen_immune_motifs("TTTTAAAACCCCGGGG", f).u_count == 4
+
+    def test_chance_hits_is_analytic_and_length_aware(self, tmp_path: Path) -> None:
+        """No simulation: the expectation has a closed form, so it is exact.
+
+        For each motif of length L in a sequence of length n, both strands
+        give 2(n - L + 1) positions, each matching with probability 4**-L.
+        """
+        f = _write_motif_file(tmp_path)
+        motifs = _load_motifs(f)
+        assert motifs is not None
+        for n in (16, 20, 30):
+            expected = sum(2 * (n - len(m) + 1) * 0.25 ** len(m) for m in motifs)
+            result = screen_immune_motifs("A" * n, f)
+            assert result.chance_hits == pytest.approx(expected, abs=1e-12)
+
+    def test_the_project_duplex_length_gives_the_measured_figure(
+        self, tmp_path: Path
+    ) -> None:
+        """Pins the number quoted in the roadmap and in DATA_SOURCES."""
+        f = _write_motif_file(tmp_path)
+        result = screen_immune_motifs("A" * 20, f)
+        assert result.chance_hits == pytest.approx(0.5642, abs=5e-4)
+
+    def test_an_unscreened_sequence_reports_no_chance_rate_either(
+        self, tmp_path: Path
+    ) -> None:
+        """If nothing was screened there is no expectation to quote."""
+        result = screen_immune_motifs("GCUUUUGC", tmp_path / "missing.txt")
+        assert result.chance_hits is None
+        assert result.u_count is None
+        assert result.u_fraction is None
+
+    def test_the_verdict_is_not_quietly_recalibrated(self, tmp_path: Path) -> None:
+        """`risk_level` still comes from the raw count, and that is declared.
+
+        B11c reports the chance rate beside the verdict rather than redefining
+        the verdict, because a threshold on an empirical p would be another
+        free parameter. §10.1 of the pre-registration carries the whole
+        `Impact` column as `validated: false`, which is where the
+        uncalibrated level is accounted for.
+        """
+        f = _write_motif_file(tmp_path)
+        result = screen_immune_motifs("UUUUUGUAUGUGU", f)
+        assert result.risk_level == "HIGH"
+        assert result.chance_hits is not None
+        assert result.total_hits is not None
+        assert result.total_hits > result.chance_hits
