@@ -18,6 +18,7 @@ from tenacity import (
     wait_exponential,
 )
 
+from src.core import ensembl_release
 from src.core.cache import Cache
 from src.core.config import OrcSonarConfig, config_from_mapping
 from src.core.exceptions import DataSourceError
@@ -80,7 +81,9 @@ def get_transcript_sequence(transcript_id: str, config: OrcSonarConfig) -> str:
     Raises:
         DataSourceError: If the sequence cannot be retrieved.
     """
-    cache_key = f"seq:{transcript_id}"
+    # The release is part of the key: two Ensembl releases must not be able
+    # to share a cache entry (roadmap B17).
+    cache_key = ensembl_release.cache_key("seq", config.ensembl_release, transcript_id)
     cache = Cache(config.data_paths.cache_db)
 
     try:
@@ -119,7 +122,9 @@ def _query_ensembl(gene_name: str, config: OrcSonarConfig) -> list[TranscriptInf
     Returns:
         List of TranscriptInfo (empty list on any failure).
     """
-    cache_key = f"ensembl:transcripts:{gene_name.upper()}"
+    cache_key = ensembl_release.cache_key(
+        "ensembl", config.ensembl_release, f"transcripts:{gene_name.upper()}"
+    )
     cache = Cache(config.data_paths.cache_db)
 
     try:

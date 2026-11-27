@@ -151,7 +151,10 @@ _FASTA_NM_001001 = ">NM_001001.1 Homo sapiens fake gene, mRNA\nATGCATGCATGC\nTTT
 
 _ENSEMBL_SEQ = {"id": "ENST00000376218", "seq": "ATGCCCGGGAAATTT"}
 
-_BASE = "https://rest.ensembl.org"
+# Read from the config default rather than hardcoded: `ensembl_base_url` is
+# a pinned release host since B17, and a copy of it here would silently
+# stop matching the moment the pin moves (roadmap H9).
+_BASE = OrcSonarConfig.model_fields["ensembl_base_url"].default
 _NCBI = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/"
 
 
@@ -492,7 +495,7 @@ class TestAFailedResolutionIsNotAnEmptyGene:
         ), pytest.raises(DataSourceError, match="transcript"):
             transcript_resolver_run(
                 gene="VEGFA",
-                ensembl_url="https://rest.ensembl.org",
+                ensembl_url=OrcSonarConfig.model_fields["ensembl_base_url"].default,
                 ncbi_url="https://eutils.ncbi.nlm.nih.gov/entrez/eutils/",
                 output_path=str(out),
                 log_path=str(tmp_path / "tr.log"),

@@ -25,7 +25,16 @@ gc_range: [35, 65]         # % GC content acceptable range
 
 # --- Remote Data URLs ---
 phylop_bigwig_url: "https://hgdownload.soe.ucsc.edu/goldenPath/hg38/phyloP100way/hg38.phyloP100way.bw"
-ensembl_base_url: "https://rest.ensembl.org"
+# PINNED to an Ensembl archive host (roadmap B17). `rest.ensembl.org` is
+# not a pin, it is "whatever is current", and that is what let the cache
+# fill with two releases at once. A release only gets an archive host once
+# it is superseded, so the rule is: the newest release with a resolvable
+# archive host. 116 was live and unarchived when this was pinned.
+# Moving this is a deliberate act: bump `ensembl_release` with it, and
+# expect every cached sequence to be re-fetched (the release is in the
+# cache key). `src/core/ensembl_release.py` is the authority on all of it.
+ensembl_base_url: "https://sep2025.rest.ensembl.org"
+ensembl_release: 115
 gnomad_api_url: "https://gnomad.broadinstitute.org/api"
 ncbi_eutils_url: "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/"
 ucsc_api_url: "https://api.genome.ucsc.edu/getData/track"

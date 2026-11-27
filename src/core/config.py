@@ -85,7 +85,12 @@ class OrcSonarConfig(BaseSettings):
 
     # Remote URLs
     phylop_bigwig_url: str = "https://hgdownload.soe.ucsc.edu/goldenPath/hg38/phyloP100way/hg38.phyloP100way.bw"
-    ensembl_base_url: str = "https://rest.ensembl.org"
+    # Pinned to an archive host, with the release it is expected to serve
+    # (roadmap B17). The default here deliberately matches config.yaml: a
+    # default of `rest.ensembl.org` would mean a config-less run silently
+    # follows the current release, which is the behaviour B17 removed.
+    ensembl_base_url: str = "https://sep2025.rest.ensembl.org"
+    ensembl_release: int = 115
     gnomad_api_url: str = "https://gnomad.broadinstitute.org/api"
     ncbi_eutils_url: str = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/"
     ucsc_api_url: str = "https://api.genome.ucsc.edu/getData/track"

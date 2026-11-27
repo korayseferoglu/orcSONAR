@@ -16,6 +16,7 @@ from tenacity import (
     wait_exponential,
 )
 
+from src.core import ensembl_release
 from src.core.cache import Cache
 from src.core.config import OrcSonarConfig, config_from_mapping
 from src.core.exceptions import DataSourceError
@@ -217,7 +218,9 @@ def _get_gene_coordinates_ensembl(
     Returns:
         GenomicRegion (hg38, with "chr" prefix) or None on failure.
     """
-    cache_key = f"ensembl:lookup:{gene_name.upper()}"
+    cache_key = ensembl_release.cache_key(
+        "ensembl", config.ensembl_release, f"lookup:{gene_name.upper()}"
+    )
     cache = Cache(config.data_paths.cache_db)
 
     try:
@@ -291,10 +294,28 @@ def run(
     logger.add(log_path, level="DEBUG")
     logger.add(sys.stderr, level="INFO")
 
-    config = config_from_mapping(config_raw, 
+    config = config_from_mapping(config_raw,
         target_gene=gene,
         data_paths={"epdnew_bed": epdnew_bed, "fantom5_bed": fantom5_bed},
     )
+
+    # Stage 1 is the pipeline's first step, so this is the first moment the
+    # pinned Ensembl release can be checked against the host actually serving
+    # it (roadmap B17). A mismatch **stops the run**: every cached sequence is
+    # keyed on the declared release, so continuing would compute on one
+    # release while recording another. An unreachable host is not a mismatch —
+    # it is unverified, and the run manifest says so rather than implying a
+    # check that did not happen.
+    live = ensembl_release.live_release(config.ensembl_base_url)
+    ensembl_release.verify(declared=config.ensembl_release, live=live)
+    if live is None:
+        logger.warning(
+            f"tss_mapper: could not confirm the Ensembl release at "
+            f"{config.ensembl_base_url}; proceeding with the declared "
+            f"release {config.ensembl_release}, recorded as UNVERIFIED"
+        )
+    else:
+        logger.info(f"tss_mapper: Ensembl release {live} confirmed (pinned)")
 
     try:
         tss = find_tss(gene, config)

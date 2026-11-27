@@ -18,7 +18,8 @@ from src.stage2_offtarget_scan.transcriptome_fetcher import (
     get_background_transcriptome,
 )
 
-ENSEMBL_BASE = "https://rest.ensembl.org"
+# Pinned host comes from the config default (B17); see test_transcript_resolver.
+ENSEMBL_BASE = OrcSonarConfig.model_fields["ensembl_base_url"].default
 LOOKUP_URL = f"{ENSEMBL_BASE}/lookup/symbol/homo_sapiens"
 SEQ_URL = f"{ENSEMBL_BASE}/sequence/id"
 

@@ -36,6 +36,8 @@ from importlib import metadata
 from pathlib import Path
 from typing import Any
 
+from src.core import ensembl_release
+
 SCHEMA_VERSION = 1
 
 #: Files whose content defines a run's configuration.
@@ -373,6 +375,44 @@ def stochastic_components(repo_root: Path) -> dict[str, Any]:
     }
 
 
+
+def data_sources(repo_root: Path) -> dict[str, Any]:
+    """Which release of each versioned remote source this run reads.
+
+    `external_data` records the **bytes on disk** and their digests. This
+    records the ones that are not on disk: a live API answers with whatever
+    release it is serving, so the only provenance available is the release the
+    configuration pinned and whether the host confirmed it.
+
+    It exists because the manifest fingerprinted code and config and recorded
+    no source release at all, while the cache was quietly holding cDNA from
+    two Ensembl releases at once (roadmap B17). A run that cannot name its
+    annotation release cannot be reproduced and, worse, cannot be *compared*
+    with another run.
+
+    Args:
+        repo_root: Repository root.
+
+    Returns:
+        One block per versioned remote source. ``release_verified: false``
+        means the host was not asked — the manifest never implies a check it
+        did not perform.
+    """
+    import yaml
+
+    try:
+        raw = (
+            yaml.safe_load(
+                (repo_root / "config" / "config.yaml").read_text(encoding="utf-8")
+            )
+            or {}
+        )
+    except (OSError, yaml.YAMLError):
+        return {"ensembl": {"release": None, "reason": "config unreadable"}}
+    base_url = str(raw.get("ensembl_base_url", ""))
+    declared = raw.get("ensembl_release")
+    return {"ensembl": ensembl_release.describe(base_url, declared, check=False)}
+
 def build_manifest(run_dir: Path, repo_root: Path) -> dict[str, Any]:
     """Assemble the full provenance record for one run directory.
 
@@ -394,6 +434,7 @@ def build_manifest(run_dir: Path, repo_root: Path) -> dict[str, Any]:
         "head_consistency": head_consistency(code, mtimes),
         "config": config_fingerprint(repo_root),
         "external_data": external_data(repo_root),
+        "data_sources": data_sources(repo_root),
         "environment": environment(),
         "snakemake_state": snakemake_state(run_dir, repo_root),
         "stochastic_components": stochastic_components(repo_root),

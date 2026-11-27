@@ -21,6 +21,7 @@ from tenacity import (
     wait_exponential,
 )
 
+from src.core import ensembl_release
 from src.core.cache import Cache
 from src.core.config import OrcSonarConfig
 from src.core.exceptions import DataSourceError
@@ -231,7 +232,9 @@ def _load_canonical_transcripts(
 
     with Cache(config.data_paths.cache_db) as cache:
         for gene in genes:
-            key = f"bg:canonical:{gene.upper()}"
+            key = ensembl_release.cache_key(
+                "bg", config.ensembl_release, f"canonical:{gene.upper()}"
+            )
             val = cache.get(key)
             if val is not None:
                 try:
@@ -254,7 +257,13 @@ def _load_canonical_transcripts(
     fetched = _batch_lookup_symbols(uncached, config)
     with Cache(config.data_paths.cache_db) as cache:
         for gene, t_info in fetched.items():
-            cache.set(f"bg:canonical:{gene.upper()}", t_info.model_dump(), ttl_hours=168)
+            cache.set(
+                ensembl_release.cache_key(
+                    "bg", config.ensembl_release, f"canonical:{gene.upper()}"
+                ),
+                t_info.model_dump(),
+                ttl_hours=168,
+            )
             canonical[gene] = t_info
 
     return canonical
@@ -347,7 +356,9 @@ def _load_sequences(
 
     with Cache(config.data_paths.cache_db) as cache:
         for tid in transcript_ids:
-            val = cache.get(f"seq:{tid}")
+            val = cache.get(
+                ensembl_release.cache_key("seq", config.ensembl_release, tid)
+            )
             if val is not None:
                 seq = val.get("sequence", "")
                 if seq:
@@ -365,7 +376,11 @@ def _load_sequences(
 
     with Cache(config.data_paths.cache_db) as cache:
         for tid, seq in fetched.items():
-            cache.set(f"seq:{tid}", {"sequence": seq}, ttl_hours=168)
+            cache.set(
+                ensembl_release.cache_key("seq", config.ensembl_release, tid),
+                {"sequence": seq},
+                ttl_hours=168,
+            )
             sequences[tid] = seq
 
     return sequences

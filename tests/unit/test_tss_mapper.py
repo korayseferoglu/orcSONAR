@@ -20,6 +20,12 @@ from src.stage1_genomic_map.tss_mapper import (
 )
 from src.stage1_genomic_map.tss_mapper import run as tss_mapper_run
 
+# The pinned Ensembl host lives in config, not here (B17, H9).
+_ENSEMBL_LOOKUP = (
+    OrcSonarConfig.model_fields["ensembl_base_url"].default
+    + "/lookup/symbol/homo_sapiens/"
+)
+
 # ---------------------------------------------------------------------------
 # Fixtures
 # ---------------------------------------------------------------------------
@@ -122,7 +128,7 @@ def test_fantom5_fallback_returns_highest_score_peak(
 ) -> None:
     resp_mock.add(
         resp_mock.GET,
-        "https://rest.ensembl.org/lookup/symbol/homo_sapiens/GENENOTINEPDNEW"
+        _ENSEMBL_LOOKUP + "GENENOTINEPDNEW"
         "?expand=0&content-type=application/json",
         json=_MOCK_ENSEMBL_RESPONSE,
         status=200,
@@ -144,7 +150,7 @@ def test_fantom5_adds_chr_prefix(fantom5_bed: Path, test_config: OrcSonarConfig)
     """Ensembl returns seq_region_name without 'chr'; mapper must prepend it."""
     resp_mock.add(
         resp_mock.GET,
-        "https://rest.ensembl.org/lookup/symbol/homo_sapiens/GENENOTINEPDNEW"
+        _ENSEMBL_LOOKUP + "GENENOTINEPDNEW"
         "?expand=0&content-type=application/json",
         json=_MOCK_ENSEMBL_RESPONSE,
         status=200,
@@ -160,7 +166,7 @@ def test_fantom5_returns_none_when_ensembl_fails(
 ) -> None:
     resp_mock.add(
         resp_mock.GET,
-        "https://rest.ensembl.org/lookup/symbol/homo_sapiens/BADGENE"
+        _ENSEMBL_LOOKUP + "BADGENE"
         "?expand=0&content-type=application/json",
         status=404,
     )
@@ -188,7 +194,7 @@ def test_find_tss_uses_epdnew_without_api_call(test_config: OrcSonarConfig) -> N
 def test_find_tss_raises_when_both_sources_fail(test_config: OrcSonarConfig) -> None:
     resp_mock.add(
         resp_mock.GET,
-        "https://rest.ensembl.org/lookup/symbol/homo_sapiens/UNKNOWNGENE"
+        _ENSEMBL_LOOKUP + "UNKNOWNGENE"
         "?expand=0&content-type=application/json",
         status=404,
     )
@@ -206,7 +212,7 @@ def test_ensembl_result_is_cached(test_config: OrcSonarConfig) -> None:
     """Second call must not issue a second HTTP request."""
     resp_mock.add(
         resp_mock.GET,
-        "https://rest.ensembl.org/lookup/symbol/homo_sapiens/CACHEDGENE"
+        _ENSEMBL_LOOKUP + "CACHEDGENE"
         "?expand=0&content-type=application/json",
         json={"seq_region_name": "6", "start": 1000, "end": 2000, "strand": 1},
         status=200,
