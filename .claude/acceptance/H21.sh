@@ -80,19 +80,16 @@ def run_test() -> int:
     return done.returncode
 
 
+# Bozma/geri yükleme `_perturb`'e devredildi (`H23`): tek uygulama, geri
+# yüklemeyi kendisi doğruluyor, ve yazdıktan sonra bytecode'u düşürüyor.
+sys.path.insert(0, ".claude/hooks")
+import _perturb  # noqa: E402
+
+
 def with_patched(path: Path, text: str, body: callable) -> None:
     """Replace a tracked file's bytes, run `body`, then restore them exactly."""
-    original = path.read_bytes()
-    backup = Path(tempfile.mkstemp(suffix=path.suffix)[1])
-    backup.write_bytes(original)
-    try:
-        path.write_text(text, encoding="utf-8")
+    with _perturb.patched(path, text):
         body()
-    finally:
-        path.write_bytes(backup.read_bytes())
-        backup.unlink(missing_ok=True)
-        if path.read_bytes() != original:  # paranoia: a gate must not corrupt the repo
-            shutil.copyfile(backup, path)
 
 
 workflow_text = WORKFLOW.read_text(encoding="utf-8")

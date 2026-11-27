@@ -84,23 +84,25 @@ def run_tests() -> int:
     return done.returncode
 
 
+# Bozma/geri yükleme `_perturb`'e devredildi (`H23`): tek uygulama, ve geri
+# yüklerken bytecode'u geçersiz kılıyor. Bu kapı `.md`/`.yaml` bozuyor, ama
+# yardımcının paylaşılması `.py` bozan ilk kapının sessizce yanlış-yeşil
+# vermesini engelliyor — ölçülmüş tuzak, `H23`'ün satırında.
+sys.path.insert(0, ".claude/hooks")
+import _perturb  # noqa: E402
+
+
 def perturb(path: Path, old: str, new: str, label: str) -> int | None:
     """Temporarily replace `old` with `new`, run the tests, restore exactly."""
-    original = path.read_bytes()
-    text = original.decode("utf-8")
-    if text.count(old) != 1:
-        problems.append(f"{label}: çapa {text.count(old)} kez bulundu, 1 olmalı")
-        return None
-    backup = Path(tempfile.mkstemp(suffix=path.suffix)[1])
-    backup.write_bytes(original)
     try:
-        path.write_text(text.replace(old, new, 1), encoding="utf-8")
-        return run_tests()
-    finally:
-        path.write_bytes(backup.read_bytes())
-        backup.unlink(missing_ok=True)
-        if path.read_bytes() != original:
-            problems.append(f"{label}: dosya geri yüklenmedi — kapı depoyu bozdu")
+        with _perturb.perturbed(path, old, new):
+            return run_tests()
+    except ValueError as exc:
+        problems.append(f"{label}: {exc}")
+        return None
+    except RuntimeError as exc:  # geri yükleme başarısız — depo kirli
+        problems.append(f"{label}: {exc}")
+        return None
 
 
 # ---- 2  sahipsiz bölüm ---------------------------------------------------
