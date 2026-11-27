@@ -72,8 +72,14 @@ def fetch(url: str, timeout: int = 90) -> str:
 
 # ---- 1  her accession bir PMID ve künye taşıyor ------------------------
 # Künye tablosu: | `GSE…` | PMID | ilk yazar | dergi, cilt (yıl) |
+#
+# ⚠️ PMID hücresi **7-8 haneli** olmak zorunda. İlk hali `(\d+)` idi ve §6'ya
+# accession ile anahtarlanmış İKİNCİ bir tablo (seed envanteri) eklenince
+# onun satırlarını künye satırı sanmaya başladı: `GSE41924`'ün "PMID"i kol
+# sayısı olan **3** okundu. Kapı bunu yakaladı — bir PMID'in tek haneli
+# olamayacağını kontrol etmiyordu, yani biçimi değil yalnız varlığı ölçüyordu.
 rows = re.findall(
-    r"^\|\s*`(GSE\d+)`\s*\|\s*(\d+)\s*\|\s*([^|]+?)\s*\|\s*([^|]+?)\s*\|\s*$",
+    r"^\|\s*`(GSE\d+)`\s*\|\s*(\d{7,8})\s*\|\s*([^|]+?)\s*\|\s*([^|]+?)\s*\|\s*$",
     body,
     re.M,
 )

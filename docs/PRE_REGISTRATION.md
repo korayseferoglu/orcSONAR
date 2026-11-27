@@ -35,7 +35,20 @@ Dayanak, ve sınırı:
   kurulmuş bir olgu: seed'e komplementer diziler bakımından zenginleşme var, ve
   **seed mutasyona uğratılınca yeni seed'e uyan yeni bir off-target imzası**
   doğuyor — yani ilişki nedensel yönde sınanmış
-  ([Birmingham ve ark., *RNA* 2006](https://rnajournal.cshlp.org/content/12/7/1179.full)).
+  ([**Jackson** ve ark., *RNA* 12(7):1179-1187, 2006, **PMID 16682560**](https://rnajournal.cshlp.org/content/12/7/1179.full)),
+  ve bu çalışmanın verisi §6'da kilitlenen `GSE5814`'ün kendisi — yani
+  mekanizma kararı ile değerlendirme seti aynı deneyden geliyor.
+  Bağımsız bir ikinci dayanak, **farklı** bir çalışma:
+  [Birmingham ve ark., *Nat Methods* 3(3):199-204, 2006, PMID 16489337](https://pubmed.ncbi.nlm.nih.gov/16489337/)
+  — *"3′ UTR seed matches, but not overall identity, are associated with RNAi
+  off-targets"*.
+  ⚠️ **Bu satır 2026-11-27'de düzeltildi:** ilk hali bu iddiayı *"Birmingham
+  ve ark., RNA 2006"* diye yazıp Jackson'ın makalesine link veriyordu. Künye
+  ölçüldü: o URL `RNA` 12(7):1179'dur ve **Jackson**'dır; Birmingham *Nat
+  Methods*'tadır; `RNA` 12(7)'nin diğer makalesi Fedorov ve ark. 1188-1196
+  (PMID 16682561), **başka** bir iddia (toksik fenotip). Üçü karıştırılması
+  kolay ve `A2b` satırı tam bu tuzağa karşı yazılmıştı; PMID'ler bu yüzden
+  artık metnin içinde.
 - Seed'in tanımı literatürde zaten **iplik-agnostik**: "her iki siRNA ipliğinin
   5′ ucundan 2–8. pozisyonu"
   ([Chemical modification of the siRNA seed region, *ACS Omega* 2017](https://pubs.acs.org/doi/full/10.1021/acsomega.7b00291)).
@@ -63,9 +76,86 @@ Nasıl hesaplanacağı: <formül ya da fonksiyon adı, belirsizlik bırakmadan>
 
 ## 4. Eşikler ve karar kuralı
 
-- Başarı eşiği: <sayı ve birimi>
-- Bu eşik neden bu: <önceki ölçüm, literatür ya da güç analizi>
-- Eşiğin altı: <ne sonuçlanır — bu da bir sonuçtur, değişmez 7>
+### 4.1 Etiket tanımı — bir genin "off-target" sayılması
+
+**Birincil etiket:** `PVALUE < 0.01` **ve** `VALUE < 0`, §6.3'ün ifade
+evreninde, her array için ayrı ayrı.
+
+**Neden bu, ve neden bir kat-değişim eşiği DEĞİL.** Kaynak makalelerin üçü de
+tam bunu kullanıyor ve kat-değişime **hiç** kesim koymuyor. Jackson ve ark.
+2006a (PMID 16682560) yöntem bölümünde kelimesi kelimesine: *"Data shown are
+signature genes that display a difference in expression level (p < 0.01)
+relative to mock-transfected cells. **No cuts were placed on fold change in
+expression.**"* Aynı cümle 2006b'de (PMID 16682562) de var; Schwarz ve ark.
+(PMID 16965178) *"(p < 0.01, in one or two experiments…)"* diyor. Testin
+kendisi Rosetta Resolver prob-başına hata modeli (Hughes ve ark. 2001,
+PMID 11283592) ve **GEO kaydında `PVALUE` kolonu olarak zaten geliyor** — yani
+bu projenin ~161 array'inin 147'si için sahip olacağı **tek** gen-başına hata
+modeli. Bir çıplak kat-değişim eşiği onu çöpe atıp yerine ayarlanması gereken
+bir serbest parametre koyardı.
+
+🔬 **Ve ölçüm kararı serbest parametresiz hale getiriyor.** Altı array'de
+(üç seri, üç platform) `{p<0.01 ve aşağı}` ile
+`{p<0.01 ve log2FC ≤ −0.3}` **birebir aynı prob kümesini** veriyor
+(640/640, 307/307, 367/367, 575/575, 509/509, 280/280), çünkü `p<0.01`'e
+ulaşan **en zayıf** düşüş zaten **−0.382 … −0.394 log2** aralığında. Yani
+`p<0.01` kat-değişim eşiğini *ima ediyor*; ikisini birlikte yazmak hem
+kaynak makalelerin ölçütünü hem siSPOTR'ın eşiğini hem MAQC'nin
+"kat-değişim + sıkı olmayan bir P" doktrinini **ayarlama yapmadan**
+karşılıyor. ⚠️ Bu denklik 6 array'de ölçüldü, ~161'inde değil; `E0` ölçeğe
+çıktığında bozulursa birincil ölçüt kararı **yeniden açılır** ve bu satır onu
+şimdiden söylüyor.
+
+### 4.2 Ölçek, yön ve dönüşüm — sayıdan önce gelen şey
+
+🔴 **Eşik yazmadan önce ölçeği yazmak zorunlu, çünkü bu sette iki farklı
+"−0.3" var ve ikisi farklı log tabanında.** siSPOTR'ın `−0.3`'ü **log2**
+(1,23 kat); Anderson 2008'in (PMID 18367722) `−0.3`'ü **log10**, ve o
+kelimesi kelimesine *"down-regulated by **twofold or more** (log ratio more
+negative than −0.3)"* diyor.
+
+Ölçülmüş olgular (GEO kayıtlarından, 2026-11-27):
+
+- `GSE5814`, `GSE5769`: `#VALUE = Corrected (normalized) **Log10** Ratio of
+  channels (CH2/CH1)`
+- `GSE5291`: `#VALUE = MLRATIO: Averaged **log10** ratio
+  [log10(CHANNEL1/CHANNEL2), error weighted]`
+- Dönüşüm sabiti: **`log2FC = VALUE × 3.321928`**
+- Yön: `GSE5814`/`GSE5769` ch1=mock, ch2=işlem; `GSE5291` **ch1=işlem,
+  ch2=mock** *ve* oranı ters. **İki ters çevirme birbirini götürüyor**, üçü de
+  `log10(işlem/mock)`, yani negatif = aşağı regülasyon. ⚠️ Yönü **yalnız**
+  `VALUE` dizgisinden ya da **yalnız** `characteristics` alanından okuyan biri
+  `GSE5291`'in işaretini ters çevirir — **iki alan birlikte** okunmak zorunda.
+
+**Sayısal örnek, karışmasın diye:** `VALUE = −0.1150` →
+`log2FC = −0.1150 × 3.321928 = −0.3820` → kat değişimi `2^−0.382 = 0.767`,
+yani **%23 azalma**. Aynı `−0.3` sayısı dönüştürülmeden uygulanırsa
+`log10 = −0.3` → `2 kat azalma` okunur. Ölçülen maliyet: aynı array'de
+280 pozitif yerine **8** pozitif (35 kat), başka bir array'de 640 yerine 80.
+
+### 4.3 Duyarlılık ızgarası — ilan edilmiş, ve birincil asla yeniden atanmaz
+
+Tam ızgara **her zaman raporlanır**: log2FC ≤
+`{−0.1, −0.2, −0.3, −0.4, −0.5, −0.75, −1.0}`, artı BH `q < 0.05`.
+**Birincil hücre §4.1'dir ve ızgara görüldükten sonra yeniden atanmaz.**
+
+⚠️ Bunun neden kuralla yazıldığı ölçülmüş: eşiği `−1.0`'dan `−0.1`'e
+gevşetmek pozitif oranını ~%1'den ~%36'ya çıkarır ve **PR-AUC'yi mekanik
+olarak yükseltir**. Bu, "ölü bir kanalı telafi etmek için eşik indirmek"
+hamlesinin tam kendisi (değişmez 7), ve görünür kalmasının yolu her PR-AUC'nin
+**kendi taban oranıyla ve `lift = PR-AUC / taban` olarak** raporlanması —
+bu da ön kayıtlı bir zorunluluktur.
+
+📌 **İlan edilmiş döngüsellik:** siSPOTR'ın `−0.3`'ü 0,05-log2 aralıklarını
+tarayıp seed-vs-arka plan ayrımını maksimize eden aralığı **seçerek**
+türetilmiş, ve eğitim verisi **`GSE5291` ve `GSE5769`** — yani bu projenin
+kilitlediği setin ikisi. Dolayısıyla `−0.3` bu proje için **bağımsız bir eşik
+değil**; ızgarada ilan edilmiş bir hücre olarak durur, gerekçe olarak değil.
+
+### 4.4 Karar kuralı
+
+Başarı eşiği `A6a`'da sayıyla yazılı (aynı bölüm). Eşiğin altı kalırsa sonuç
+**negatif olarak** raporlanır; planı §9'da (`A15`).
 
 ## 5. Null modeli
 
@@ -134,13 +224,38 @@ alınamaz.
   yok), ama *sanki bağımsız bir off-target çalışmasıymış gibi* sayılmasını
   engellemek için burada yazılı.
 
-### 6.2 Bağımsız dizi sayısı: ~14, ve üç kol tipi tabandan dışlanıyor
+### 6.2 Bağımsız birim **seed heptameri**: ~43, ve üç kol tipi tabandan dışlanıyor
 
-Ölçülen ayrık **ebeveyn dizi** sayısı **yaklaşık 14**: `MAPK14-193`,
-`PLK1-319`, `PLK-772`, `Luc`, `PIK3CA-2629`, `MPHOSPH1-2692`, `SOS1-1582`,
-`PRKCE-1295`, `VHL-2651`, `VHL-2652`, `SOD1` (iki varyant), `GAPDH`, `EGFP`,
-`LMNA`, `VIM-270`. 171 örnek bunların kolları, tekrarları ve kimyasal
-varyantları.
+⚠️ **Bu bölümün ilk hali birimi yanlış seçmişti ve 2026-11-27'de düzeltildi.**
+"Ayrık ebeveyn dizi"yi **hedef gen etiketine** göre saymış ve ~14 bulmuştu; o
+sayı `GSE5291`'i **iki** dizi sanıyordu. Doğru birim hedef gen değil, modelin
+tahmin ettiği şey: **2-8 seed heptameri**.
+
+Ölçülen envanter:
+
+| seri | kol | ayrık seed heptameri | neden |
+|---|---|---|---|
+| `GSE5814` | 19 pozisyon mutantı + WT + 3 başka reaktif | **~8** (+3) | seed 2-8 olduğu için **1. ve 9-19. pozisyon mutantları yabani-tip seed'i AYNEN taşır**; yalnız 2-8'deki yedi mutant yeni seed üretir. Bu aritmetik, atıf değil |
+| `GSE5769` | 61 array | **~8** | yedi ebeveyn dizi + `MAPK14-193`; `AS_pos2_modified` kolları ve doz/zaman serisi **diziyi değiştirmiyor**, kimyayı değiştiriyor |
+| `GSE5291` | 18 array | **18** | SNP **18 ayrı pozisyona** yerleştirilmiş, yani 18 ayrı dizi ve 18 ayrı seed (örnek başlıkları: *"SOD1 SNP at position 1…19"*). **Bu, kilitlenen setin en güçlü serisi** |
+| `GSE41924` | 3 | 1 | tek `GAPDH` siRNA'sı |
+| `GSE44256` | 4 | 1 | tek tanımlı `EGFP` siRNA'sı; pro-siRNA kolları havuz |
+| `GSE44105` | 6 | 1 | tek `LMNA` siRNA'sı |
+| `GSE278438`+`GSE278439` | 11 | **1** | hepsi `siVIM-270`, yalnız kimyası değişiyor |
+
+**Toplam ≈ 43 ayrık seed**, ve bunun **39'u 2006'nın üç serisinden**. 171
+örnek bunların kolları, tekrarları ve kimyasal varyantları. ⚠️ `GSE5814` ve
+`GSE5769`'un tam sayıları dizileri elde edilince `E0`'da kesinleşecek
+(yayınların ek dosyalarında); yukarıdaki *"~8"*ler yapıdan türetilmiş alt
+sınırlar, ölçülmüş sayılar değil — **bu belirsizlik burada yazılı, çünkü
+`A12`'den sonra düzeltilemez.**
+
+📌 **Sonuç, ve `A4`'ün CV şemasını bağlıyor: CV birimi ayrık seed
+heptameridir.** Kol düzeyinde ya da dupleks düzeyinde fold kurmak aynı seed'i
+foldlar arasında sızdırır. Bu bizim çıkarımımız değil, alanın yaptığı:
+**siSPOTR `GSE5814`'ü tam bu sebeple kendi eğitim setinden çıkardı**
+(*"77 of the experiments tested siRNAs with the same seed sequence"*), ve
+MIRZA-G yalnız o serinin ayrık-seed kollarını kullandı.
 
 Üç kol tipi, ölçülmüş gerekçeyle, **birincil değerlendirmenin dışında**:
 
