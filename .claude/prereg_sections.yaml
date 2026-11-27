@@ -57,7 +57,7 @@ sections:
       (`null-check`); A12 locks the version of it that was measured.
   6:
     title: Örneklem ve veri
-    owners: [A2, A2b, A8, A9]
+    owners: [A2, A2b, A8, A8b, A9]
     note: >-
       A2 locks the accessions, A2b verifies each one's identity, A8 defines the
       evaluation universe (expressed in HeLa), A9 the on-target and

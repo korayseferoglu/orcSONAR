@@ -69,7 +69,7 @@ RECORD = Path("reports/a8-filtre-2026-11-27")
 problems: list[str] = []
 text = DOC.read_text(encoding="utf-8")
 
-found = re.search(r"^### 6\.4 (.+?)$(.*?)(?=^## 7\.)", text, re.S | re.M)
+found = re.search(r"^### 6\.4 (.+?)$(.*?)(?=^### 6\.5|^## 7\.)", text, re.S | re.M)
 if not found:
     sys.exit("§6.4 (tespit edilebilirlik filtresi) bölümü bulunamadı")
 body = found.group(2)

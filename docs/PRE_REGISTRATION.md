@@ -730,6 +730,114 @@ lift'i **aşağı** yönde sapıyor, yani `GSE5291` bu yüzden avantajlı **değ
 Sapma %5 ile sınırlı ve ihtiyatlı yönde; seri başına raporlanır.
 
 
+### 6.5 Prob → gen ve site → gen: çökertme kuralları ve **yönleri**
+
+🔴 **Bu bölüm `A8` biterken bulunan bir boşluğu kapatıyor, ve boşluk
+ölçüldü.** §6.3 birimin **gen** olduğunu söylüyor, §2 "evrendeki her **geni**
+sıralar" diyor — ama §4.1'in etiketi ve §6.4'ün filtresi **prob** düzeyinde
+çalışıyor. Aradaki adım belgenin hiçbir yerinde yazılı değildi, ve o adım
+masum değil: platformlarda sembollerin **%13,9-20,5'i birden fazla prob**
+taşıyor (tek sembolde en çok 15 prob), ve ölçülen dokuz array'in hepsinde
+**pozitif içeren çok-problu genlerin %59-84'ünde problar §4.1 etiketinde
+çelişiyor** — biri `p<0.01 ve aşağı`, diğeri değil.
+
+#### 6.5.1 Etiket tarafı: tek prob, **etiketten bağımsız** bir istatistikle
+
+**Kural:** bir genin etiketi, o genin problarından **mock kanalı
+yoğunluğu en yüksek** olanın etiketidir (`log10(INTENSITY1)`); kanal-başına
+yoğunluk olmayan serilerde (`GSE5291`, §7.5) `LOGINTENSITY`'nin en yükseği.
+Eşitlikte **en küçük prob kimliği** seçilir.
+
+Yöntem Miller ve ark.'nın `collapseRows`'undaki `MaxMean` (`1.max`): *"we
+choose the row with the highest mean expression (1.max)"*, ve prob→gen
+çökertmesi için önerdikleri strateji — *"we find that the 1.max strategy"*
+… *"produces the most robust results"*, özette *"choosing the probe with the
+highest average expression leads to best between-study consistency"*
+(**BMC Bioinformatics 2011;12:322, PMID 21816037,
+DOI 10.1186/1471-2105-12-322**).
+
+⚠️ **Üç sınır, ve üçü de burada yazılı çünkü atıf olduğundan fazlasını
+söyleyemez:**
+
+1. **Makale diferansiyel ifade analizini HİÇ ele almıyor.** Önerisi
+   çalışmalar-arası tutarlılık ve koekspresyon üzerine. Yani bu atıf seçim
+   kuralının **sağlamlığını** destekler, onun DE etiketlemede kullanımını
+   desteklemez. Bu ayrım yazılmazsa atıf sahip olmadığı bir yetki taşır.
+2. **Kendi çekinceleri:** *"the optimal collapsing strategy depends on the
+   analysis goal"*, ve varsayılanlar *"often, but not always, the best
+   parameters to use"*. Tam kan verisinde ise açıkça tersini söylüyorlar:
+   *"Choosing the gene with the maximum mean expression (1.max), however, is
+   a much less robust method, and should not be used in this situation."*
+3. **Eşitlik kuralı DEĞİŞTİRİLDİ:** `collapseRows` eşitlikte *"randomly
+   chooses a representative row"*. Ön kayıtlı bir evren rastgele
+   kurulamaz — tekrar koşulduğunda farklı bir evren verirdi. Bu yüzden
+   eşitlik **en küçük prob kimliğiyle** çözülüyor: keyfi, ama determinist.
+
+🔬 **Neden seçim, neden toplama değil — ölçülmüş YÖN.** Dokuz array'de dört
+kural karşılaştırıldı (`reports/a8b-cokertme-2026-11-27/`):
+
+| kural | medyan taban oranı | `maxmean`'e göre pozitif sayısı | etiketi görüyor mu |
+|---|---|---|---|
+| `any` (herhangi bir prob pozitifse) | 0,0604 | **+5,4%** | evet, OR olarak |
+| `best-p` (en küçük `PVALUE`'lu prob) | 0,0603 | **+5,4%** | **evet, doğrudan** |
+| **`maxmean` (seçilen, birincil)** | **0,0577** | — | **hayır** |
+| `all` (tüm problar pozitifse) | 0,0519 | **−9,6%** | evet, AND olarak |
+
+Dördü **farklı pozitif kümeleri** üretiyor, ve taban oranı `lift`'in
+bölenidir — yani kuralı sonucu gördükten sonra seçmek doğrudan metriği
+seçmek olur. `any`, `all` ve `best-p`'nin üçü de kararı **etikete bakarak**
+veriyor; `maxmean` seçim istatistiğinde etiketi hiç kullanmıyor, ve pozitif
+sayısı bu üçünün **ortasında** kalıyor. Birincil bu yüzden `maxmean`: en çok
+ya da en az pozitif üreten kural değil, **kararı etiketten bağımsız veren**
+kural.
+
+📌 `any` ve `all` **ilan edilmiş duyarlılık analizleri** olarak her zaman
+raporlanır (§4.3'ün ızgara mantığı). `best-p` **raporlanmaz ve
+kullanılmaz** — buraya yalnız karşıtlık için yazıldı: ölçüm onun `any` ile
+neredeyse birebir aynı sonucu verdiğini gösteriyor, yani "en anlamlı probu
+al" masum görünen bir kuralken aslında pozitif kümesini maksimize ediyor.
+
+⚠️ **`LOGINTENSITY` kullanılan serilerde zayıf bir etiket bağımlılığı var ve
+yönü ihtiyatlı:** ortalama iki kanalı içerdiği için aşağı regüle olmuş bir
+probun ortalaması düşer, yani seçim bir genin **daha az** düşmüş probuna
+kayar → daha az pozitif. Bu yön §6.3 ve §6.4.2'nin ilan ettiği yönle aynı:
+pozitif *silmek*, pozitif *uydurmak* değil.
+
+#### 6.5.2 Gen evrenine geçişin kendi bedeli
+
+🔬 **Sembole eşleşmeyen problar gen evreninden düşüyor: %8,5-17,2** (ölçüldü,
+platforma göre). §6.4'ün prob evreni ile §6.5'in gen evreni bu yüzden aynı
+büyüklükte değil — örnek olarak ölçülen bir array'de 11.009 prob → 8.810 gen.
+Düşen probların sayısı ve oranı **array başına raporlanır**; sessizce
+düşmezler. ⚠️ Eşleşme platform annotasyonunun kalitesine bağlı ve Miller ve
+ark.'nın uyarısı aynen geçerli: *"group assignments should be carefully
+checked"*, çünkü fonksiyon *"does not test whether annotations are correct"*.
+
+#### 6.5.3 Skor tarafı: site → gen **maksimum**
+
+orcSONAR site başına skor üretiyor (`site_id`, kural 10) ve bir gende birden
+çok seed eşleşme sitesi olabilir. **Kural: genin skoru sitelerinin
+maksimumudur.**
+
+🔴 **Gerekçe, ve neden toplam DEĞİL:** `toplam` ve `sayı` site sayısında
+**monoton**dur, ve site sayısı tam olarak §7.5'in **1 numaralı tabanı**
+(3′UTR 7mer-m8 sayısı) ile **3 numaralı tabanı** (transkript uzunluğu;
+denetim hit sayısı ↔ cDNA uzunluğu `r = 0,349` buldu). Toplamla çökertmek,
+modeli aşması gereken tabanın **kısmen kendisi** yapardı — aşması
+beklenen şeyi içine almış bir model, kendi kontrolünü geçemez.
+
+📌 **§1'in hipotezi sayı diliyle yazılı** (*"eşleşme sayısı arttıkça…"*) ve
+bu bir çelişki değil, iş bölümü: çıplak **sayı** 1 numaralı tabanın
+operasyonel hali, orcSONAR'ın iddiası ise **site-başına kanıtın** (ΔG,
+erişilebilirlik, ifade) o çıplak sayıya **eklediği** şey. Maksimum, modelin
+sayıya indirgenmeden site-başına kanıtı taşımasının yolu.
+
+📌 **`toplam` ilan edilmiş bir duyarlılık analizi** olarak raporlanır,
+birincil olarak **asla**. Ve `maksimum` seçimi §4.4.2'nin ön koşulunu
+kolaylaştırmıyor: tek siteli genlerde iki kural aynı sayıyı verir, yani
+çözünürlük sorunu (`C1`, ≥500 ayrık değer) buradan kaçırılamaz.
+
+
 ## 7. Analiz planı
 
 Burada yazılmayan bir analiz keşifseldir ve yayında öyle etiketlenir (§10).
