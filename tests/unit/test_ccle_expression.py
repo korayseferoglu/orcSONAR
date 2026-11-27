@@ -133,24 +133,31 @@ class TestCCLERealData:
         result = reader.get_expression("VEGFA", "MCF7")
         assert result.is_expressed is True
 
-    def test_gene_not_found_returns_neutral(self, tmp_path: Path) -> None:
+    def test_gene_not_found_is_unknown_not_zero(self, tmp_path: Path) -> None:
+        """Roadmap B19. An expression of 0.0 means *not expressed*, which means
+        *cannot be silenced*, which reads as **lower risk** — for a gene nobody
+        measured. These three tests asserted that 0.0 until B19; they were
+        pinning the invariant-2 violation in place.
+        """
         reader = _make_real_reader(tmp_path)
         result = reader.get_expression("NOTAREALGENEXYZ123", "HeLa")
-        assert result.expression_value == pytest.approx(0.0)
-        assert result.is_expressed is False
-        assert result.expression_percentile == pytest.approx(0.0)
+        assert result.expression_value is None
+        assert result.is_expressed is None
+        assert result.expression_percentile is None
 
-    def test_cell_line_not_found_returns_neutral(self, tmp_path: Path) -> None:
+    def test_cell_line_not_found_is_unknown_not_zero(self, tmp_path: Path) -> None:
         reader = _make_real_reader(tmp_path)
         result = reader.get_expression("VEGFA", "NotARealCellLine")
-        assert result.expression_value == pytest.approx(0.0)
-        assert result.is_expressed is False
+        assert result.expression_value is None
+        assert result.is_expressed is None
 
-    def test_hek293t_absent_returns_neutral(self, tmp_path: Path) -> None:
-        # HEK293T has null in ccle_depmap_ids.yaml → reader skips it
+    def test_hek293t_absent_is_unknown_not_zero(self, tmp_path: Path) -> None:
+        # HEK293T is null in ccle_depmap_ids.yaml: there is no DepMap model for
+        # it, so there is nothing to look up — and nothing to look up is not a
+        # measured zero.
         reader = _make_real_reader(tmp_path)
         result = reader.get_expression("VEGFA", "HEK293T")
-        assert result.expression_value == pytest.approx(0.0)
+        assert result.expression_value is None
 
     def test_percentile_within_unit_interval(self, tmp_path: Path) -> None:
         reader = _make_real_reader(tmp_path)
@@ -196,24 +203,26 @@ class TestCCLEMock:
         assert result.expression_value == pytest.approx(0.3)
         assert result.is_expressed is False
 
-    def test_gene_not_found_returns_neutral(self, tmp_path: Path) -> None:
+    def test_gene_not_found_is_unknown(self, tmp_path: Path) -> None:
+        """Roadmap B19: a gene absent from the header was never measured."""
         reader = _make_mock_reader(tmp_path)
         result = reader.get_expression("FAKEGENE", "MockHeLa")
-        assert result.expression_value == pytest.approx(0.0)
-        assert result.is_expressed is False
-        assert result.expression_percentile == pytest.approx(0.0)
+        assert result.expression_value is None
+        assert result.is_expressed is None
+        assert result.expression_percentile is None
 
-    def test_cell_line_not_in_depmap_returns_neutral(self, tmp_path: Path) -> None:
+    def test_cell_line_not_in_depmap_is_unknown(self, tmp_path: Path) -> None:
         reader = _make_mock_reader(tmp_path)
         result = reader.get_expression("VEGFA", "UnknownLine")
-        assert result.expression_value == pytest.approx(0.0)
-        assert result.is_expressed is False
+        assert result.expression_value is None
+        assert result.is_expressed is None
 
-    def test_ach_id_not_in_csv_returns_neutral(self, tmp_path: Path) -> None:
-        # MockNoDefault has IsDefaultEntryForModel=No → excluded
+    def test_ach_id_not_in_csv_is_unknown(self, tmp_path: Path) -> None:
+        # MockNoDefault has IsDefaultEntryForModel=No → excluded. An excluded
+        # row is a row nobody read, not a row that read zero.
         reader = _make_mock_reader(tmp_path)
         result = reader.get_expression("VEGFA", "MockNoDefault")
-        assert result.expression_value == pytest.approx(0.0)
+        assert result.expression_value is None
 
     def test_percentile_less_than_one(self, tmp_path: Path) -> None:
         reader = _make_mock_reader(tmp_path)
@@ -233,7 +242,7 @@ class TestCCLEMock:
         assert result.gene == "TP53"
         assert result.cell_line == "MockHeLa"
 
-    def test_csv_not_found_returns_neutral(self, tmp_path: Path) -> None:
+    def test_csv_not_found_is_unknown(self, tmp_path: Path) -> None:
         config = _make_config(tmp_path)
         depmap_yaml = tmp_path / "ccle_depmap_ids.yaml"
         depmap_yaml.write_text(_yaml.dump(_MOCK_DEPMAP), encoding="utf-8")
@@ -243,7 +252,8 @@ class TestCCLEMock:
             depmap_ids_yaml=depmap_yaml,
         )
         result = reader.get_expression("VEGFA", "MockHeLa")
-        assert result.expression_value == pytest.approx(0.0)
+        # A missing CSV is the loudest possible "not measured".
+        assert result.expression_value is None
 
     def test_cache_hit_skips_read_csv(self, tmp_path: Path) -> None:
         reader = _make_mock_reader(tmp_path)
@@ -318,3 +328,43 @@ class TestLoadDepMapIds:
     def test_missing_yaml_returns_empty(self, tmp_path: Path) -> None:
         mapping = CCLEReader._load_depmap_ids(tmp_path / "nonexistent.yaml")
         assert mapping == {}
+
+
+# ---------------------------------------------------------------------------
+# B19 — the unknown must survive all the way to the merger
+# ---------------------------------------------------------------------------
+
+
+class TestUnknownReachesTheMerger:
+    """A `None` at the source is only useful if nothing downstream fills it in.
+
+    The merger was already built for this by `B2`: `ScoreComponents.
+    ccle_expression` is `float | None` and `epigenetic_merger` excludes an
+    unknown channel and renormalises the remaining weights. What was missing
+    was the signal ever *being* unknown — so these tests pin the seam, which
+    is where this project keeps losing things (`H4`'s porcelain bug).
+    """
+
+    def test_model_default_is_unknown(self) -> None:
+        from src.core.models import CCLEResult
+
+        result = CCLEResult(gene="X", cell_line="HeLa")
+        assert result.expression_value is None
+        assert result.is_expressed is None
+        assert result.expression_percentile is None
+
+    def test_adapter_failure_path_writes_null_not_zero(self, tmp_path: Path) -> None:
+        """`ccle_reader`'s except branch hand-wrote three zeros."""
+        import inspect
+
+        from src.stage4_epigenetic import ccle_reader
+
+        source = inspect.getsource(ccle_reader)
+        assert '"expression_value": 0.0' not in source
+        assert '"expression_percentile": 0.0' not in source
+
+    def test_merger_excludes_an_unknown_expression(self) -> None:
+        from src.stage4_epigenetic.epigenetic_merger import _as_optional
+
+        assert _as_optional(None) is None
+        assert _as_optional(0.0) == 0.0  # a measured zero stays a zero

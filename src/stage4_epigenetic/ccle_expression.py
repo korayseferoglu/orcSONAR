@@ -77,15 +77,22 @@ class CCLEReader:
     def get_expression(self, gene: str, cell_line: str) -> CCLEResult:
         """Return log₂(TPM+1) expression for a gene in a cell line.
 
-        Results are cached in SQLite.  Returns a neutral ``CCLEResult`` with
-        ``expression_value=0.0`` when the cell line or gene is not found.
+        Measured results are cached in SQLite. An **unknown** result — the
+        cell line has no DepMap model, the gene is absent from the CCLE header,
+        or the row could not be read — carries ``None`` and is deliberately
+        **not cached** (roadmap B19). Caching an unknown is how a transient
+        failure becomes a year-long one: `_CCLE_TTL_HOURS` is 8760, and B2
+        established the rule after the same mistake in `encode_reader`.
 
         Args:
             gene: HGNC gene symbol, e.g. ``"VEGFA"``.
             cell_line: Cell line name, e.g. ``"HeLa"``.
 
         Returns:
-            CCLEResult with expression value, expressed flag, and percentile.
+            CCLEResult whose fields are ``None`` when nothing was measured.
+            ``None`` is not ``0.0``: zero expression means the gene cannot be
+            silenced, which lowers risk, and an unmeasured gene must never do
+            that (invariant 2).
         """
         cache_key = f"ccle:{gene}:{cell_line}"
         with Cache(self._cache_db) as cache:
@@ -95,6 +102,12 @@ class CCLEReader:
                 return CCLEResult(**cached)
 
         result = self._compute_expression(gene, cell_line)
+
+        if result.expression_value is None:
+            logger.debug(
+                f"ccle_expression: {cell_line}/{gene} UNKNOWN — not cached"
+            )
+            return result
 
         with Cache(self._cache_db) as cache:
             cache.set(cache_key, result.model_dump(), ttl_hours=_CCLE_TTL_HOURS)
@@ -124,24 +137,30 @@ class CCLEReader:
     # ------------------------------------------------------------------
 
     def _compute_expression(self, gene: str, cell_line: str) -> CCLEResult:
-        neutral = CCLEResult(gene=gene, cell_line=cell_line)
+        # Not "neutral" — *unknown*. There is no neutral expression value: 0.0
+        # reads as "not expressed", so it reads as "cannot be silenced", so it
+        # lowers risk for a gene nobody looked up (roadmap B19, invariant 2).
+        # The name mattered: `_NEUTRAL_SIGNAL = 0.0` is how the same mistake
+        # survived six modules in `encode_reader` (B2).
+        unknown = CCLEResult(gene=gene, cell_line=cell_line)
 
         ach_id = self._depmap_ids.get(cell_line)
         if not ach_id:
             logger.warning(
                 f"ccle_expression: '{cell_line}' not in DepMap ID mapping "
-                f"(check config/ccle_depmap_ids.yaml)"
+                f"(check config/ccle_depmap_ids.yaml) — expression is UNKNOWN, "
+                f"not zero"
             )
-            return neutral
+            return unknown
 
         col_name = self._find_gene_column(gene)
         if col_name is None:
             logger.warning(f"ccle_expression: gene '{gene}' not found in CCLE header")
-            return neutral
+            return unknown
 
         value, percentile = self._load_expression(ach_id, col_name, cell_line)
         if value is None:
-            return neutral
+            return unknown
 
         return CCLEResult(
             gene=gene,

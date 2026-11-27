@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Literal
+from typing import Annotated, Literal
 
 from pydantic import BaseModel, Field, computed_field, field_validator
 
@@ -267,9 +267,15 @@ class CCLEResult(BaseModel):
 
     gene: str
     cell_line: str
-    expression_value: float = 0.0
-    is_expressed: bool = False
-    expression_percentile: float = Field(ge=0.0, le=1.0, default=0.0)
+    # `None` means not measured (roadmap B19). The old 0.0/False defaults were
+    # the fourth fallback B2 missed, and the worst-directed one: an expression
+    # of 0.0 reads as "not expressed", which reads as "cannot be silenced",
+    # which reads as **lower risk** — for a gene nobody looked up. Reached
+    # whenever the cell line has no DepMap model (HEK293T, GM12878) or the gene
+    # is absent from the CCLE header.
+    expression_value: float | None = None
+    is_expressed: bool | None = None
+    expression_percentile: Annotated[float, Field(ge=0.0, le=1.0)] | None = None
 
 
 class HiCResult(BaseModel):

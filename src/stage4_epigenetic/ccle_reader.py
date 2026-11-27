@@ -59,10 +59,16 @@ def run(
                     ccle_results[gene] = result.model_dump()
                 except Exception as exc:
                     logger.debug(f"ccle_reader: expression lookup failed for {gene}: {exc}")
+                    # A lookup that threw measured nothing. Writing zeros here
+                    # made a crashed lookup indistinguishable from a gene the
+                    # cell line genuinely does not express — and the second one
+                    # lowers risk (roadmap B19, invariant 2). `null` survives
+                    # to `epigenetic_merger`, which drops the unknown channel
+                    # and renormalises the remaining weights.
                     ccle_results[gene] = {
                         "gene": gene, "cell_line": cell_line,
-                        "expression_value": 0.0, "is_expressed": False,
-                        "expression_percentile": 0.0,
+                        "expression_value": None, "is_expressed": None,
+                        "expression_percentile": None,
                     }
         except Exception as exc:
             logger.warning(f"ccle_reader: reader init failed: {exc}")
