@@ -189,12 +189,12 @@ else:
 # ---- 7  TARAMA: kalan SAFE fallback'leri carve-out'lu olmalı ------------
 # Her carve-out onu KALDIRACAK yol haritası maddesini adlandırmak zorunda
 # (`H9`'un kalıbı), ve bayat bir carve-out kırmızıya düşer.
-CARVE_OUTS: dict[str, str] = {
-    "src/stage6_execution/immune_screen.py": "B11b",
-    # `ImmuneResult`'ın varsayılanı da aynı satırda duruyor ve aynı madde
-    # onu kaldırıyor.
-    "src/core/models.py": "B11b",
-}
+# `B11b` kapandığında bu sözlük BOŞALDI, ve boşalması kapı tarafından
+# zorlandı: `B11b`'nin düzeltmesinden sonra bu kapı "bayat carve-out" diye
+# kırmızıya düştü, yani muafiyetin kaldırılması bir hatırlama işi değil bir
+# ölçüm sonucu oldu. Yeni bir `SAFE` fallback'i eklenirse buraya bir satır
+# ve onu kaldıracak madde yazılmak ZORUNDA (`H9`'un kalıbı).
+CARVE_OUTS: dict[str, str] = {}
 out = subprocess.run(
     # Üç biçim: `risk_level="SAFE"` (çağrı), `risk_level: str = "SAFE"`
     # (alan varsayılanı — ilk regex bunu KAÇIRIYORDU ve carve-out bayat

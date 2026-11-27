@@ -117,9 +117,38 @@ class TestLoadMotifs:
         motifs = _load_motifs(f)
         assert len(motifs) == 2
 
-    def test_missing_file_returns_empty(self, tmp_path: Path) -> None:
-        motifs = _load_motifs(tmp_path / "nonexistent.txt")
-        assert motifs == []
+    def test_missing_file_returns_unknown_not_empty(self) -> None:
+        """Roadmap B11b, and this test asserted the conflation.
+
+        `[]` is what a readable file with no motifs returns, so a missing file
+        returning the same value left the caller unable to tell "we screened
+        against nothing" from "we screened and found nothing".
+        """
+        assert _load_motifs("/no/such/dir/nonexistent.txt") is None
+
+    def test_empty_file_is_also_unknown_and_here_is_why(self, tmp_path: Path) -> None:
+        """This is where B11b DIFFERS from B11, deliberately.
+
+        miRBase's `[]` — a readable catalogue with no human entry — is a
+        measured absence: there is genuinely no human miRNA to overlap with,
+        so SAFE is right (and `B11`'s control asserts exactly that). This
+        motif list is **our own curation**, six hand-written lines, so an
+        empty list does not mean "no immunostimulatory motifs exist"; it
+        means we compared the sequence against nothing. The decision the
+        caller makes is the same in both cases — there is no list to screen
+        against — so the type carries that, and the log distinguishes the
+        reasons.
+        """
+        empty = tmp_path / "motifs.txt"
+        empty.write_text("# only a comment\n\n", encoding="utf-8")
+        assert _load_motifs(empty) is None
+
+    def test_a_readable_list_with_motifs_is_still_a_list(self, tmp_path: Path) -> None:
+        """The control for the two above: unknown must not swallow everything."""
+        f = _write_motif_file(tmp_path)
+        motifs = _load_motifs(f)
+        assert motifs is not None
+        assert len(motifs) == 6
 
     def test_exact_motifs_from_spec(self, tmp_path: Path) -> None:
         f = _write_motif_file(tmp_path)
@@ -251,10 +280,64 @@ class TestScreenImmuneMotifs:
         assert result.risk_level == "HIGH"
         assert result.total_hits >= 2
 
-    def test_missing_motif_file_returns_safe(self, tmp_path: Path) -> None:
+    def test_missing_motif_file_returns_unknown_not_safe(self, tmp_path: Path) -> None:
+        """Roadmap B11b. "SAFE" from an unloadable list is a verdict from
+        absent data — invariant 2, and the shape `B11` removed from miRBase.
+
+        ⚠️ The sharper half of this finding: the adapter
+        (`immune_screener.py`) already writes unknown on failure, with a
+        comment citing the 2026-11-19 audit. But this function does not
+        *raise*, so the adapter's `except` never fires and the SAFE verdict
+        overwrites that correct placeholder. The unit's two halves disagreed
+        and the wrong half was the one that ran.
+        """
         result = screen_immune_motifs("GCUUUUGC", tmp_path / "missing.txt")
+        assert result.risk_level is None
+        assert result.total_hits is None
+        assert result.risk_score is None
+
+    def test_a_screen_that_ran_still_reports_safe(self, tmp_path: Path) -> None:
+        """The control. Without it the fix would make every verdict unknown.
+
+        A motif list that loaded, screened against a sequence with no hits,
+        is a *measured* absence of motifs — SAFE and 0.0 are correct.
+        """
+        f = _write_motif_file(tmp_path)
+        result = screen_immune_motifs("GCGCGCGCGCGCGCGCGCGC", f)
         assert result.risk_level == "SAFE"
         assert result.total_hits == 0
+        assert result.risk_score == pytest.approx(0.0)
+
+    def test_the_model_default_is_unknown(self) -> None:
+        bare = ImmuneResult()
+        assert bare.risk_level is None
+        assert bare.total_hits is None
+        assert bare.risk_score is None
+
+    def test_the_risk_level_type_matches_what_the_classifier_emits(self) -> None:
+        """`risk_level` was typed `str`, so a typo was a valid risk level.
+
+        The `Literal` is exactly the set `_classify_risk` can return — not a
+        wider one. "MODERATE" is absent on purpose: the classifier never
+        emits it (measured, `git grep MODERATE` over this channel is empty),
+        and declaring a value nothing produces is invariant 3's shape.
+        """
+        import typing
+
+        from src.core.models import ImmuneResult as Model
+
+        annotation = Model.model_fields["risk_level"].annotation
+        allowed = {
+            value
+            for arg in typing.get_args(annotation)
+            for value in typing.get_args(arg)
+            if isinstance(value, str)
+        }
+        emitted = {_classify_risk(n)[1] for n in (0, 1, 2, 5, 20)}
+        assert emitted <= allowed, f"classifier emits {emitted - allowed} but the model refuses it"
+        assert allowed == emitted, (
+            f"the model allows {allowed - emitted} which the classifier never emits"
+        )
 
     def test_total_hits_equals_len_motifs_found(self, tmp_path: Path) -> None:
         f = _write_motif_file(tmp_path)

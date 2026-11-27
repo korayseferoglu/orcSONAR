@@ -22,6 +22,7 @@ Risk classification:
 from __future__ import annotations
 
 from pathlib import Path
+from typing import Literal
 
 from loguru import logger
 
@@ -65,22 +66,38 @@ def _reverse_complement_rna(sequence: str) -> str:
     return "".join(reversed(comp))
 
 
-def _load_motifs(filepath: str | Path) -> list[str]:
+def _load_motifs(filepath: str | Path) -> list[str] | None:
     """Load immune motifs from a plain-text file.
 
     Lines starting with ``#`` and blank lines are skipped.  Each motif is
     normalised to uppercase RNA format (T → U).
 
+    ⚠️ ``None`` means **there is no motif list to screen against** — the file
+    is missing, unreadable, or holds no motif. Roadmap `B11b`; all three used
+    to return ``[]``, and the caller then reported ``"SAFE"`` for a sequence
+    it had compared against nothing.
+
+    ⚠️ And this is where `B11b` *differs* from `B11` on purpose. miRBase's
+    empty-but-readable case is a measured absence — there is genuinely no
+    human miRNA to overlap with — so it stays ``SAFE``. This list is **our own
+    curation**, so an empty one does not mean no immunostimulatory motif
+    exists; it means nothing was compared. The caller's decision is identical
+    in all three cases, so the type carries that and the log carries the
+    reason.
+
     Args:
         filepath: Path to the motif file.
 
     Returns:
-        List of motif strings (RNA, uppercase).  Empty list on file error.
+        List of motif strings (RNA, uppercase), or ``None`` when no usable
+        list could be read.
     """
     path = Path(filepath)
     if not path.exists():
-        logger.warning(f"immune_screen: motif file not found at '{path}'")
-        return []
+        logger.warning(
+            f"immune_screen: motif file not found at '{path}' — UNKNOWN, not SAFE"
+        )
+        return None
     motifs: list[str] = []
     try:
         for raw in path.read_text(encoding="utf-8").splitlines():
@@ -89,8 +106,17 @@ def _load_motifs(filepath: str | Path) -> list[str]:
                 continue
             motifs.append(_to_rna(line))
     except OSError as exc:
-        logger.error(f"immune_screen: cannot read motif file '{path}': {exc}")
-        return []
+        logger.error(
+            f"immune_screen: cannot read motif file '{path}': {exc} — "
+            "UNKNOWN, not SAFE"
+        )
+        return None
+    if not motifs:
+        logger.warning(
+            f"immune_screen: '{path}' holds no motif — UNKNOWN, not SAFE "
+            "(a hand-curated empty list means nothing was compared)"
+        )
+        return None
     logger.debug(f"immune_screen: loaded {len(motifs)} motifs from {path}")
     return motifs
 
@@ -146,9 +172,15 @@ def screen_immune_motifs(
         and risk level.
     """
     motifs = _load_motifs(motif_file)
-    if not motifs:
-        logger.warning("immune_screen: no motifs loaded — returning SAFE result")
-        return ImmuneResult(motifs_found=[], total_hits=0, risk_score=0.0, risk_level="SAFE")
+    if motifs is None:
+        # Not "SAFE": nothing was screened, so there is no verdict to give.
+        # This function does not raise, which is why the adapter's `except`
+        # never fired and this value overwrote its correct unknown
+        # placeholder (roadmap B11b).
+        logger.warning(
+            "immune_screen: no motif list — returning UNKNOWN (not SAFE)"
+        )
+        return ImmuneResult()
 
     sense = _to_rna(sarna_sequence)
     antisense = _reverse_complement_rna(sense)
@@ -180,7 +212,7 @@ def screen_immune_motifs(
     )
 
 
-def _classify_risk(total_hits: int) -> tuple[float, str]:
+def _classify_risk(total_hits: int) -> tuple[float, Literal["SAFE", "LOW", "HIGH"]]:
     """Map hit count to (risk_score, risk_level).
 
     Per spec: ≥2 hits → HIGH immunogenicity risk.

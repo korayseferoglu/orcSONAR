@@ -467,12 +467,24 @@ class MotifHit(BaseModel):
 
 
 class ImmuneResult(BaseModel):
-    """Immune motif screen result for a saRNA sequence (Stage 6)."""
+    """Immune motif screen result for a saRNA sequence (Stage 6).
+
+    ``total_hits``, ``risk_score`` and ``risk_level`` are ``None`` when the
+    screen could not run — invariant 2's shape, roadmap `B11b`. They used to
+    default to ``0``, ``0.0`` and ``"SAFE"``, so a sequence nobody screened
+    was reported as clean.
+
+    ``risk_level`` is a ``Literal`` of exactly what `_classify_risk` emits.
+    ``"MODERATE"`` is deliberately absent: the classifier never returns it
+    (measured — this channel contains no such value), and declaring a level
+    nothing produces is invariant 3's shape. Before `B11b` the field was
+    ``str``, so a typo would have been a silently valid risk level.
+    """
 
     motifs_found: list[MotifHit] = Field(default_factory=list)
-    total_hits: int = Field(ge=0, default=0)
-    risk_score: float = Field(ge=0.0, le=1.0, default=0.0)
-    risk_level: str = "SAFE"
+    total_hits: Annotated[int, Field(ge=0)] | None = None
+    risk_score: Annotated[float, Field(ge=0.0, le=1.0)] | None = None
+    risk_level: Literal["SAFE", "LOW", "HIGH"] | None = None
 
 
 class ExecutionScore(BaseModel):
