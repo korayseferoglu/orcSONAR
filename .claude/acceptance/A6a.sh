@@ -238,17 +238,25 @@ if MARGIN is not None and SIGMA is not None:
                 f"n={n}: §4.4 gücü {claimed:.3f} diyor, yeniden simülasyon "
                 f"{got:.3f} veriyor (m={MARGIN}, σ_d={SIGMA})"
             )
-    joint12 = expected["14"] ** 12
-    if joint12 >= 0.01:
-        problems.append(
-            f"12-koşullu birleşik güç {joint12:.4f} ≥ %1 — tabakaların tanıya "
-            "indirilmesinin gerekçesi bu sayıya dayanıyor"
-        )
+    # Koşul sayısı §4.4'ten okunuyor, betiğe gömülmüyor: `A5b` beşinci tabanı
+    # ekleyince 12 → 15 oldu ve gömülü bir sayı sessizce bayatlardı.
+    conj = re.search(r"\*\*(\d+)\s+kesişimsel koşul\*\*", body)
+    if conj is None:
+        problems.append("§4.4.5 kesişimsel koşul sayısını yazmıyor")
+    else:
+        k = int(conj.group(1))
+        joint = expected["14"] ** k
+        if joint >= 0.01:
+            problems.append(
+                f"{k}-koşullu birleşik güç {joint:.4f} ≥ %1 — tabakaların tanıya "
+                "indirilmesinin gerekçesi bu sayıya dayanıyor"
+            )
     if not [p for p in problems if "güç" in p or "n=" in p]:
         print(
             f"  4  güç yeniden simüle edildi: n=43 → {expected['43']:.3f}, "
             f"n=25 → {expected['25']:.3f}, n=14 → {expected['14']:.3f}; "
-            f"12 koşul birleşik ≤ {joint12:.4f}"
+            f"{conj.group(1) if conj else '?'} koşul birleşik ≤ "
+            f"{expected['14'] ** int(conj.group(1)) if conj else float('nan'):.6f}"
         )
 
 # ---- 5  KONTROL: ön koşul ne her şeyi reddediyor ne geçiriyor -----------

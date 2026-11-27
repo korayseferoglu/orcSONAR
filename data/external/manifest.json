@@ -15,6 +15,20 @@
         "B18",
         "A7"
       ]
+    },
+    {
+      "name": "de_prior/DE_Prior.txt",
+      "source": "https://raw.githubusercontent.com/maggiecrow/DEprior/master/DE_Prior.txt",
+      "doi": "10.1073/pnas.1802973116",
+      "release": "Crow et al. 2019, PNAS 116(13):6491-6500 (PMID 30846554), repo maggiecrow/DEprior @ master",
+      "downloaded": "2026-11-27",
+      "bytes": 745389,
+      "sha256": "e0c822026cc8159edd1d4f37e89e48c875fb1b92d0a21ac92a992827e2812881",
+      "licence": "NOT STATED — the repository carries no LICENSE file and the table has no terms header. Treated as all rights reserved: used locally, cited, and NOT redistributed. data/external/* is gitignored, so only this record travels with the repository.",
+      "note": "The fifth baseline of pre-registration 7.5 (A5b): a gene's prior probability of being called differentially expressed, built from 635 Gemma datasets on GPL570. Entrez-keyed, 19172 genes, DE_Prior_Rank in (0,1]. Chosen over an equivalent computed inside the locked evaluation set precisely because it is external: it cannot leak, and it leaves no free parameter to tune after A12. Scope limit measured, not assumed — its top ranks are sex-chromosome genes (XIST, DDX3Y, EIF1AY, KDM5D, USP9Y) because male-vs-female comparisons dominate the compendium, so in a single cell line it is weaker than the paper's headline AUROC suggests: median lift 1.27 over 20 distinct seeds here.",
+      "used_by": [
+        "A5b"
+      ]
     }
   ]
 }

@@ -344,7 +344,7 @@ d_i^b  =  AP_model(i) − AP_b(i)
   `n ≤ 25` için null dağılımı **tam** hesaplanır (normal yaklaşım bu örneklem
   büyüklüğünde yetersiz).
 - **Çoklu taban için α DÜZELTİLMEZ, ve bu bir ihmal değil.** Gereklilik
-  **kesişimsel**: dört tabanın **hepsi** aşılmalı. Böyle bir kural bir
+  **kesişimsel**: beş tabanın **hepsi** aşılmalı. Böyle bir kural bir
   kesişim-birleşim testidir ve boyutu `α`'yı **aşamaz** (Berger 1982), yani
   düzeltme gereksiz. Ters yönü de yazılı: FDA'nın 2022 çok-uç-noktalı
   kılavuzu kelimesi kelimesine *"increasing α for each co-primary endpoint is
@@ -362,17 +362,17 @@ hiçbiri okunmaz. Sağlanırsa, **her taban için** aralık hesaplanır ve verdi
 
 | sonuç | koşul | ne iddia edilir |
 |---|---|---|
-| **`GEÇTİ`** | dört tabanın **hepsinde** `d − m` için tek-yanlı Wilcoxon `p < 0,05` | orcSONAR her ucuz tabanı pratik olarak anlamlı bir farkla aşıyor |
+| **`GEÇTİ`** | beş tabanın **hepsinde** `d − m` için tek-yanlı Wilcoxon `p < 0,05` | orcSONAR her ucuz tabanı pratik olarak anlamlı bir farkla aşıyor |
 | **`EŞDEĞER`** | en az bir tabanda iki-yanlı %95 GA tamamen `(−m, +m)` içinde | o tabana karşı **pratik eşdeğerlik** — pozitif, yayınlanabilir bir iddia |
 | **`DAHA KÖTÜ`** | en az bir tabanda GA tamamen `−m`'in altında | orcSONAR o ucuz tabandan kötü |
 | **`SONUÇSUZ`** | kalan her şey (GA bir sınırı kesiyor) | **hiçbir yönde iddia yok**; ulaşılan GA genişliği raporlanır |
 
-**Öncelik, belirsizlik bırakmadan.** `GEÇTİ` dört tabanın **hepsini** ister;
+**Öncelik, belirsizlik bırakmadan.** `GEÇTİ` beş tabanın **hepsini** ister;
 biri bile sağlanmazsa `GEÇTİ` yoktur. Kalan durumda birden fazla sonuç aynı
 anda uygulanabilir (bir tabanda `DAHA KÖTÜ`, başkasında `EŞDEĞER`), ve o zaman
 raporlanan verdi **en olumsuz uygulanabilir** olandır:
 `DAHA KÖTÜ` > `EŞDEĞER` > `SONUÇSUZ` > `GEÇTİ`. Sonuç ne olursa olsun dört
-tabanın **dördünün** aralığı da raporlanır; verdi bir özet, veri değil.
+tabanın **beşinin** aralığı da raporlanır; verdi bir özet, veri değil.
 
 🔴 **`EŞDEĞER` ve `SONUÇSUZ`'un ayrı olması bu bölümün asıl düzeltmesi.**
 Başarısız bir üstünlük testi negatif sonuç **üretmez**: Benavoli, Corani,
@@ -388,10 +388,10 @@ yayın yolu **`EŞDEĞER` ve `DAHA KÖTÜ`** içindir, `SONUÇSUZ` için değild
 #### 4.4.5 Tabakalar: raporlanan tanı + bağlayıcı yön koşulu
 
 `A6a` satırı birincil metriğin **uzunluk tabakaları içinde de** her tabanı
-aşmasını istiyordu. 4 taban × 3 tabaka = **12 kesişimsel koşul**, ve bunun
-gücü ölçüldü: tabaka içi `n ≈ 43/3 ≈ 14`'te tek testin gücü **0,538**, on iki
-koşulun birleşik gücü (bağımsızlık varsayımıyla, yani bir **alt sınır**)
-**0,0006**. Testler pozitif korele olduğu için gerçek değer bundan yüksek, ama
+aşmasını istiyordu. 5 taban × 3 tabaka = **15 kesişimsel koşul** (`A5b`
+beşinci tabanı ekledi, §7.5), ve bunun gücü ölçüldü: tabaka içi
+`n ≈ 43/3 ≈ 14`'te tek testin gücü **0,538**, on beş koşulun birleşik gücü
+(bağımsızlık varsayımıyla, yani bir **alt sınır**) **0,0001**. Testler pozitif korele olduğu için gerçek değer bundan yüksek, ama
 iki mertebe yüksek değil. **Gücü %0,06 olan bir geçme koşulunu sonucu
 belirleyen şey model değil örneklem büyüklüğüdür** — ve böyle bir koşul
 konulursa sonuç neredeyse kesin olarak `SONUÇSUZ` çıkar, yani kural
@@ -399,7 +399,7 @@ yanlışlanamaz hale gelir.
 
 O yüzden tabakalar şöyle bağlanıyor:
 
-- **Raporlanır:** birincil metrik, dört tabanın hepsine karşı, uzunluk ve
+- **Raporlanır:** birincil metrik, beş tabanın hepsine karşı, uzunluk ve
   ifade-şiddeti tabakalarının her birinde, güven aralıklarıyla (§7.4'ün
   zorunluluğu aynen duruyor).
 - **Bağlayıcı olan koşul YÖN:** hiçbir tabakada, hiçbir tabana karşı
@@ -418,12 +418,14 @@ Tek-yanlı eşleşmiş Wilcoxon, `α = 0,05`, gerçek fark `δ = m = 0,020`,
 
 | n | ne | güç |
 |---|---|---|
-| 43 | tüm seed'ler, tabanlar 1-3 (§6.2) | **0,935** |
+| 43 | tüm seed'ler, tabanlar 1-3 ve 5 (§6.2) | **0,935** |
 | 25 | dördüncü taban (`GSE5291` hesaplanamıyor, §7.5) | **0,779** |
 | 14 | tabaka içi (≈43/3) | **0,538** |
 
-- Dört tabanın **birleşik** gücü, bağımsızlık varsayımıyla (alt sınır):
-  `0,935⁴ ≈ 0,76`. Testler aynı model ve aynı seed'ler üzerinde olduğu için
+- Beş tabanın **birleşik** gücü, bağımsızlık varsayımıyla (alt sınır):
+  `0,935⁵ ≈ 0,71`. ⚠️ Beşinci tabanı eklemek bu alt sınırı 0,76'dan 0,71'e
+  indiriyor; maliyet ilan edilmiştir ve taban **yine de eklendi**, çünkü
+  çıtayı yükseltmemek değişmez 7'nin yasakladığı yöndür (`A5b`). Testler aynı model ve aynı seed'ler üzerinde olduğu için
   pozitif korele, yani gerçek değer bunun üstünde.
 - ⚠️ **Dördüncü taban yetersiz güçlüdür ve bu ilan edilmiştir:** 0,779 < 0,80.
   Çözüm olarak marj **büyütülmeyecek** — marjı `σ̂_d`'yi gördükten sonra
@@ -698,12 +700,21 @@ devralınıyor, çünkü ikisi de sonucu gördükten sonra eklenirse ayarlama ol
   beyan ediliyor**, sonradan "biz de PLSR yapmalıydık" demek bir sapma
   günlüğü maddesi olur, sessiz bir düzeltme değil.
 
-### 7.5 Tabanlar — dördü de, ve hepsi 3′UTR tanımlı
+### 7.5 Tabanlar — beşi de, ve ilk dördü 3′UTR tanımlı
 
-orcSONAR'ın **her birini** aşması gerekiyor; biri aşılmazsa sonuç negatiftir
-(§9). Dördü de §6.3'ün evreninde, §4.1'in etiketiyle, §7.1'in foldlarıyla
-hesaplanır ve §2'nin metriğiyle raporlanır — yani tabanlar modelle **aynı**
-koşuda ölçülür, literatürden alıntılanmaz.
+orcSONAR'ın **her birini** aşması gerekiyor; biri aşılmazsa verdi §4.4'ün
+tablosundan okunur. Beşi de §6.3'ün evreninde, §4.1'in etiketiyle, §7.1'in
+foldlarıyla hesaplanır ve §2'nin metriğiyle raporlanır — yani tabanlar modelle
+**aynı** koşuda ölçülür, literatürden **performans** alıntılanmaz. ⚠️ Beşinci
+tabanın *tablosu* dışsaldır (yayınlanmış bir gen listesi), ama o tablonun bu
+sette ürettiği **AP yine burada ölçülür**; aradaki fark §4.4.1'in marjının
+dayandığı ayrımın aynısı.
+
+⚠️ **Bölge:** 1-3 numaralı tabanlar 3′UTR tanımlıdır. Dördüncüsü (mock kanalı
+yoğunluğu) ve beşincisi (yayınlanmış genel-DE önselliği) **gen düzeyindedir**
+ve bölge tanımı taşımaz — çünkü ikisi de bir dizi özelliği değil, genin
+ölçülme/oynama eğilimi. Bu ayrım burada yazılı, çünkü "hepsi 3′UTR tanımlı"
+cümlesi dördüncü taban eklendiğinde zaten doğru olmaktan çıkmıştı.
 
 1. **3′UTR 7mer-m8 varlığı / sayısı.** Genin 3′UTR'sinde seed'in 7mer-m8
    eşleşmesi var mı, kaç tane. Alanın en çıplak tahmin edicisi; bunu aşmayan
@@ -749,6 +760,84 @@ koşuda ölçülür, literatürden alıntılanmaz.
    üzerinden **ithal etmek** — **benimsenmedi**: seriler arası bir varsayım
    ekler ve MAQC'nin büyüklük uyarısı (§7.3) tam buna karşı. Benimsenmediği
    burada yazılı, çünkü sonradan yapılırsa sessiz bir genişleme olur.
+
+5. 🆕 **Yayınlanmış genel-DE önselliği — Crow ve ark. 2019'un `DE prior`'ı.**
+   Genin, **birbirinden bağımsız deneylerde** diferansiyel eksprese çıkma
+   eğilimi; hiçbir dizi bilgisi yok, bu projenin verisinden hiçbir şey yok.
+   Kaynak: Megan Crow, Nathaniel Lim, Sara Ballouz, Paul Pavlidis, Jesse
+   Gillis, *"Predictability of human differential gene expression"*,
+   **PNAS 2019;116(13):6491-6500, PMID 30846554, DOI 10.1073/pnas.1802973116**;
+   tablo `DE_Prior.txt` (19.172 gen, Entrez anahtarlı, `DE_Prior_Rank` ∈ (0,1]),
+   `data/external/de_prior/` altında checksum'ıyla.
+
+   🔴 **Bu tabanın eklenmesinin sebebi `A6a`'nın kendi ölçümü, ve literatür
+   onu teyit etti.** Marjı ölçerken dizi bilgisi kullanmayan bir "genel
+   oynaklık" kovaryatının §7.5'in dördüncü tabanını 20 seed'in 20'sinde de
+   aştığı görüldü. Crow ve ark. aynı kovaryatı 635 veri setinde ölçmüş ve
+   kelimesi kelimesine şunu buluyor: `DE prior` tek başına bir çalışmanın DE
+   listesini **"mean AUROC, 0.83 ± 0.1"** ile geri getiriyor, ve
+   *"a large fraction of DE hit lists are nonspecific"*. Daha önemlisi,
+   §7.5'in 1-4 numaralı tabanlarının **tam olarak zayıf sınıfta** olduğunu
+   söylüyor: GC içeriği, gen uzunluğu, doku ifadesi, mutabilite ve
+   koekspresyon derecesi için *"None of these properties is nearly as
+   predictive as the DE prior (mean across all categories, 0.55"*. Yani
+   §7.5'in dört tabanı 0,55 sınıfındandı ve 0,83 sınıfı listede **yoktu**.
+
+   🔬 **Bu sette ölçüldü (2026-11-27, modelden bağımsız):** 20 ayrık seed'de
+   medyan lift **1,2708**, dördüncü tabanı 20 seed'in **14'ünde** aşıyor, ve
+   eşleşmiş fark medyanı **+0,0063** (tek-yanlı tam Wilcoxon `p = 0,041`
+   sıfıra karşı, ama `§4.4`'ün marjına karşı `p = 0,995`). ⚠️ Yani **bu sette
+   yayınlanmış önsellik dördüncü tabandan pratik olarak daha güçlü DEĞİL**, ve
+   bu beklenen bir uyumsuzluk: önsellik GPL570 derlemesinde, ağırlıkla
+   cinsiyet karşılaştırmalarıyla kurulmuş (en üst sıraları `XIST`, `DDX3Y`,
+   `EIF1AY`, `KDM5D`, `USP9Y`), tek bir hücre hattında ise o genler hiç
+   oynamıyor. Bu sayı **sonucu görmeden** yazıldı; tabanın zayıf olduğunu
+   sonradan keşfetmek bir sapma maddesi olurdu.
+
+   📌 **Eşleşmeyen problar medyan rankla doldurulur, son sıraya atılmaz.**
+   Prob→gen eşleşmesi platforma göre **%66,1-87,4** (ölçüldü); eşleşmeyeni son
+   sıraya atmak tabanı *zayıflatır*, yani çıtayı düşürür — değişmez 7'nin
+   yasakladığı yön. Doldurma yönü bu yüzden tabanın lehine seçildi ve burada
+   ilan edildi.
+
+   ✅ **Buna rağmen eklenmesinin iki ölçülmüş sebebi var.** (i) Dördüncü
+   tabandan **farklı bir alternatif açıklamayı** kapatıyor: Crow'un kendi
+   ölçümü ifade düzeyini 0,55'te, önselliği 0,83'te buluyor, ve bu sette de
+   iki sıralama birbirinin yerine geçmiyor (önsellik 14/20'de üstün, 6/20'de
+   değil). (ii) **`GSE5291`'de hesaplanabiliyor, dördüncü taban ise değil.**
+   `GSE5291` 18 ayrık seed'le kilitlenen setin en güçlü serisi; tablosunda
+   kanal-başına yoğunluk **yok** ama platformu `GPL3992`, yani prob→gen
+   eşlemesi aynen çalışıyor (ölçüldü: 5 array'de eşleşme %68,1-68,6, medyan
+   lift **1,33**). Yani beşinci taban **n ≈ 43**'ü kapsıyor, dördüncüsü
+   **n ≈ 25**'i.
+
+🔴 **REDDEDİLEN ADAY, gerekçesiyle: "bu prob genel olarak ne kadar oynar".**
+`A6a`'nın ölçümünde en güçlü ucuz tahmin edici bu çıktı — probun **bu setteki
+diğer array'lerdeki** medyan `\|VALUE\|`'su, medyan lift **2,18** (20/20'de
+dördüncü tabanın üstünde; `A6a`'nın ayrı betiği 2,19 ölçtü, yani sayı iki
+bağımsız uygulamada tekrarlandı). Taban yapılmadı, ve üç sebebin **üçü de ölçüm**:
+
+- **Gücünün yarısı paylaşılan koşuldan geliyordu.** Yalnız **diğer seriden**
+  hesaplandığında medyan lift 2,18'den **1,46**'ya düşüyor. Aradaki fark aynı
+  serinin paylaşılan mock hibridizasyonları ve aynı platformun teknik ortak
+  varyansı. Leke-sız hali hâlâ dördüncü tabanı aşıyor (12 hesaplanabilir
+  array'de 12/12, eşleşmiş fark medyanı **+0,0230**, `p = 0,0002`) — yani
+  sorun gerçek olmaması değil, **tanımının keyfi olması**.
+- **Tanımı küme üzerinde tek biçimli DEĞİL.** `GPL2029` ile `GPL3991`/`GPL3992`
+  arasında **sıfır** prob-id örtüşmesi var (ölçüldü: 0; aynı ölçümde
+  `GPL3991 ∩ GPL3992` = **4.895**, yani %37,9). Yani `GSE5814`'ün sekiz `GPL2029` array'i için
+  seriler-arası bir tanım **hiç hesaplanamıyor**. "Hangi diğer array'ler
+  besler" sorusu böylece serbest bir parametre olur, ve `A12`'den sonra
+  ayarlanabilir bir parametre değişmez 7'nin yasakladığı şeyin ta kendisi.
+- **İleriye dönük bir tahmin için mevcut değil:** yeni bir dupleks için aynı
+  platformda bir transfeksiyon derlemesi gerektiriyor. Yayınlanmış önsellik
+  (5 numaralı taban) tam bu boşluğu dışsal ve sabit bir tabloyla kapatıyor.
+
+📌 **Ama raporlanması ZORUNLU, taban olarak değil tanı olarak.** Seriler-arası
+hali, hesaplanabildiği foldlarda, kapsamıyla birlikte raporlanır. Sebebi tek
+cümlede: dizi bilgisi kullanmayan bir derleme kovaryatı off-target'ları ifade
+düzeyinden daha iyi sıralıyorsa, okuyucunun bunu bilmesi gerekir — ve bu
+cümle `A12`'den sonra yazılamaz.
 
 📌 **Dördüncüyü eklemek çıtayı YÜKSELTİYOR**, yani değişmez 7'nin yasakladığı
 yönün tersi: bir tabanı sonradan *çıkarmak* ihlal olurdu, eklemek ihtiyattır.
