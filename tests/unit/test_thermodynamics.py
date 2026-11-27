@@ -415,8 +415,6 @@ class TestDeltaGUsesTheRealTargetPerSite:
             offtargets_path=str(off),
             sarna_sequence=guide,
             turner_dir="data/4_Biyofizik_Yapısal/Turner_Rules",
-            dg_strong=-30.0,
-            dg_moderate=-25.0,
             output_path=str(out),
             log_path=str(tmp_path / "dg.log"),
         )

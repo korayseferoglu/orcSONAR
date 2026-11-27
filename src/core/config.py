@@ -75,8 +75,6 @@ class OrcSonarConfig(BaseSettings):
     promoter_downstream: int = 200
 
     # Thermodynamic thresholds
-    delta_g_strong: float = -30.0
-    delta_g_moderate: float = -25.0
 
     # Seed alignment
     seed_length: int = 7

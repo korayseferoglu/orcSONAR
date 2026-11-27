@@ -13,16 +13,12 @@ rule delta_g:
         "logs/{gene}_{cell_line}/delta_g.log",
     params:
         sarna          = config["sarna_sequence"],
-        dg_strong      = config["delta_g_strong"],
-        dg_moderate    = config["delta_g_moderate"],
     run:
         from src.stage5_biophysics import delta_g_calculator
         delta_g_calculator.run(
             sarna_sequence=params.sarna,
             offtargets_path=input.offtargets,
             turner_dir=input.turner_dir,
-            dg_strong=params.dg_strong,
-            dg_moderate=params.dg_moderate,
             output_path=output[0],
             log_path=log[0],
         )

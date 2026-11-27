@@ -11,30 +11,39 @@ from loguru import logger
 
 from src.stage5_biophysics.thermodynamics import TurnerCalculator
 
-_DG_NEUTRAL = -15.0  # kcal/mol neutral fallback
-_DG_STRONG = -30.0
-_DG_MODERATE = -25.0
-
-
-def _dg_to_risk_score(delta_g: float, dg_strong: float, dg_moderate: float) -> float:
-    """Normalise ΔG to a risk score in [0, 1].  More negative = higher risk."""
-    if delta_g <= dg_strong:
-        return 1.0
-    if delta_g <= dg_moderate:
-        frac = (delta_g - dg_moderate) / (dg_strong - dg_moderate)
-        return round(0.5 + 0.5 * frac, 4)
-    if delta_g < -10.0:
-        frac = (delta_g - (-10.0)) / (dg_moderate - (-10.0))
-        return round(frac * 0.5, 4)
-    return 0.0
+# No ΔG → risk mapping lives here any more (roadmap C3d), and nothing replaced
+# it. `C3` closed on the grounds that the literature offers no transportable
+# per-site ΔG threshold; the physics fix it made stands, but the grounds were
+# wrong — per-site scoring functions exist (RIsearch2, PMID 28108657; PITA's
+# ddG, PMID 17893677). What the literature does not offer is a *threshold*, and
+# it declines to offer one deliberately: PITA states "our model employs no such
+# parameters or thresholds", context++ is a percentile-scaled regression, Lu &
+# Mathews use continuous features. The two published cutoffs (Shao 2007,
+# RNAxs) are accessibility quantities fitted to labelled data, so they do not
+# transport to a duplex energy — and no scale makes -30/-25 right.
+#
+# Keeping the old mapping would be worse than deleting it, for reasons that are
+# measured rather than stylistic. Kamola et al. 2015 (PMID 26657993, Ui-Tei's
+# own group) report that "siRNA with high GC content in the non-seed region
+# have 'weaker' off-target effects" and that high GC in target positions 8-15
+# *reduces* off-target potency (r = 0.23, p = 1.2e-13) — so a monotone
+# "more negative ⇒ riskier" score has the **sign inverted** over the duplex's
+# 3' half. The same paper objects to the calculation itself: "the currently
+# established calculation procedure of thermodynamic profiles is not applicable
+# for such **discontinuous** duplexes", which is exactly what a Turner
+# nearest-neighbour sum over a mismatched 20-mer is.
+#
+# So this module emits the raw per-site energy in native units (rule 10) and
+# **no derived score**. Choosing a mapping now would be an unregistered
+# modelling decision taken after seeing the data, which is what `A10` and
+# invariant 6 exist to prevent. The accessibility term that makes the energy
+# interpretable is `C3e`.
 
 
 def run(
     sarna_sequence: str,
     offtargets_path: str,
     turner_dir: str,
-    dg_strong: float,
-    dg_moderate: float,
     output_path: str,
     log_path: str,
 ) -> None:
@@ -44,8 +53,6 @@ def run(
         sarna_sequence: saRNA guide strand (DNA or RNA).
         offtargets_path: Path to stage2_offtargets.json.
         turner_dir: Directory containing Turner parameter files.
-        dg_strong: ΔG threshold for strong binding (kcal/mol).
-        dg_moderate: ΔG threshold for moderate binding (kcal/mol).
         output_path: Destination JSON path.
         log_path: Log file path.
     """
@@ -109,13 +116,16 @@ def run(
             dg = None
             has_mm = None
 
-        risk = None if dg is None else _dg_to_risk_score(dg, dg_strong, dg_moderate)
         deltag_results[site_id] = {
             "delta_g": None if dg is None else round(dg, 4),
             "has_mismatches": has_mm,
-            "risk_score": risk,
+            # Deliberately always null until a mapping is pre-registered (C3d).
+            # The field is kept rather than dropped so a consumer reading it
+            # gets an explicit "not derived" instead of a KeyError it might
+            # paper over with a default.
+            "risk_score": None,
         }
-        shown = "ÖLÇÜLMEDİ" if dg is None else f"ΔG={dg:.2f} risk={risk:.3f}"
+        shown = "ÖLÇÜLMEDİ" if dg is None else f"ΔG={dg:.2f} (skor ön kayıt bekliyor)"
         logger.debug(f"delta_g_calculator: {site_id} → {shown}")
 
     payload: dict[str, Any] = {"deltag_results": deltag_results}

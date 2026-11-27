@@ -11,8 +11,11 @@ promoter_upstream: 1000
 promoter_downstream: 200
 
 # --- Thermodynamic Thresholds ---
-delta_g_strong: -30.0      # kcal/mol  → high-risk binding
-delta_g_moderate: -25.0    # kcal/mol  → moderate-risk binding
+# delta_g_strong / delta_g_moderate were REMOVED 2026-11-27 (roadmap C3d).
+# No literature supports a transportable per-site ΔG threshold, and the two
+# values sat outside the range this pipeline can even produce. They are not
+# retuned, because retuning a threshold to make a channel fire is what
+# invariant 7 forbids. See src/stage5_biophysics/delta_g_calculator.py.
 
 # --- Seed Alignment ---
 seed_length: 7

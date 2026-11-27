@@ -10,8 +10,15 @@ from typing import Any
 from loguru import logger
 
 _NEUTRAL_DG = -15.0  # kcal/mol fallback
-_DG_REFERENCE = -10.0  # weak binding baseline
-_DG_STRONG = -30.0  # saturation point
+# The ΔG → risk thresholds that used to live here are gone (roadmap C3d),
+# and this module's pair was a *second, independent* copy: -30/-10 against
+# the calculator's -30/-25, neither from config, and the merger recomputed
+# its own number while ignoring the one the calculator had just written.
+# Three copies of an unjustifiable decision, with different constants.
+# The successor is a per-site criterion with an accessibility term
+# (RIsearch2, PMID 28108657; PITA's ddG, PMID 17893677) — roadmap `C3e`.
+# Until it is pre-registered, ΔG abstains: it contributes `None`, which
+# `_normalize` excludes before renormalising (B2).
 
 
 def _load(path: str) -> dict[str, Any]:
@@ -24,15 +31,6 @@ def _load(path: str) -> dict[str, Any]:
     except Exception as exc:
         logger.warning(f"biophysics_merger: failed to parse {path}: {exc}")
         return {}
-
-
-def _delta_g_risk(dg: float) -> float:
-    """Normalise ΔG to [0, 1]. More negative = stronger binding = higher risk."""
-    if dg <= _DG_STRONG:
-        return 1.0
-    if dg >= _DG_REFERENCE:
-        return 0.0
-    return round((dg - _DG_REFERENCE) / (_DG_STRONG - _DG_REFERENCE), 4)
 
 
 def _normalize(
@@ -57,7 +55,10 @@ def _normalize(
         Score in [0, 1], or ``None`` if no channel was measured.
     """
     contributions: dict[str, tuple[float, float | None]] = {
-        "delta_g": (0.35, None if delta_g is None else _delta_g_risk(delta_g)),
+        # ΔG abstains until `C3e` lands and `A10` pre-registers the mapping.
+        # The weight stays declared so the abstention is visible rather
+        # than silently redistributed in the source as well as at runtime.
+        "delta_g": (0.35, None),
         "shape": (0.25, shape_acc),
         "m6a": (0.15, m6a_score),
         "adar": (0.15, adar_score),
