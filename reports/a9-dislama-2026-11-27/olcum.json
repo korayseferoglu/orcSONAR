@@ -1,0 +1,143 @@
+{
+  "measured_at": "2026-11-27",
+  "on_target": [
+    {
+      "gsm": "GSM133689",
+      "target": "MAPK14",
+      "probes": 1,
+      "positives": 980,
+      "rank1_contribution": 0.0010204081632653062,
+      "is_positive": true,
+      "log2fc": -4.0015944688
+    },
+    {
+      "gsm": "GSM133697",
+      "target": "MAPK14",
+      "probes": 1,
+      "positives": 622,
+      "rank1_contribution": 0.001607717041800643,
+      "is_positive": true,
+      "log2fc": -2.8914061312
+    },
+    {
+      "gsm": "GSM133702",
+      "target": "MAPK14",
+      "probes": 1,
+      "positives": 589,
+      "rank1_contribution": 0.001697792869269949,
+      "is_positive": true,
+      "log2fc": -3.2903696840000003
+    },
+    {
+      "gsm": "GSM133703",
+      "target": "LUC",
+      "probes": 0,
+      "positives": 498,
+      "rank1_contribution": 0.002008032128514056,
+      "is_positive": null,
+      "log2fc": null
+    },
+    {
+      "gsm": "GSM134317",
+      "target": "PIK3CA",
+      "probes": 1,
+      "positives": 921,
+      "rank1_contribution": 0.0010857763300760044,
+      "is_positive": false,
+      "log2fc": 0.0023253496
+    },
+    {
+      "gsm": "GSM134319",
+      "target": "MPHOSPH1",
+      "probes": 0,
+      "positives": 1118,
+      "rank1_contribution": 0.0008944543828264759,
+      "is_positive": null,
+      "log2fc": null
+    },
+    {
+      "gsm": "GSM134523",
+      "target": "MPHOSPH1",
+      "probes": 1,
+      "positives": 1033,
+      "rank1_contribution": 0.000968054211035818,
+      "is_positive": true,
+      "log2fc": -1.1324452552
+    },
+    {
+      "gsm": "GSM119707",
+      "target": "SOD1",
+      "probes": 1,
+      "positives": 293,
+      "rank1_contribution": 0.0034129692832764505,
+      "is_positive": true,
+      "log2fc": -2.80932129032
+    },
+    {
+      "gsm": "GSM119708",
+      "target": "SOD1",
+      "probes": 1,
+      "positives": 452,
+      "rank1_contribution": 0.0022123893805309734,
+      "is_positive": true,
+      "log2fc": -2.7401255300800003
+    },
+    {
+      "gsm": "GSM119759",
+      "target": "SOD1",
+      "probes": 1,
+      "positives": 565,
+      "rank1_contribution": 0.0017699115044247787,
+      "is_positive": true,
+      "log2fc": -3.0224561908000003
+    }
+  ],
+  "median_rank1_contribution": 0.001652754955535296,
+  "signor_transcriptional_downstream": {
+    "MAPK14": [
+      "CCND1",
+      "COL1A1",
+      "HBB",
+      "JUNB"
+    ],
+    "PLK1": [],
+    "PIK3CA": [],
+    "PIK3CB": [],
+    "SOS1": [],
+    "PRKCE": [],
+    "VHL": [
+      "SPARC"
+    ],
+    "MPHOSPH1": [],
+    "SOD1": [],
+    "GAPDH": []
+  },
+  "deletion_directions": {
+    "0.02": {
+      "random_dap": -0.001455572350147788,
+      "random_dlift": 0.0008125628384136885,
+      "worst_dap": 0.00019678381487732433,
+      "worst_dlift": 0.02356298896157938
+    },
+    "0.05": {
+      "random_dap": -0.003737636978497466,
+      "random_dlift": 0.002506412018714599,
+      "worst_dap": 0.0004417658593885293,
+      "worst_dlift": 0.06245160173930997
+    },
+    "0.1": {
+      "random_dap": -0.00755597283291537,
+      "random_dlift": 0.0017894980586987685,
+      "worst_dap": 0.0007009003583014206,
+      "worst_dlift": 0.13374102691051104
+    },
+    "0.2": {
+      "random_dap": -0.015527965775549879,
+      "random_dlift": 0.005915223484796783,
+      "worst_dap": 0.0006083680242296788,
+      "worst_dlift": 0.3004477259218903
+    }
+  },
+  "label_rule": "PVALUE < 0.01 and VALUE < 0",
+  "universe": "LOGINTENSITY >= -1 (and QUALITY == 1 where present)"
+}

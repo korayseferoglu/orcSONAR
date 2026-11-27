@@ -838,6 +838,116 @@ kolaylaştırmıyor: tek siteli genlerde iki kural aynı sayıyı verir, yani
 çözünürlük sorunu (`C1`, ≥500 ayrık değer) buradan kaçırılamaz.
 
 
+### 6.6 On-target ve ikincil etki dışlaması — biri zorunlu, diğeri yasak
+
+İki dışlama konuşuluyor ve **yönleri zıt**. Hedef genin kendisini dışlamak
+PR-AUC'yi düşürür (ihtiyatlı); ikincil etkileri dışlamak raporlanan `lift`'i
+yükseltir (ayarlama yönü). O yüzden biri **zorunlu**, diğeri **birincilde
+yasak** — ve ikisinin de gerekçesi ölçüldü.
+
+#### 6.6.1 Hedef genin kendisi: dışlanır
+
+**Kural:** o kolun transfekte edilmiş dupleksinin hedeflediği gen — GEO'nun
+kendi örnek başlığından/`characteristics` alanından okunur — array'in
+platform annotasyonunda sembolle eşlenir, ve o genin **bütün probları**
+evrenden çıkarılır (§6.5'in seçtiği temsilci prob değil, hepsi: dışlanan şey
+prob değil gen).
+
+**Neden:** on-target bir off-target değil. Dizi-tabanlı bir tahmin edici onu
+**yapı gereği** birinci sıraya koyar (guide boyunca tam komplementerlik), yani
+garantili ve bedavaya öngörülmüş bir pozitif olurdu.
+
+🔬 **Ölçülenler (on array, `reports/a9-dislama-2026-11-27/`):**
+
+- Hedef, **10 array'in 7'sinde pozitif**, `log2FC` **−1,13 … −4,00** —
+  yani susturma gerçekten olmuş.
+- **Bir array'de on-target pozitif DEĞİL:** `GSM134317`'de `PIK3CA` probu
+  `log2FC = +0,002`. §7.2'nin devraldığı *"hedef-üstü susturma > %85"*
+  filtresi o array'i zaten dışlar; iki kural tutarlı ve **ikisi de**
+  uygulanır. ⚠️ Hedefin probu bu yüzden §7.2'nin filtresini hesaplamak için
+  **kullanılır** ve değerlendirme evreninden **çıkarılır** — ikisi birlikte,
+  kasıtlı.
+- **İki array'de hedefin probu hiç yok** (`Luc` bir insan geni değil; diğerinde
+  prob §6.4'ün evrenine girmiyor), yani dışlama orada boş işlem — ve bu
+  **raporlanır**, sessizce geçilmez.
+- **Büyüklüğü küçük, ve bu da yazılı:** birinci sıradaki bir gerçek pozitifin
+  AP'ye katkısı `1/P`'dir ve medyan `1/P` = **0,00165**, yani §4.4'ün marjının
+  (0,020) yaklaşık **on ikide biri**. Dışlama **yapı** gereği zorunludur;
+  sayısal etkisi küçüktür. Bu cümle burada, çünkü sonradan "dışlama ağır iş
+  yaptı" denmesini engelliyor.
+
+#### 6.6.2 İkincil etkiler: birincilde dışlanmaz, ve iki ölçüm bunu söylüyor
+
+Yol haritası *"hedef genin bilinen doğrudan alt akışı pozitif sayılamaz"*
+diyordu. Bir **liste** olarak bu uygulanamaz, ve bir liste olarak uygulanırsa
+tehlikeli. İkisi de ölçüldü.
+
+🔬 **Ölçüm 1 — küratörlü, sürümlü bir kaynakta o küme yok.** SIGNOR'un insan
+nedensel ilişkileri (bu kopyada **31.020** kenar;
+`data/external/signor/signor_human_all.tsv`, manifest'te checksum'ıyla)
+**transkripsiyonel** mekanizmaya göre süzüldüğünde, bu setin **on hedef
+geninin** alt akışı şu kadar:
+
+| hedef | transkripsiyonel alt akış |
+|---|---|
+| `MAPK14` | **4** — `CCND1`, `COL1A1`, `HBB`, `JUNB` |
+| `VHL` | **1** — `SPARC` |
+| `PLK1`, `PIK3CA`, `PIK3CB`, `SOS1`, `PRKCE`, `MPHOSPH1`, `SOD1`, `GAPDH` | **0** |
+
+On hedefte toplam **5** gen. ⚠️ **Ve bu, veritabanı hakkında bir cümle,
+biyoloji hakkında değil:** `VHL`'nin gerçek programı HIF üzerinden yürür ve
+SIGNOR onu taşımıyor. Yani ikincil etkiler **kesinlikle var**; sabit bir
+kaynaktan **sayılamıyor**lar. Sayılamayan bir kümeyi dışlamak, listeyi
+**bizim** kürasyonumuz yapar — ve o bir serbest parametredir.
+
+🔬 **Ölçüm 2 — yön. Ve ilk simülasyonum yanlış modeli ölçüyordu.** Pozitifleri
+**rastgele** silmek AP'yi *düşürüyor* (%20'de **−0,0155**) ve `lift`'i neredeyse
+hiç oynatmıyor. Ama elle küratörlenmiş bir "ikincil etki" listesi rastgele
+değildir: **tahmin edicinin kaçırdığı** pozitiflerle korelasyonludur, çünkü
+seed eşleşmesiyle açıklanamayan pozitifler zaten listeye girmeye aday
+olanlardır. Tahmin edicinin **en kötü sıraladığı** pozitifleri silmek:
+
+| silinen pozitif | ΔAP | **Δlift** |
+|---|---|---|
+| %2 | +0,0002 | **+0,024** |
+| %5 | +0,0004 | **+0,062** |
+| %10 | +0,0007 | **+0,134** |
+| %20 | +0,0006 | **+0,300** |
+
+Yani böyle bir liste **AP'yi neredeyse hiç** değiştirmezken **raporlanan
+`lift`'i** sertçe yükseltiyor. §4.4'ün karar kuralı AP biriminde olduğu için
+bu manipülasyona karşı **bağışık**; §2'nin zorunlu kıldığı `lift` ise değil.
+Bu bölümün kuralı **tam olarak o başlık sayısını koruyor**.
+
+✅ **Karar:** birincilde **hiçbir ikincil etki dışlaması yapılmaz.** İkincil
+etkiler evrende kalır ve **tavanı düşüren etiket gürültüsü** olarak ilan
+edilir: §2'nin PR-AUC açığının bir kısmı model kalitesi değil, bu gürültüdür.
+
+📌 **İlan edilmiş duyarlılık analizi:** yukarıdaki **beş** SIGNOR geni,
+yalnız onlar, sürümü ve indirme tarihi şimdi sabitlenmiş halde, ayrı bir satır
+olarak raporlanır. Ölçülen verimi (on hedefte beş gen) bu analizin hiçbir şeyi
+maddi olarak değiştiremeyeceğini söylüyor — ve adlandırılmasının sebebi tam
+bu: sonradan elle kürasyonla büyütülmüş bir liste **görünür** şekilde daha
+büyük olurdu.
+
+🔴 **Açıkça yasak:** sonucu gördükten sonra bizim kürasyonumuzla kurulmuş
+hiçbir dışlama listesi kullanılmaz. Değişmez 7'nin kapsamına girer.
+
+#### 6.6.3 Dışlanmayanlar — kapsam, sayıyla
+
+- **Prosedürün ikincil etkileri dışlanmaz:** transfeksiyon stresi, interferon
+  yanıtı ve lipid taşıyıcı etkileri hedef genin değil **işlemin** sonucudur,
+  ve aynı gerekçeyle evrende kalır. §7.2'nin devraldığı iplik-yanlılığı ve
+  hedef-üstü susturma filtreleri **prosedürün başarısız olduğu kolları** zaten
+  çıkarıyor; bu, gen düzeyinde bir dışlama değil kol düzeyinde bir filtre.
+- **`GSE5814`'ün 19 pozisyon mutantının hedefi aynı gen** (`MAPK14`), yani
+  dışlama kol başına uygulanır ama o panelde sabittir. Bu, §7.1'in sızıntı
+  kuralıyla karıştırılmamalı: oradaki birim **seed**, buradaki **hedef gen**.
+- **Hedefin paralogları ve aynı aile üyeleri dışlanmaz.** Onlar gerçek seed
+  off-target adaylarıdır ve dışlanmaları modelin en kolay doğrularını silerdi
+  — yine ayarlama yönü.
+
+
 ## 7. Analiz planı
 
 Burada yazılmayan bir analiz keşifseldir ve yayında öyle etiketlenir (§10).

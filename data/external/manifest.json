@@ -43,6 +43,20 @@
       "used_by": [
         "A8"
       ]
+    },
+    {
+      "name": "signor/signor_human_all.tsv",
+      "source": "https://signor.uniroma2.it/getData.php?organism=9606",
+      "doi": "10.1093/nar/gkz949",
+      "release": "SIGNOR, downloaded 2026-11-27 (the endpoint serves the current release and carries no version string; 31020 human causal relations in this copy)",
+      "downloaded": "2026-11-27",
+      "bytes": 15199947,
+      "sha256": "c812d11ef54ebe0d8e79d06111f7f094432a76a30ceb462eefacce6e4e18b279",
+      "licence": "NOT VERIFIED in this session — the download carries no terms header and the licence was not read first-hand. Not redistributed: data/external/* is gitignored, so only this record travels. Verify before any redistribution.",
+      "note": "Authority for one measured claim in pre-registration 6.6.2 (A9): whether a curated, versioned source can enumerate the 'known direct downstream' of this reference set's ten target genes at the mRNA level. It cannot — filtering for transcriptional mechanisms gives 4 genes for MAPK14 (CCND1, COL1A1, HBB, JUNB), 1 for VHL (SPARC) and zero for PLK1, PIK3CA, PIK3CB, SOS1, PRKCE, MPHOSPH1, SOD1 and GAPDH. That is a statement about the database, not about biology: VHL's real programme is HIF-driven and SIGNOR does not carry it. Also note the endpoint ignores its own `entity` parameter and returns the whole human set.",
+      "used_by": [
+        "A9"
+      ]
     }
   ]
 }
