@@ -14,6 +14,7 @@ Scoring (fraction of 7 seed positions that match exactly, case-insensitive):
 from __future__ import annotations
 
 from pathlib import Path
+from typing import Literal
 
 from loguru import logger
 
@@ -28,6 +29,25 @@ _SEED_START = 1
 _SEED_LENGTH = 7
 
 _SCORE_TABLE: dict[int, float] = {7: 1.0, 6: 0.7, 5: 0.3}
+
+
+def _seed_of(sequence: str) -> str:
+    """Return the seed slice rule 10 defines, for every path in this module.
+
+    One copy. The failure path used to slice ``[:7]`` — positions 1-7 instead
+    of 2-8 — so the seed reported next to a failed check was the wrong one
+    (roadmap `B11`; rule 10 is the authority for the slice).
+
+    Args:
+        sequence: saRNA sequence, 5'→3'.
+
+    Returns:
+        The seed substring, or the whole sequence when it is shorter than the
+        slice.
+    """
+    if len(sequence) < _SEED_START + _SEED_LENGTH:
+        return sequence
+    return sequence[_SEED_START : _SEED_START + _SEED_LENGTH]
 
 
 # ---------------------------------------------------------------------------
@@ -45,8 +65,16 @@ def check_mirbase_overlap(sarna_seq: str, mirbase_path: str) -> MirbaseResult:
     Returns:
         MirbaseResult with all overlapping miRNAs and aggregate risk level.
     """
-    sarna_seed = sarna_seq[_SEED_START : _SEED_START + _SEED_LENGTH]
+    sarna_seed = _seed_of(sarna_seq)
     mirnas = _parse_mirbase(mirbase_path)
+    if mirnas is None:
+        # The FASTA could not be read. "No overlap found" would be a risk
+        # decision taken from the absence of data (invariant 2, roadmap B11).
+        logger.warning(
+            f"miRBase check NOT PERFORMED (unreadable: {mirbase_path}) — "
+            "returning unknown, not SAFE"
+        )
+        return MirbaseResult(sarna_seed=sarna_seed)
 
     overlaps: list[MirbaseOverlap] = []
     for mirna in mirnas:
@@ -87,21 +115,28 @@ def check_mirbase_overlap(sarna_seq: str, mirbase_path: str) -> MirbaseResult:
 # ---------------------------------------------------------------------------
 
 
-def _parse_mirbase(fasta_path: str) -> list[MirnaEntry]:
+def _parse_mirbase(fasta_path: str) -> list[MirnaEntry] | None:
     """Parse human miRNA entries from miRBase mature FASTA.
 
     Only records with an ``hsa-`` prefix (Homo sapiens) are returned.
+
+    ⚠️ The return type carries the distinction roadmap `B11` is about:
+    ``None`` means the FASTA could not be read, while ``[]`` means it was read
+    and holds no human entry. Both used to be ``[]``, so the caller computed
+    ``max_score = 0.0`` and ``risk = SAFE`` from a missing file — a risk
+    decision taken from the absence of data (invariant 2).
 
     Args:
         fasta_path: Absolute or relative path to mature.fa.
 
     Returns:
-        List of MirnaEntry objects (sequence and seed normalised to U).
+        List of MirnaEntry objects (sequence and seed normalised to U), or
+        ``None`` when the file could not be read at all.
     """
     path = Path(fasta_path)
     if not path.exists():
         logger.error(f"miRBase FASTA not found: {fasta_path}")
-        return []
+        return None
 
     entries: list[MirnaEntry] = []
     current_id: str | None = None
@@ -164,7 +199,20 @@ def _compare_seeds(sarna_seed: str, mirna_seed: str) -> float:
     return _SCORE_TABLE.get(matched, 0.0)
 
 
-def _score_to_risk(score: float) -> str:
+def _score_to_risk(score: float) -> Literal["SAFE", "LOW", "MODERATE", "HIGH"]:
+    """Map an overlap score to the risk level `MirbaseResult` accepts.
+
+    The return type is the model's own `Literal` rather than `str` so the two
+    cannot drift: before `B11` the field accepted any string and this returned
+    `str`, so a typo here would have been a silently invalid risk level.
+
+    Args:
+        score: Overlap score in [0, 1].
+
+    Returns:
+        The risk level. Never ``None`` — a measured score always has one; the
+        unknown case never reaches this function.
+    """
     if score >= 1.0:
         return "HIGH"
     if score >= 0.7:
@@ -203,13 +251,13 @@ def run(
             f"overlaps={len(result.overlapping_mirnas)} risk={result.risk_level}"
         )
     except Exception as exc:
-        logger.warning(f"mirbase_checker: failed: {exc} — returning SAFE result")
-        payload = {
-            "sarna_seed": sarna_sequence[:7] if len(sarna_sequence) >= 7 else sarna_sequence,
-            "overlapping_mirnas": [],
-            "max_overlap_score": 0.0,
-            "risk_level": "SAFE",
-        }
+        # Not "SAFE": a check that crashed measured nothing (invariant 2,
+        # roadmap B11). The seed goes through `_seed_of` so this path reports
+        # rule 10's slice like every other one.
+        logger.warning(
+            f"mirbase_checker: failed: {exc} — returning UNKNOWN (not SAFE)"
+        )
+        payload = MirbaseResult(sarna_seed=_seed_of(sarna_sequence)).model_dump()
 
     out = _Path(output_path)
     out.parent.mkdir(parents=True, exist_ok=True)

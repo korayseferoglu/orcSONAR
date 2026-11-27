@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import json
+import tempfile
 import textwrap
 from pathlib import Path
 
@@ -117,9 +119,17 @@ class TestParseMirbase:
         entries = _parse_mirbase(path)
         assert entries == []
 
-    def test_missing_file_returns_empty(self):
-        entries = _parse_mirbase("/nonexistent/path/mature.fa")
-        assert entries == []
+    def test_missing_file_returns_unknown_not_empty(self):
+        """The second test that defended the conflation (roadmap B11).
+
+        It asserted the same `[]` an *empty but readable* FASTA returns
+        (the test just above), which is exactly what made a missing file
+        indistinguishable from a measured absence of human miRNAs.
+        """
+        assert _parse_mirbase("/nonexistent/path/mature.fa") is None
+        # And the readable-but-empty case still returns a list, so the two
+        # really are different values rather than both being falsy-by-luck.
+        assert _parse_mirbase.__annotations__["return"] is not None
 
     def test_multiline_sequence(self, tmp_path):
         content = ">hsa-miR-multi MIMAT0000001 Homo sapiens miR-multi\nUGAGGUA\nGUAGGUU\nGUAUAGU\n"
@@ -198,10 +208,43 @@ class TestCheckMirbaseOverlap:
         scores = [o.overlap_score for o in result.overlapping_mirnas]
         assert scores == sorted(scores, reverse=True)
 
-    def test_missing_file_returns_safe(self):
+    def test_missing_file_returns_unknown_not_safe(self):
+        """Roadmap B11, and this test used to assert the bug.
+
+        It read `risk_level == "SAFE"` for a file that does not exist — the
+        third of invariant 2's measured fallbacks and the one `B2` left open.
+        A miRBase check that cannot run must say *unknown*, because "SAFE" is
+        a risk decision made from the absence of data.
+        """
         result = check_mirbase_overlap("UAGCUUAUCAGACUGAUGUUGA", "/no/such/file.fa")
+        assert result.risk_level is None, "missing file claimed a risk level"
+        assert result.max_overlap_score is None, "missing file claimed a score"
+
+    def test_present_but_nonhuman_file_really_is_safe(self):
+        """The control, and without it the fix would make everything unknown.
+
+        A file that reads fine and contains no human miRNA is a *measured*
+        absence: nothing to overlap with, so SAFE and 0.0 are the right
+        answers. The distinction between this and the test above is the whole
+        point of `B11` — the same distinction `_bigwig_mean` already draws
+        between "contig absent" and "signal measured 0" (invariant 2).
+        """
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "mature.fa"
+            path.write_text(textwrap.dedent("""\
+                >cel-let-7-5p MIMAT0000001 Caenorhabditis elegans let-7-5p
+                UGAGGUAGUAGGUUGUAUAGUU
+            """), encoding="utf-8")
+            result = check_mirbase_overlap("UAGCUUAUCAGACUGAUGUUGA", str(path))
         assert result.risk_level == "SAFE"
         assert result.max_overlap_score == pytest.approx(0.0)
+
+    def test_the_parser_separates_unreadable_from_empty(self):
+        """`_parse_mirbase` must not return the same thing for both."""
+        assert _parse_mirbase("/no/such/file.fa") is None, (
+            "an unreadable FASTA returns the same empty list as a readable "
+            "one with no human entries, so the caller cannot tell them apart"
+        )
 
     def test_returns_mirbase_result_type(self, tmp_fasta):
         path = tmp_fasta(FASTA_HUMAN_ONLY)
@@ -267,3 +310,122 @@ class TestRealMirbase:
         result = check_mirbase_overlap(SARNA_PERFECT_MATCH, MIRBASE_PATH)
         assert result.max_overlap_score == pytest.approx(1.0)
         assert result.risk_level == "HIGH"
+
+
+# ---------------------------------------------------------------------------
+# B11 — the exception path, the seed slice, and the next hop
+# ---------------------------------------------------------------------------
+
+
+class TestTheFailurePathEmitsNoRiskDecision:
+    """Roadmap B11. Three hops turned missing data into "SAFE"; all three go.
+
+    The measured scope, before the fix: `_parse_mirbase` returned `[]` for a
+    missing file, indistinguishable from a readable file with no human
+    entries, so `check_mirbase_overlap` computed `max_score = 0.0` and
+    `risk = SAFE`. `run()`'s `except` wrote the same verdict directly. And
+    `offtarget_merger` re-introduced it one hop later as its default when
+    `stage2_mirbase.json` could not be parsed. Fixing only the first would
+    have left the chain's output unchanged.
+
+    ⚠️ Measured and worth stating plainly: this channel's risk level feeds
+    **nothing** in production scoring today — the only reader of
+    `max_overlap_score` is `src/scoring/domain_scores.py`, which has zero
+    production callers (roadmap B8). So this fix is about the invariant and
+    the honesty of the written output, not about moving a score.
+    """
+
+    def test_run_writes_unknown_not_safe_when_the_check_fails(self, tmp_path):
+        from src.stage2_offtarget_scan import mirbase_checker
+
+        out = tmp_path / "stage2_mirbase.json"
+        mirbase_checker.run(
+            sarna_sequence="UAGCUUAUCAGACUGAUGUUGA",
+            mirbase_fa="/no/such/file.fa",
+            output_path=str(out),
+            log_path=str(tmp_path / "log.txt"),
+        )
+        payload = json.loads(out.read_text(encoding="utf-8"))
+        assert payload["risk_level"] is None, "the failure path claimed SAFE"
+        assert payload["max_overlap_score"] is None
+
+    def test_run_reports_the_rule_10_seed_slice_on_the_exception_path(self, tmp_path):
+        """The second bug on the same line: `[:7]` is positions 1-7, not 2-8.
+
+        ⚠️ Measured while writing this test: a *missing* file does not reach
+        that line. `_parse_mirbase` returns for a missing path without
+        raising, so `run()`'s `except` never fires and the correct slice is
+        used. The wrong slice is only reachable when the check genuinely
+        raises — a directory handed in as the FASTA does it, because the path
+        exists and `open()` then raises. Without that trigger this test would
+        have passed against the bug.
+
+        Rule 10 is the authority for the slice and it is not restated here;
+        the expectation is built from the module's own constants so the test
+        cannot drift from them.
+        """
+        from src.stage2_offtarget_scan import mirbase_checker
+
+        sequence = "UAGCUUAUCAGACUGAUGUUGA"
+        expected = sequence[
+            mirbase_checker._SEED_START :
+            mirbase_checker._SEED_START + mirbase_checker._SEED_LENGTH
+        ]
+        assert expected != sequence[:7], "fixture cannot distinguish the slices"
+        a_directory = tmp_path / "not-a-fasta"
+        a_directory.mkdir()
+        out = tmp_path / "stage2_mirbase.json"
+        mirbase_checker.run(
+            sarna_sequence=sequence,
+            mirbase_fa=str(a_directory),
+            output_path=str(out),
+            log_path=str(tmp_path / "log.txt"),
+        )
+        payload = json.loads(out.read_text(encoding="utf-8"))
+        assert payload["sarna_seed"] == expected
+        assert payload["sarna_seed"] != sequence[:7], (
+            "the exception path still reports positions 1-7"
+        )
+
+    def test_the_exception_path_also_emits_no_risk_decision(self, tmp_path):
+        from src.stage2_offtarget_scan import mirbase_checker
+
+        a_directory = tmp_path / "not-a-fasta"
+        a_directory.mkdir()
+        out = tmp_path / "stage2_mirbase.json"
+        mirbase_checker.run(
+            sarna_sequence="UAGCUUAUCAGACUGAUGUUGA",
+            mirbase_fa=str(a_directory),
+            output_path=str(out),
+            log_path=str(tmp_path / "log.txt"),
+        )
+        payload = json.loads(out.read_text(encoding="utf-8"))
+        assert payload["risk_level"] is None
+        assert payload["max_overlap_score"] is None
+
+    def test_the_merger_does_not_reintroduce_safe(self, tmp_path):
+        """The next hop. Fixing the checker alone leaves the chain unchanged."""
+        from src.stage2_offtarget_scan import offtarget_merger
+
+        seed_hits = tmp_path / "stage2_seed_hits.json"
+        seed_hits.write_text(json.dumps({"sites": [], "sequence_scores": {}}),
+                             encoding="utf-8")
+        repeats = tmp_path / "stage2_repeats.json"
+        repeats.write_text(json.dumps({"repeat_results": {}}), encoding="utf-8")
+        out = tmp_path / "stage2_offtargets.json"
+        offtarget_merger.run(
+            seed_hits_path=str(seed_hits),
+            mirbase_path="/no/such/file.json",
+            repeats_path=str(repeats),
+            output_path=str(out),
+            log_path=str(tmp_path / "log.txt"),
+        )
+        payload = json.loads(out.read_text(encoding="utf-8"))
+        assert payload["mirbase_result"]["risk_level"] is None
+        assert payload["mirbase_result"]["max_overlap_score"] is None
+
+    def test_the_model_default_is_unknown(self):
+        """A default of "SAFE" means every half-built result claims safety."""
+        bare = MirbaseResult(sarna_seed="AGCUUAU")
+        assert bare.risk_level is None
+        assert bare.max_overlap_score is None

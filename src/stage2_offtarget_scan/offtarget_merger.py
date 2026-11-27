@@ -50,12 +50,15 @@ def run(
     sequence_scores: dict[str, float] = seed_data.get("sequence_scores", {})
     repeat_results: dict[str, Any] = repeats_data.get("repeat_results", {})
 
-    # Default miRBase result if missing
+    # No miRBase file means the check did not happen, so the result is
+    # UNKNOWN — not "SAFE". The earlier default re-introduced the very
+    # verdict `B11` removes one hop upstream, which is why fixing only
+    # `mirbase_checker` would have left this chain's output unchanged.
     mirbase_result: dict[str, Any] = mirbase_data if mirbase_data else {
         "sarna_seed": "",
         "overlapping_mirnas": [],
-        "max_overlap_score": 0.0,
-        "risk_level": "SAFE",
+        "max_overlap_score": None,
+        "risk_level": None,
     }
 
     payload: dict[str, Any] = {

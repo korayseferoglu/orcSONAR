@@ -101,12 +101,23 @@ class MirbaseOverlap(BaseModel):
 
 
 class MirbaseResult(BaseModel):
-    """Aggregated miRBase seed overlap result for a saRNA."""
+    """Aggregated miRBase seed overlap result for a saRNA.
+
+    ``max_overlap_score`` and ``risk_level`` are ``None`` when the check could
+    not run — invariant 2's shape, and roadmap `B11`'s subject. They used to
+    default to ``0.0`` and ``"SAFE"``, which meant every half-built result
+    claimed safety and a missing FASTA was indistinguishable from a measured
+    absence of overlap. The two cases are now different values, and the
+    distinction is the same one `_bigwig_mean` already draws between "contig
+    absent" and "signal measured 0".
+    """
 
     sarna_seed: str
     overlapping_mirnas: list[MirbaseOverlap] = Field(default_factory=list)
-    max_overlap_score: float = 0.0
-    risk_level: Literal["SAFE", "LOW", "MODERATE", "HIGH"] = "SAFE"
+    #: ``None`` = never measured. A readable FASTA with no human overlap is a
+    #: measured ``0.0``, which is a different statement.
+    max_overlap_score: float | None = None
+    risk_level: Literal["SAFE", "LOW", "MODERATE", "HIGH"] | None = None
 
 
 class OffTargetSite(BaseModel):
