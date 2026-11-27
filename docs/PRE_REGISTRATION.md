@@ -89,14 +89,50 @@ girmez.
 | `GSE5814` | 68 | GPL3992 (47), GPL2029 (20), GPL3991 (1) | 67 HeLa + 1 HT29 | 16682560 | **Ana set.** `193-MAPK14` guide'ının **1-19. pozisyonlarında tek nükleotid mutantları** (pozisyon başına bir kol) + mutasyonsuz hali; ayrıca `Luc`, `PLK1-319`, `1721-PLK-772` |
 | `GSE5769` | 61 | GPL3992 (38), GPL3991 (23) | 61 HeLa | 16682562 | **Yedi ayrı ebeveyn dizi** (`PIK3CA-2629`, `MPHOSPH1-2692`, `SOS1-1582`, `PRKCE-1295`, `VHL-2651`, `VHL-2652`, `193-MAPK14`), her biri **modifiye edilmemiş** ve **AS_pos2_modified** halinde, `a`/`b` tekrarıyla |
 | `GSE5291` | 18 | GPL3992 | 18 HeLa | 16965178 | `SOD1` tek-nükleotid ayrımı (tek nükleotidle farklılaşan dizi çiftleri) |
-| `GSE41924` | 3 | GPL6947 | ⚠️ örnek başlıklarında yazılı değil — `A2b` doğrulayacak | 24145823 | `GAPDH` siRNA + negatif kontrol + transfeksiyon kontrolü |
+| `GSE41924` | 3 | GPL6947 | HeLa (⚠️ örnek *başlıklarında* yok; `source_name = "HeLa cells"` ve `characteristics = "cell line: HeLa cervical cancer cell line"` alanlarından doğrulandı — `A2b`) | 24145823 | `GAPDH` siRNA + negatif kontrol + mock transfeksiyon |
 | `GSE44256` | 4 | GPL9115 (**RNA-seq**) | HeLa-d1EGFP | 23475073 | `EGFP` siRNA + `EGFP100`/`EGFPFL` **pro-siRNA** + NC |
 | `GSE44105` | 6 | GPL6244 | HeLa-d1EGFP | 23475073 | `LMNA` siRNA + `LMNA` pro-siRNA, iki tekrar + NC |
 | `GSE278438` | 7 | GPL20844 | 7 HeLa | 41467115 | `siVIM-270`, DNA/FA/MOE kimyaları |
 | `GSE278439` | 4 | GPL20844 | 4 HeLa | 41467115 | `siVIM-270`, Fluoro/OMe kimyaları |
 
 Toplam **171 örnek**. Ama genelleme birimi örnek değil **dupleks dizisi**, ve
-ikisi arasındaki fark bu setin en önemli özelliği:
+ikisi arasındaki fark bu setin en önemli özelliği (§6.2).
+
+### 6.1b Yayın kimlikleri — sekiz accession, **altı** yayın
+
+Her PMID iki kez çözüldü: numara GEO'nun kendi kaydından, künye Europe
+PMC'den. Gerekçe, bu satırın kendi uyarısı: `GSE5814`'ün yayını Jackson ve
+ark. 2006 ***RNA***'dır, ve Birmingham ve ark. 2006 ***Nat Methods*** 3:199
+**başka bir veri setidir** — yerine atıf vermek kolay, `A12`'den sonra geri
+alınamaz.
+
+| accession | PMID | ilk yazar | dergi, cilt (yıl) |
+|---|---|---|---|
+| `GSE5814` | 16682560 | Jackson AL | *RNA* 12 (2006) |
+| `GSE5769` | 16682562 | Jackson AL | *RNA* 12 (2006) |
+| `GSE5291` | 16965178 | **Schwarz DS** | *PLoS Genetics* 2 (2006) |
+| `GSE41924` | 24145823 | Jiang Z | *RNA* 19 (2013) |
+| `GSE44256` | 23475073 | Huang L | *Nature Biotechnology* 31 (2013) |
+| `GSE44105` | 23475073 | Huang L | *Nature Biotechnology* 31 (2013) |
+| `GSE278438` | 41467115 | An S | *Mol Ther Nucleic Acids* 36 (2025) |
+| `GSE278439` | 41467115 | An S | *Mol Ther Nucleic Acids* 36 (2025) |
+
+İki şey buradan okunuyor ve ikisi de analizi bağlıyor:
+
+- **Sekiz accession, altı yayın.** `GSE44256`+`GSE44105` tek bir yayının iki
+  serisi; `GSE278438`+`GSE278439` de öyle. Yani bunlar bağımsız çalışma değil,
+  aynı laboratuvarın aynı deney setinin parçaları — çalışma düzeyinde bir
+  rastgele etki ya da ağırlıklandırma düşünülürse birim **yayın** olmalı, seri
+  değil. `GSE5814` ve `GSE5769` de aynı grubun (Jackson/Rosetta) iki ardışık
+  makalesi.
+- ⚠️ **`GSE41924`'ün GEO başlığı ile yayın konusu uyuşmuyor.** Seri
+  *"Global analysis of off-target genes by GAPDH siRNA"* diyor; bağlı yayın
+  ise *"Rational design of **microRNA-siRNA chimeras** for multifunctional
+  target suppression"*. Yani bu üç örnek, düz bir siRNA off-target
+  çalışmasının değil, bir **kimera** tasarım çalışmasının yan verisi. Bu
+  madde onu **dışlamıyor** (n=3 ve tek dupleks olduğu için ağırlığı zaten
+  yok), ama *sanki bağımsız bir off-target çalışmasıymış gibi* sayılmasını
+  engellemek için burada yazılı.
 
 ### 6.2 Bağımsız dizi sayısı: ~14, ve üç kol tipi tabandan dışlanıyor
 
