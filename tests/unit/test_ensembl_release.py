@@ -117,8 +117,9 @@ class TestCacheKeysCarryTheRelease:
 
 class TestTheConfigIsPinned:
     def test_config_declares_an_archived_host_and_a_release(self) -> None:
-        import yaml
         from pathlib import Path
+
+        import yaml
 
         root = Path(__file__).resolve().parents[2]
         config = yaml.safe_load(

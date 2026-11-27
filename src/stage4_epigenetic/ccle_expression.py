@@ -140,8 +140,9 @@ class CCLEReader:
         # Not "neutral" — *unknown*. There is no neutral expression value: 0.0
         # reads as "not expressed", so it reads as "cannot be silenced", so it
         # lowers risk for a gene nobody looked up (roadmap B19, invariant 2).
-        # The name mattered: `_NEUTRAL_SIGNAL = 0.0` is how the same mistake
-        # survived six modules in `encode_reader` (B2).
+        # The name mattered: `encode_reader`'s neutral-signal constant is how
+        # the same mistake survived six modules (B2). The sentinel's value is
+        # invariant 2's to state, not this comment's.
         unknown = CCLEResult(gene=gene, cell_line=cell_line)
 
         ach_id = self._depmap_ids.get(cell_line)
