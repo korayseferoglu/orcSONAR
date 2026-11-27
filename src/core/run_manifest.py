@@ -28,9 +28,12 @@ nothing. The absence is recorded as a claim with its evidence instead.
 
 from __future__ import annotations
 
+import ast
 import hashlib
 import json
 import subprocess
+from collections.abc import Iterable
+from contextlib import suppress
 from datetime import UTC, datetime
 from importlib import metadata
 from pathlib import Path
@@ -334,46 +337,196 @@ def snakemake_state(run_dir: Path, repo_root: Path) -> dict[str, Any]:
     }
 
 
+#: Modules whose use makes a run non-reproducible without a recorded seed.
+#: Written as data rather than as a regular expression because the probe walks
+#: the AST: these are matched against *imports*, never against text, so a
+#: docstring or a string constant naming them is not a finding (roadmap H24).
+_STOCHASTIC_MODULES: frozenset[str] = frozenset(
+    {"random", "secrets", "numpy.random", "numpy.random.mtrand"}
+)
+#: Names that mean sampling wherever they come from. `default_rng` is here
+#: because the textual probe this replaced could not see it at all: neither
+#: `rng = default_rng()` nor `import random as rnd` matched its patterns, so a
+#: module that genuinely sampled would have been reported as clean.
+_STOCHASTIC_NAMES: frozenset[str] = frozenset({"default_rng", "urandom"})
+
+
+class _RandomnessVisitor(ast.NodeVisitor):
+    """Collect the imports and calls that make a module stochastic.
+
+    Anchored on the import graph rather than on spelling: an alias is followed
+    (`import random as rnd`), a bare name brought in from a stochastic module
+    is followed (`from random import shuffle`), and anything that is only a
+    string or a comment is invisible because the parser already discarded it.
+    """
+
+    def __init__(self) -> None:
+        self.findings: list[dict[str, Any]] = []
+        #: local alias → the stochastic module it refers to
+        self._aliases: dict[str, str] = {}
+        #: local name → the stochastic module it was imported from
+        self._imported: dict[str, str] = {}
+
+    # -- imports ----------------------------------------------------------
+
+    def visit_Import(self, node: ast.Import) -> None:  # noqa: N802
+        for alias in node.names:
+            root = alias.name.split(".")[0]
+            if alias.name in _STOCHASTIC_MODULES or root in _STOCHASTIC_MODULES:
+                local = alias.asname or alias.name.split(".")[0]
+                self._aliases[local] = alias.name
+                self._record(node, f"import {alias.name}")
+            elif alias.name in {"numpy", "os"}:
+                # Not stochastic in itself; remembered so that `np.random.*`
+                # and `os.urandom(...)` can be resolved below.
+                self._aliases[alias.asname or alias.name] = alias.name
+        self.generic_visit(node)
+
+    def visit_ImportFrom(self, node: ast.ImportFrom) -> None:  # noqa: N802
+        module = node.module or ""
+        root = module.split(".")[0]
+        for alias in node.names:
+            local = alias.asname or alias.name
+            stochastic_module = (
+                module in _STOCHASTIC_MODULES or root in _STOCHASTIC_MODULES
+            )
+            if stochastic_module or alias.name in _STOCHASTIC_NAMES:
+                self._imported[local] = module or "?"
+                self._record(node, f"from {module} import {alias.name}")
+            elif alias.name == "random" and root in {"numpy", "np"}:
+                self._aliases[local] = "numpy.random"
+                self._record(node, f"from {module} import {alias.name}")
+        self.generic_visit(node)
+
+    # -- calls and attribute chains ---------------------------------------
+
+    def visit_Call(self, node: ast.Call) -> None:  # noqa: N802
+        chain = _attribute_chain(node.func)
+        if chain and self._is_stochastic(chain):
+            self._record(node, ".".join(chain) if len(chain) > 1 else f"{chain[0]}()")
+        self.generic_visit(node)
+
+    def _is_stochastic(self, chain: list[str]) -> bool:
+        """Does this call chain resolve to sampling?
+
+        Args:
+            chain: Flattened attribute chain, e.g. ``["np", "random", "normal"]``.
+
+        Returns:
+            True when the chain's head is a local alias of a stochastic module,
+            or is ``numpy``/``os`` followed by the stochastic attribute, or is a
+            bare name imported from such a module.
+        """
+        head, rest = chain[0], chain[1:]
+        resolved = self._aliases.get(head)
+        if resolved in _STOCHASTIC_MODULES:
+            return True
+        if resolved == "numpy" and rest and rest[0] == "random":
+            # `numpy` itself is not stochastic, only this attribute of it.
+            return True
+        if resolved == "os" and rest and rest[0] in _STOCHASTIC_NAMES:
+            return True
+        return len(chain) == 1 and (
+            head in self._imported or head in _STOCHASTIC_NAMES
+        )
+
+    def _record(self, node: ast.AST, construct: str) -> None:
+        self.findings.append(
+            {"line": getattr(node, "lineno", 0), "construct": construct}
+        )
+
+
+def _attribute_chain(node: ast.AST) -> list[str]:
+    """Flatten ``a.b.c`` into ``["a", "b", "c"]``; ``[]`` if not a plain chain."""
+    parts: list[str] = []
+    current = node
+    while isinstance(current, ast.Attribute):
+        parts.append(current.attr)
+        current = current.value
+    if isinstance(current, ast.Name):
+        parts.append(current.id)
+        return list(reversed(parts))
+    return []
+
+
+def randomness_findings(paths: Iterable[Path]) -> list[dict[str, Any]]:
+    """Find every stochastic construct in ``paths``, by parsing them.
+
+    Args:
+        paths: Python files to inspect.
+
+    Returns:
+        One record per finding, sorted by ``(file, line, construct)`` so that
+        two runs over the same tree produce byte-identical provenance. A file
+        that cannot be parsed yields a finding of its own rather than being
+        skipped: unreadable is unknown, not clean (invariant 2).
+    """
+    findings: list[dict[str, Any]] = []
+    for path in paths:
+        name = str(path)
+        try:
+            tree = ast.parse(Path(path).read_text(encoding="utf-8"), filename=name)
+        except (OSError, SyntaxError, ValueError) as exc:
+            findings.append(
+                {"file": name, "line": 1, "construct": f"unparseable: {exc}"}
+            )
+            continue
+        visitor = _RandomnessVisitor()
+        visitor.visit(tree)
+        for finding in visitor.findings:
+            findings.append({"file": name, **finding})
+    return sorted(findings, key=lambda f: (f["file"], f["line"], f["construct"]))
+
+
 def stochastic_components(repo_root: Path) -> dict[str, Any]:
     """State whether the pipeline has any randomness, with its evidence.
+
+    ⚠️ Roadmap `H24`. This used to be a textual ``git grep``, and both
+    directions of that were wrong. It went red for `B11c`'s ``_chance_hits``,
+    a closed-form expectation that samples nothing, because the *docstring*
+    described a shuffled null — and the fix at the time was to reword the
+    prose, i.e. the record was being written to fit the detector. The
+    dangerous direction was the other one: ``rng = default_rng()`` and
+    ``import random as rnd`` matched none of its patterns, so a module that
+    genuinely sampled would have been reported clean while the manifest
+    claimed reproducibility it could not support.
+
+    The walk is over the AST of every tracked ``src/**.py``, so comments and
+    string constants are structurally invisible — which is also why this
+    module no longer has to exempt its own source.
 
     Args:
         repo_root: Repository root.
 
     Returns:
-        The claim and the command that supports it.
+        The claim, the constructs behind it, how many files were read, and how.
     """
-    # This module is excluded from its own probe: it has to spell the patterns
-    # out in order to search for them, the same reason the single-copy gate
-    # exempts its own registry and the acceptance scripts name the values they
-    # measure. Without the exclusion the probe matched this file and reported
-    # randomness that does not exist — and it only did so once the file was
-    # tracked, because `git grep` ignores untracked files (roadmap H18).
-    probe = _git(
-        [
-            "grep",
-            "-lE",
-            r"\brandom\b|np\.random|numpy\.random|secrets\.|shuffle|sample\(",
-            "--",
-            "src",
-            ":!src/core/run_manifest.py",
-        ],
-        repo_root,
-    )
-    hits = [line for line in (probe or "").splitlines() if line.strip()]
+    listing = _git(["ls-files", "--", "src/*.py"], repo_root)
+    files = [
+        repo_root / line
+        for line in (listing or "").splitlines()
+        if line.strip().endswith(".py")
+    ]
+    findings = randomness_findings(files)
+    for finding in findings:
+        with suppress(ValueError):
+            finding["file"] = str(Path(finding["file"]).relative_to(repo_root))
     return {
-        "present": bool(hits),
-        "files": hits,
+        "present": bool(findings),
+        "files": sorted({finding["file"] for finding in findings}),
+        "findings": findings,
+        "scanned": len(files),
         "evidence": (
-            "git grep -lE '\\brandom\\b|np.random|numpy.random|secrets.|shuffle|"
-            "sample(' -- src"
+            "ast.parse over every tracked src/**.py; imports of "
+            "random/secrets/numpy.random, plus default_rng and os.urandom "
+            "calls, resolved through their local aliases. Comments and string "
+            "constants are not matched (roadmap H24)."
         ),
         "note": (
             "No seeds are recorded because no stochastic component was found. "
             "An empty seeds map would advertise bookkeeping that tracks nothing."
         ),
     }
-
 
 
 def data_sources(repo_root: Path) -> dict[str, Any]:

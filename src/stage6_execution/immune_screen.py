@@ -226,21 +226,20 @@ def _chance_hits(motifs: list[str], length: int) -> float:
     a specific L-mer occurs with probability ``4 ** -L``.
 
     ⚠️ Roadmap `B11c` measured why this is the null that belongs here and a
-    **composition-matched** one does not. A mononucleotide permutation of the
-    sequence preserves its uridine content, and the motifs are largely a
-    U-richness detector, so that permuted null tracks the observation almost
-    exactly (U fraction 0.8: observed 8.08, permuted null 7.99) — it cancels
-    precisely the quantity Goodchild et al. 2009 (PMID 19630977) found to
-    correlate with activity. A uniform-composition expectation instead answers
-    the question a reader has: what would an arbitrary sequence of this length
-    score?
+    **composition-matched** one does not. Shuffling the sequence preserves its
+    uridine content, and the motifs are largely a U-richness detector, so the
+    shuffled null tracks the observation almost exactly (U fraction 0.8:
+    observed 8.08, shuffled null 7.99) — it cancels precisely the quantity
+    Goodchild et al. 2009 (PMID 19630977) found to correlate with activity. A
+    uniform-composition expectation instead answers the question a reader has:
+    what would a random sequence of this length score?
 
-    ⚠️ The wording above says "permutation" rather than the obvious verb on
-    purpose: `run_manifest.stochastic_components()` decides whether the
-    pipeline has any randomness with a textual `git grep`, so prose about
-    shuffling reads as a stochastic component. That detector cannot tell code
-    from a docstring, which is roadmap `H24`; this function performs no
-    sampling at all.
+    📌 This docstring used to avoid the word "shuffling" on purpose, because
+    `run_manifest.stochastic_components()` decided whether the pipeline had
+    randomness with a textual `git grep` and so read prose as a stochastic
+    component — the record was being written to fit the detector's blindness.
+    Roadmap `H24` moved that probe to an AST walk, where a docstring is not a
+    call, so the plain wording is back. This function performs no sampling.
 
     Args:
         motifs: Motif list actually screened against.

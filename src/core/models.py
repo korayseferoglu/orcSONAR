@@ -488,7 +488,7 @@ class ImmuneResult(BaseModel):
     #: Expected motif hits for a *uniform-composition* sequence of the same
     #: length, computed analytically. Roadmap `B11c`: without it, "2 hits"
     #: sits against nothing, and the measured chance rate of a `HIGH` verdict
-    #: for an arbitrary 20-mer is 12.7%.
+    #: for a random 20-mer is 12.7%.
     chance_hits: Annotated[float, Field(ge=0.0)] | None = None
     #: Uridine count and fraction — the correlate Goodchild et al. 2009
     #: (PMID 19630977) measured, as opposed to the short fixed motifs. The

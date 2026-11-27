@@ -228,7 +228,10 @@ class TestStochasticComponents:
         claim = stochastic_components(ROOT)
         assert claim["present"] is False
         assert claim["files"] == []
-        assert "git grep" in claim["evidence"]
+        # How the claim is established is `H24`'s subject and is measured in
+        # `tests/unit/test_randomness_detector.py`; this file only asserts the
+        # manifest section's contract.
+        assert claim["evidence"]
 
 
 class TestBuildAndWrite:
