@@ -373,11 +373,12 @@ gürültülü, yani §2'nin medyanı onların bulunduğu yerde daha oynak.
 ### 6.3 Kapsam, dışlama ve sürümler
 
 - **Kapsam:** değerlendirme evreni, HeLa'da ölçülebilir düzeyde eksprese
-  edilen genler (filtre tanımı ve eşiği aşağıda, `A8`); birim **gen**, site
+  edilen genler (filtre tanımı ve eşiği `A8`'de); birim **gen**, site
   değil (koordinat körlüğü İddia 1'i etkilemez — `.claude/rules/10-koordinatlar.md`).
 - **Dışlama kuralları (veriyi görmeden):** §6.2'nin üç kol tipi; hedef genin
   kendisi ve bilinen doğrudan alt akışı (`A9`); HeLa'da eksprese edilmeyen
   genler (`A8`).
+- ⚠️ **İfade filtresinin kendisi hakkında bir beyan:** Jackson'ın yayınlanmış filtresi *"expressed at significant levels (log 10 intensity ≥ −1, ∼1 copy/cell)"* ve o eşik `LOGINTENSITY` üzerinde tanımlı — ki GEO'nun tanımıyla **iki kanalın ortalaması**, yani aşağı regüle olmuş bir gende kısmen **etiketin fonksiyonu**. Filtre buna rağmen **kaynak makalelerin kendi filtresi olduğu için** korunuyor (karşılaştırılabilirlik §4.1'in gerekçesiyle aynı), ama bağımlılık burada yazılı ve etkisi **ihtiyatlı yönde**: ortalama düşeceği için filtre aşağı regüle olmuş genleri daha kolay **dışlar**, yani pozitifleri azaltır, uydurmaz. ⚠️ Tabanlarda aynı tercih **yapılmıyor**: §7.5'in dördüncü tabanı mock kanalını (`INTENSITY1`) kullanıyor, çünkü bir tabanın etiket bilgisi taşıması onu taban olmaktan çıkarır.
 - **Veri sürümleri:** annotasyon **Ensembl 115**, pinlenmiş arşiv host'undan
   (`src/core/ensembl_release.py` otorite; sürüm her koşunun manifest'inde ve
   her önbellek anahtarında). İfade verisi DepMap 24Q2'ye eşlenmiş CCLE
@@ -488,16 +489,38 @@ koşuda ölçülür, literatürden alıntılanmaz.
    yalnız uzunluk. Denetim hit sayısı ile cDNA uzunluğu arasında
    **r = 0,349** buldu: uzun transkriptler hem daha çok seed eşleşmesi hem
    daha güvenilir DE çağrısı alır.
-4. 🆕 **Mock kanalının ifade şiddeti (`LOGINTENSITY`), tek başına.** Hiçbir
-   dizi bilgisi yok, yalnız genin o array'de ne kadar eksprese olduğu.
-   **Bu dördüncü taban bu satırın kendi gerekçesinden ve bir ölçümden
-   doğdu:** yol haritası `A5` satırı karıştırıcıyı *"uzun **ve yüksek
-   ifadeli** transkriptler"* diye tarif ediyordu ama yalnız uzunluğu taban
-   yapıyordu. Ölçüm (2026-11-27) ifadenin en az o kadar güçlü olduğunu
-   gösteriyor: **pozitiflerin medyan `LOGINTENSITY`'si −0,08 … −0,36, tüm
-   probların medyanı −0,78 … −1,12.** Yani yalnız ifadeye göre sıralayan bir
-   tahmin edici şans üstü skorlar, ve bu taban olmadan orcSONAR'ın skoru
-   "tespit edilebilirliği öğrendi" ile ayırt edilemez.
+4. 🆕 **Mock kanalının ham yoğunluğu — `log10(INTENSITY1)`, tek başına.**
+   Hiçbir dizi bilgisi yok, yalnız genin o array'in **mock** kanalında ne
+   kadar eksprese olduğu. **Bu dördüncü taban bu satırın kendi
+   gerekçesinden ve bir ölçümden doğdu:** yol haritası `A5` satırı
+   karıştırıcıyı *"uzun **ve yüksek ifadeli** transkriptler"* diye tarif
+   ediyordu ama yalnız uzunluğu taban yapıyordu. Ölçüm (2026-11-27)
+   ifadenin en az o kadar güçlü olduğunu gösteriyor: mock kanalında
+   **pozitiflerin medyanı −0,014 … −0,134, tüm probların medyanı −0,766 …
+   −1,109** — yani **0,75-1,09 birim** fark. Yalnız ifadeye göre sıralayan
+   bir tahmin edici şans üstü skorlar, ve bu taban olmadan orcSONAR'ın skoru
+   *"tespit edilebilirliği öğrendi"* ile ayırt edilemez.
+
+   🔴 **Bu tanım DÜZELTİLDİ ve ilk hali döngüseldi.** İlk yazım kovaryatı
+   `LOGINTENSITY` olarak veriyordu; GEO'nun kendi tanımı
+   `#LOGINTENSITY = Corrected **average** log intensity of channels`, yani
+   **iki kanalın ortalaması** — ve aşağı regüle olmuş bir genin işlem kanalı
+   düşük olduğu için o ortalama **etiketin bir fonksiyonu**. Etiket bilgisi
+   taşıyan bir taban, tabanı değil kendisini ölçer. Mock kanalı
+   `#INTENSITY1 = Raw Cy3 intensity (CH1)`, ve `GSE5814`/`GSE5769`'da ch1 =
+   mock (§4.2). Ölçüm mock kanalında **yeniden yapıldı** ve fark duruyor;
+   zaten döngüsellik gözlenen yönün **tersine** itiyordu (aşağı regülasyon
+   ortalamayı düşürür), yani gerçek fark en az bu kadar.
+
+   🔴 **Ve bu taban `GSE5291`'de HESAPLANAMIYOR.** O serinin tablosu yalnız
+   `VALUE`, `LOGINTENSITY`, `PVALUE`, `MLRATIOERROR` taşıyor — **kanal-başına
+   yoğunluk yok** (ölçüldü). `GSE5291` ≈43 seed'in **18'ini** veren en güçlü
+   seri olduğu için bu önemli: dördüncü taban **hesaplanabildiği foldlarda**
+   değerlendirilir ve hangi foldları kapsadığı **raporlanır**.
+   ⚠️ Alternatif — mock yoğunluğunu `GSE5814`/`GSE5769`'dan ortak prob kümesi
+   üzerinden **ithal etmek** — **benimsenmedi**: seriler arası bir varsayım
+   ekler ve MAQC'nin büyüklük uyarısı (§7.3) tam buna karşı. Benimsenmediği
+   burada yazılı, çünkü sonradan yapılırsa sessiz bir genişleme olur.
 
 📌 **Dördüncüyü eklemek çıtayı YÜKSELTİYOR**, yani değişmez 7'nin yasakladığı
 yönün tersi: bir tabanı sonradan *çıkarmak* ihlal olurdu, eklemek ihtiyattır.

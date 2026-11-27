@@ -86,7 +86,18 @@ if not re.search(r"çıtayı\s+\*{0,2}YÜKSELTİYOR|çıtayı yükselt", body, r
 checks = {
     "bölge": r"3′UTR|3'UTR",
     "aynı koşuda ölçüm": r"aynı\*{0,2}\s*koşuda|literatürden alıntılanmaz",
+    # İlk yazım dördüncü tabanı `LOGINTENSITY` ile tanımlıyordu; GEO'nun kendi
+    # tanımı "Corrected **average** log intensity of channels", yani iki kanalın
+    # ortalaması ve aşağı regüle olmuş bir gende etiketin fonksiyonu. Etiket
+    # bilgisi taşıyan bir taban, tabanı değil kendisini ölçer.
+    "mock kanalı": r"INTENSITY1",
+    "GSE5291'de yok beyanı": r"GSE5291.{0,80}(HESAPLANAMIYOR|hesaplanamıyor)",
 }
+if re.search(r"ifade şiddeti \(`LOGINTENSITY`\), tek başına", body):
+    problems.append(
+        "dördüncü taban hâlâ `LOGINTENSITY` (iki kanalın ortalaması) ile "
+        "tanımlı — etiket bilgisi taşıyor, mock kanalı `INTENSITY1` olmalı"
+    )
 missing = [k for k, pat in checks.items() if not re.search(pat, body)]
 if missing:
     problems.append(f"§7.5 eksik: {missing}")
@@ -95,7 +106,13 @@ else:
 
 # ---- 4  AĞ: ifade-şiddeti farkı hâlâ var -------------------------------
 GEO = "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi"
-ARRAYS = ("GSM133689", "GSM119707")
+# Ölçüm MOCK kanalında (`INTENSITY1`) yapılır, iki kanalın ortalaması olan
+# `LOGINTENSITY`'de değil: ortalama aşağı regüle olmuş bir gende etiketin
+# fonksiyonu, yani onunla ölçmek gerekçeyi döngüsel bir değişkenle doğrulamak
+# olur. Bu kapının ilk hali tam bunu yapıyordu.
+# `GSE5291`'in tablosunda kanal-başına yoğunluk YOK, o yüzden listede değil —
+# ve bu bir eksiklik değil, §7.5'te beyan edilmiş bir sınır.
+ARRAYS = ("GSM133689", "GSM133702", "GSM134317")
 
 
 def intensities(gsm: str) -> tuple[list[float], list[float]] | None:
@@ -124,13 +141,14 @@ def intensities(gsm: str) -> tuple[list[float], list[float]] | None:
         if quality is not None and quality.strip() not in ("1", "1.0"):
             continue
         try:
-            intensity = float(row["LOGINTENSITY"])
+            raw = float(row["INTENSITY1"])   # mock kanalı (Cy3, CH1)
             value = float(row["VALUE"])
             pval = float(row["PVALUE"])
         except (KeyError, TypeError, ValueError):
             continue
-        if math.isnan(intensity):
+        if math.isnan(raw) or raw <= 0:
             continue
+        intensity = math.log10(raw)
         everything.append(intensity)
         if pval < 0.01 and value < 0:
             positives.append(intensity)
@@ -152,13 +170,13 @@ else:
         gap = med_pos - med_all
         if gap <= 0.2:
             problems.append(
-                f"{gsm}: pozitiflerin ifade şiddeti farkı yalnız {gap:.3f} — "
+                f"{gsm}: mock kanalında ifade farkı yalnız {gap:.3f} — "
                 f"dördüncü tabanın gerekçesi bu farka dayanıyor ve ölçüm onu "
                 f"desteklemiyor; madde yeniden açılmalı"
             )
         else:
             print(
-                f"  4  {gsm}: pozitif medyan LOGINTENSITY {med_pos:.3f} vs "
+                f"  4  {gsm}: mock kanalı log10(INTENSITY1) — pozitif medyan {med_pos:.3f} vs "
                 f"tüm problar {med_all:.3f} (fark {gap:.3f})"
             )
 
