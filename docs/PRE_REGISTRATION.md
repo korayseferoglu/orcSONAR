@@ -1453,8 +1453,120 @@ skorun o enerjiyi **temsil etmediği**.
 
 ## 8. Durdurma kuralı
 
-<Analiz ne zaman biter? "Sonuç anlamlı olana kadar koşturmak" bir kural
-değil, ihlaldir.>
+Bu projede durdurma kuralının özel ve somut bir sebebi var. Beş skor
+alanından azı bilgi taşıyor (kural 20), ve **her düzeltme PR-AUC'yi
+değiştirecek**. Yani *"bir kanal daha düzeltip tekrar bak"* döngüsü sonsuz
+ve her turda pozitife yaklaşma şansı artar. Aşağıdaki kural tam bunu kesmek
+için var — ve bir durdurma kuralının çalışması için **başlama** kuralı da
+olmak zorunda, yoksa "henüz hazır değildi" her turda yeni bir tur üretir.
+
+### 8.1 Saat ne zaman başlar — ilan edilmiş önkoşullar
+
+Birincil değerlendirme, aşağıdaki maddelerin **hepsi** kapanmadan
+koşturulmaz. Her biri yol haritasında kendi kabul kapısı olan bir madde;
+"kapandı" demek beyan değil, kapının geçmesi:
+
+| madde | neden önkoşul |
+|---|---|
+| `C1` | `sequence_specificity` §4.4.2'nin `k > 1`'ini sağlamalı; bugün 41/41 sabit, yani verdi **yapı gereği** `GEÇERSİZ` |
+| `B3` | skor uzayındaki fallback §7.7.2'nin değerine inmeli; bugün aday olmayan bir gen zayıf bir gerçek adayın üstünde sıralanıyor — sıralama tersliği metriğin okuduğu şeyi bozuyor |
+| `C0` | §1'in hipotezi ve §7.5'in dört tabanı **3′UTR** tanımlı; bölge farkındalığı olmadan ne hipotez ne tabanlar hesaplanabilir |
+| `C0b` | §1 **iki ipliği** gereklilik olarak kilitliyor |
+| `D1` | arama uzayı ile §6.3'ün değerlendirme evreni örtüşmeli; bugün taranan küme `transcriptome_fetcher.py`'ın `_BACKGROUND_GENES` tanımı kadar ve evrenin ezici kısmı §7.7.2 gereği **bilinmiyor** kalır |
+| `E0` | referans seti ölçekte kurulmalı (sekiz seri, ortak ölçekli matris) |
+| `E0b` | §7.5'in **2 numaralı tabanı** (siSPOTR POTS) tablo kurulmadan hesaplanamaz |
+| `E1` | §5'in null modeli |
+
+⚠️ **Ve üç madde ÖNKOŞUL DEĞİL — gerekçeleriyle, çünkü listeyi şişirmek de
+aynı döngüyü açar:**
+
+- **`B6`** (koşu başına sabit `cell_modifier`): monoton bir **sabit** çarpan
+  bir sıralamayı değiştiremez, yani AP ve `lift` ondan etkilenmez. Geçersiz
+  kıldığı şey *hücre-hattına özgülük* iddiasıdır, ve §4.4 o iddiayı
+  **yapmıyor**. Beyan edildi, bloke etmiyor.
+- **`C4`** (çift sayım): ağırlıkları yorumlanamaz yapıyor, ki §7.6 bunu
+  zaten beyan ediyor; sıralamayı **yozlaştırmıyor**. Beyan edildi, bloke
+  etmiyor.
+- **`C3e`** (per-site ΔG): ΔG kanalı **bilinmiyor** kaldığı sürece merger
+  onu dışlayıp ağırlıkları yeniden normalize ediyor (değişmez 2'nin
+  mekanizması), yani §4.4.2'nin ön koşulu **sağlanıyor**. Ama o zaman
+  `P_silence` fiilen dizi + epigenetik kanallarından oluşur, ve **bu,
+  sonucun kapsamı olarak raporlanmak zorundadır**. Beyan edildi, bloke
+  etmiyor.
+
+### 8.2 Kaç birincil değerlendirme — en çok **2**
+
+**Bir birincil değerlendirme** = §2'nin birincil metriğinin, kilitlenmiş
+referans seti üzerinde, skorlayıcının **belirli bir commit'inde**
+hesaplanması. Her değerlendirme, verdisi ne olursa olsun, **commit hash'iyle
+ve sırasıyla** raporlanır.
+
+- **`GEÇERSİZ` bir deneme SAYILMAZ** (enstrüman sıralama üretmedi), ama
+  **zorunlu duruş** getirir: sağlanmayan önkoşul kendi yol haritası maddesi
+  olarak, kendi kapısıyla kapanana kadar yeni koşu yapılmaz. Ad-hoc bir
+  düzeltmeyle tekrar koşmak bu kuralın ihlalidir.
+- Geçerli bir birincil değerlendirmeden **sonra** skorlayıcıda yapılan her
+  kod değişikliği **yeni bir deneme** başlatır.
+- **Doğrulayıcı olarak raporlanabilecek deneme sayısı en çok 2'dir.**
+
+🔬 **Neden 2 — hesaplanmış.** Tek-yanlı `α = 0,05` ile, `K` bağımsız denemede
+aile-düzeyi hata `1 − 0,95^K`:
+
+| K | aile-düzeyi hata |
+|---|---|
+| 1 | **%5,00** |
+| 2 | **%9,75** |
+| 3 | **%14,26** |
+
+%10'un altında kalan en büyük `K` **2**'dir. ⚠️ Denemeler aynı veri üzerinde
+olduğu için pozitif korele, yani `1 − 0,95^K` bir **üst sınır**; bu da beyan
+edildi. Sayı bir gelenek değil, bu tablodan okunuyor.
+
+- **İkinci denemenin tek ön-ilan edilmiş tetikleyicisi** şudur: §8.1'in bir
+  önkoşulunun **sağlanmadığı sonradan anlaşılmıştır**, yani ilk deneme hiç
+  koşmamalıydı. Başka hiçbir sebep ikinci bir **doğrulayıcı** deneme
+  üretmez.
+- İkiden sonraki her şey **keşifsel** olarak raporlanır (§10'un kuralı) ve
+  doğrulayıcı iddia **ilk geçerli denemenin** iddiasıdır.
+
+### 8.3 Analiz ne ile biter
+
+| ilk geçerli denemenin verdisi | sonra ne olur |
+|---|---|
+| `GEÇTİ` | analiz biter; §9 |
+| `EŞDEĞER` | analiz biter; §9'un negatif yolu |
+| `DAHA KÖTÜ` | analiz biter; §9'un negatif yolu |
+| `SONUÇSUZ` | **analiz biter** ve sonuçsuz olarak raporlanır |
+
+🔴 **`SONUÇSUZ` bir devam izni DEĞİL.** "Aralık marjı kesti, bir kanal daha
+düzeltip tekrar bakalım" cümlesi bu satırın yasakladığı şeyin ta kendisi:
+her tur pozitife yaklaşma şansını arttırır ve §8.2'nin sayfası iki turda
+kapanır. `SONUÇSUZ` çıkarsa raporlanan şey ulaşılan güven aralığının
+**genişliği** ve §4.4.6'nın güç tablosudur — yani "bu veriyle bu soru
+cevaplanamadı", ki ölçülmüş ve yayınlanabilir bir sonuçtur.
+
+### 8.4 Sonuç ne olursa olsun yapılmayacaklar
+
+Aşağıdakiler `A12`'nin commit'inden sonra **değiştirilmez**; değiştirilmesi
+gerekiyorsa `docs/PRE_REGISTRATION_v2.md` açılır ve yayında **ikisi de**
+raporlanır (değişmez 6):
+
+- §2'nin birincil metriği, §3'ün dört ikincili
+- §4.1'in etiket kuralı, §4.2'nin ölçeği, §4.3'ün ızgarası, §4.4'ün marjı ve
+  karar kuralı
+- §6.1'in **sekiz accession'ı** — sonradan ne eklenir ne çıkarılır
+- §6.3/§6.4'ün evreni ve eşiği, §6.5'in çökertme kuralları, §6.6'nın
+  dışlamaları
+- §7.1'in foldları, §7.5'in **beş tabanı**, §7.7'nin haritalaması, §7.8'in
+  G:U ağırlığı
+
+Ve özellikle, değişmez 7'nin kapsamına girenler:
+
+- ağırlık, eşik ya da sabit **ayarlayarak** pozitif sonuç aramak;
+- ölü bir kanalı telafi etmek için eşik indirmek;
+- bir **tabanı**, bir **tabakayı** ya da bir **seriyi**, katkısını gördükten
+  sonra çıkarmak;
+- bir array'i ya da bir seed'i, sonucu gördükten sonra düşürmek.
 
 ## 9. Negatif sonuç
 

@@ -118,8 +118,12 @@ elif code is not None:
 
 # ---- 3  sayı örtüşmesi yetmiyor -----------------------------------------
 # A14'ün kriteri §8'i adlandırıyor; §9'a çevirince harita ile çelişiyor.
-code = perturb(ROADMAP, "| A13 | §8'de koşu sayısı/koşulu sayıyla yazılı | TODO |",
-               "| A13 | §9'da koşu sayısı/koşulu sayıyla yazılı | TODO |",
+# ⚠️ Çapalar DURUM hücresini içermiyor. İlk hali `| TODO |` ile bitiyordu ve
+# `A14` kapandığı anda çapa kayboldu — kapı "bozulamadı" diye düştü, yani
+# kendi ölçümünü yol haritasının durum sütununa bağlamak bir bayatlama
+# kaynağıydı.
+code = perturb(ROADMAP, "| §8'de koşu sayısı/koşulu sayıyla yazılı |",
+               "| §9'da koşu sayısı/koşulu sayıyla yazılı |",
                "yanlış bölüm")
 if code == 0:
     problems.append(
@@ -130,8 +134,8 @@ elif code is not None:
     print("  3  kriter haritadan sapınca → kırmızı")
 
 # ---- 4  var olmayan bölüm -----------------------------------------------
-code = perturb(ROADMAP, "| A13 | §9'da negatif sonucun raporlanacağı yer ve içerik yazılı | TODO |",
-               "| A13 | §11'de negatif sonucun raporlanacağı yer ve içerik yazılı | TODO |",
+code = perturb(ROADMAP, "| §9'da negatif sonucun raporlanacağı yer ve içerik yazılı |",
+               "| §11'de negatif sonucun raporlanacağı yer ve içerik yazılı |",
                "var olmayan bölüm")
 if code == 0:
     problems.append(
