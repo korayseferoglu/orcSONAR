@@ -51,6 +51,7 @@ echo "  geçti"
 
 echo "# 2-5  üç bozma denemesi ve kilit grafiği"
 "$PY" - <<'INNER' || exit 1
+import os
 import re
 import subprocess
 import sys
@@ -64,6 +65,13 @@ TESTS = "tests/hooks/test_prereg_sections.py"
 problems: list[str] = []
 
 
+# Bu çağrılar testleri KASTEN kırmızıya düşürüyor (mekanizmanın çalıştığını
+# göstermenin başka yolu yok). Makbuz geçici bir yola yönlendirilmek zorunda,
+# yoksa o kırmızı gerçek makbuzun "son koşu" alanında kalır ve `H7` sonraki
+# commit'i reddeder — ölçüldü, `H22`.
+_THROWAWAY_RECEIPT = tempfile.mkstemp(suffix=".json")[1]
+
+
 def run_tests() -> int:
     done = subprocess.run(
         [sys.executable, "-m", "pytest", TESTS, "-q", "-o", "addopts=",
@@ -71,6 +79,7 @@ def run_tests() -> int:
         capture_output=True,
         text=True,
         timeout=180,
+        env=dict(os.environ, ORCSONAR_SUITE_RECEIPT=_THROWAWAY_RECEIPT),
     )
     return done.returncode
 

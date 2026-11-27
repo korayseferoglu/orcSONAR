@@ -336,6 +336,40 @@ MIRZA-G yalnız o serinin ayrık-seed kollarını kullandı.
    havuzlar; tanımı gereği tek bir 2-8 seed'i yoktur, dolayısıyla bu modelin
    öngörebileceği bir nesne değildir.
 
+### 6.2b Analiz birimi: array mı, replikat çifti mi — ölçülmüş cevap
+
+Kaynak makalelerin kendi birimi **array değil**: Jackson 2006b kelimesi
+kelimesine *"Transcript regulation was calculated as the **error-weighted
+mean log 10 ratio** for each transcript across the **fluor-reversed
+pair**."* Bu birimin GEO yatağından **ne kadarının geri kurulabildiği**
+ölçüldü (2026-11-27), çünkü analiz birimi `A12`'den sonra değiştirilemez:
+
+| seri | array | ayrık kol | tam `a`/`b` çifti taşıyan | durum |
+|---|---|---|---|---|
+| `GSE5291` | 18 | 18 | — | ✅ **Her GSM zaten çift-ortalaması.** Metadata açıkça söylüyor: `!Sample_label_ch1 = Cy3/Cy5 (fluor-reversed pair)`. Birim = GSM = siRNA |
+| `GSE5814` | 68 | 30 | **19** | kısmi |
+| `GSE5769` | 61 | 50 | **11**, artı **1 yarım çift** | kısmi |
+
+Üç ölçülmüş sonuç ve üçü de bağlayıcı:
+
+1. ✅ **Replikat yapısı geri kurulabiliyor:** `GSE5814` ve `GSE5769`'un
+   başlıklarındaki `a`/`b` eki kolları eşleştirmeye yetiyor.
+2. ⚠️ **Ama `a`/`b`'nin boya-çevrimi OLDUĞU kayıtlı değil.** İki serinin
+   **bütün** örnekleri `ch1 = Cy3, ch2 = Cy5` diyor; `GSE5291` gibi açık bir
+   *"fluor-reversed pair"* ifadesi yok. Makaleler birimlerini çevrimli çift
+   üzerinden tanımladığına göre `a`/`b` en olası eşleşme — ama bu bir
+   **çıkarım**, ölçüm değil, ve burada öyle etiketli.
+3. 🔴 **Makalelerin tam birimi kolların AZINLIĞI için mevcut:** `GSE5814`'ün
+   30 kolundan 19'u, `GSE5769`'un 50 kolundan 11'i. Geri kalan kollar **tek
+   array** tahmini verir. `E0` bu kolları **işaretlemek** zorunda, sessizce
+   çift gibi ortalamamak; ve `GSE5769`'daki **yarım çift** ayrıca
+   raporlanacak, tam çift sayılmayacak.
+
+📌 Yani §2'nin "dupleks başına" hücresi, çifti olan kollarda çift-ortalaması,
+olmayanlarda tek array üzerinden hesaplanır, **ve hangisinin hangisi olduğu
+raporda görünür**. Bu bir zayıflık ve örtülmüyor: tek-array hücreleri daha
+gürültülü, yani §2'nin medyanı onların bulunduğu yerde daha oynak.
+
 ### 6.3 Kapsam, dışlama ve sürümler
 
 - **Kapsam:** değerlendirme evreni, HeLa'da ölçülebilir düzeyde eksprese

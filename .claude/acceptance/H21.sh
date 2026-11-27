@@ -50,6 +50,7 @@ echo "  geçti"
 
 echo "# 2-4  mekanizma, kontrolü ve yorum ayrımı"
 "$PY" - <<'INNER' || exit 1
+import os
 import shutil
 import subprocess
 import sys
@@ -63,6 +64,10 @@ TEST = "tests/hooks/test_ci_workflow.py::test_the_local_gate_runs_every_blocking
 problems: list[str] = []
 
 
+# Kasten kırmızı koşular; makbuz geçici bir yola yönlendiriliyor (`H22`).
+_THROWAWAY_RECEIPT = tempfile.mkstemp(suffix=".json")[1]
+
+
 def run_test() -> int:
     done = subprocess.run(
         [sys.executable, "-m", "pytest", TEST, "-q", "-o", "addopts=", "-p",
@@ -70,6 +75,7 @@ def run_test() -> int:
         capture_output=True,
         text=True,
         timeout=180,
+        env=dict(os.environ, ORCSONAR_SUITE_RECEIPT=_THROWAWAY_RECEIPT),
     )
     return done.returncode
 

@@ -154,3 +154,68 @@ class TestReceiptPath:
     def test_conftest_uses_this_module(self) -> None:
         conftest = (ROOT / "tests" / "conftest.py").read_text(encoding="utf-8")
         assert "_receipt" in conftest
+
+
+# ---------------------------------------------------------------------------
+# H22 — a gate that proves a test goes red must not leave the red behind
+# ---------------------------------------------------------------------------
+
+
+class TestDeliberatelyRedGatesRedirectTheReceipt:
+    """H20's sibling, and H20 does not cover it.
+
+    H20 stopped a *narrowed* run from erasing the whole-suite evidence. But
+    `A13.sh` and `H21.sh` prove their mechanisms work by perturbing a file and
+    running pytest **red** on purpose. That red lands in the receipt's
+    latest-run fields, and `H7`'s first check is "latest run failed → refuse",
+    so the next commit is blocked. Measured: after A5 closed, running A13.sh
+    left `exitstatus=1, failed=2` over 8 tests and the commit was refused,
+    while the whole-suite evidence was still intact — so H20 had done its job
+    and the poisoning was in a different field.
+
+    This is the structural cost of self-verifying gates: if the only way to
+    show a mechanism fires is to make it fire, the failure gets recorded
+    somewhere. The fix is to point those runs at a throwaway receipt, and the
+    test below is what stops the third such gate from forgetting (H21's
+    lesson, one level down).
+    """
+
+    GATES_THAT_RUN_PYTEST_IN_A_SUBPROCESS = ("A13.sh", "H21.sh")
+
+    def _acceptance(self, name: str) -> str:
+        return (ROOT / ".claude" / "acceptance" / name).read_text(encoding="utf-8")
+
+    def test_every_subprocess_pytest_redirects_the_receipt(self) -> None:
+        """Scanned rather than asserted: a new gate must not be able to forget."""
+        import re
+
+        offenders: list[str] = []
+        for name in self.GATES_THAT_RUN_PYTEST_IN_A_SUBPROCESS:
+            text = self._acceptance(name)
+            # Python-level invocations: subprocess.run([... "-m", "pytest" ...])
+            for match in re.finditer(r'"-m",\s*"pytest"', text):
+                window = text[max(0, match.start() - 600) : match.start() + 600]
+                if "ORCSONAR_SUITE_RECEIPT" not in window:
+                    offenders.append(
+                        f"{name}: a subprocess pytest call near offset "
+                        f"{match.start()} does not set ORCSONAR_SUITE_RECEIPT"
+                    )
+        assert not offenders, "; ".join(offenders)
+
+    def test_the_scan_covers_the_gates_that_need_it(self) -> None:
+        """A list that silently stops matching reality is worse than none."""
+        import re
+        from pathlib import Path as _Path
+
+        acceptance = ROOT / ".claude" / "acceptance"
+        spawning = {
+            path.name
+            for path in acceptance.glob("*.sh")
+            if re.search(r'"-m",\s*"pytest"', path.read_text(encoding="utf-8"))
+        }
+        listed = set(self.GATES_THAT_RUN_PYTEST_IN_A_SUBPROCESS)
+        assert spawning == listed, (
+            f"gates spawning pytest in a subprocess: {sorted(spawning)}, "
+            f"but the scan lists {sorted(listed)}"
+        )
+        assert isinstance(acceptance, _Path)
