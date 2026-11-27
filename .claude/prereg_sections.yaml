@@ -65,7 +65,7 @@ sections:
       section.
   7:
     title: Analiz planı
-    owners: [A4, A5, A5b, A7, A10]
+    owners: [A4, A5, A5b, A7, A10, A10b]
     note: >-
       A4 the cross-validation scheme (its metric goes in §2 and its secondary
       metrics in §3), A5 the baselines, A5b the fifth baseline candidate that

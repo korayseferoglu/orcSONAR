@@ -287,16 +287,54 @@ değeri eziyor. Yani bu ön koşul yazılmadan kilitlenen bir ön kayıt, *ölç
 yapmayan* bir planı kilitlemiş olurdu — `pre-register` skill'inin kelimesi
 kelimesine uyardığı şey.
 
-**Ön koşul, sayıyla.** Bir tahmin ediciye §2'nin metriği uygulanabilmesi için,
-değerlendirilen **her** array'de bağlantı grupları içindeki sıralama
-belirsizliğinin AP'yi oynatabileceği aralık marjın yarısını geçmemeli:
+🔴 **DÜZELTME (`A10`, 2026-11-27) — bu ön koşulun İLK SAYISAL HALİ YANLIŞTI,
+ve hatası benim.** İlk yazım şunu istiyordu: *bağlantı grupları içindeki
+sıralama belirsizliğinin AP'yi oynatabileceği aralık `m/2 = 0,010`'u
+geçmemeli* (`AP_en_iyi − AP_en_kötü`), ve bundan *"haritalama ≥ 500 ayrık
+değer üretmeli"* talebini türetiyordu. **İkisi de geri çekildi**, iki bağımsız
+ölçüm yüzünden:
 
-```
-AP_en_iyi − AP_en_kötü  ≤  m/2 = 0,010
-```
+1. 🔬 **§2'nin kilitlediği AP formülü bağlantı sırasına DUYARLI DEĞİL.** §2
+   `AP = Σ(R_n − R_{n−1})·P_n` diyor ve eşikler **ayrık skor değerleridir**;
+   bağlı skorlar eğride **tek bir nokta** verir. Ölçüldü: bu formül bağlantı
+   içi permütasyona karşı **tam olarak** değişmez (5 permütasyonda yayılım
+   **0,00e+00**) ve sabit bir tahminci için **AP = π'ye makine hassasiyetinde
+   eşit**. Oysa açıklık ölçütü sıra-temelli `Σ(hits/rank)/P` formülüne
+   dayanıyordu — o formül gerçekten sıraya duyarlı (12 kademede açıklık
+   0,088), **ama bu ön kayıt onu kullanmıyor.** Yani ölçüt, birincil metriğin
+   sahip olmadığı bir duyarlılığı ölçüyordu.
+2. 🔬 **≥500 talebi yapı gereği KARŞILANAMAZ.** `alignment_score`
+   dupleksin her pozisyonu için {Watson-Crick **+1,0**, G:U **+0,5**,
+   eşleşmezlik **0**} toplamıdır, yani değerleri `{0, 0,5, 1,0, …, n}`
+   kümesinde ve en fazla **2n+1** ayrık değer alabilir. Bu projenin
+   dupleksi `n = 20`, yani **tavan 41** ayrık değer — kural 20'nin 41 sitede
+   ölçtüğü **12** ayrık değer bu tavanla tutarlı. Hiçbir yeniden ölçekleme
+   çözünürlük **yaratamaz**: monoton bir dönüşüm ayrık değer sayısını
+   değiştirmez. Yani 500 talebi, karşılanması imkânsız olduğu için
+   değerlendirmeyi kalıcı olarak `GEÇERSİZ` yapardı.
 
-(`AP_en_kötü`: her bağlantı grubunun içinde pozitifler **sona**;
-`AP_en_iyi`: başa.) Ön koşul **iki ayrı yerde** uygulanır:
+⚠️ **Ama yozlaşma sorunu DURUYOR** ve yukarıdaki kimlik hâlâ geçerli: sabit
+bir skorla `lift` tam **1,0000** çıkar, ve bu bir ölçüm değil. Düzeltilen şey
+ölçütün **biçimi**, varlığı değil.
+
+**Ön koşul, düzeltilmiş ve parametresiz hali.** Değerlendirilen her array
+için şunlar hesaplanır ve **raporlanır**:
+
+- tahmin edicinin o evrende aldığı **ayrık değer sayısı** `k`;
+- en büyük bağlantı grubunun evrendeki payı ve **içindeki pozitif payı**;
+- `AP` ile `π`'nin farkı.
+
+Ve verdi `GEÇERSİZ`'dir, eğer **`k = 1`** ya da **`AP`, `π`'ye `1e-9`
+toleransında eşit** ise. Bu ölçüt keyfi bir eşik taşımıyor: ikisi de sabit
+bir tahmincinin **analitik** imzasıdır, ve §2'nin formülü bağlantı sırasına
+duyarlı olmadığı için ikisi de **determinist**. ⚠️ `k > 1` olduğu halde
+evrenin büyük kısmı tek bir grupta toplanıyorsa bu **yozlaşma değil**,
+seyrek bir tahmin edicinin doğal yapısıdır (aday olmayan genler en alt
+grupta toplanır) ve §2'nin formülü o yapıyı doğru biçimde fiyatlar — ama
+payların **raporlanması zorunlu**, çünkü okuyucu AP'nin ne kadarının üst
+gruptan geldiğini bilmek zorunda.
+
+Ön koşul **iki ayrı yerde** uygulanır:
 
 1. **Değerlendirilen sıralama** (nihai risk skoru) için — sağlanmazsa sonuç
    `GEÇERSİZ`, ve §9'un negatif sonuç yolu **kullanılmaz**.
@@ -308,25 +346,19 @@ AP_en_iyi − AP_en_kötü  ≤  m/2 = 0,010
    (`C1`) ya da ağırlığı **ilan edilerek sıfırlanır** ve §2'nin metriği onsuz
    yeniden hesaplanır. Üçüncü bir seçenek yok.
 
-🔬 **Ölçülmüş çözünürlük talebi — `C1` ve `A10` için bir sayı.** Aynı 20
-array'de, mock yoğunluğu kovaryatı `k` kademeye nicelenerek bağlantı açıklığı
-ölçüldü:
+📌 **`C1`'in kabul kriteri bu düzeltmeyle yeniden yazıldı.** Geri çekilen
+≥500 talebi yerine geçen şey: `sequence_specificity` değerlendirme
+evreninde **`k > 1`** ayrık değer taşımalı — yani `_clamp` kaldırıldığında
+tavanı `2n+1 = 41` olan ham çözünürlük **yeter**, çünkü §2'nin formülü
+bağlantı sırasına duyarlı değil. ⚠️ Yetersiz olan şey `_clamp`'in kendisi:
+o 12 ayrık değeri **1'e** eziyor, ve `k = 1` tam olarak `GEÇERSİZ`'in
+tanımıdır.
 
-| kademe | medyan açıklık | en kötü array | m/2 = 0,010 altında? |
-|---|---|---|---|
-| 1 (sabit) | 0,9725 | 0,9881 | hayır |
-| 12 (bugünkü ham seed skoru) | 0,0316 | 0,0518 | **hayır** |
-| 50 | 0,0073 | 0,0199 | hayır |
-| 100 | 0,0040 | 0,0155 | hayır |
-| 250 | 0,0017 | 0,0106 | hayır |
-| 500 | 0,0009 | 0,0060 | **evet** |
-
-Yani `_clamp`'i kaldırmak **yetmez**: `_clamp` öncesindeki 12 ayrık değer de
-bu ön koşulu geçmiyor, ve açıklığı (0,0518) marjın **iki buçuk katı**.
-`A10`'un ön kaydedeceği haritalama ve `C1`'in uygulaması, değerlendirme
-evreninde ≥ **500** ayrık değer üretmek zorunda. Bu sayı ölçülmüştür, bir
-tercih değildir; `C1`'in bugünkü kabul kriteri ("41/41 sabit değil") bu
-eşiğin çok altındaydı ve yol haritasında düzeltildi.
+🔬 **Çözünürlük tavanının kaydı:** ölçülen açıklık tablosu (1/12/50/100/250/500
+kademe) `reports/a6a-marj-2026-11-27/cozunurluk.json` içinde duruyor ve
+**silinmiyor** — geri çekilen bir ölçütün kanıtı da kayıttır. Ama artık bir
+**talep** değil: sıra-temelli AP formülünün duyarlılığını gösteren bir ek
+ölçüm.
 
 #### 4.4.3 Kontrast ve test
 
@@ -1244,6 +1276,102 @@ genleri etrafında elle küratörlendiği için taban orandan çok yukarıda. Bu
 `Impact` AUROC'u **şişkindir** ve Bulgu-6 göçünden sonra yeniden
 hesaplanmalıdır. Bu cümle burada, çünkü `A12`'den sonra "şişkin olduğunu
 biliyorduk" demek bir sapma maddesi olur.
+
+
+### 7.7 `_clamp` yerine gelen haritalama — `alignment_score` → `[0, 1]`
+
+`_clamp` bir hata (ham skoru `min(1,·)` ile eziyor); yerine gelen şey bir
+**karar**, ve sonucu gördükten sonra değiştirilemez.
+
+**Karar:**
+
+```
+sequence_specificity = alignment_score / n          (n = dupleks uzunluğu)
+```
+
+`alignment_score` dupleksin her pozisyonu için {Watson-Crick **+1,0**, G:U
+**+0,5**, eşleşmezlik **0**} toplamı (`seed_aligner.py`), yani bölen
+**teorik maksimum**: tam komplementer bir hedefte her pozisyon +1,0 verir ve
+toplam `n` olur. Dolayısıyla haritalanan sayının anlamı sabit ve
+yoruma açık: **dupleksin eşleşen pozisyon kesri** (G:U yarım sayılır).
+
+#### 7.7.1 Reddedilen iki alternatif, ve sebebi aynı
+
+- **Koşu içi min-max** (`(s − min)/(max − min)`) ve **koşu içi yüzdelik**
+  **reddedildi.** İkisi de koşunun **kendi dağılımının** fonksiyonu: aynı
+  sitenin skoru, o koşuda başka hangi sitelerin bulunduğuna göre değişir.
+  Yani skor sitenin bir özelliği olmaktan çıkar. Daha somut bir sonucu var:
+  arama uzayı büyüdüğünde (Bulgu-6'nın GENCODE göçü) **her sitenin skoru
+  yeniden yazılır**, ve göç öncesi/sonrası hiçbir sayı karşılaştırılamaz.
+  Teorik maksimuma bölmek bu bağımlılığı hiç kurmuyor.
+- Min-max'in ayrıca bir yan etkisi var: her koşuda en yüksek siteyi
+  **tanım gereği 1,0** yapar, yani bir yozlaşma çapası yaratır.
+
+#### 7.7.2 Değerlendirme evreninde ulaşılabilir aralık — ölçülmüş sınır
+
+Adaylar seed'in **tam komplementeri** üzerine kurulu bir indeksle bulunuyor
+(kural 10: `seed_aligner` yalnız `reverse_complement(seed)` indeksliyor), yani
+bulunan her sitede seed'in **7 pozisyonu kesin eşleşir** ve
+`alignment_score ≥ 7`. Bu projenin dupleksi `n = 20`
+(`config/config.yaml`'ın `sarna_sequence`'ı):
+
+| | değer | neden |
+|---|---|---|
+| ulaşılabilir **alt sınır** | **0,35** = 7/20 | seed'in 7 pozisyonu zorunlu eşleşir |
+| ulaşılabilir **üst sınır** | 1,0 | tam komplementer = **on-target**, §6.6.1 onu dışlıyor |
+| değerlendirme evreninde fiilî aralık | **[0,35, 1,0)** | üst uç dışlanmış |
+| ayrık değer **tavanı** | **2n+1 = 41** | skor `{0, 0,5, …, n}` kümesinde |
+
+📌 Nominal **0,20** ağırlığının bu yüzden fiilen `0,20 × 0,65 = 0,13`'ü
+kadarı oynuyor. Bu sayı burada, çünkü ağırlıkların göründükleri anlama
+gelmediği kural 20'nin ölçtüğü bir şey ve bu haritalama onu **değiştirmiyor**,
+yalnız ölçülebilir kılıyor.
+
+🔴 **ADAY OLMAYAN GENİN DEĞERİ 0,0'dır — ve bugünkü kod 0,5 veriyor.**
+Tam taranmış bir transkriptte seed eşleşmesi **bulunmadıysa** bu bir
+*ölçülmüş yokluk*tur ve değeri **0,0**'dır. Bugünkü `score_integrator` eksik
+kanalı skor uzayındaki bir sabitle dolduruyor (otoritesi değişmez 2,
+`.claude/rules/00-degismezler.md`; bugünkü değeri **0,5** ve onu silecek madde
+`B3`), ve o değer ulaşılabilir aralığın **içinde**: yani aday olmayan bir gen,
+zayıf bir gerçek adayın (0,35-0,45) **üstünde** sıralanıyor — bir sıralama
+tersliği. ⚠️ Düzeltmenin yeri `B3`;
+burada **ön kaydedilen şey hangi değerin doğru olduğu**.
+
+⚠️ **Ve bu, değişmez 2 ile çelişmiyor, çünkü iki farklı durum var ve
+ayrılmak zorunda:**
+
+| durum | değer | gerekçe |
+|---|---|---|
+| transkript **tarandı**, seed eşleşmesi yok | **0,0** | ölçülmüş yokluk; riski düşürmesi doğru |
+| transkript **taranmadı** (arama uzayı dışı) | **bilinmiyor** | veri yok; değişmez 2 gereği sayı yazılmaz |
+
+İkinci satır bugün sessizce birinciye karışıyor: arama uzayı
+`_BACKGROUND_GENES` ile sınırlı olduğu için **taranmamış** genler
+değerlendirme evrenine girip aday-değil gibi davranıyor. Bu, Bulgu-6'nın
+kapsamına girer ve §6.3'ün *"değerlendirme evreni"* tanımı ile arama uzayı
+örtüşmediği sürece devam eder; **ön kayıt bu örtüşmezliği bir sınır olarak
+beyan ediyor** ve göç sonrası yeniden ölçülmesini gerektiriyor.
+
+#### 7.7.3 Haritalamanın neye etki ettiği, neye etmediği
+
+**Monotondur**, yani `sequence_specificity`'nin **kendi** sıralamasını
+değiştirmez: tek kanalı tek başına değerlendiren bir AP bu seçimden
+**bağımsız**dır. Ama ölçek **ağırlıklı toplama** girer, yani §7.6'nın
+`P_silence`'ının sıralaması haritalamaya **bağlıdır** — ön kaydedilmesinin
+sebebi tam bu. Bir alternatifin (örn. min-max) `P_silence` sıralamasını
+değiştirmesi beklenir ve bu bir **duyarlılık analizi olarak raporlanır**,
+birincil olarak **asla**.
+
+📌 **Çözünürlük:** haritalama monoton olduğu için ayrık değer sayısını
+**değiştirmez** — tavan `2n+1 = 41`'dir ve §4.4.2'nin düzeltilmiş ön koşulu
+(`k > 1`) bu tavanla rahatça sağlanır. `_clamp` kaldırıldığı anda `k` 1'den
+12'ye çıkıyor (kural 20'nin ölçtüğü ham değer sayısı). Geri çekilen ≥500
+talebinin neden karşılanamaz olduğu §4.4.2'de yazılı.
+
+📌 **G:U'nun +0,5 ağırlığı bu maddenin kararı DEĞİL** — o
+`alignment_score`'un içinde, bu haritalamadan önce duran bir modelleme
+tercihi ve ön kayıtta hiçbir yerde gerekçelendirilmemiş. Yol haritasına
+`A10b` olarak yazıldı; burada `alignment_score` **verildiği gibi** alınıyor.
 
 
 ## 8. Durdurma kuralı
