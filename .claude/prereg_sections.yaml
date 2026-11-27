@@ -1,0 +1,95 @@
+# Which roadmap item fills which pre-registration section.
+#
+# Roadmap A13. FAZ A was written against a template that was never built: one
+# where item *n* fills section *n*. The `pre-register` skill generates ten
+# semantically-organised sections instead, so the two coincide only at
+# `A1`→§1, and `A11`'s criterion pointed at §11, which does not exist.
+#
+# Why this file exists rather than just corrected numbers in the roadmap:
+# number coverage is not semantic fit, and the first version of the test
+# proved it. §8 and §9 looked owned — by `A8` and `A9` — purely because the
+# digits matched, while `A8` is a detectability filter and §8 is the stopping
+# rule. A check that counts numbers passes on exactly the arrangement it is
+# meant to catch. So the mapping is declared here, with each section's
+# expected **title**, and the test checks it against the template and the
+# roadmap in both directions: a criterion that drifts from this map goes red,
+# and so does a section nobody claims.
+#
+# `title` is matched as a substring of the template's heading, so wording may
+# be polished without breaking the map, but renaming a section's subject
+# cannot pass silently.
+
+schema_version: 1
+
+sections:
+  1:
+    title: Hipotez
+    owners: [A1]
+    note: >-
+      Done. The mechanism in one sentence: seed-mediated silencing by both
+      strands of the duplex. The seed's definition is rule 10's to state, not
+      this file's.
+  2:
+    title: Birincil metrik
+    owners: [A4]
+    note: >-
+      PR-AUC, one metric. `A4` also writes the secondary metrics in §3 and the
+      CV scheme in §7 — the only item that legitimately spans three sections,
+      because a metric, its runners-up and the resampling that produces it are
+      three different commitments.
+  3:
+    title: İkincil metrikler
+    owners: [A4]
+    note: ROC-AUC and ECDF/KS, explicitly secondary to PR-AUC.
+  4:
+    title: Eşikler ve karar kuralı
+    owners: [A3, A6a]
+    note: >-
+      A3 fixes the label threshold (log2FC), A6a the decision rule (beat all
+      three baselines within length strata). Both are thresholds, and both
+      become unchangeable at A12 — which is the point.
+  5:
+    title: Null modeli
+    owners: [E1]
+    note: >-
+      The empirical 4^7 7-mer null plus its multiple-testing correction. Owned
+      by a FAZ E item, not a FAZ A one, because the null already runs
+      (`null-check`); A12 locks the version of it that was measured.
+  6:
+    title: Örneklem ve veri
+    owners: [A2, A2b, A8, A9]
+    note: >-
+      A2 locks the accessions, A2b verifies each one's identity, A8 defines the
+      evaluation universe (expressed in HeLa), A9 the on-target and
+      downstream exclusions. All four describe *which data*, which is one
+      section.
+  7:
+    title: Analiz planı
+    owners: [A4, A5, A7, A10]
+    note: >-
+      A4 the cross-validation scheme (its metric goes in §2 and its secondary
+      metrics in §3), A5 the three baselines, A7 the P_silence / Impact split, A10 the mapping
+      that replaces `_clamp`. All of them are analysis decisions that change
+      the numbers and so cannot be taken after seeing them.
+  8:
+    title: Durdurma kuralı
+    owners: [A14]
+    note: >-
+      Had **no owner at all** before A13 — nothing in the roadmap mentioned a
+      stopping rule, while the `pre-register` skill lists it among the fields
+      that cannot be revised later. A12 would have locked a placeholder.
+  9:
+    title: Negatif sonuç
+    owners: [A15]
+    note: >-
+      Also unowned. Invariant 7 makes the negative-result path a rule of this
+      project, which made its absence from the plan easy to miss: everyone
+      assumed the rule covered it, and a rule is not a written plan.
+  10:
+    title: Keşifsel
+    owners: [A7, A11]
+    unowned_by_design: true
+    note: >-
+      Deliberately shared. §10 holds what is *not* pre-registered: A7's
+      unvalidatable `Impact` half and A11's RNAa column, both carrying
+      `validated: false`. A single owner would imply a plan for the unplanned.
