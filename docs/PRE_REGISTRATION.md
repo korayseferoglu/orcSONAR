@@ -1374,6 +1374,83 @@ tercihi ve ön kayıtta hiçbir yerde gerekçelendirilmemiş. Yol haritasına
 `A10b` olarak yazıldı; burada `alignment_score` **verildiği gibi** alınıyor.
 
 
+### 7.8 G:U sallantısının ağırlığı — **0,5**, ve neden keyfi olduğu yazılı
+
+`alignment_score` her pozisyon için {Watson-Crick **+1,0**, G:U **+0,5**,
+eşleşmezlik **0**} veriyor. İlk iki sayı bir **modelleme kararı**: bir
+sallantı, bir eşleşmenin yarısı kadar mı sayılır? §7.7 `alignment_score`'u
+verildiği gibi aldı; bu bölüm o sabiti ön kaydediyor. Sonucu gördükten sonra
+0,5'i oynatmak §7.7'nin haritalamasını değiştirmekle aynı şeydir ve §4.3'ün
+yasağına girer.
+
+**Karar: ağırlık 0,5'te sabitlenmiştir**, ve iki ölçümle birlikte
+**keyfi olduğu ilan edilmiştir**.
+
+#### 7.8.1 Ağırlık seed bölgesinde HİÇ uygulanmıyor — ölçüldü
+
+İndeks seed'in **tam ters komplementeri** üzerine kurulu
+(`seed_aligner._build_seed_index`), yani bulunan her sitede seed'in yedi
+pozisyonu Watson-Crick'tir. Doğrudan ölçüldü
+(`reports/a10b-gu-agirligi-2026-11-27/`): sentetik bir transkriptte, seed
+dışı her pozisyonu bilerek bozacak bir dolgu ile bile, bulunan sitede
+**seed bölgesinde G:U sayısı = 0** ve `seed_mismatches = 0` (toplam skor
+13,5; 6 eşleşmezlik ve 1 G:U, hepsi seed dışında).
+
+🔴 **Bunun iki sonucu var ve ikisi de yazılmak zorunda:**
+
+1. **Alanın G:U kanıtı bu sabiti gerekçelendiremez.** Literatürün G:U
+   tartışması **seed içindeki** sallantılar üzerine — PITA'nın (PMID
+   17893677) web aracı bile seed'de "tek bir G-U sallantısı" seçeneği
+   sunuyor, yani alan bunu **ayarlanabilir bir seçenek** olarak görüyor, yerleşmiş
+   bir ağırlık olarak değil. Bu projede seed'de G:U **yapı gereği
+   oluşamadığı** için o kanıtın hiçbiri 0,5'e uygulanmaz.
+2. **Sabitin fiilen modüle ettiği şey seed DIŞI eşleşmedir** — ve §1'in
+   hipotezi **seed-aracılı** susturma hakkında. Yani bu ağırlık, hipotezin
+   mekanizmasının **dışındaki** bir terimi derecelendiriyor, ve o terimin
+   siRNA-benzeri seed mekanizmasındaki rolü bu ön kayıtta **doğrulanmamış**
+   bir varsayımdır. Beyan edilmiştir.
+
+#### 7.8.2 0,5 termodinamikten TÜRETİLEMEZ — ölçüldü
+
+Projenin kendi Turner parametrelerinden
+(`data/4_Biyofizik_Yapısal/Turner_Rules/rna.stack.dg`, altı 4×4 yığın
+tablosu) G:U yığınlarının ΔG'si aynı bağlamdaki Watson-Crick yığınlarının
+medyanına oranlandı:
+
+| ilk çift | G:U yığın ΔG (kcal/mol) | WC medyanı | oran |
+|---|---|---|---|
+| A:U | −1,40 / −0,60 | −1,60 | +0,37 … +0,87 |
+| C:G | −2,10 / −1,40 | −2,25 | +0,62 … +0,93 |
+| G:C | −2,50 / −1,50 | −2,85 | +0,53 … +0,88 |
+| G:U | −0,50 / **+1,30** | −1,75 | **−0,74** … +0,29 |
+| U:A | −1,30 / −1,00 | −1,70 | +0,59 … +0,76 |
+| U:G | −0,50 / **+0,30** | −1,20 | **−0,25** … +0,42 |
+
+**Oran aralığı −0,74 … +0,93, medyanı 0,56.** Ve asıl olgu şu: G:U yığın
+ΔG'si **−2,50 … +1,30 kcal/mol** aralığında, yani **işaret değiştiriyor** —
+bazı bağlamlarda bir G:U **kararsızlaştırıcı**dır. Watson-Crick yığınları ise
+istisnasız **−3,40 … −0,60**, yani her zaman kararlılaştırıcı.
+
+🔴 **Sonuç:** 0,5 ölçülen aralığın içinde ve medyanına (0,56) yakın, yani
+**makul**; ama **hiçbir sabit** işareti bağlama göre değişen bir niceliği
+temsil edemez. Dolayısıyla 0,5 **termodinamikten türetilmiş değildir,
+keyfidir**, ve bu ön kayıt onu keyfi olarak **donduruyor** — gerekçesi
+"makul aralıkta" olmasıdır, "doğru değer" olması değil.
+
+📌 **İlan edilmiş duyarlılık ızgarası:** `{0,0, 0,5, 1,0}` **her zaman**
+raporlanır. `0,0` sallantıyı eşleşmezlik sayar, `1,0` tam eşleşme sayar;
+ikisi de uçtur ve birincil hücre **0,5**'tir, ızgara görüldükten sonra
+yeniden atanmaz (§4.3'ün kuralı). ⚠️ Izgaranın `P_silence` sıralamasını
+değiştirmesi **beklenir** (§7.7.3: ölçek ağırlıklı toplama giriyor); bu bir
+sorun değil, ölçülecek bir duyarlılıktır.
+
+📌 **Bu ağırlığı bağlama duyarlı bir enerjiyle değiştirmek bir MODELLEME
+değişikliğidir**, bu maddenin kararı değil: `alignment_score`'un yerine
+nearest-neighbour ΔG koymak RIsearch2'nin (PMID 28108657) yaptığı şeydir ve
+yol haritasının `C3`/`C3e` kapsamına girer. Burada beyan edilen şey, bugünkü
+skorun o enerjiyi **temsil etmediği**.
+
+
 ## 8. Durdurma kuralı
 
 <Analiz ne zaman biter? "Sonuç anlamlı olana kadar koşturmak" bir kural

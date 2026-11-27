@@ -1,0 +1,94 @@
+{
+  "measured_at": "2026-11-27",
+  "seed_region": {
+    "sarna": "GCAACCAUAGCCUCGGCCGC",
+    "n": 20,
+    "seed": "CAACCAU",
+    "seed_reverse_complement": "AUGGUUG",
+    "index_positions": [
+      40
+    ],
+    "sites": [
+      {
+        "position": 40,
+        "score": 13.5,
+        "mismatches": 6,
+        "gu_wobbles_total": 1,
+        "seed_mismatches": 0,
+        "gu_wobbles_in_seed": 0
+      }
+    ]
+  },
+  "turner_wobble_ratios": {
+    "tables": 6,
+    "per_context": [
+      {
+        "first_pair": "A:U",
+        "wobble_dg": [
+          -1.4,
+          -0.6
+        ],
+        "wc_median_dg": -1.6,
+        "ratio_min": 0.37499999999999994,
+        "ratio_max": 0.8749999999999999
+      },
+      {
+        "first_pair": "C:G",
+        "wobble_dg": [
+          -2.1,
+          -1.4
+        ],
+        "wc_median_dg": -2.25,
+        "ratio_min": 0.6222222222222222,
+        "ratio_max": 0.9333333333333333
+      },
+      {
+        "first_pair": "G:C",
+        "wobble_dg": [
+          -2.5,
+          -1.5
+        ],
+        "wc_median_dg": -2.8499999999999996,
+        "ratio_min": 0.5263157894736843,
+        "ratio_max": 0.8771929824561404
+      },
+      {
+        "first_pair": "G:U",
+        "wobble_dg": [
+          -0.5,
+          1.3
+        ],
+        "wc_median_dg": -1.75,
+        "ratio_min": -0.7428571428571429,
+        "ratio_max": 0.2857142857142857
+      },
+      {
+        "first_pair": "U:A",
+        "wobble_dg": [
+          -1.3,
+          -1.0
+        ],
+        "wc_median_dg": -1.7000000000000002,
+        "ratio_min": 0.588235294117647,
+        "ratio_max": 0.7647058823529411
+      },
+      {
+        "first_pair": "U:G",
+        "wobble_dg": [
+          -0.5,
+          0.3
+        ],
+        "wc_median_dg": -1.2,
+        "ratio_min": -0.25,
+        "ratio_max": 0.4166666666666667
+      }
+    ],
+    "ratio_min": -0.7428571428571429,
+    "ratio_max": 0.9333333333333333,
+    "ratio_median": 0.5572755417956656,
+    "wobble_dg_min": -2.5,
+    "wobble_dg_max": 1.3,
+    "wc_dg_min": -3.4,
+    "wc_dg_max": -0.6
+  }
+}
