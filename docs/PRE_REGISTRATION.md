@@ -1570,10 +1570,119 @@ Ve özellikle, değişmez 7'nin kapsamına girenler:
 
 ## 9. Negatif sonuç
 
-<Hipotez doğrulanmazsa ne rapor edilecek ve nereye. Değişmez 7: negatif sonuç
-kabul edilir ve bir yayın yolu vardır. Ağırlık, eşik ya da sabit ayarlayarak
-pozitif sonuç aramak ihlaldir — ölü kanalları telafi etmek için eşik
-indirmek de bu kategoridedir.>
+Değişmez 7 negatif sonucu **kabul edilen** bir sonuç yapıyor ve bir yayın
+yolu olduğunu söylüyor. Bu bölüm o yolu **sonucu görmeden** bağlıyor, çünkü
+sonradan bağlanan bir yol hiç bağlanmamış bir yoldur: elde negatif bir sayı
+varken "nereye yazsak" diye düşünmek, o sayıyı rafa kaldırmanın en kolay
+biçimi.
+
+### 9.1 Hangi verdi negatif sonuçtur — ve hangisi DEĞİLDİR
+
+🔴 **Bu ayrım bu bölümün ilk işi, çünkü §9 "PASS olmayan her şeyin çöplüğü"
+değil.**
+
+| verdi | negatif sonuç mu | nereye gider |
+|---|---|---|
+| `EŞDEĞER` | **evet** — pratik eşdeğerlik, yönü belli bir iddia | §9.2'nin negatif/benchmark yolu |
+| `DAHA KÖTÜ` | **evet** | aynı yol, ve farkın **yönü** başlıkta |
+| `SONUÇSUZ` | **hayır** — hiçbir yönde iddia yok | §9.4: *yetersiz bilgi* raporu, ayrı çerçeve |
+| `GEÇERSİZ` | **hayır** — enstrüman sıralama üretmedi | **hiçbir yere gitmez**; §8.2'nin zorunlu duruşu işler |
+
+⚠️ `GEÇERSİZ`'i negatif sonuç diye yayınlamak §4.4.2'nin kapattığı hatanın
+yayın tarafındaki hali: `lift = 1,0000` bir ölçüm değil, aritmetik bir
+kimlik. `SONUÇSUZ`'u negatif diye yayınlamak da Benavoli ve ark. 2017'nin
+yasakladığı çıkarımdır (§4.4.4).
+
+### 9.2 Venue, önceden bağlı
+
+Yol haritasının §0'ındaki koşullu tablo *"Tabanları geçmiyor"* satırında şu
+üçünü sayıyor: ***NAR GAB***, ***F1000Research***, ***PLOS ONE***. Çerçeve
+cümlesi de orada ve aynen devralınıyor: *"siRNA off-target verisi saRNA
+tasarım araçlarını test etmek için yeniden amaçlanabilir ve mevcut
+yaklaşımlar şans üstüne çıkmıyor."*
+
+⚠️ **Tavan da bağlı:** §0 *NAR* ve *Genome Biology*'yi bu çıktı için
+**fazla iyimser** sayıyor (birden çok bağımsız veri setinde yerleşik araçlara
+net üstünlük beklerler), ve bu bölüm o değerlendirmeyi devralıyor. Yani
+negatif bir sonuç **yukarı doğru pazarlanmaz**; üçlünün içinden seçim
+serbest.
+
+### 9.3 Negatifle ne yayınlanır — **pozitifle tam olarak aynı şeyler**
+
+🔴 **Asıl mekanizma bu, venue değil.** Negatif bir sonucun rafa kalkmasını
+engelleyen şey bir dergi adı değil, **ürünlerin verdi okunmadan önce var
+olması**. O yüzden aşağıdaki liste **verdiye bağlı değildir** ve **tek bir
+koşuda** üretilir; verdi bu ürünler elde olduktan sonra okunur.
+
+**Tablolar:**
+
+1. Seed başına AP, taban oranı ve `lift` — model **ve beş tabanın hepsi**
+   (§2, §7.5); ≈43 satır, eksiksiz.
+2. Her tabana karşı eşleşmiş farklar `d_i^b`, medyanı, BCa aralığı ve
+   tek-yanlı Wilcoxon `p`'si (§4.4.3).
+3. Dört verdinin karar tablosu, marj işaretlenmiş (§4.4.4).
+4. Tabaka tanısı: tabaka × taban için nokta tahminler ve aralıklar (§4.4.5).
+5. Güç tablosu ve **ulaşılan** aralık genişlikleri (§4.4.6).
+6. Duyarlılık ızgaralarının hepsi: §4.3'ün etiket ızgarası, §6.4.3'ün evren
+   ızgarası, §6.5.1'in çökertme kuralları (`any`/`all`), §7.7.3'ün min-max
+   alternatifi, §7.8'in G:U ızgarası.
+7. Geçerlilik ön koşulunun raporu: array başına `k`, en büyük bağlantı
+   grubunun evren ve pozitif payı, ve `AP − π` (§4.4.2).
+8. İlan edilmiş döngüsellikler: POTS'un eğitim örtüşmesi (§4.3) ve
+   yayınlanmış DE önselliğinin bileşim uyumsuzluğu (§7.5).
+9. §3'ün dört ikincil metriği.
+10. `Impact` kolonu `validated: false` ile (§10.1) ve RNAa kolonu
+    `validated: false` ile (§10.2).
+
+**Şekiller:**
+
+- **Ş1** seed başına `lift`: model ve beş taban, aynı eksende.
+- **Ş2** eşleşmiş farkların forest plot'u, **marj çizili**.
+- **Ş3** tabaka tanısı (tabaka × taban).
+- **Ş4** duyarlılık ızgaralarının ısı haritası.
+
+📌 **Simetri bir nezaket değil, bir kilit:** aynı liste pozitif verdide de
+üretilir, yani negatif sonuç raporlanmadığında **eksik kalan şey görünür
+olur**.
+
+### 9.4 `SONUÇSUZ` çıkarsa — ayrı ve daha kısa bir çerçeve
+
+Raporlanan şey bir negatif bulgu değil, **bu veriyle bu sorunun
+cevaplanamadığı**: ulaşılan aralık genişlikleri, §4.4.6'nın güç tablosu, ve
+§8.1'in önkoşullarının durumu. ⚠️ Bu da ölçülmüş ve yayınlanabilir bir
+sonuçtur — ama *"yaklaşımlar şans üstüne çıkmıyor"* diye **çerçevelenemez**,
+çünkü ölçüm bunu söylemiyor.
+
+### 9.5 `E6`/`E7`'nin dış kontrolleri raporda nasıl durur
+
+- **`E7` — saRNA'ya özgü dış kontrol.** Üç indirilebilir veri seti, **toplam
+  üç dupleks**. **Ayrı bir dış kontrol** olarak raporlanır, birincil metriğe
+  **havuzlanmaz** (§6.3'ün beyanı). Kapsam sınırları adlarıyla: `GSE32999`'un
+  saRNA kolu **tek havuzlanmış array** ve kontrolü **yalnız mock**;
+  `GSE42024` MCF-7'de n=3v3 ve **tek saRNA**.
+- **`E6` — `GSE42024` Tartışma'da**, §0'ın bağladığı biçimde: **metrik
+  iddiası olmayan tek paragraf + tek şekil**. Bu bölüm o sınırı aynen
+  bağlıyor.
+- 🔴 **Ve asıl kural:** **pozitif bir dış kontrol negatif bir birincili
+  KURTARMAZ**, negatif bir dış kontrol de negatif birincili
+  **yumuşatmaz**. İkisi de olduğu gibi raporlanır. Üç dupleksle hiçbir yöne
+  çıkarım yapılamaz, ve bunu sonucu gördükten sonra söylemek seçim olur.
+
+### 9.6 Bu bölüm `F5` DEĞİL
+
+`F5` (`docs/LIMITATIONS.md`) **ölçülmüş sınırları** sonradan listeler; §9
+negatifin yayın yolunu **sonucu görmeden** bağlar. Kardeşler, kopya değil —
+ve §9'un işi `F5`'e **devredilemez**: "sınırları LIMITATIONS'a yazdık" bir
+yayın yolu değildir.
+
+### 9.7 Negatif sonuçla yapılmayacaklar
+
+- **Rafa kaldırmak** (değişmez 7'nin doğrudan ihlali).
+- Negatifi *"ön bulgu"* diye çerçeveleyip yeni deneme gerekçesi yapmak —
+  §8.2 doğrulayıcı deneme sayısını **2** ile kapatıyor.
+- Sonucu üreten **tabanı**, **tabakayı** ya da **seriyi** çıkarmak (§8.4).
+- §10'un `validated: false` kolonlarını **kısmi başarı** gibi sunmak.
+- `GEÇERSİZ`'i ya da `SONUÇSUZ`'u negatif sonuç diye yayınlamak (§9.1).
 
 ## 10. Keşifsel (ön kayıt dışı)
 
