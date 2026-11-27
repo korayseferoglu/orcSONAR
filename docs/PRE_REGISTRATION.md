@@ -1518,10 +1518,93 @@ ağırlıklandırma denenirse **yalnız keşifsel** olarak raporlanır, pTriplo
 kolonuyla **birlikte**, ve hiçbir koşulda §2'nin birincil metriğine girmez.
 `A6a`'nın karar kuralı `Impact`'tan hiçbir girdi almaz.
 
-### 10.2 Diğer keşifsel analizler
+### 10.2 RNAa kolonu — `validated: false`
 
-<`A11`'in maddesi: pasajer-baskın dupleks alt kümesi (§7.2), ve ön kayıt
-dışında kalan diğer okumalar.>
+```yaml
+rnaa_column:
+  validated: false
+  per_site: true
+  reason_not_validated: "bu büyüklükte bir RNAa referans seti yok"
+  reference_sets_available: 3        # E7: üç veri seti, TOPLAM üç dupleks
+```
+
+**Ne olduğu:** her saRNA için, hedef genin **promoter penceresinde** seed
+eşleşmeleri — pencere kural 10'un tanımıyla TSS'e göre −1000 / +200 — ikinci
+bir çıktı sütunu olarak raporlanır.
+
+**Neden burada olduğu.** §1 mekanizma olarak siRNA-benzeri seed
+off-target'ını modelliyor, çünkü **referans setinin ölçtüğü şey o**. Ama bu
+projenin konusu saRNA, yani *aktive edici* RNA. Promoter kolonunu
+raporlamak projenin kendi konusunu, doğrulanmamış bir iddia üretmeden
+koruyor. Onu tamamen çıkarmak ters yönde bir dürüstsüzlük olurdu: aracı
+bir siRNA aracıymış gibi sunmak.
+
+#### 10.2.1 Kodun ölçülmüş durumu — ve yol haritası satırının bir iddiası YANLIŞ
+
+🔬 Ölçüldü (2026-11-27):
+
+- ✅ **`promoter_region.define_promoter` iplik-farkında ve kural 10'la
+  birebir:** `+` iplikte `[TSS − 1000, TSS + 200]`, `−` iplikte
+  `[TSS − 200, TSS + 1000]`, ve `start` 0'a kırpılıyor. Satırın "doğru"
+  iddiası **doğrulandı**.
+- 🔴 **Satırın "yalnız hiç okunmuyor" iddiası YANLIŞ.** Modül üretimde
+  çağrılıyor (`promoter_definer.py` `define_promoter`'ı import ediyor) ve
+  pencere her koşunun `stage1_promoter.json`'ına
+  `{chrom, start, end, strand}` olarak yazılıyor. Doğru ifade şu:
+  **pencereyi hiçbir seed taraması kullanmıyor.** `seed_aligner` o dosyayı
+  okuyor ama yalnız `gene` ve `transcripts` için; `promoter_region`
+  anahtarını hiç tüketmiyor.
+- 🔴 **Ve bu yüzden maliyet "~0" DEĞİL.** Pencere **koordinat** taşıyor,
+  **dizi** taşımıyor; promoter penceresinde seed taraması o pencerenin
+  **genomik dizisini** gerektiriyor ve bunu bugün hiçbir aşama getirmiyor.
+  Maliyet bir dizi çağrısı artı önbellek; sıfır değil, ve bu beyan edildi.
+- ✅ **Ama pencerenin koordinatı GÜVENİLİR**, off-target sitelerinkinin
+  aksine: pencere doğrudan TSS'ten türüyor (EPDnew/FANTOM5, genomik uzayda),
+  yani Bulgu-8'in cDNA→genomik hatası ona **değmiyor**. Bu, projede şüpheli
+  olmayan birkaç genomik koordinattan biri — kural 10 hangi kaynakların
+  etkilendiğini sayıyor ve promoter penceresi o listede yok.
+
+#### 10.2.2 Kolonun bilgi içeriği — kilitten önce hesaplandı
+
+1200 bp'lik bir pencerede bir 7-mer için **1194** pozisyon var. Düzgün baz
+bileşiminde, **iki DNA ipliği** sayıldığında belirli bir 7-mer'in beklenen
+sayısı **0,1458**, yani `P(≥1) = %13,6`. Bu projenin seed'i `CAACCAT`
+(GC = 3/7) ve promoterlar GC-zengin olduğu için sayı seed'e bağlı:
+
+| promoter GC | beklenen sayı | `P(≥1)` |
+|---|---|---|
+| 0,50 | 0,1458 | %13,6 |
+| 0,55 | 0,1273 | %11,9 |
+| 0,60 | 0,1032 | %9,8 |
+| 0,65 | 0,0769 | %7,4 |
+
+🔴 **Sonuç, ve ön kayda yazılmasının sebebi:** kolon **neredeyse ikili ve
+çoğunlukla sıfır** — pencerelerin %86-93'ü hiç eşleşme taşımıyor — ve tek
+bir eşleşme **şanstan ayırt edilemiyor**. Yani kolonun bilgi içeriği
+yapısal olarak düşük, ve bu *sonucu görmeden* yazıldı. Seed-başına ampirik
+null `E1`/`H13`'ün işi; buradaki sayı düzgün/GC-ayarlı bileşim varsayımıyla
+hesaplanmış bir **üst sınır tahmini**, ölçülmüş bir null değil.
+
+#### 10.2.3 Yasaklar
+
+- Bu kolon §2'nin **birincil metriğine girmez**.
+- §4.4'ün **karar kuralına girmez** (karar kuralı yalnız `P_silence`
+  üzerinde, §4.4.3).
+- `P_silence` ya da `Impact` ile **birleştirilmez**; §7.6'nın birleştirme
+  yasağı buna da geçerli.
+- `validated: false` etiketi olmadan **hiçbir yerde raporlanmaz**.
+- ⚠️ Sonradan "aslında doğrulandı" denmesi için gereken şey bir RNAa
+  referans setidir. `E7` bugün indirilebilir **üç** veri seti sayıyor,
+  **toplam üç dupleks** — ≈43 ayrık seed'lik birincil setin iki mertebe
+  altında. Bu sayı burada yazılı ki eşiğin ne olduğu tartışılabilir olsun.
+
+#### 10.2.4 Diğer keşifsel okumalar
+
+- **Pasajer-baskın dupleksler** (§7.2): iplik yanlılığı filtresi onları
+  dışlamıyor, ayrı bir alt küme olarak raporlanıyor.
+- **CCLE tabanlı evren tanımı** (§6.4.1): birincil değil, ilan edilmiş bir
+  duyarlılık analizi.
+- **Küme-içi oynaklık tanısı** (§7.5): taban değil, zorunlu tanı.
 
 ## Sapma günlüğü
 
