@@ -3,16 +3,33 @@
 # Maps human-readable cell line names to DepMap ACH IDs used in
 # CCLE_Expression.csv (ModelID column).
 #
-# Source: DepMap portal https://depmap.org/portal/download/
-#   File: Model.csv → ModelID + CellLineName columns
+# Authority: DepMap's own Model.csv, vendored at
+#   data/external/depmap/Model_24Q2.csv  (sha256 in data/external/manifest.json)
+# A name is correct here when it equals that file's StrippedCellLineName for
+# the ID. `tests/unit/test_depmap_ids.py` checks every line on every run — do
+# not edit an ID without running it.
 #
-# HEK293T is absent from CCLE default entries; queries return 0.0 (neutral).
+# ⚠️ Fixed 2026-11-27 (roadmap B18). Five of the seven non-null IDs named a
+# different cell line, and because both the wrong and the right IDs exist in
+# CCLE_Expression.csv the lookup succeeded and returned another line's real
+# numbers — never an error. What each wrong ID actually was:
+#
+#   HeLa     ACH-001113 → LC-1/sq-SF     (non-small-cell lung cancer)
+#   HepG2    ACH-000021 → NCI-H1693      (non-small-cell lung cancer)
+#   K562     ACH-000707 → P3HR-1         (mature B-cell neoplasm)
+#   Huh7     ACH-001339 → Colo 794       (melanoma)
+#   GM12878  ACH-000004 → HEL            (acute myeloid leukaemia)
+#
+# A null entry means DepMap has no model for that line, so there is nothing to
+# look up. Since B19 that returns **unknown**, not 0.0 — an unmeasured gene
+# must never read as "not expressed", because not expressed reads as "cannot
+# be silenced" and that lowers risk (invariant 2).
 
 A549:    ACH-000681
-GM12878: ACH-000004
-HEK293T: null         # not present in CCLE_Expression.csv
-HeLa:    ACH-001113
-HepG2:   ACH-000021
-Huh7:    ACH-001339
-K562:    ACH-000707
+GM12878: null         # no DepMap model: absent from every field of Model.csv
+HEK293T: null         # no DepMap model
+HeLa:    ACH-001086
+HepG2:   ACH-000739
+Huh7:    ACH-000480
+K562:    ACH-000551
 MCF7:    ACH-000019

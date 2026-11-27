@@ -96,12 +96,19 @@ def _make_real_reader(tmp_path: Path) -> CCLEReader:
 )
 class TestCCLERealData:
     def test_hela_vegfa_expression_value(self, tmp_path: Path) -> None:
+        """Roadmap B18: this asserted 6.231 until 2026-11-27.
+
+        6.231 is LC-1/sq-SF's VEGFA — a lung line — because
+        `ccle_depmap_ids.yaml` mapped HeLa to `ACH-001113`. Real HeLa
+        (`ACH-001086`) is 4.516, measured independently off the CSV column
+        rather than through this reader, so the two paths have to agree.
+        """
         reader = _make_real_reader(tmp_path)
         result = reader.get_expression("VEGFA", "HeLa")
 
         assert result.gene == "VEGFA"
         assert result.cell_line == "HeLa"
-        assert result.expression_value == pytest.approx(6.231, abs=0.01)
+        assert result.expression_value == pytest.approx(4.516, abs=0.01)
 
     def test_hela_vegfa_is_expressed(self, tmp_path: Path) -> None:
         reader = _make_real_reader(tmp_path)
@@ -111,16 +118,29 @@ class TestCCLERealData:
     def test_hela_vegfa_percentile_range(self, tmp_path: Path) -> None:
         reader = _make_real_reader(tmp_path)
         result = reader.get_expression("VEGFA", "HeLa")
-        # HeLa VEGFA is ~63rd percentile across CCLE
-        assert 0.55 < result.expression_percentile < 0.75
+        # ~16th percentile across the 1719 default CCLE rows. The old comment
+        # said "~63rd percentile", which was the lung line's rank (B18) — the
+        # prose had been written to match the wrong number.
+        assert 0.10 < result.expression_percentile < 0.22
 
-    def test_k562_myc_high_expression(self, tmp_path: Path) -> None:
+    def test_k562_myc_expression(self, tmp_path: Path) -> None:
+        """Roadmap B18, and the clearest lesson in it.
+
+        This asserted MYC = 9.295 above the 95th percentile, with the comment
+        "K562 is a leukemia line with very high MYC". That value belongs to
+        P3HR-1 (`ACH-000707`), a **Burkitt lymphoma** line whose MYC is
+        translocated — so the wrong cell line satisfied the biological
+        expectation *better* than the right one. Real K562 (`ACH-000551`) sits
+        at MYC = 6.568, the 62nd percentile. A plausible number from the wrong
+        source is the hardest error to see, which is why the ID is now checked
+        against DepMap's Model.csv on every run
+        (`tests/unit/test_depmap_ids.py`) instead of against an expectation.
+        """
         reader = _make_real_reader(tmp_path)
         result = reader.get_expression("MYC", "K562")
-        # K562 is a leukemia line with very high MYC
-        assert result.expression_value == pytest.approx(9.295, abs=0.01)
+        assert result.expression_value == pytest.approx(6.568, abs=0.01)
         assert result.is_expressed is True
-        assert result.expression_percentile > 0.95
+        assert 0.55 < result.expression_percentile < 0.70
 
     def test_a549_vegfa_expressed(self, tmp_path: Path) -> None:
         reader = _make_real_reader(tmp_path)

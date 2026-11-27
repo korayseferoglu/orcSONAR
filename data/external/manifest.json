@@ -1,4 +1,20 @@
 {
   "schema_version": 1,
-  "artifacts": []
+  "artifacts": [
+    {
+      "name": "Model_24Q2.csv",
+      "source": "https://ndownloader.figshare.com/files/46489732",
+      "doi": "10.25452/figshare.plus.25880521.v1",
+      "release": "DepMap 24Q2 Public",
+      "downloaded": "2026-11-27",
+      "bytes": 559182,
+      "sha256": "a4cac376131b41aa10b60a075b11c80264bfa860a5509d22cde259c5e85867f8",
+      "licence": "CC BY 4.0",
+      "note": "Authority for config/ccle_depmap_ids.yaml. An ACH ModelID is a stable identifier, so a name mismatch is a mapping error and not a release difference. 24Q2 is pinned deliberately: DepMap stopped depositing releases with DOIs after 24Q4, and a source with no DOI cannot be cited.",
+      "used_by": [
+        "B18",
+        "A7"
+      ]
+    }
+  ]
 }
