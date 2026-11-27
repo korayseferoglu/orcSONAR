@@ -336,6 +336,13 @@ Her ayrık seed heptameri `i` ve her taban `b` için eşleşmiş fark:
 d_i^b  =  AP_model(i) − AP_b(i)
 ```
 
+⚠️ **`AP_model` HANGİ skor üzerinde hesaplanır:** yalnız **`P_silence`**
+üzerinde (§7.6). Karar kuralı `Impact` kolonundan **hiçbir girdi almaz**, çünkü
+`Impact` bu referans setinde doğrulanamıyor (§10.1, `validated: false`) ve
+doğrulanamayan bir kolonu geçme koşuluna sokmak, ölçülmemiş bir niceliği
+sonucun belirleyicisi yapardı. Birleşik bir skor da kullanılmaz; §7.6
+birleştirmeyi ayrı bir ön kayıt maddesine bırakıyor.
+
 - **Test:** tek-yanlı **eşleşmiş Wilcoxon işaretli sıra** testi, `d_i^b − m`
   üzerinde, `α = 0,05`. Yani sınanan şey "sıfırdan büyük" değil,
   **"marjdan büyük"** — eşik testin içinde, sonradan bakılan bir sayı değil.
@@ -844,6 +851,79 @@ yönün tersi: bir tabanı sonradan *çıkarmak* ihlal olurdu, eklemek ihtiyatt�
 `A5`'in satırı "üçü de" diyordu; dördüncüsü o satırın kendi cümlesinin
 tamamlanması, ve bu fark burada yazılı çünkü `A12`'den sonra görünmez olurdu.
 
+### 7.6 Skorun ayrışması — `P_silence` ve `Impact`, iki ayrı kolon
+
+Bu planın en önemli yapısal kararı, ve sebebi tek cümlede: **referans seti bir
+transkriptin düşüp düşmediğini ölçüyor, düşmesinin ne kadar kötü olduğunu
+ölçmüyor.** O yüzden skorun doğrulanabilir yarısı ile doğrulanamayan yarısı
+**aynı sayıya karışamaz**.
+
+- **`P_silence`** — bir off-target transkriptin susturulma olasılığı.
+  §2'nin birincil metriği **bunu** sıralar. §4.1'in etiketi tam olarak bunun
+  gözlenmiş halidir, yani doğrulanabilir.
+- **`Impact`** — susturma gerçekleşirse sonucunun ciddiyeti. Bu referans
+  setinde **gözlenmiş karşılığı yok**. §10.1'de keşifsel olarak, `validated:
+  false` ile duruyor.
+
+🔴 **Yol haritası `A7` satırının kanal ataması KODDAN düzeltildi.** Satır
+`Impact = g(variant_toxicity, execution_safety)` diyordu. Ama
+`src/stage6_execution/execution_merger.py` dört girdiden üçünü *susturmanın
+gerçekleşip gerçekleşmediği* üzerine kuruyor, ve `_normalize`'ın kendi
+docstring'i bunu kelimesi kelimesine söylüyor: *"Higher score = more execution
+risk (**more silencing activity expected**)"*. Girdi girdi:
+
+| girdi | ne ölçüyor | hangi tarafa ait |
+|---|---|---|
+| `ago2_loading` | guide ipliğin Ago2'ye yüklenmesi | **`P_silence`** |
+| `rbp_competition` | sitenin RBP'lerce kapatılması (ters çevrilmiş) | **`P_silence`** |
+| `circrna_overlap` | circRNA sünger etkisi | **`P_silence`** |
+| immün motifler | TLR aktivasyonu | `Impact` |
+
+Yani `execution_safety`'yi bütün olarak `Impact`'a koymak, kendi sözleşmesine
+göre bir **olasılık** kanalını **sonuç** tarafına yazmak olurdu. Ayrışmanın
+bağlayıcı hali:
+
+```
+P_silence = f(sequence_specificity, biophysics_structure, epigenetic_context,
+              ago2_loading, rbp_competition, circrna_overlap)
+Impact    = g(variant_toxicity, immün motifler)
+```
+
+⚠️ **Ve bu, `Impact`'ın bugün site-başına içeriği olmadığını ortaya çıkarıyor.**
+`execution_merger.py:152` immün sonucu `offtarget_immune.get(site_id,
+sarna_immune)` ile okuyor — yani bir site için kayıt yoksa **saRNA düzeyindeki
+tek değer** düşüyor. Dolayısıyla `Impact`'ın iki kanalından biri geniş ölçüde
+**site-değişmez**, diğeri (`variant_toxicity`) ise aşağıda çürütülmüş bir vekil
+üzerinde duruyor. Sonuç: `Impact` kolonu §4.4.2'nin geçerlilik ön koşuluna
+**ayrıca** tabidir ve onu geçmesi beklenmemektedir; geçmezse `Impact` **sayı
+olarak değil, bilinmiyor olarak** raporlanır (değişmez 2).
+
+🔴 **`variant_toxicity`'nin bugünkü vekili çürütüldü, ve bu ön kayda yazılı.**
+`cosmic_scanner.py` site başına kb başına COSMIC mutasyon yoğunluğu kullanıyor.
+Lawrence ve ark. 2013 (PMID 23770567) naif mutasyon frekansının gen uzunluğu,
+ifade düzeyi ve replikasyon zamanlamasıyla sürüklendiğini gösteriyor — naif
+listelerindeki 450 genin 101'i **koku reseptörü**. Martincorena ve ark. 2017
+(PMID 29056346) kodlayan mutasyonların **~%99'unun tolere edildiğini**
+buluyor. Yani mutasyon yoğunluğu ile fonksiyonel önem arasındaki ilişki ters
+değil, **yok**. Bu vekille hesaplanmış bir `Impact` kolonu bir ölçüm değildir
+ve öyle etiketlenir.
+
+📌 **İki kolon birleştirilmez.** Tek bir skor isteniyorsa birleştirme kuralı
+**ayrı bir ön kayıt maddesidir** ve gerekçesi yazılır; özellikle çarpımsal form
+(`P_silence × Impact`) kanıtsız bir etkileşim modeli varsayar — iki kat daha
+olası bir susturmanın iki kat daha kötü olduğunu söyler, ki bunun hiçbir
+dayanağı yok. Bu ön kayıt **iki kolonu** bağlar.
+
+⚠️ **Arka plan kümesi `Impact` için yanlı, ölçüldü.** Bugünkü arka plan
+kümesinin (boyutunun otoritesi `transcriptome_fetcher.py`'ın
+`_BACKGROUND_GENES` tanımı) **tamamı** DepMap evreninde, yani etiket kapsamı
+tam; ama **%40'ı** DepMap ortak-esansiyeli — küme kanser ve housekeeping
+genleri etrafında elle küratörlendiği için taban orandan çok yukarıda. Bu kümede hesaplanan her
+`Impact` AUROC'u **şişkindir** ve Bulgu-6 göçünden sonra yeniden
+hesaplanmalıdır. Bu cümle burada, çünkü `A12`'den sonra "şişkin olduğunu
+biliyorduk" demek bir sapma maddesi olur.
+
+
 ## 8. Durdurma kuralı
 
 <Analiz ne zaman biter? "Sonuç anlamlı olana kadar koşturmak" bir kural
@@ -858,8 +938,63 @@ indirmek de bu kategoridedir.>
 
 ## 10. Keşifsel (ön kayıt dışı)
 
-<Yapmayı düşündüğün ama teste sokmadığın şeyler. Buraya yazmak serbest;
-sonradan buradan birincil metriğe taşımak değil.>
+Buraya yazılan hiçbir şey §2'nin birincil metriğine **taşınamaz**; §4.3'ün
+kuralı buraya da geçerli. Her madde `validated:` bayrağıyla duruyor, çünkü
+"keşifsel" kelimesi tek başına bir okuyucuya neyin ölçülmüş neyin
+ölçülmemiş olduğunu söylemiyor.
+
+### 10.1 `Impact` kolonu — `validated: false`
+
+```yaml
+impact_column:
+  validated: false
+  per_site: false        # immün kanal saRNA düzeyine düşüyor (§7.6)
+  reason_not_validated: "bu referans setinde gözlenmiş karşılığı yok"
+```
+
+§7.6'nın ayırdığı doğrulanamayan yarı. **Dört ayrı sebeple** doğrulanamaz, ve
+dördü de ölçülmüş ya da kaynaklı:
+
+1. **Referans seti onu ölçmüyor.** §6.1'in sekiz accession'ı bir transkriptin
+   düşüp düşmediğini ölçüyor; düşmenin sonucunu değil. ⚠️ Daha önceki bir
+   ifade *"`Impact`'ın hiçbir gerçek referansı yok"* diyordu; o iddia
+   2026-11-27'de ölçülüp **geri çekildi**. Doğru ifade: *siRNA off-target
+   mikroarray'lerinde yok.* Susturmanın sonucunu ölçen veri **var**: DepMap
+   CRISPR gene effect (24Q2, figshare DOI
+   `10.25452/figshare.plus.25880521.v1`) ve DEMETER2 RNAi (figshare DOI
+   `10.6084/m9.figshare.6025238.v6`). DEMETER2 bu projeye üç sebeple daha iyi
+   oturuyor: HeLa onun içinde var (DepMap CRISPR'ın taranmış modellerinde
+   **yok**), seed tanımı bu projeyle birebir aynı (McFarland ve ark. 2018,
+   PMID 30389920, antisense ipliğin 1-7 ve 2-8'i), ve hücre-hattı başına seed
+   etki matrisi yayınlanmış (≈15.386 7-mer × 712 hat).
+2. **Yön uyuşmuyor.** DepMap, DEMETER2, LOEUF, pLI, CEG2 ve pHaplo'nun
+   **hepsi kaybın** sonucunu ölçer. Bu bir *aktive edici* RNA aracı; off-target
+   *aktivasyon* için eşleşen metrik **pTriplo** (Collins ve ark. 2022,
+   PMID 35917817; `pTriplo ≥ 0,94` → 1.559 gen). Tek bir `Impact` kolonu iki
+   yönü birlikte temsil **edemez**, ve hangi yönün raporlandığı yazılmak
+   zorunda.
+3. **Arıza yönü yanlış.** Bir fitness taraması ölümsüzleşmiş bir hatta ~3
+   haftalık çoğalmayı ölçer. `gene effect ≈ 0` *"bu testte fitness kaybı
+   yok"* demektir, **"güvenli" demez** — bir risk aracında bu, değişmez 2'nin
+   yasakladığı yönde bir arızadır.
+4. **Precedent yok.** Beş Europe PMC ve iki web sorgusunda, öngörülen
+   off-target'ları gen esansiyelliğiyle ağırlıklandıran **tek bir yayın**
+   bulunamadı. Sektör bunun yerine seed'i doğrudan bir **toksisite** bitiş
+   noktasına bağlıyor (GalNAc-siRNA hepatotoksisitesi: Janas ve ark. 2018,
+   PMID 29459660; Schlegel ve ark. 2022, PMID 35736224). Dolayısıyla
+   esansiyellikle ağırlıklandırma burada **keşifsel** olarak durur ve sahip
+   olmadığı bir precedent'e atıf **yapamaz**.
+
+📌 **Ne yapılacağı, şimdiden bağlı:** `Impact` kolonu raporlanır, `validated:
+false` etiketiyle ve yukarıdaki dört sebebin özetiyle. Esansiyellikle
+ağırlıklandırma denenirse **yalnız keşifsel** olarak raporlanır, pTriplo
+kolonuyla **birlikte**, ve hiçbir koşulda §2'nin birincil metriğine girmez.
+`A6a`'nın karar kuralı `Impact`'tan hiçbir girdi almaz.
+
+### 10.2 Diğer keşifsel analizler
+
+<`A11`'in maddesi: pasajer-baskın dupleks alt kümesi (§7.2), ve ön kayıt
+dışında kalan diğer okumalar.>
 
 ## Sapma günlüğü
 
