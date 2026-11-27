@@ -414,10 +414,9 @@ devralınıyor, çünkü ikisi de sonucu gördükten sonra eklenirse ayarlama ol
   inandırıcı olduğu savunulabilir; o yüzden dışlanmıyor, **ayrı
   raporlanıyor**.
 
-### 7.4 Zorunlu tabanlar ve tabakalar
+### 7.4 Zorunlu tabakalar
 
-`A5` üç tabanı tanımlıyor (aynı bölüm). Buna ek olarak, `A4`'ün bağladığı
-iki zorunluluk:
+`A4`'ün bağladığı iki zorunluluk:
 
 - Birincil metrik **hem uzunluk hem ifade-şiddeti tabakaları içinde**
   raporlanır. Gerekçe ölçülmüş: pozitiflerin medyan `LOGINTENSITY`'si
@@ -435,6 +434,41 @@ iki zorunluluk:
   bunun yerine tabaka içi raporlama yapılıyor ve **bu sınır burada
   beyan ediliyor**, sonradan "biz de PLSR yapmalıydık" demek bir sapma
   günlüğü maddesi olur, sessiz bir düzeltme değil.
+
+### 7.5 Tabanlar — dördü de, ve hepsi 3′UTR tanımlı
+
+orcSONAR'ın **her birini** aşması gerekiyor; biri aşılmazsa sonuç negatiftir
+(§9). Dördü de §6.3'ün evreninde, §4.1'in etiketiyle, §7.1'in foldlarıyla
+hesaplanır ve §2'nin metriğiyle raporlanır — yani tabanlar modelle **aynı**
+koşuda ölçülür, literatürden alıntılanmaz.
+
+1. **3′UTR 7mer-m8 varlığı / sayısı.** Genin 3′UTR'sinde seed'in 7mer-m8
+   eşleşmesi var mı, kaç tane. Alanın en çıplak tahmin edicisi; bunu aşmayan
+   bir model hiçbir şey eklemiyor demektir.
+2. **siSPOTR POTS** (PMID 22941647). 3′UTR heptamer frekans tablosundan
+   türetilen yayınlanmış skor. Tabloyu kurmak ayrı bir iş (`E0b`).
+   ⚠️ POTS'un eşiği `GSE5291` + `GSE5769` üzerinde türetilmiş (§4.3'ün ilan
+   ettiği döngüsellik), yani POTS bu iki seride **avantajlı** bir taban;
+   aşılması gereken çıta bu yüzden daha yüksek, ve bu *lehimize* değil.
+3. **Transkript / 3′UTR uzunluğu, tek başına.** Hiçbir dizi bilgisi yok,
+   yalnız uzunluk. Denetim hit sayısı ile cDNA uzunluğu arasında
+   **r = 0,349** buldu: uzun transkriptler hem daha çok seed eşleşmesi hem
+   daha güvenilir DE çağrısı alır.
+4. 🆕 **Mock kanalının ifade şiddeti (`LOGINTENSITY`), tek başına.** Hiçbir
+   dizi bilgisi yok, yalnız genin o array'de ne kadar eksprese olduğu.
+   **Bu dördüncü taban bu satırın kendi gerekçesinden ve bir ölçümden
+   doğdu:** yol haritası `A5` satırı karıştırıcıyı *"uzun **ve yüksek
+   ifadeli** transkriptler"* diye tarif ediyordu ama yalnız uzunluğu taban
+   yapıyordu. Ölçüm (2026-11-27) ifadenin en az o kadar güçlü olduğunu
+   gösteriyor: **pozitiflerin medyan `LOGINTENSITY`'si −0,08 … −0,36, tüm
+   probların medyanı −0,78 … −1,12.** Yani yalnız ifadeye göre sıralayan bir
+   tahmin edici şans üstü skorlar, ve bu taban olmadan orcSONAR'ın skoru
+   "tespit edilebilirliği öğrendi" ile ayırt edilemez.
+
+📌 **Dördüncüyü eklemek çıtayı YÜKSELTİYOR**, yani değişmez 7'nin yasakladığı
+yönün tersi: bir tabanı sonradan *çıkarmak* ihlal olurdu, eklemek ihtiyattır.
+`A5`'in satırı "üçü de" diyordu; dördüncüsü o satırın kendi cümlesinin
+tamamlanması, ve bu fark burada yazılı çünkü `A12`'den sonra görünmez olurdu.
 
 ## 8. Durdurma kuralı
 
