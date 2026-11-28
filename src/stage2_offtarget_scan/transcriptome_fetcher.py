@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import time
 from collections.abc import Iterator
+from typing import Any
 
 import requests
 from loguru import logger
@@ -269,6 +270,30 @@ def _load_canonical_transcripts(
     return canonical
 
 
+def _first_int(*candidates: Any, default: int | None) -> int | None:
+    """The first candidate that is an integer, else ``default``.
+
+    Roadmap `B10a`. ``a.get(k, b.get(k, 0))`` reads as a chain of fallbacks but
+    is not one: a key that is *present and null* satisfies the outer `get`, so
+    the default never applies and `None` travels onward. Ensembl emits such
+    nulls, and the two values this guards — a transcript coordinate and a
+    strand — fail in opposite and equally bad ways when it happens.
+
+    Args:
+        *candidates: Values in preference order; ``None`` and non-integers are
+            skipped. ``bool`` is rejected too, since ``True`` is an ``int`` in
+            Python and a boolean strand is not a coordinate.
+        default: Returned when no candidate qualifies.
+
+    Returns:
+        The first integral candidate, or ``default``.
+    """
+    for candidate in candidates:
+        if isinstance(candidate, int) and not isinstance(candidate, bool):
+            return candidate
+    return default
+
+
 def _batch_lookup_symbols(
     genes: list[str],
     config: OrcSonarConfig,
@@ -310,22 +335,58 @@ def _batch_lookup_symbols(
             if chrom and not chrom.startswith("chr"):
                 chrom = f"chr{chrom}"
 
-            strand_int: int = canonical_raw.get("strand", gene_data.get("strand", 1))
+            # Roadmap B10a. `x.get(k, y.get(k, default))` does NOT fall back
+            # when the key is present and null, and Ensembl does emit explicit
+            # nulls. Two different failures came out of that one idiom:
+            #
+            # * a null coordinate reached `TranscriptInfo`, Pydantic refused
+            #   it, and the `except` below logged at **debug** — so the gene
+            #   left the background set with no trace at INFO, and a smaller
+            #   background reads as *fewer off-targets* (invariant 2);
+            # * a null strand is not `1`, so `"+" if strand_int == 1 else "-"`
+            #   assigned `"-"`: an unknown orientation silently became a
+            #   definite and wrong one, which is the class rule 10 exists for.
+            #
+            # `_first_int` therefore skips nulls rather than accepting them,
+            # and a coordinate that is still missing is refused loudly below.
+            strand_int = _first_int(
+                canonical_raw.get("strand"), gene_data.get("strand"), default=1
+            )
             strand = "+" if strand_int == 1 else "-"
+            start = _first_int(
+                canonical_raw.get("start"), gene_data.get("start"), default=None
+            )
+            end = _first_int(
+                canonical_raw.get("end"), gene_data.get("end"), default=None
+            )
+            if start is None or end is None:
+                logger.warning(
+                    f"transcriptome_fetcher: dropping {symbol} — Ensembl gave "
+                    f"no usable coordinate (start={start!r}, end={end!r}). The "
+                    f"background set is one gene smaller and that reads as "
+                    f"fewer off-targets, so it is reported rather than logged "
+                    f"at debug (roadmap B10a)."
+                )
+                continue
 
             try:
                 result[symbol] = TranscriptInfo(
                     transcript_id=canonical_raw["id"],
                     gene=symbol.upper(),
                     chrom=chrom,
-                    start=canonical_raw.get("start", gene_data.get("start", 0)),
-                    end=canonical_raw.get("end", gene_data.get("end", 0)),
+                    start=start,
+                    end=end,
                     strand=strand,
                     is_canonical=True,
                     source="Ensembl",
                 )
             except Exception as exc:
-                logger.debug(f"transcriptome_fetcher: could not build TranscriptInfo for {symbol}: {exc}")
+                # Still not debug: a refused transcript is a gene missing from
+                # the search space, and that must be visible in a run's log.
+                logger.warning(
+                    f"transcriptome_fetcher: could not build TranscriptInfo "
+                    f"for {symbol}, so it is absent from the background set: {exc}"
+                )
 
     return result
 

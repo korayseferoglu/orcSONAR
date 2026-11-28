@@ -283,22 +283,28 @@ def get_shape_accessibility(
         ``single_stranded_fraction``, ``data_available``, and the input
         ``region``.
     """
-    use_icshape = (
+    # Roadmap B10a. The three None-checks used to be collected into a bool and
+    # tested as `if use_icshape:`. A type checker cannot narrow through a
+    # boolean variable, so inside the block `tx_start`/`tx_end` were still
+    # `int | None` and reached `max()`/`min()`. The two
+    # `# type: ignore[arg-type]` comments covered nothing — the real error is
+    # `type-var` — so mypy reported them as unused *and* the error as
+    # uncovered: a suppression that suppressed nothing. Written inline, the
+    # narrowing is visible and the ignores are gone.
+    if (
         transcript_id is not None
         and tx_start is not None
         and tx_end is not None
         and tx_end > tx_start >= 0
-    )
-
-    if use_icshape:
+    ):
         table = _load_icshape_data(cell_line, data_dir)
         if table is not None:
-            tid = _strip_ensembl_version(transcript_id)  # type: ignore[arg-type]
+            tid = _strip_ensembl_version(transcript_id)
             reactivities = table.get(tid)
             if reactivities is not None:
                 # Clamp window to transcript bounds; tx_end is exclusive.
-                lo = max(0, tx_start)  # type: ignore[arg-type]
-                hi = min(len(reactivities), tx_end)  # type: ignore[arg-type]
+                lo = max(0, tx_start)
+                hi = min(len(reactivities), tx_end)
                 window_vals = [
                     r for r in reactivities[lo:hi] if not math.isnan(r)
                 ]

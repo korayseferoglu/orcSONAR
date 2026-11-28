@@ -388,3 +388,52 @@ class TestGetShapeAccessibilityIcshape:
         # Should average just the two available positions
         assert result.data_available is True
         assert result.single_stranded_fraction == pytest.approx(1.0)
+
+
+# ---------------------------------------------------------------------------
+# Roadmap B10a — the suppression that suppressed nothing
+# ---------------------------------------------------------------------------
+
+
+class TestTheNarrowingIsVisibleToTheTypeChecker:
+    """`tx_start`/`tx_end` are `int | None` and reach `max()`/`min()`.
+
+    The None-checks existed, but they were collected into a bool:
+
+        use_icshape = (transcript_id is not None and tx_start is not None
+                       and tx_end is not None and tx_end > tx_start >= 0)
+        if use_icshape:
+            lo = max(0, tx_start)   # type: ignore[arg-type]
+
+    A checker cannot narrow a type through a boolean variable, so inside the
+    block `tx_start` was still `int | None`. The two `type: ignore[arg-type]`
+    comments did not help either: the real error is `type-var`, so mypy
+    reported the ignore as **unused** *and* the error as uncovered — a
+    suppression that suppressed nothing, which is invariant 3's class in a
+    single line.
+
+    Today the guard is correct, so this is a type-safety hole rather than a
+    live failure: nothing currently reaches `max(0, None)`. That is exactly why
+    a behavioural test cannot catch it and this one reads the checker instead.
+    Edit the guard wrongly and the hole becomes a `TypeError` at run time, in
+    the one place that is silent about it.
+    """
+
+    def test_mypy_reports_nothing_on_the_icshape_window_clamp(self) -> None:
+        import subprocess
+        import sys
+        from pathlib import Path
+
+        root = Path(__file__).resolve().parents[2]
+        target = "src/stage5_biophysics/shape_profile.py"
+        proc = subprocess.run(
+            [sys.executable, "-m", "mypy", target],
+            cwd=root, capture_output=True, text=True,
+        )
+        own = [
+            line for line in proc.stdout.splitlines()
+            if line.startswith(target) and ": error:" in line
+        ]
+        assert own == [], (
+            "mypy still reports errors in this module:\n  " + "\n  ".join(own)
+        )

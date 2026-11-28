@@ -7,6 +7,7 @@ from unittest.mock import patch
 
 import pytest
 import responses as resp_mock
+from loguru import logger
 
 from src.core.config import OrcSonarConfig
 from src.core.exceptions import DataSourceError
@@ -532,3 +533,111 @@ class TestLookupBatchSizeIsMeasured:
             "Two of three batches failing is how the 2026-11-19 run resolved "
             "only 12% of the background set."
         )
+
+
+# ---------------------------------------------------------------------------
+# Roadmap B10a — a null coordinate must not vanish, and must not flip a strand
+# ---------------------------------------------------------------------------
+
+
+class TestNullCoordinatesFromEnsembl:
+    """A missing coordinate is unknown; it is not a reason to lose a gene.
+
+    `_batch_lookup_symbols` built `TranscriptInfo` with
+    ``canonical_raw.get("start", gene_data.get("start", 0))``. The default of
+    the outer `get` is itself a `get`, so a response that carries the key with
+    an explicit ``null`` — which Ensembl does emit — produced ``start=None``,
+    which Pydantic rejected, which the surrounding ``except Exception`` logged
+    at **debug** level. The gene then disappeared from the search space with no
+    visible trace at INFO. mypy was reporting exactly this
+    (``Argument "start" … has incompatible type "Any | None"``) and the error
+    was lost inside `B10`'s backlog.
+
+    Two consequences, and the second is worse:
+
+    * the gene is dropped, and a smaller background reads as *fewer
+      off-targets*, so the failure points toward SAFE (invariant 2);
+    * the same construct on the line above governs **strand**
+      (``canonical_raw.get("strand", gene_data.get("strand", 1))``). A null
+      there is not ``1``, so the code assigned ``"-"`` — a silently wrong
+      strand rather than a dropped gene, which is the class rule 10 exists for.
+
+    At `D1`'s ~250k transcripts either one becomes mass silent loss, which is
+    why `B10a` is scoped ahead of it.
+    """
+
+    @resp_mock.activate
+    def test_a_null_start_does_not_silently_drop_the_gene(
+        self, tmp_path: Path
+    ) -> None:
+        # loguru does not route through stdlib logging, so `caplog` sees
+        # nothing. A sink added here is explicit about what level it collects,
+        # which is the thing under test: the message used to be `debug`.
+        collected: list[str] = []
+        sink = logger.add(collected.append, level="WARNING")
+        config = _default_config(tmp_path)
+        resp_mock.add(
+            resp_mock.POST,
+            LOOKUP_URL,
+            json={
+                "ACTB": {
+                    "id": "ENSG00000075624",
+                    "seq_region_name": "7",
+                    "start": None,
+                    "end": 5530601,
+                    "strand": 1,
+                    "Transcript": [
+                        {"id": "ENST00000461615", "is_canonical": 1,
+                         "start": None, "end": 5530601, "strand": 1}
+                    ],
+                }
+            },
+            status=200,
+        )
+
+        try:
+            result = _batch_lookup_symbols(["ACTB"], config)
+        finally:
+            logger.remove(sink)
+
+        # Either the gene is kept with a usable coordinate, or it is refused
+        # loudly. What it must not be is absent and quiet.
+        if "ACTB" not in result:
+            assert any("ACTB" in message for message in collected), (
+                "the gene was dropped and nothing at WARNING or above said "
+                "so — a smaller background reads as fewer off-targets "
+                "(invariant 2)"
+            )
+
+    @resp_mock.activate
+    def test_a_null_strand_is_not_silently_read_as_minus(
+        self, tmp_path: Path
+    ) -> None:
+        """`None != 1`, so the old expression chose "-" without saying so."""
+        config = _default_config(tmp_path)
+        resp_mock.add(
+            resp_mock.POST,
+            LOOKUP_URL,
+            json={
+                "TP53": {
+                    "id": "ENSG00000141510",
+                    "seq_region_name": "17",
+                    "start": 7668402,
+                    "end": 7687550,
+                    "strand": None,
+                    "Transcript": [
+                        {"id": "ENST00000269305", "is_canonical": 1,
+                         "start": 7668402, "end": 7687550, "strand": None}
+                    ],
+                }
+            },
+            status=200,
+        )
+
+        result = _batch_lookup_symbols(["TP53"], config)
+
+        if "TP53" in result:
+            assert result["TP53"].strand == "+", (
+                "a null strand was turned into '-' — an unknown became a "
+                "definite, wrong orientation (rule 10)"
+            )
