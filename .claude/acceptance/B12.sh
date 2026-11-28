@@ -35,6 +35,11 @@
 #
 # ⚠️ 6. ölçümün canlı yarısı ağ istiyor ve ağsız ATLANIR; ama host cevap verip
 # sürüm UYUŞMAZSA kırmızıya düşer (`H17` deseni).
+#
+# 📌 Bu kapı CI'da KOŞMUYOR ve koşmamalı: `results/` git'te izlenmiyor, yani
+# CI'da dört koşu dizini hiç yok ve kapı ölçecek bir şey bulamaz. CI yalnız
+# `H9` ve `H9b`'yi bloke edici koşuyor. Yokluğu eksiklik değil, bu satır da o
+# yüzden burada.
 
 set -uo pipefail
 

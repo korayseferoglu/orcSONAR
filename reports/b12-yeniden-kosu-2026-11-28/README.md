@@ -84,3 +84,32 @@ değil. Kalıcı kayıt gerekiyorsa dört `manifest.json` commit'lenmeli — ham
 Deneme koşusu (`VEGFA_HeLa`, izole çıktı + izole cache) 02:27 UTC'de başladı ve
 bu kayıt yazılırken stage 2'de Ensembl'den 182 geni çekiyordu — 504 yok, cache
 büyüyor. Kullanım limiti nedeniyle sonucu bu oturumda ölçülemedi.
+
+## 6. ÖNKOŞUL ÖLÇÜLDÜ: arka plan kapsamı tam (2026-11-28)
+
+`B12`'nin tek gerçek riski, 2026-11-24'teki denemeyi öldüren şeydi: Ensembl
+`lookup/symbol` üç batch'ten ikisini 504 ile reddetmiş, 182 genin 22'si (%12)
+çözülmüş ve koşu `SAFE` deyip kapsamı raporlamamıştı. O yüzden tam boru hattını
+koşmadan **yalnız o parça** yalıtılarak ölçüldü — `get_background_transcriptome`
+doğrudan çağrıldı, izole cache, pinlenmiş arşiv host.
+
+`kapsam-onkosul.json`:
+
+| requested | resolved | fraction | süre |
+|---|---|---|---|
+| 182 | **182** | **1,0** | 289,1 s (soğuk cache) |
+
+Yani `R12a`'nın batch küçültmesi pinlenmiş host'ta çalışıyor ve 504 sorunu
+tekrarlanmıyor. Dört koşunun önündeki engel kalktı.
+
+⚠️ Ölçüm `exclude_gene="VEGFA"` ile yapıldı, yani denominatör 182 (183 eksi
+hedef gen). Başka hedef genlerde denominatör aynı mantıkla kurulur; kapı
+`fraction == 1.0` arıyor, mutlak sayı değil.
+
+## 7. Kapı yazıldı ve eski durumda KIRMIZI
+
+`.claude/acceptance/B12.sh` + `b12_check.py`, sekiz ölçüm. Mevcut dört koşuda
+dört ayrı sebeple kırmızı: kapsam alanı hiçbirinde yok, dördü de `B17`/`B18`/
+`C3d` öncesi, üçünde id'ler iki parçalı (840/840, 1110/1110, 257/257) ve 48
+kalıntı bulgunun sahibi yok. 8. ölçüm kontrol: korunmuş eski manifest'ler 3. ve
+4. ölçümü geçmiyor, yani kapı gerçekten ayırt ediyor.
