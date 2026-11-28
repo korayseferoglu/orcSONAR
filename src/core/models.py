@@ -260,6 +260,14 @@ class PhylopResult(BaseModel):
     region: GenomicRegion
     mean_score: float | None = None  # raw phyloP value (can be negative)
     conservation_score: float | None = Field(ge=0.0, le=1.0, default=None)
+    #: Fraction of the window the 100-way alignment actually covers. Roadmap
+    #: R14: measured on the live file, a window straddling an alignment
+    #: boundary returns a mean over *part* of itself (chr1:121,609,785-805 →
+    #: mean 0.213 at coverage 0.6) and nothing recorded that, so a partial
+    #: measurement read as a full one. 0.0 means the window is entirely
+    #: outside the alignment; ``None`` means the read failed and even the
+    #: coverage is unknown.
+    covered_fraction: float | None = Field(ge=0.0, le=1.0, default=None)
 
 
 class VariantScore(BaseModel):
