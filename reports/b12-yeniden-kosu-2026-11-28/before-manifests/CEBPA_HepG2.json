@@ -1,0 +1,228 @@
+{
+  "schema_version": 1,
+  "written_at": "2026-11-26T20:44:55.754070+00:00",
+  "run": {
+    "gene": "CEBPA",
+    "cell_line": "HepG2",
+    "dir": "CEBPA_HepG2"
+  },
+  "code": {
+    "head_commit": "41e7208dab0fe49ccba6e3dbcca28d1970e8a17f",
+    "head_committed_at": "2026-11-26T23:31:43+03:00",
+    "worktree_clean": false,
+    "dirty_paths": [
+      "CIENTIFIC_ROADMAP.md",
+      "Snakefile",
+      "rules/stage7_scoring.smk",
+      "src/core/manifest_writer.py",
+      "src/core/run_manifest.py",
+      "tests/unit/test_run_manifest.py"
+    ]
+  },
+  "head_consistency": {
+    "verdict": "head_cannot_have_produced_this_run",
+    "reason": "an output predates the recorded commit, so the run was produced by earlier code",
+    "oldest_output_at": "2026-05-08T23:43:31.917776+00:00",
+    "head_committed_at": "2026-11-26T23:31:43+03:00"
+  },
+  "config": {
+    "config/config.yaml": "sha256:b3449d6ba8619c5ec3d8474b2ef902b85170c4dbdb0fd939a059ef8154b8485c",
+    "config/cell_lines.yaml": "sha256:2f21d23ca70e785d8ba05810684df3eb5adbc5e202aabb425efea1e1e6c178ef",
+    "config/ccle_depmap_ids.yaml": "sha256:27d1c774fae2e8ac372f2a42a11b366a6148a0bccd5d6a85e1a10ab7d0fd9318"
+  },
+  "external_data": {
+    "schema_version": 1,
+    "artifacts": []
+  },
+  "environment": {
+    "python": "3.12.3",
+    "packages": {
+      "snakemake": "9.19.0",
+      "pysam": "0.23.3",
+      "pyBigWig": "0.3.25",
+      "hic-straw": "1.3.1",
+      "pandas": "3.0.2",
+      "pydantic": "2.13.3",
+      "requests": "2.33.1",
+      "numpy": "2.4.4",
+      "scipy": null
+    }
+  },
+  "snakemake_state": {
+    "incomplete_outputs": [],
+    "note": "A marker means the producing job was interrupted. The bytes may still be complete — compare against the recorded hash."
+  },
+  "stochastic_components": {
+    "present": false,
+    "files": [],
+    "evidence": "git grep -lE '\\brandom\\b|np.random|numpy.random|secrets.|shuffle|sample(' -- src",
+    "note": "No seeds are recorded because no stochastic component was found. An empty seeds map would advertise bookkeeping that tracks nothing."
+  },
+  "outputs": {
+    "final_report.html": {
+      "sha256": "9fb77c31bebd999b497aaf5870763f116b22af8c22735aad4066e5ed3bad8066",
+      "bytes": 341515,
+      "modified_at": "2026-05-09T00:06:40.433185+00:00"
+    },
+    "final_report.json": {
+      "sha256": "f7c93f3b2e5691d9e1182fdd720dd66ec0c122ca62e4170a86978791e68a61fa",
+      "bytes": 24948,
+      "modified_at": "2026-05-09T00:06:40.433185+00:00"
+    },
+    "stage1_promoter.json": {
+      "sha256": "9e8745370d496fbebebc65978de98e2ebc0891969d2f37c148485671be7a0a04",
+      "bytes": 532,
+      "modified_at": "2026-05-08T23:43:33.784768+00:00"
+    },
+    "stage1_transcripts.json": {
+      "sha256": "91193be62df58fa9cdb6b928438a02826939f051f3ddcdc9937bb084a5ed6065",
+      "bytes": 283,
+      "modified_at": "2026-05-08T23:43:32.065435+00:00"
+    },
+    "stage1_tss.json": {
+      "sha256": "f6601ffda1ed4099057cc0c15eeb8d65f2c73f35a3c5241b85c2df1a73467445",
+      "bytes": 172,
+      "modified_at": "2026-05-08T23:43:32.064307+00:00"
+    },
+    "stage2_mirbase.json": {
+      "sha256": "1d82803bc370fb8b3612c9dcdee27df364f9568b8f4270ad22b516a044d02793",
+      "bytes": 109,
+      "modified_at": "2026-05-08T23:43:31.917776+00:00"
+    },
+    "stage2_offtargets.json": {
+      "sha256": "ad2d05c3012965b9cb5b431baab8849794efc381ce215b9fb65d16ec86d190c4",
+      "bytes": 27670,
+      "modified_at": "2026-05-08T23:44:17.755585+00:00"
+    },
+    "stage2_repeats.json": {
+      "sha256": "1c7fdb5ce702dc43917d333a91d66067ea1748985ccfed6f76d670cefe72f791",
+      "bytes": 11194,
+      "modified_at": "2026-05-08T23:44:16.029593+00:00"
+    },
+    "stage2_seed_hits.json": {
+      "sha256": "71f99397c24354c87241cbf332cfbf932cbdce284283c4c7dd1e652d9a18a21a",
+      "bytes": 16327,
+      "modified_at": "2026-05-08T23:43:35.543761+00:00"
+    },
+    "stage3_clinvar.json": {
+      "sha256": "5cbc8f7c0918276691ed2bd2e6cc47943aa98fd071d04cb3f496687d3b5287e1",
+      "bytes": 9305,
+      "modified_at": "2026-05-08T23:44:42.232484+00:00"
+    },
+    "stage3_cosmic.json": {
+      "sha256": "fdfe213709d9e37a08a67aa893a1da25ba0b7f2698395ba3ebb2f7f3839f22d2",
+      "bytes": 17712,
+      "modified_at": "2026-05-08T23:44:19.646578+00:00"
+    },
+    "stage3_gnomad.json": {
+      "sha256": "cef369dd3de6865ace40c23907a2de47c404899cd131a725c5148925c95af56b",
+      "bytes": 81088,
+      "modified_at": "2026-05-08T23:49:27.105479+00:00"
+    },
+    "stage3_phylop.json": {
+      "sha256": "3770d20d25cb40af7d9a64a455ae0033bc7c5eecab80ff1b8f9f2f5a61ef03b7",
+      "bytes": 9128,
+      "modified_at": "2026-05-08T23:44:49.165456+00:00"
+    },
+    "stage3_variants.json": {
+      "sha256": "5605339f1943fbc71a3ed6f3fade4a9e60802b77e87ec9b950a6142a9e3f0203",
+      "bytes": 9556,
+      "modified_at": "2026-05-08T23:49:28.832582+00:00"
+    },
+    "stage4_atac.json": {
+      "sha256": "d20e4dd9f65bb3363ec736e1761cc1d9c6914b0bc497ae82fa61d9ce6fb0dca3",
+      "bytes": 1379,
+      "modified_at": "2026-05-08T23:46:52.886953+00:00"
+    },
+    "stage4_ccle.json": {
+      "sha256": "f6631a42ade3073efa080ca13ebb968b599b547b67c7cd6b1df2ad0b1bccd2da",
+      "bytes": 6985,
+      "modified_at": "2026-05-08T23:46:19.505087+00:00"
+    },
+    "stage4_epigenetic.json": {
+      "sha256": "f96142b3f390261091c025cbe9d67b52c637b99d7fdf919bb0d99b4581472e75",
+      "bytes": 10845,
+      "modified_at": "2026-05-09T00:06:35.207119+00:00"
+    },
+    "stage4_groseq.json": {
+      "sha256": "c1c7e3d2056e424487faff527310fe11692d498c3548008b076b6440ee7cdd16",
+      "bytes": 1282,
+      "modified_at": "2026-05-08T23:45:18.356336+00:00"
+    },
+    "stage4_hic.json": {
+      "sha256": "377b334581049995bdfee08f269c95ad0f89cb045eea24611e2834ce7f37bad4",
+      "bytes": 1376,
+      "modified_at": "2026-05-09T00:06:33.475096+00:00"
+    },
+    "stage4_histones.json": {
+      "sha256": "40cf577fd029b8ad84583bbdc9b06f657d57c2514b420bf5173683529cd99643",
+      "bytes": 4150,
+      "modified_at": "2026-05-08T23:46:19.734086+00:00"
+    },
+    "stage5_adar.json": {
+      "sha256": "781a69372cd8b5eaa854461193fa29ba5066923c09d291a3f15cde4d6221d6e2",
+      "bytes": 9894,
+      "modified_at": "2026-05-08T23:44:51.150448+00:00"
+    },
+    "stage5_biophysics.json": {
+      "sha256": "1e14631532f5b97c0641e8564d0b4bd0c1ec5b54317820adffd4a53d5794dda8",
+      "bytes": 7250,
+      "modified_at": "2026-05-08T23:46:23.057073+00:00"
+    },
+    "stage5_deltag.json": {
+      "sha256": "de585d38e32dd2450ae0123ae81186ef20985adeaf65afa0fda11749888e0b16",
+      "bytes": 4233,
+      "modified_at": "2026-05-08T23:44:43.972477+00:00"
+    },
+    "stage5_g4.json": {
+      "sha256": "c58292cc1f38503dbac3c5b45a6f9105f37cdc996d844cae9dba9f12f7bdfa4e",
+      "bytes": 48911,
+      "modified_at": "2026-05-08T23:44:21.414570+00:00"
+    },
+    "stage5_m6a.json": {
+      "sha256": "cb595b21fa894b0d16685702479208ff3056084613baf356f262c4be6a447f13",
+      "bytes": 9864,
+      "modified_at": "2026-05-08T23:44:49.346455+00:00"
+    },
+    "stage5_shape.json": {
+      "sha256": "a006143bb0aebbf983b8664f84cf18cb07ecb6a46b95009b16be548daabc9f53",
+      "bytes": 11042,
+      "modified_at": "2026-05-08T23:44:24.950556+00:00"
+    },
+    "stage6_ago2.json": {
+      "sha256": "2ac2c89316856ed7ed6dddf91027ae477ea3e220c625ce3261ce4750a02346d4",
+      "bytes": 11000,
+      "modified_at": "2026-05-08T23:44:47.578462+00:00"
+    },
+    "stage6_circrna.json": {
+      "sha256": "56179995295d9c4cc2747b8b5e0265c8aeaca9077ef8568aa184d11977af75ba",
+      "bytes": 34793,
+      "modified_at": "2026-05-08T23:44:53.583438+00:00"
+    },
+    "stage6_execution.json": {
+      "sha256": "6b854b5d8bcd2c66b4d4fa4ce1a7c1f07a1dc854508e9322c190432f19651067",
+      "bytes": 9655,
+      "modified_at": "2026-05-08T23:46:21.299080+00:00"
+    },
+    "stage6_immune.json": {
+      "sha256": "d1e0d299ef301b0f0fd369eb099484771296e93a6efab7194f6ce54ce2fdcffa",
+      "bytes": 9180,
+      "modified_at": "2026-05-08T23:44:23.177563+00:00"
+    },
+    "stage6_rbp.json": {
+      "sha256": "e34e156aa2db5c3d6ecf27a9c9b4f8d96d2ad89c6934b9f820e7212dd94774a5",
+      "bytes": 11568,
+      "modified_at": "2026-05-08T23:45:38.196255+00:00"
+    },
+    "stage7_classification.json": {
+      "sha256": "45aecb755737f759e37fad0a36c9da7eeb78cd8a6586d4207d66df75bcd0851a",
+      "bytes": 4983,
+      "modified_at": "2026-05-09T00:06:38.708163+00:00"
+    },
+    "stage7_scores.json": {
+      "sha256": "4a0fd0fcbc1cb586c2c99e78cd8ff5c820131cfa976b7053d19d5e59daf9a347",
+      "bytes": 24653,
+      "modified_at": "2026-05-09T00:06:36.954141+00:00"
+    }
+  }
+}

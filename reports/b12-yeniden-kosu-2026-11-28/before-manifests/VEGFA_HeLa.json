@@ -1,0 +1,221 @@
+{
+  "schema_version": 1,
+  "written_at": "2026-11-26T21:26:08.982212+00:00",
+  "run": {
+    "gene": "VEGFA",
+    "cell_line": "HeLa",
+    "dir": "VEGFA_HeLa"
+  },
+  "code": {
+    "head_commit": "4c2b3fad933580fbf9e65cb06fbe8a5c39a92e60",
+    "head_committed_at": "2026-11-27T00:18:36+03:00",
+    "worktree_clean": true,
+    "dirty_paths": []
+  },
+  "head_consistency": {
+    "verdict": "head_cannot_have_produced_this_run",
+    "reason": "an output predates the recorded commit, so the run was produced by earlier code",
+    "oldest_output_at": "2026-09-16T20:16:57.486792+00:00",
+    "head_committed_at": "2026-11-27T00:18:36+03:00"
+  },
+  "config": {
+    "config/config.yaml": "sha256:b3449d6ba8619c5ec3d8474b2ef902b85170c4dbdb0fd939a059ef8154b8485c",
+    "config/cell_lines.yaml": "sha256:2f21d23ca70e785d8ba05810684df3eb5adbc5e202aabb425efea1e1e6c178ef",
+    "config/ccle_depmap_ids.yaml": "sha256:27d1c774fae2e8ac372f2a42a11b366a6148a0bccd5d6a85e1a10ab7d0fd9318"
+  },
+  "external_data": {
+    "schema_version": 1,
+    "artifacts": []
+  },
+  "environment": {
+    "python": "3.12.3",
+    "packages": {
+      "snakemake": "9.19.0",
+      "pysam": "0.23.3",
+      "pyBigWig": "0.3.25",
+      "hic-straw": "1.3.1",
+      "pandas": "3.0.2",
+      "pydantic": "2.13.3",
+      "requests": "2.33.1",
+      "numpy": "2.4.4",
+      "scipy": null
+    }
+  },
+  "snakemake_state": {
+    "incomplete_outputs": [],
+    "note": "A marker means the producing job was interrupted. The bytes may still be complete — compare against the recorded hash."
+  },
+  "stochastic_components": {
+    "present": false,
+    "files": [],
+    "evidence": "git grep -lE '\\brandom\\b|np.random|numpy.random|secrets.|shuffle|sample(' -- src",
+    "note": "No seeds are recorded because no stochastic component was found. An empty seeds map would advertise bookkeeping that tracks nothing."
+  },
+  "outputs": {
+    "final_report.html": {
+      "sha256": "64323faa55f4db621d065f232d4faf6d531089a2dfea67e8dcc5385fe4452b92",
+      "bytes": 383104,
+      "modified_at": "2026-09-16T21:26:39.581242+00:00"
+    },
+    "final_report.json": {
+      "sha256": "94e519b5d8cbd4cc49b6532642ac81627b2cf044445ffb04402f5f9836331214",
+      "bytes": 27648,
+      "modified_at": "2026-09-16T21:26:39.581242+00:00"
+    },
+    "stage1_promoter.json": {
+      "sha256": "7ca9bc1711fe6325e92b42f6b872180d23db1b33c750e113ef7e6c73dcb39545",
+      "bytes": 6150,
+      "modified_at": "2026-09-16T20:17:12.116832+00:00"
+    },
+    "stage1_transcripts.json": {
+      "sha256": "e58a46b0608a9c59fe2d8e3232d22b52d210bbfd1588ea4de46287f36b9c8214",
+      "bytes": 5908,
+      "modified_at": "2026-09-16T20:17:10.351827+00:00"
+    },
+    "stage1_tss.json": {
+      "sha256": "01b66156750c421ca261fc9ba6c325cbbe9d74f20acb6231db2f8dbd0a42cd78",
+      "bytes": 167,
+      "modified_at": "2026-09-16T20:16:57.486792+00:00"
+    },
+    "stage2_mirbase.json": {
+      "sha256": "89f700a993145438a1a9201c08e16bca9619d565db4ad6974961e34a54f14a76",
+      "bytes": 934,
+      "modified_at": "2026-09-16T20:37:30.842219+00:00"
+    },
+    "stage2_offtargets.json": {
+      "sha256": "853b7c2b86c2e2d4e755d59115a7f19e7b5d572515bf1becf9f0f5d5a4f13ebb",
+      "bytes": 34360,
+      "modified_at": "2026-09-16T20:55:56.360938+00:00"
+    },
+    "stage2_repeats.json": {
+      "sha256": "015c879ebd07e68b018f4936bbbe1860ab7dea36a4494afa00ca489459d98418",
+      "bytes": 14890,
+      "modified_at": "2026-09-16T20:55:54.610938+00:00"
+    },
+    "stage2_seed_hits.json": {
+      "sha256": "6f93fb4b9fed97ba8411e3f845e690a89322c1bbed12aab1e0a30258d2070caf",
+      "bytes": 18422,
+      "modified_at": "2026-09-16T20:55:22.016930+00:00"
+    },
+    "stage3_clinvar.json": {
+      "sha256": "e9bdf87bf8a2d7305b32ebb9be533e385acced44dbaf41dad64b3044fc0a5bb2",
+      "bytes": 10906,
+      "modified_at": "2026-09-16T21:20:51.021263+00:00"
+    },
+    "stage3_cosmic.json": {
+      "sha256": "0603d8a4b750b86df6bf0e5e660563f386b9bed413d695444a532ebd28369164",
+      "bytes": 18107,
+      "modified_at": "2026-09-16T21:20:52.963265+00:00"
+    },
+    "stage3_gnomad.json": {
+      "sha256": "1fbafc6566568a5f4640b57c3fad0598f59b05808fcd725e47b1e43faf81b450",
+      "bytes": 93347,
+      "modified_at": "2026-09-16T21:26:28.602241+00:00"
+    },
+    "stage3_phylop.json": {
+      "sha256": "5010a7b9ed4cc5da2ca4b7c23f9358b5f86853897586e5e135ec5e1c5ed76804",
+      "bytes": 10646,
+      "modified_at": "2026-09-16T21:20:26.289235+00:00"
+    },
+    "stage3_variants.json": {
+      "sha256": "8cd1af76b04482801ec7d0cee4a31f1602dd571477acb2bdfcca2fad9d76adc6",
+      "bytes": 10968,
+      "modified_at": "2026-09-16T21:26:30.410241+00:00"
+    },
+    "stage4_atac.json": {
+      "sha256": "882fe0915fc6082b1add17bb8d4dcc774ab4ba9111e1122820de03bc5e2dd5c8",
+      "bytes": 2099,
+      "modified_at": "2026-09-16T20:57:59.463984+00:00"
+    },
+    "stage4_ccle.json": {
+      "sha256": "f7c0dbef40e11b38327e59f5b7d761a0fc1675d708260b426c400e2638a4efa6",
+      "bytes": 5388,
+      "modified_at": "2026-09-16T20:58:01.278984+00:00"
+    },
+    "stage4_epigenetic.json": {
+      "sha256": "8930b047e02234120bb3efd5c1f82ebc838f67e3c0ada391e466965c2cfa5be5",
+      "bytes": 11112,
+      "modified_at": "2026-09-16T21:26:34.055242+00:00"
+    },
+    "stage4_groseq.json": {
+      "sha256": "dbf502f868b7dc8385ad4ddf6b76eee5d4e2dd0781420568638979b86b9c3079",
+      "bytes": 2046,
+      "modified_at": "2026-09-16T20:59:18.803025+00:00"
+    },
+    "stage4_hic.json": {
+      "sha256": "71fe7d1cc94226311f5d788ca026afb570846fc7c9d83849399d86e3a91162e5",
+      "bytes": 2049,
+      "modified_at": "2026-09-16T21:19:12.273152+00:00"
+    },
+    "stage4_histones.json": {
+      "sha256": "49d57482d30594dfcb0ab521d3eb4bd7bbf63a33525ec68bd38d5d9d10275dcf",
+      "bytes": 4287,
+      "modified_at": "2026-09-16T21:22:47.049269+00:00"
+    },
+    "stage5_adar.json": {
+      "sha256": "854ff2b5d224992b93565c84b7ec0158bf49f3a7ef77f859a061230404b1e19b",
+      "bytes": 11559,
+      "modified_at": "2026-09-16T21:22:48.824269+00:00"
+    },
+    "stage5_biophysics.json": {
+      "sha256": "0b1b7cba0bdb161444d09debd66f135cdc3fad13a8c828a8eff11334e57d4485",
+      "bytes": 8697,
+      "modified_at": "2026-09-16T21:22:50.756268+00:00"
+    },
+    "stage5_deltag.json": {
+      "sha256": "ffb83ffa54b30b023b1b028803b93c9e20bd4df0b183d97ca07fb3eb910a0ae6",
+      "bytes": 5340,
+      "modified_at": "2026-09-16T20:59:49.637043+00:00"
+    },
+    "stage5_g4.json": {
+      "sha256": "db2b6795c9d512ae3a4b415dcb9270ce5f05d208cac6afabed5d24e6c81f55db",
+      "bytes": 61501,
+      "modified_at": "2026-09-16T20:59:20.530025+00:00"
+    },
+    "stage5_m6a.json": {
+      "sha256": "90af5155157b9dad911f058c0f544eefd97a757f5875e105ecba69cf75e71c8c",
+      "bytes": 11148,
+      "modified_at": "2026-09-16T21:20:28.307238+00:00"
+    },
+    "stage5_shape.json": {
+      "sha256": "99c9d86f70ce67783a2f8a4b36ffe6f74e04ebacbbffc33de47f0503e15451a4",
+      "bytes": 12844,
+      "modified_at": "2026-09-16T20:59:46.189040+00:00"
+    },
+    "stage6_ago2.json": {
+      "sha256": "dfa0286d4a791b34aae1497725c63d09f024af51b4780fa6854612b843df6d44",
+      "bytes": 11682,
+      "modified_at": "2026-09-16T20:59:47.911041+00:00"
+    },
+    "stage6_circrna.json": {
+      "sha256": "5b244ca67f083da1db33205fc665e5660d8d7bc093c9245ba95fe4bcdd413731",
+      "bytes": 54705,
+      "modified_at": "2026-09-16T21:22:56.377266+00:00"
+    },
+    "stage6_execution.json": {
+      "sha256": "14052bf9302ccdd4cc1e00b490d806d35df84d684fcfb4aa9ef66664736c5f7f",
+      "bytes": 9698,
+      "modified_at": "2026-09-16T21:26:32.251242+00:00"
+    },
+    "stage6_immune.json": {
+      "sha256": "06dd1cd6566009d8dc035ff759ad434e62dc30ee5a8a6c25637e8a1c1ffc5358",
+      "bytes": 6444,
+      "modified_at": "2026-09-16T20:59:22.308027+00:00"
+    },
+    "stage6_rbp.json": {
+      "sha256": "5b51786b39120ab1d5e9332507086e2dfe9d3a7b87ffb82a79a4a1d6c6be0709",
+      "bytes": 13157,
+      "modified_at": "2026-09-16T20:58:03.033985+00:00"
+    },
+    "stage7_classification.json": {
+      "sha256": "c8ce66ac39c660c2d87a834ddf3041dfe625a1ece5fe9453190128194b57dc39",
+      "bytes": 6083,
+      "modified_at": "2026-09-16T21:26:37.684242+00:00"
+    },
+    "stage7_scores.json": {
+      "sha256": "9b093db0349b09da842d39c0fe83d4db73192169ae4c1bd0121a1113aeb8f596",
+      "bytes": 28134,
+      "modified_at": "2026-09-16T21:26:35.878242+00:00"
+    }
+  }
+}
