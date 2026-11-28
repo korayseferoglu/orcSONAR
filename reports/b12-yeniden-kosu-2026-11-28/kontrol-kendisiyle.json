@@ -1,0 +1,134 @@
+{
+  "question": "Which verify-run findings does a re-run remove, and which are code findings that no re-run can touch?",
+  "old_results_dir": "results",
+  "fresh_results_dir": "results",
+  "runs": {
+    "VEGFA_HeLa": {
+      "old": {
+        "verdict": "FAIL",
+        "failed": [
+          "degeneracy",
+          "ranges",
+          "fallback",
+          "dynamic_range"
+        ],
+        "sites": 41,
+        "error": null,
+        "numbers_are_not_measurements": "staleness evidence only — see SCIENTIFIC_ROADMAP.md B12/B17/B18"
+      },
+      "fresh": {
+        "verdict": "FAIL",
+        "failed": [
+          "degeneracy",
+          "ranges",
+          "fallback",
+          "dynamic_range"
+        ],
+        "sites": 41,
+        "error": null
+      },
+      "per_check": {
+        "degeneracy": {
+          "before": 28,
+          "after": 28,
+          "removed_by_rerun": [],
+          "new_in_fresh": [],
+          "unchanged": [
+            "stage3_clinvar.json:clinvar_results:likely_pathogenic_count",
+            "stage3_clinvar.json:clinvar_results:pathogenic_count",
+            "stage3_clinvar.json:clinvar_results:variants[n]",
+            "stage3_variants.json:variant_scores:clinvar_pathogenic",
+            "stage5_adar.json:adar_results:shape_ds_risk",
+            "stage5_adar.json:adar_results:shape_used",
+            "stage5_biophysics.json:biophysics_scores:delta_g",
+            "stage5_biophysics.json:biophysics_scores:m6a_sites",
+            "stage5_deltag.json:deltag_results:delta_g",
+            "stage5_deltag.json:deltag_results:has_mismatches",
+            "stage5_deltag.json:deltag_results:risk_score",
+            "stage5_m6a.json:m6a_results:m6a_score",
+            "stage5_m6a.json:m6a_results:site_count",
+            "stage5_m6a.json:m6a_results:sites[n]",
+            "stage6_ago2.json:ago2_results:is_loaded",
+            "stage6_ago2.json:ago2_results:loading_score",
+            "stage6_ago2.json:ago2_results:raw_signal",
+            "stage6_circrna.json:circrna_results:data_available",
+            "stage6_execution.json:execution_scores:ago2_loading",
+            "stage6_execution.json:execution_scores:immune_motif_count",
+            "stage6_execution.json:execution_scores:immune_motifs_found[n]",
+            "stage6_execution.json:execution_scores:rbp_competition",
+            "stage6_immune.json:offtarget_immune:motifs_found[n]",
+            "stage6_immune.json:offtarget_immune:risk_score",
+            "stage6_immune.json:offtarget_immune:total_hits",
+            "stage6_rbp.json:rbp_results:competition_score",
+            "stage6_rbp.json:rbp_results:is_competing",
+            "stage6_rbp.json:rbp_results:raw_signal"
+          ]
+        },
+        "ranges": {
+          "before": 3,
+          "after": 3,
+          "removed_by_rerun": [],
+          "new_in_fresh": [],
+          "unchanged": [
+            "stage5_biophysics.json:biophysics_scores:delta_g",
+            "stage5_deltag.json:deltag_results:delta_g",
+            "stage5_g4.json:g4_results:g4_density"
+          ]
+        },
+        "fallback": {
+          "before": 11,
+          "after": 11,
+          "removed_by_rerun": [],
+          "new_in_fresh": [],
+          "unchanged": [
+            "stage4_epigenetic.json:epigenetic_scores:atac_signal",
+            "stage4_epigenetic.json:epigenetic_scores:ccle_expression",
+            "stage4_epigenetic.json:epigenetic_scores:groseq_signal",
+            "stage4_epigenetic.json:epigenetic_scores:h3k27ac_signal",
+            "stage4_epigenetic.json:epigenetic_scores:hic_contact",
+            "stage5_adar.json:adar_results:shape_ds_risk",
+            "stage5_biophysics.json:biophysics_scores:shape_accessibility",
+            "stage5_shape.json:shape_results:accessibility_score",
+            "stage5_shape.json:shape_results:single_stranded_fraction",
+            "stage6_ago2.json:ago2_results:raw_signal",
+            "stage6_rbp.json:rbp_results:raw_signal"
+          ]
+        },
+        "saturation": {
+          "before": 6,
+          "after": 6,
+          "removed_by_rerun": [],
+          "new_in_fresh": [],
+          "unchanged": [
+            "stage4_epigenetic.json:epigenetic_scores:atac_signal",
+            "stage4_epigenetic.json:epigenetic_scores:ccle_expression",
+            "stage4_epigenetic.json:epigenetic_scores:groseq_signal",
+            "stage4_epigenetic.json:epigenetic_scores:h3k27ac_signal",
+            "stage4_epigenetic.json:epigenetic_scores:h3k4me3_signal",
+            "stage4_epigenetic.json:epigenetic_scores:hic_contact"
+          ]
+        },
+        "dynamic_range": {
+          "old": {
+            "span": 0.15157600000000002,
+            "min": 0.19897,
+            "max": 0.350546,
+            "never_triggered": [
+              "HIGH_RISK",
+              "DANGEROUS"
+            ]
+          },
+          "fresh": {
+            "span": 0.15157600000000002,
+            "min": 0.19897,
+            "max": 0.350546,
+            "never_triggered": [
+              "HIGH_RISK",
+              "DANGEROUS"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,33 @@
+# Which still-open roadmap item owns each `verify-run` finding that a re-run
+# cannot remove.
+#
+# Roadmap B12. The item's criterion said "`verify-run` clean on all four runs",
+# and that sentence cannot be true: four of `verify-run`'s six checks were
+# failing on the newest run, and only some of those findings come from a run
+# being stale. The rest come from live code — `HIGH_RISK`/`DANGEROUS` being
+# unreachable, `sequence_specificity` crushed to a constant — and no number of
+# re-runs touches them.
+#
+# So the checkable claim is not "clean" but: **every residual finding is
+# attributable to a named open item, and nothing else is there**. Lowering a
+# threshold to manufacture a pass would be invariant 7's violation; writing
+# down what the bar measures is not.
+#
+# Why a declared file rather than prose in the roadmap row: `A13`'s precedent
+# (`.claude/prereg_sections.yaml`). A mapping the gate parses can be checked in
+# **both** directions, and the second direction is the valuable one — a
+# residual finding with no owner goes red, AND an owner whose item has since
+# closed while its finding persists also goes red. Prose can do neither.
+#
+# `finding` is `<file>:<table>:<metric>` exactly as `verify-run --json` reports
+# the pair `(table, metric)`. `owner` is a roadmap id that must still be open;
+# when it closes, its findings must disappear from the next run or the gate
+# fails and says which.
+
+schema_version: 1
+
+# Filled from the measurement in reports/b12-yeniden-kosu-2026-11-28/.
+# An empty list is not a default: the gate refuses a run whose residual
+# findings are not listed here, and refuses a listing with no measurement
+# behind it.
+residual: []
